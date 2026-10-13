@@ -14,4 +14,5 @@ Repoet inneholder gruppens applikasjon og dokumentasjon av utvikling, testing og
 ## Dokumentasjon
 
 - [Product brief](.docs/planning-artifacts/briefs/brief-prompt-force-2026-09-16/) med tilbakemelding
+- [KI-logg](.docs/ki-logg.md): hvordan gruppen bruker KI, hva vi har bedt om og hva vi selv har kontrollert
 - [Sensorveiledning del 1 – applikasjon og prosess](.docs/course/sensorveiledning-del1-applikasjon-og-prosess.pdf): vurderingskriteriene repoet skal oppfylle

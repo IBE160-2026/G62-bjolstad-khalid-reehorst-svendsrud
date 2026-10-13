@@ -1,6 +1,6 @@
 ---
 title: "Product Brief: Prompt Force"
-status: draft
+status: approved
 created: 2026-09-16
 updated: 2026-10-13
 ---
