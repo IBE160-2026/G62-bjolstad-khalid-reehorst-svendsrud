@@ -50,6 +50,41 @@ Denne loggen viser hvordan gruppen bruker KI i prosjektet: hva vi har bedt om, h
 
 ---
 
+## 2026-10-27 – Research og brainstorming før PRD
+
+**Verktøy:** Claude Code
+**Hvem:** Osman Khalid
+**Bakgrunn:** Faglærer ba oss gjøre så mye relevant research som mulig før torsdag, slik at vi er klare til å starte på PRD-en. Vi skulle også kjøre `git pull` før vi jobbet videre.
+
+### Hva vi ba KI om
+
+1. Sjekke om repoet var oppdatert mot GitHub, og kjøre `git pull`.
+2. Lage et research-dokument ut fra briefen, addendumet og tilbakemeldingen. Det skulle dekke: hva vi bør undersøke, hvilke spørsmål som er uklare, hvilke funksjoner vi bør diskutere, hva brukerne trenger, lignende løsninger, og hvor vi trenger mer informasjon.
+
+### Hva KI produserte
+
+| Resultat | Fil |
+|---|---|
+| Oppdatert `main` (2 nye commits fra GitHub) | – |
+| Research- og brainstormdokument med agenda for torsdag | `.docs/planning-artifacts/research/research-prd-forberedelse-2026-10-27.md` |
+
+KI gjorde også et kort nettsøk. Det viktigste funnet: Open Food Facts har en grense på 15 produktoppslag i minuttet, krever egen User-Agent og kildehenvisning (ODbL), og skal ikke brukes til «søk mens du skriver». Det innebygde `BarcodeDetector`-API-et virker ikke pålitelig på iOS Safari, så vi bør bruke et zxing-basert bibliotek.
+
+### Hva vi selv vurderte og kontrollerte
+
+- **Research-dokumentet:** [Fyll inn: hva du leste gjennom, godtok, endret eller strøk, f.eks. «Lest gjennom av Osman Khalid, ingen endringer.»]
+- **Punkter merket [sjekk]** i dokumentet er ikke verifisert av KI, og må testes av gruppen. Det gjelder blant annet hvor godt Open Food Facts dekker norske varer, og strekkodeskanning på ekte mobiler.
+- **Kildene** er delvis tredjepartssider. Grensene for Open Food Facts er hentet fra den offisielle dokumentasjonen.
+
+### Status
+
+- [x] `git pull` kjørt, `main` oppdatert
+- [x] Research-dokumentet committet og pushet
+- [ ] Research-dokumentet gjennomgått av gruppen
+- [ ] [sjekk]-punktene testet (OFF-dekning, strekkode på mobil)
+
+---
+
 ## Mal for nye oppføringer
 
 ```markdown
