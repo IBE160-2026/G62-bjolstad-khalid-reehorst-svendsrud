@@ -72,7 +72,7 @@ KI gjorde også et kort nettsøk. Det viktigste funnet: Open Food Facts har en g
 
 ### Hva vi selv vurderte og kontrollerte
 
-- **Research-dokumentet:** [Fyll inn: hva du leste gjennom, godtok, endret eller strøk, f.eks. «Lest gjennom av Osman Khalid, ingen endringer.»]
+- **Research-dokumentet:** Skumlest av Osman Khalid før commit. Grundig gjennomgang gjøres av hele gruppen på møtet torsdag.
 - **Punkter merket [sjekk]** i dokumentet er ikke verifisert av KI, og må testes av gruppen. Det gjelder blant annet hvor godt Open Food Facts dekker norske varer, og strekkodeskanning på ekte mobiler.
 - **Kildene** er delvis tredjepartssider. Grensene for Open Food Facts er hentet fra den offisielle dokumentasjonen.
 
