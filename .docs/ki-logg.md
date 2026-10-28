@@ -116,6 +116,38 @@ KI gjorde også et kort nettsøk. Det viktigste funnet: Open Food Facts har en g
 
 ---
 
+## 2026-10-28 – Research på treningsdelen
+
+**Verktøy:** Claude Code
+**Hvem:** Osman Khalid
+**Bakgrunn:** Gruppen delte researchen før PRD-en mellom mat og trening. Osman tok treningsdelen.
+
+### Hva vi ba KI om
+
+1. Lage et research-dokument for treningsdelen uten å gjenta det som allerede er dekket (lisenser for wger og free-exercise-db).
+
+### Hva KI produserte
+
+| Resultat | Fil |
+|---|---|
+| Research på treningsdelen: andre apper, nybegynneranbefalinger, dekningsanalyse, regler for forslag, datamodell og spørsmål | `.docs/planning-artifacts/research/research-trening-2026-10-28.md` |
+
+Det viktigste funnet: Dekningsanalysen er regnet ut fra øvelseslista og viser at brukere med bare kroppsvekt, bare kettlebell eller bare trekkestang ikke får noen skulder- eller armøvelse. Planke måles i sekunder, og det må datamodellen ta høyde for.
+
+### Hva vi selv vurderte og kontrollerte
+
+- Dekningsanalysen er regnet ut av et skript direkte fra `ovelsesliste.md`, ikke anslått av KI.
+- ACSM-tallet for reps (8–12) kommer fra en sekundærkilde og må sjekkes mot originaldokumentet før det brukes i appen.
+- Dokumentet tas opp med gruppen på møtet torsdag.
+
+### Status
+
+- [x] Research-dokumentet for trening committet og pushet
+- [ ] Gjennomgått av gruppen
+- [ ] Avklart om vi skal legge til øvelser for å tette hullene
+
+---
+
 ## Mal for nye oppføringer
 
 ```markdown
