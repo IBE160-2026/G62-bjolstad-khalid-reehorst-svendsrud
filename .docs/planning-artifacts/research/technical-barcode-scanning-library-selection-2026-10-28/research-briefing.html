@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Barcode-scanning library selection</title>
+<style>
+  :root {
+    --bg: #ffffff; --fg: #1a1d21; --muted: #5b6168; --card: #f6f7f8; --border: #e1e4e8; --accent: #2563eb;
+    --verified-bg: #e6f4ea; --verified-fg: #1e7a34; --verified-border: #a8d8b8;
+    --medium-bg: #fff6e0; --medium-fg: #8a6500; --medium-border: #f0d78c;
+    --low-bg: #fdeee0; --low-fg: #9a4b00; --low-border: #f3c293;
+    --unverified-bg: #fde8e8; --unverified-fg: #b02a2a; --unverified-border: #f3a9a9;
+    --cut-bg: #2a1212; --cut-fg: #ffffff; --cut-border: #b02a2a;
+    --pick-bg: #e8f0fe; --pick-border: #93b4f6;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #14161a; --fg: #e8eaed; --muted: #a2a9b0; --card: #1d2024; --border: #30343a; --accent: #6ea8fe;
+      --verified-bg: #16301f; --verified-fg: #7fd99a; --verified-border: #2a5c3a;
+      --medium-bg: #332a0a; --medium-fg: #e8c766; --medium-border: #5c4c15;
+      --low-bg: #3a2210; --low-fg: #f0a868; --low-border: #6b3f1a;
+      --unverified-bg: #3a1414; --unverified-fg: #ff9b9b; --unverified-border: #7a2424;
+      --cut-bg: #ff3b3b; --cut-fg: #1a0505; --cut-border: #ff6b6b;
+      --pick-bg: #16213a; --pick-border: #3a5a9c;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 0 20px 80px; }
+  header.page { padding: 28px 20px 20px; border-bottom: 1px solid var(--border); margin-bottom: 24px; }
+  header.page .meta { max-width: 860px; margin: 0 auto; }
+  h1 { font-size: 1.5rem; margin: 0 0 10px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; font-size: 0.82rem; color: var(--muted); }
+  .tags span { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 3px 9px; }
+  .decision { margin-top: 12px; font-size: 0.95rem; color: var(--muted); }
+  .decision b { color: var(--fg); }
+  nav.toc { position: sticky; top: 0; background: var(--bg); z-index: 10; border-bottom: 1px solid var(--border); padding: 10px 20px; margin-bottom: 28px; display: flex; gap: 14px; overflow-x: auto; font-size: 0.85rem; white-space: nowrap; }
+  nav.toc a { color: var(--muted); text-decoration: none; }
+  nav.toc a:hover { color: var(--accent); }
+  section { margin-bottom: 36px; }
+  h2 { font-size: 1.2rem; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+  h3 { font-size: 1.02rem; margin-top: 22px; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 18px 20px; margin-bottom: 18px; }
+  .card.summary { border-left: 4px solid var(--accent); }
+  .card.pick { background: var(--pick-bg); border-color: var(--pick-border); border-left: 4px solid var(--accent); }
+  p { margin: 0 0 12px; }
+  ul, ol { margin: 0 0 12px; padding-left: 22px; }
+  li { margin-bottom: 6px; }
+  a { color: var(--accent); }
+  sup.cite a { text-decoration: none; font-size: 0.78em; }
+  .badge { display: inline-block; font-size: 0.72rem; font-weight: 600; letter-spacing: .02em; border-radius: 5px; padding: 2px 7px; border: 1px solid; vertical-align: middle; margin-left: 6px; text-transform: uppercase; }
+  .badge.verified { background: var(--verified-bg); color: var(--verified-fg); border-color: var(--verified-border); }
+  .badge.medium { background: var(--medium-bg); color: var(--medium-fg); border-color: var(--medium-border); }
+  .badge.low { background: var(--low-bg); color: var(--low-fg); border-color: var(--low-border); }
+  .badge.unverified { background: var(--unverified-bg); color: var(--unverified-fg); border-color: var(--unverified-border); font-weight: 800; }
+  .badge.cut { background: var(--cut-bg); color: var(--cut-fg); border-color: var(--cut-border); font-weight: 800; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+  table td, table th { border-bottom: 1px solid var(--border); padding: 7px 8px; text-align: left; vertical-align: top; }
+  table.matrix td, table.matrix th { text-align: center; }
+  table.matrix td:first-child, table.matrix th:first-child { text-align: left; }
+  table.matrix .total { font-weight: 700; }
+  details.appendix { border: 1px solid var(--border); border-radius: 10px; padding: 4px 16px; background: var(--card); }
+  details.appendix summary { cursor: pointer; padding: 10px 0; font-weight: 600; }
+  .recs li { margin-bottom: 10px; }
+  .caveat { font-size: 0.9rem; color: var(--muted); margin-top: 10px; }
+  footer { text-align: center; color: var(--muted); font-size: 0.8rem; margin-top: 60px; }
+</style>
+</head>
+<body>
+
+<header class="page">
+  <div class="meta">
+    <h1>Barcode-scanning library selection for Prompt Force</h1>
+    <div class="tags">
+      <span>Type: technical</span>
+      <span>Shape: select</span>
+      <span>Created: 2026-10-28</span>
+      <span>Candidates: 5 (1 screened wildcard, 1 cut)</span>
+      <span>Validation: normal</span>
+      <span>Status: complete</span>
+    </div>
+    <p class="decision"><b>Decision this research serves:</b> Which barcode-scanning approach Prompt Force should use for mobile-web food logging (camera-based EAN-13 scan with a manual-entry fallback).</p>
+  </div>
+</header>
+
+<nav class="toc">
+  <a href="#summary">Summary</a>
+  <a href="#frame">Requirements</a>
+  <a href="#screen">Candidate screen</a>
+  <a href="#evidence">Evidence</a>
+  <a href="#matrix">Decision matrix</a>
+  <a href="#verdict">Verdict</a>
+  <a href="#open">Open questions</a>
+  <a href="#sources">Sources</a>
+  <a href="#staleness">Staleness</a>
+</nav>
+
+<div class="wrap">
+
+<section id="summary">
+  <h2>Executive summary</h2>
+  <div class="card pick">
+    <p><b>Pick: Quagga2</b> (<code>@ericblade/quagga2</code>), on condition that the team runs the mobile spike it already planned before locking in the architecture.</p>
+  </div>
+  <div class="card summary">
+    <p>No candidate has confirmed-good iOS Safari reliability — that's the one finding that cuts across everything else. html5-qrcode has the strongest <i>confirmed-bad</i> signal: four users report the same unresolved iOS barcode-scanning failure in one GitHub issue, one quantifying it under 10% recognition on iPhones <sup class="cite"><a href="#src-3">[3]</a></sup> <span class="badge medium">medium confidence</span>; the rest are simply unverified in either direction.</p>
+    <p>Given that, the decision comes down to the next-strongest signals: Quagga2 is the only candidate that is both actively maintained (commit today, release one week ago <sup class="cite"><a href="#src-23">[23]</a><a href="#src-24">[24]</a></sup>) <i>and</i> ships a working camera-capture pipeline out of the box <sup class="cite"><a href="#src-22">[22]</a></sup> <span class="badge verified">verified</span>. zxing-wasm matches it on maintenance but is decode-only and would need a hand-built camera UI <sup class="cite"><a href="#src-12">[12]</a></sup>; @zxing/library ships a camera wrapper but its maintenance signal is weaker (self-described "maintenance mode," a 20-month release gap before two releases landed in April 2026) <sup class="cite"><a href="#src-6">[6]</a><a href="#src-8">[8]</a></sup>. The native <code>BarcodeDetector</code> API is <span class="badge cut">cut</span> outright — disabled by default in every iOS Safari version through 27.2 <sup class="cite"><a href="#src-17">[17]</a><a href="#src-18">[18]</a></sup>, failing the "works for a real user on an unmodified phone" gate.</p>
+    <p class="caveat"><b>Biggest caveat:</b> Quagga2's own iOS Safari EAN-13 reliability was not directly evidenced either way this session <sup class="cite"><a href="#src-25">[25]</a></sup> <span class="badge unverified">unverified</span> — the pick rests on the criteria that <i>were</i> evidenced, not on a confirmed iOS win. The team's already-planned mobile spike is the test that actually settles this.</p>
+  </div>
+</section>
+
+<section id="frame">
+  <h2>Requirements frame</h2>
+  <p><i>(From the project — brief.md and the pre-PRD prep doc — not from research, per the select-shape method.)</i></p>
+  <p><b>Hard gates:</b> mobile-browser camera use (iOS Safari + Android Chrome, no native app) &middot; decodes EAN-13 &middot; free/open source, no paid account &middot; locally testable via HTTPS/localhost.</p>
+  <p><b>Weighted preferences:</b> iOS Safari reliability (high) &middot; Android reliability (high) &middot; active maintenance (medium) &middot; framework-agnostic integration ease (medium) &middot; bundle size/scan speed (medium-low).</p>
+</section>
+
+<section id="screen">
+  <h2>Candidate screen</h2>
+  <table>
+    <thead><tr><th>Candidate</th><th>Hard gates</th><th>Verdict</th></tr></thead>
+    <tbody>
+      <tr><td>html5-qrcode</td><td>Pass (nominally)</td><td>Carried — but see confirmed iOS accuracy problem</td></tr>
+      <tr><td>@zxing/library</td><td>Pass</td><td>Carried</td></tr>
+      <tr><td>zxing-wasm</td><td>Partial fail — decode-only</td><td>Carried, with integration-cost penalty</td></tr>
+      <tr><td>native BarcodeDetector</td><td><b>Fails gate 1 on iOS</b></td><td><span class="badge cut">Cut</span> — Android-only viable, not for cross-platform</td></tr>
+      <tr><td>Quagga2 (wildcard)</td><td>Pass</td><td>Carried</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="evidence">
+  <h2>Evidence per candidate</h2>
+
+  <h3>html5-qrcode</h3>
+  <p>Nominally passes every hard gate — a platform-support table marks iOS Safari and Android Chrome as fully supported, EAN-13 is listed, Apache-2.0 license <sup class="cite"><a href="#src-1">[1]</a><a href="#src-2">[2]</a></sup>. In practice, a GitHub issue open since April 2024 collects four independent users reporting the same unresolved iOS barcode-scanning failure on iPhone 13/15 — one quantifies &lt;10% recognition, three others report "same problem" without numbers; none confirms the format tested was EAN-13 specifically <sup class="cite"><a href="#src-3">[3]</a></sup> <span class="badge medium">medium confidence</span>. No substantive commit since April 2023; maintainer calls it "maintenance mode," 448 open vs 334 closed issues <sup class="cite"><a href="#src-2">[2]</a></sup> <span class="badge verified">verified</span>. Easiest integration of all five (fewer than ten lines, built-in UI) <sup class="cite"><a href="#src-1">[1]</a></sup> — doesn't offset the 2.5-year-unaddressed iOS bug.</p>
+
+  <h3>@zxing/library (zxing-js)</h3>
+  <p>Passes every hard gate via the browser's MediaDevices API <sup class="cite"><a href="#src-6">[6]</a></sup>. No recent (2025–2026) real-device EAN-13 test found — a gap, not a confirmed problem <sup class="cite"><a href="#src-6">[6]</a><a href="#src-7">[7]</a><a href="#src-11">[11]</a></sup>. Maintenance is ambiguous: self-described "maintenance mode" yet two releases landed April 2026 after a 20-month gap <sup class="cite"><a href="#src-6">[6]</a><a href="#src-8">[8]</a></sup> <span class="badge medium">semi-active</span>.</p>
+
+  <h3>zxing-wasm</h3>
+  <p>Fails the camera-API gate standalone — decode-only, no getUserMedia wiring; wrapper libraries or a (still "planned") React toolkit are needed for camera UI <sup class="cite"><a href="#src-12">[12]</a></sup> <span class="badge medium">partial fail</span>. Decodes EAN-13, free/OSS <sup class="cite"><a href="#src-12">[12]</a></sup>. The most actively maintained candidate — release 6 days before this research, commit the same day <sup class="cite"><a href="#src-13">[13]</a></sup> <span class="badge verified">verified</span>. Its "WASM is faster than pure JS" pitch could not be corroborated by independent non-vendor sources <sup class="cite"><a href="#src-14">[14]</a></sup> <span class="badge unverified">unverified</span>.</p>
+
+  <h3>Native BarcodeDetector API — <span class="badge cut">cut</span></h3>
+  <p>Meets every gate on Android <sup class="cite"><a href="#src-20">[20]</a><a href="#src-21">[21]</a></sup>. On iOS Safari: "disabled by default" in every version 17.0–27.2 on caniuse.com, corroborated by WebKit's bug tracker (implementation "unusable," plus an open, unresolved regression even with the flag manually enabled) <sup class="cite"><a href="#src-17">[17]</a><a href="#src-18">[18]</a><a href="#src-19">[19]</a></sup> <span class="badge verified">verified — 2 independent sources</span>. An ordinary iPhone user cannot use this API. The leading polyfill is itself built on zxing-wasm <sup class="cite"><a href="#src-12">[12]</a></sup> — "going native" doesn't avoid a WASM dependency once iOS is in scope.</p>
+
+  <h3>Quagga2 (wildcard, screened in round 2)</h3>
+  <p>Surfaced independently by two separate research assistants. Screening confirmed — not just assumed — every hard gate, including a built-in getUserMedia camera pipeline and EAN-13 reader <sup class="cite"><a href="#src-22">[22]</a></sup> <span class="badge verified">verified</span>. Most recently active candidate alongside zxing-wasm: release 6 days before this research, commit the same day, ~monthly cadence over the past year <sup class="cite"><a href="#src-23">[23]</a><a href="#src-24">[24]</a></sup> <span class="badge verified">verified</span>. No disqualifying red flags. The one unresolved point: no direct evidence, positive or negative, for Quagga2's own EAN-13 reliability on a real iPhone — the only adjacent signal concerns the original pre-fork QuaggaJS, not Quagga2 itself <sup class="cite"><a href="#src-25">[25]</a></sup> <span class="badge unverified">unverified — biggest open question</span>.</p>
+</section>
+
+<section id="matrix">
+  <h2>Decision matrix</h2>
+  <p>Scored 1 (weak) – 3 (strong) per criterion, weighted per the requirements frame (iOS &times;3, Android &times;2, maintenance &times;2, integration &times;1, bundle/speed &times;1 — max 27). BarcodeDetector excluded (cut at the hard-gate screen).</p>
+  <table class="matrix">
+    <thead><tr><th>Criterion (weight)</th><th>html5-qrcode</th><th>@zxing/library</th><th>zxing-wasm</th><th>Quagga2</th></tr></thead>
+    <tbody>
+      <tr><td>iOS Safari (&times;3)</td><td>1 — confirmed poor</td><td>2 — unresolved</td><td>2 — unresolved</td><td>2 — unresolved</td></tr>
+      <tr><td>Android (&times;2)</td><td>2</td><td>2</td><td>2</td><td>2</td></tr>
+      <tr><td>Maintenance (&times;2)</td><td>1 — frozen 2023</td><td>2 — semi-active</td><td>3 — most active</td><td>3 — confirmed active</td></tr>
+      <tr><td>Integration (&times;1)</td><td>3 — built-in UI</td><td>2 — wrapper, no UI</td><td>1 — decode-only</td><td>3 — built-in UI</td></tr>
+      <tr><td>Bundle/speed (&times;1)</td><td>2</td><td>2</td><td>1</td><td>2</td></tr>
+      <tr class="total"><td>Weighted total / 27</td><td>14</td><td>18</td><td>18</td><td><b>21</b></td></tr>
+    </tbody>
+  </table>
+  <p class="caveat">Re-weight freely — if "ships a camera UI" matters less to the team (e.g. a UI is being built anyway), zxing-wasm closes most of the gap to Quagga2.</p>
+</section>
+
+<section id="verdict">
+  <h2>Verdict</h2>
+  <p><b>Pick: Quagga2.</b> Runner-up: zxing-wasm and @zxing/library, tied — zxing-wasm if comfortable building a camera UI and wanting the most active decode core; @zxing/library for a more complete, if staler, package. <b>html5-qrcode is not recommended</b> given its confirmed, multi-user, 2.5-year-unaddressed iOS problem. Native BarcodeDetector is cut for this cross-platform requirement.</p>
+  <p><b>Strongest argument against the pick:</b> Quagga2's own iOS Safari EAN-13 reliability has no direct evidence either way — it could still fail completely on real hardware. Not a reason to pick differently (none of the alternatives has <i>better</i> iOS evidence), but a reason to treat the pick as provisional.</p>
+  <p><b>Cheapest reversibility hedge:</b> wrap scanning behind a small adapter (a single <code>scanBarcode()</code> interface) so swapping libraries later — if the spike shows Quagga2 failing — costs an implementation change, not a UI rewrite.</p>
+</section>
+
+<section id="open">
+  <h2>Open questions</h2>
+  <ul>
+    <li><b>Quagga2's real-device iOS Safari EAN-13 reliability</b> — the decision's single biggest unknown. Next step: the team's planned mobile spike, Quagga2 first.</li>
+    <li><b>zxing-wasm's "WASM is faster" claim</b> — not corroborated independently. Doesn't affect the pick, but matters if re-weighing toward it.</li>
+    <li><b>@zxing/library's maintenance trajectory</b> — one-off releases or a resumption? Watch the repo for a few more months.</li>
+    <li><b>Quagga2 and zxing-wasm bundle sizes</b> — blocked by rate limits this session. Retry, or measure via local build output.</li>
+    <li><b>Android reliability across all four finalists</b> — thin evidence everywhere. Worth a quick real-device check alongside the iOS spike.</li>
+  </ul>
+</section>
+
+<section id="sources">
+  <h2>Source appendix</h2>
+  <details class="appendix" open>
+    <summary>24 sources (click to collapse)</summary>
+    <table class="sources"><tbody><tr id="src-1"><td>[1]</td><td><a href="https://github.com/mebjas/html5-qrcode" target="_blank" rel="noopener">html5-qrcode — README</a></td><td>mebjas (GitHub)</td><td>undated</td><td>2026-10-28</td><td>high</td></tr><tr id="src-2"><td>[2]</td><td><a href="https://api.github.com/repos/mebjas/html5-qrcode" target="_blank" rel="noopener">html5-qrcode — repo API (releases, commits, issues)</a></td><td>GitHub</td><td>live data (last release 2023-04-15)</td><td>2026-10-28</td><td>high</td></tr><tr id="src-3"><td>[3]</td><td><a href="https://github.com/mebjas/html5-qrcode/issues/915" target="_blank" rel="noopener">html5-qrcode — issue #915</a></td><td>GitHub issue thread</td><td>2024-04-18 to 2025-04-16 (open)</td><td>2026-10-28</td><td>medium</td></tr><tr id="src-4"><td>[4]</td><td><a href="https://github.com/mebjas/html5-qrcode/blob/master/experimental.md" target="_blank" rel="noopener">html5-qrcode — experimental.md (QR benchmark)</a></td><td>mebjas (GitHub)</td><td>undated</td><td>2026-10-28</td><td>medium</td></tr><tr id="src-5"><td>[5]</td><td><a href="https://bundlephobia.com/package/html5-qrcode@2.3.8" target="_blank" rel="noopener">Bundlephobia — html5-qrcode@2.3.8</a></td><td>Bundlephobia</td><td>undated</td><td>2026-10-28</td><td>medium</td></tr><tr id="src-6"><td>[6]</td><td><a href="https://github.com/zxing-js/library" target="_blank" rel="noopener">@zxing/library — README</a></td><td>zxing-js (GitHub)</td><td>undated</td><td>2026-10-28</td><td>high</td></tr><tr id="src-7"><td>[7]</td><td><a href="https://github.com/zxing-js/library/issues/286" target="_blank" rel="noopener">@zxing/library — issue #286</a></td><td>GitHub issue thread</td><td>undated (old issue)</td><td>2026-10-28</td><td>medium</td></tr><tr id="src-8"><td>[8]</td><td><a href="https://security.snyk.io/package/npm/@zxing/library" target="_blank" rel="noopener">@zxing/library — Snyk package page</a></td><td>Snyk</td><td>snapshot</td><td>2026-10-28</td><td>medium</td></tr><tr id="src-10"><td>[10]</td><td><a href="https://github.com/zxing-js/browser" target="_blank" rel="noopener">@zxing/browser — README</a></td><td>zxing-js (GitHub)</td><td>undated</td><td>2026-10-28</td><td>medium</td></tr><tr id="src-11"><td>[11]</td><td><a href="https://eringen.substack.com/" target="_blank" rel="noopener">"Barcode scanning on iOS: the missing..."</a></td><td>eringen.substack.com</td><td>2026-02-15</td><td>2026-10-28</td><td>medium</td></tr><tr id="src-12"><td>[12]</td><td><a href="https://cdn.jsdelivr.net/npm/zxing-wasm@3.1.0/README.md" target="_blank" rel="noopener">zxing-wasm — README (v3.1.0)</a></td><td>Sec-ant</td><td>undated</td><td>2026-10-28</td><td>high</td></tr><tr id="src-13"><td>[13]</td><td><a href="https://api.github.com/repos/Sec-ant/zxing-wasm" target="_blank" rel="noopener">zxing-wasm — repo API (releases, issues)</a></td><td>GitHub</td><td>live (release 2026-10-19, pushed 2026-10-28)</td><td>2026-10-28</td><td>high</td></tr><tr id="src-14"><td>[14]</td><td><a href="https://www.dynamsoft.com/" target="_blank" rel="noopener">Dynamsoft benchmark blog</a></td><td>Dynamsoft (vendor)</td><td>undated</td><td>2026-10-28</td><td>low-medium</td></tr><tr id="src-15"><td>[15]</td><td><a href="https://jsr.io/@marianmeres/scanner" target="_blank" rel="noopener">jsr.io — @marianmeres/scanner docs</a></td><td>jsr.io</td><td>undated</td><td>2026-10-28</td><td>medium</td></tr><tr id="src-16"><td>[16]</td><td><a href="https://pub.dev/packages/mobile_scanner" target="_blank" rel="noopener">mobile_scanner — pub.dev docs</a></td><td>juliansteenbakker (pub.dev)</td><td>undated</td><td>2026-10-28</td><td>medium</td></tr><tr id="src-17"><td>[17]</td><td><a href="https://caniuse.com/mdn-api_barcodedetector" target="_blank" rel="noopener">caniuse.com — BarcodeDetector</a></td><td>Can I Use</td><td>live/undated</td><td>2026-10-28</td><td>high</td></tr><tr id="src-18"><td>[18]</td><td><a href="https://bugs.webkit.org/show_bug.cgi?id=198174" target="_blank" rel="noopener">WebKit Bugzilla — bug 198174 / 255803</a></td><td>WebKit Bugzilla</td><td>comment 2023-08-10, closed 2023-10-27</td><td>2026-10-28</td><td>high</td></tr><tr id="src-19"><td>[19]</td><td><a href="https://developer.apple.com/forums/" target="_blank" rel="noopener">Apple Developer Forums — thread 767761</a></td><td>Apple</td><td>Nov 2024</td><td>2026-10-28</td><td>medium</td></tr><tr id="src-20"><td>[20]</td><td><a href="https://developer.chrome.com/docs/capabilities/shape-detection" target="_blank" rel="noopener">Chrome for Developers — Shape Detection API</a></td><td>Google</td><td>undated</td><td>2026-10-28</td><td>high</td></tr><tr id="src-21"><td>[21]</td><td><a href="https://developer.mozilla.org/en-US/docs/Web/API/BarcodeDetector" target="_blank" rel="noopener">MDN — BarcodeDetector</a></td><td>MDN</td><td>last modified 2026-06-11</td><td>2026-10-28</td><td>high</td></tr><tr id="src-22"><td>[22]</td><td><a href="https://github.com/ericblade/quagga2" target="_blank" rel="noopener">Quagga2 — README</a></td><td>ericblade (GitHub)</td><td>undated</td><td>2026-10-28</td><td>high</td></tr><tr id="src-23"><td>[23]</td><td><a href="https://registry.npmjs.org/@ericblade/quagga2" target="_blank" rel="noopener">Quagga2 — npm registry API</a></td><td>npm</td><td>release 2026-10-21</td><td>2026-10-28</td><td>high</td></tr><tr id="src-24"><td>[24]</td><td><a href="https://api.github.com/repos/ericblade/quagga2" target="_blank" rel="noopener">Quagga2 — repo API</a></td><td>GitHub</td><td>live (pushed 2026-10-28)</td><td>2026-10-28</td><td>high</td></tr><tr id="src-25"><td>[25]</td><td><a href="https://lightrun.com/" target="_blank" rel="noopener">Lightrun — mirrored QuaggaJS issue thread</a></td><td>Lightrun</td><td>undated</td><td>2026-10-28</td><td>low</td></tr></tbody></table>
+  </details>
+</section>
+
+<section id="staleness">
+  <h2>Staleness map</h2>
+  <p>Computed via <code>recon_kit.py staleness</code>: version/compatibility claims re-check within 1 month, ecosystem/performance claims within 6 months. All 12 tracked claims are fresh as of this writing.</p>
+  <table class="staleness">
+    <thead><tr><th>Claim class</th><th>Re-check by</th></tr></thead>
+    <tbody>
+      <tr><td>Maintenance &amp; compatibility facts (all 4 finalists + BarcodeDetector)</td><td><b>2026-11-01</b> (earliest)</td></tr>
+      <tr><td>iOS reliability narratives (all 4 finalists)</td><td>2027-04-01</td></tr>
+    </tbody>
+  </table>
+  <p class="caveat">If the mobile spike happens within 1–2 weeks as planned, no re-check needed first. If this report sits unused past 2026-11-01, re-run a quick refresh on sources [2][6][8][13][17][18][20][23][24] before trusting the numbers unchanged.</p>
+</section>
+
+</div>
+
+<footer>Generated by BMad Deep Recon &middot; native run, select shape &middot; 2026-10-28</footer>
+
+</body>
+</html>

@@ -36,13 +36,13 @@ Forberedelse til PRD-arbeidet torsdag. Dokumentet samler det vi bør undersøke,
 - **Kassalapp** (kassal.app) er et norsk API, hovedsakelig for priser. Det krever API-nøkkel. **[sjekk]** om det har næringsinnhold. Det er antakelig ikke aktuelt for v1, fordi kravet er «kjørbar uten våre nøkler».
 
 ### 1.4 Øvelsesdatabasen
-- Vi har allerede `ovelsesliste.xlsx` med 30 øvelser (se KI-loggen). Denne må gjennomgås av gruppen: utstyrskrav, nivå og videolenker.
+- Den opprinnelige `ovelsesliste.xlsx` fantes ikke i repoet (se KI-loggen 2026-10-28). Ny liste med 30 øvelser er laget på nytt: `.docs/planning-artifacts/ovelsesliste.md`, med maskinelt verifiserte videolenker. Denne må fortsatt gjennomgås av gruppen: utstyrskrav, nivå og at videoene faktisk er gode å lære av.
 - **Utstyrsliste (forslag):** kroppsvekt (ingen), manualer, stang og skiver, benk, kettlebell, strikk, trekkestang, kabelmaskin, beinpress/maskiner. Bestem en **fast liste**, fordi den blir en tabell i datamodellen.
 - Åpne alternativer å se på: **wger** (åpen trenings-API/database med utstyr og muskelgrupper) og **free-exercise-db** (JSON-datasett). **[sjekk]** lisens. Disse kan brukes som kontroll av utstyrstaggene våre, men vi bør beholde vår egen faste liste med 30–50 øvelser.
 - **Videoer:** YouTube-embed (`youtube-nocookie.com` gir mindre sporing). Hva skjer hvis en video blir fjernet? Øvelsen skal fortsatt vise tekstbeskrivelse.
 
 ### 1.5 Kaloriberegning
-- Mifflin-St Jeor med de fire testprofilene i briefen. **KI-loggen sier at regneeksemplene ikke er kontrollert ennå.** Dette bør gjøres før PRD-en, fordi de blir akseptansekriterier.
+- Mifflin-St Jeor med de fire testprofilene i briefen. **Kontrollert 2026-10-28 (se KI-loggen) — alle fire profiler stemmer.** Én åpen avklaring står igjen: hvordan kaloriemålet skal avrundes (nærmeste heltall, ned eller opp), siden det kan gi ±1 kcal avvik i akseptansekriteriet for profil 2 og 4.
 - Bestem aktivitetsfaktorene (1,2 / 1,375 / 1,55 / 1,725 / 1,9?) og hvordan de forklares for en nybegynner. «Moderat aktiv» er vanskelig å tolke selv.
 - Skal kaloriemålet ta hensyn til **mål** (ned i vekt / holde vekt / opp i vekt, f.eks. −500 / 0 / +300 kcal)? Det står ikke i briefen.
 - Hvordan håndterer vi kjønn i formelen hvis brukeren ikke vil oppgi det?
@@ -126,13 +126,13 @@ Persona-skisse: *Sara, 23, har nettopp kjøpt treningskort, og har to manualer h
 
 ## 6. Områder der vi trenger mer informasjon før beslutninger
 
-1. **Strekkodebibliotek.** Vi trenger spike-resultat på iPhone og Android før arkitekturen.
+1. **Strekkodebibliotek.** Vi trenger spike-resultat på iPhone og Android før arkitekturen. *(Deep Recon-utredning gjort 2026-10-28: anbefaling Quagga2, se `.docs/planning-artifacts/research/technical-barcode-scanning-library-selection-2026-10-28/`. Mobilspiken gjenstår fortsatt — den er selve testen av anbefalingen.)*
 2. **OFF-dekning av norske varer.** Testresultatet avgjør hvor mye innsats manuell registrering og en egen matvaretabell krever.
 3. **Teknologistakk.** Vi trenger en oversikt over gruppens kompetanse.
-4. **Innlogging.** Gjør vi det selv eller med et bibliotek? Det må avklares i arkitekturfasen.
-5. **Personvernkrav.** Hva krever emnet eller sensor? Sjekk sensorveiledningen (`.docs/course/`).
-6. **Regneeksemplene.** De er ikke kontrollert ennå (se KI-loggen).
-7. **Øvelseslista og videolenkene.** De er ikke gjennomgått ennå (se KI-loggen).
+4. **Innlogging.** Gjør vi det selv eller med et bibliotek? Det må avklares i arkitekturfasen. *(Deep Recon-utredning gjort 2026-10-28: anbefaling rull-selv (OWASP-sjekkliste) for v1, se `.docs/planning-artifacts/research/technical-login-authentication-approach-selection-2026-10-28/`. Selve bibliotekvalget er fortsatt utsatt til arkitekturfasen.)*
+5. **Personvernkrav.** Hva krever emnet eller sensor? Sjekk sensorveiledningen (`.docs/course/`). *(Sjekket direkte 2026-10-28: sensorveiledning del 1 nevner ikke GDPR/personvern som vurderingskriterium. Deep Recon-utredning gjort samme dag, se `.docs/planning-artifacts/research/domain-gdpr-helseopplysninger-studentprosjekt-2026-10-28/`. Ett åpent punkt gjenstår: om emnets Sikt-avtale dekker kursoppgaver — må avklares med faglærer/institusjon, ikke noe videre nettsøk kan svare på det.)*
+6. **Regneeksemplene.** Kontrollert 2026-10-28, se KI-loggen — alle fire profiler stemmer.
+7. **Øvelseslista og videolenkene.** Den gamle `ovelsesliste.xlsx` fantes ikke i repoet. Ny liste laget 2026-10-28 med 30 øvelser og maskinelt verifiserte videolenker — se `.docs/planning-artifacts/ovelsesliste.md`. Gjenstår: gruppen må fortsatt se gjennom videoene og godkjenne utstyr/nivå (se KI-loggen).
 
 ---
 

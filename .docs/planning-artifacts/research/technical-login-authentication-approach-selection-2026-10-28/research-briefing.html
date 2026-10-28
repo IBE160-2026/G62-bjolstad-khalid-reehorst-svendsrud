@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Login approach for Prompt Force</title>
+<style>
+  :root {
+    --bg: #ffffff; --fg: #1a1d21; --muted: #5b6168; --card: #f6f7f8; --border: #e1e4e8; --accent: #2563eb;
+    --verified-bg: #e6f4ea; --verified-fg: #1e7a34; --verified-border: #a8d8b8;
+    --medium-bg: #fff6e0; --medium-fg: #8a6500; --medium-border: #f0d78c;
+    --low-bg: #fdeee0; --low-fg: #9a4b00; --low-border: #f3c293;
+    --unverified-bg: #fde8e8; --unverified-fg: #b02a2a; --unverified-border: #f3a9a9;
+    --cut-bg: #2a1212; --cut-fg: #ffffff; --cut-border: #b02a2a;
+    --pick-bg: #e8f0fe; --pick-border: #93b4f6;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #14161a; --fg: #e8eaed; --muted: #a2a9b0; --card: #1d2024; --border: #30343a; --accent: #6ea8fe;
+      --verified-bg: #16301f; --verified-fg: #7fd99a; --verified-border: #2a5c3a;
+      --medium-bg: #332a0a; --medium-fg: #e8c766; --medium-border: #5c4c15;
+      --low-bg: #3a2210; --low-fg: #f0a868; --low-border: #6b3f1a;
+      --unverified-bg: #3a1414; --unverified-fg: #ff9b9b; --unverified-border: #7a2424;
+      --cut-bg: #ff3b3b; --cut-fg: #1a0505; --cut-border: #ff6b6b;
+      --pick-bg: #16213a; --pick-border: #3a5a9c;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 0 20px 80px; }
+  header.page { padding: 28px 20px 20px; border-bottom: 1px solid var(--border); margin-bottom: 24px; }
+  header.page .meta { max-width: 860px; margin: 0 auto; }
+  h1 { font-size: 1.5rem; margin: 0 0 10px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; font-size: 0.82rem; color: var(--muted); }
+  .tags span { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 3px 9px; }
+  .decision { margin-top: 12px; font-size: 0.95rem; color: var(--muted); }
+  .decision b { color: var(--fg); }
+  nav.toc { position: sticky; top: 0; background: var(--bg); z-index: 10; border-bottom: 1px solid var(--border); padding: 10px 20px; margin-bottom: 28px; display: flex; gap: 14px; overflow-x: auto; font-size: 0.85rem; white-space: nowrap; }
+  nav.toc a { color: var(--muted); text-decoration: none; }
+  nav.toc a:hover { color: var(--accent); }
+  section { margin-bottom: 36px; }
+  h2 { font-size: 1.2rem; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+  h3 { font-size: 1.02rem; margin-top: 22px; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 18px 20px; margin-bottom: 18px; }
+  .card.pick { background: var(--pick-bg); border-color: var(--pick-border); border-left: 4px solid var(--accent); }
+  .card.summary { border-left: 4px solid var(--accent); }
+  p { margin: 0 0 12px; }
+  ul, ol { margin: 0 0 12px; padding-left: 22px; }
+  li { margin-bottom: 6px; }
+  a { color: var(--accent); }
+  sup.cite a { text-decoration: none; font-size: 0.78em; }
+  .badge { display: inline-block; font-size: 0.72rem; font-weight: 600; letter-spacing: .02em; border-radius: 5px; padding: 2px 7px; border: 1px solid; vertical-align: middle; margin-left: 6px; text-transform: uppercase; }
+  .badge.verified { background: var(--verified-bg); color: var(--verified-fg); border-color: var(--verified-border); }
+  .badge.medium { background: var(--medium-bg); color: var(--medium-fg); border-color: var(--medium-border); }
+  .badge.low { background: var(--low-bg); color: var(--low-fg); border-color: var(--low-border); }
+  .badge.unverified { background: var(--unverified-bg); color: var(--unverified-fg); border-color: var(--unverified-border); font-weight: 800; }
+  .badge.cut { background: var(--cut-bg); color: var(--cut-fg); border-color: var(--cut-border); font-weight: 800; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+  table td, table th { border-bottom: 1px solid var(--border); padding: 7px 8px; text-align: left; vertical-align: top; }
+  table.matrix td, table.matrix th { text-align: center; }
+  table.matrix td:first-child, table.matrix th:first-child { text-align: left; }
+  table.matrix .total { font-weight: 700; }
+  details.appendix { border: 1px solid var(--border); border-radius: 10px; padding: 4px 16px; background: var(--card); }
+  details.appendix summary { cursor: pointer; padding: 10px 0; font-weight: 600; }
+  .caveat { font-size: 0.9rem; color: var(--muted); margin-top: 10px; }
+  footer { text-align: center; color: var(--muted); font-size: 0.8rem; margin-top: 60px; }
+</style>
+</head>
+<body>
+
+<header class="page">
+  <div class="meta">
+    <h1>Login/authentication approach for Prompt Force</h1>
+    <div class="tags">
+      <span>Type: technical</span>
+      <span>Shape: select</span>
+      <span>Created: 2026-10-28</span>
+      <span>Candidates: 3 categories (1 split internally)</span>
+      <span>Validation: normal</span>
+      <span>Status: complete</span>
+    </div>
+    <p class="decision"><b>Decision this research serves:</b> Which login/authentication approach category Prompt Force should use for v1 &mdash; the tech stack is not yet chosen, so this evaluates categories, not specific libraries.</p>
+  </div>
+</header>
+
+<nav class="toc">
+  <a href="#summary">Summary</a>
+  <a href="#screen">Candidate screen</a>
+  <a href="#evidence">Evidence</a>
+  <a href="#matrix">Decision matrix</a>
+  <a href="#verdict">Verdict</a>
+  <a href="#open">Open questions</a>
+  <a href="#sources">Sources</a>
+  <a href="#staleness">Staleness</a>
+</nav>
+
+<div class="wrap">
+
+<section id="summary">
+  <h2>Executive summary</h2>
+  <div class="card pick">
+    <p><b>Pick: roll-your-own email+password</b>, following OWASP's own checklist, as the v1 default &mdash; carried into the PRD as explicit, checkable acceptance criteria, not left implicit.</p>
+  </div>
+  <div class="card summary">
+    <p>OWASP's cheat sheets make the bar well-documented and bounded: bcrypt/argon2id hashing, server-side sessions, per-account rate limiting, generic error messages <sup class="cite"><a href="#src-1">[1]</a><a href="#src-2">[2]</a><a href="#src-3">[3]</a></sup> <span class="badge verified">verified</span> &mdash; a day-ish of focused work, not a research problem. The real risk is skipping the less-visible steps under deadline pressure, not hashing itself.</p>
+    <p><b>The auth-library category isn't a clear win for this scope</b> &mdash; the strongest evidence against it comes from inside the category: Lucia Auth, a comparable thin TS library, is reported (community sources, not independently dated) to have been deprecated by its maintainer around Oct 2024 in favor of teaching roll-your-own; what's directly confirmed is narrower &mdash; the library itself now says it no longer provides CSRF protection <sup class="cite"><a href="#src-5">[5]</a></sup> <span class="badge medium">medium</span>. Every library checked (Flask-Login, Devise, Auth.js) leaves CSRF to the developer and locks the team to one framework <sup class="cite"><a href="#src-6">[6]</a></sup>.</p>
+    <p><b>Hosted auth-as-a-service is a genuine runner-up &mdash; but only half the category clears the hard gate.</b> Supabase and Firebase both have confirmed local/offline modes <sup class="cite"><a href="#src-7">[7]</a><a href="#src-8">[8]</a></sup> <span class="badge verified">verified</span>; Clerk and Auth0 do not and fail the no-paid-account/local-run constraint outright <sup class="cite"><a href="#src-9">[9]</a></sup> <span class="badge cut">cut</span>.</p>
+  </div>
+</section>
+
+<section id="screen">
+  <h2>Candidate screen</h2>
+  <table>
+    <thead><tr><th>Candidate</th><th>Hard gates</th><th>Verdict</th></tr></thead>
+    <tbody>
+      <tr><td>Roll-your-own email+password</td><td>Pass</td><td>Carried</td></tr>
+      <tr><td>Self-hosted auth library/middleware</td><td>Pass (category)</td><td>Carried &mdash; locked to an unchosen framework</td></tr>
+      <tr><td>Hosted service &mdash; Supabase/Firebase</td><td>Pass, via local/offline mode</td><td>Carried</td></tr>
+      <tr><td>Hosted service &mdash; Clerk/Auth0</td><td><b>Fails</b> &mdash; no genuine local/offline mode</td><td><span class="badge cut">Cut</span> within-category</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="evidence">
+  <h2>Evidence per candidate</h2>
+
+  <h3>Roll-your-own email+password</h3>
+  <p>OWASP: Argon2id or bcrypt (&ge;10) for hashing, library-handled salting <sup class="cite"><a href="#src-1">[1]</a></sup>. Server-side sessions with CSPRNG IDs (&ge;128 bits) in HttpOnly/Secure/SameSite cookies, not JWT-in-localStorage <sup class="cite"><a href="#src-2">[2]</a></sup>. The documented common failure modes are missing per-account rate limiting and account enumeration &mdash; not hashing itself <sup class="cite"><a href="#src-3">[3]</a></sup> <span class="badge verified">verified</span>. No authoritative complexity benchmark exists; illustrative tutorials suggest ~100&ndash;300 lines <sup class="cite"><a href="#src-4">[4]</a></sup> <span class="badge low">low confidence, illustrative</span>.</p>
+
+  <h3>Self-hosted auth library/middleware</h3>
+  <p>Flask-Login, Devise, and Auth.js all explicitly leave CSRF protection to the developer, and each locks the team to one backend framework <sup class="cite"><a href="#src-6">[6]</a></sup>. Devise's README documents no sanctioned test-user-seeding path, with a Confirmable-module trap for directly-created accounts. Auth.js's own docs now note the project "is now part of Better Auth," signaling mid-transition. The strongest signal: Lucia Auth is reported to have been deprecated by its maintainer (community-sourced, unconfirmed date) in favor of teaching roll-your-own for exactly this scope; directly confirmed is only that Lucia's v3 guide says it no longer provides strict CSRF protection <sup class="cite"><a href="#src-5">[5]</a></sup> <span class="badge medium">medium</span>.</p>
+
+  <h3>Hosted auth-as-a-service</h3>
+  <p><b>Supabase</b> clears the local/offline gate: <code>supabase start</code> runs the full stack incl. Auth via Docker; Supabase's own docs market "offline work" as a feature <sup class="cite"><a href="#src-7">[7]</a></sup> <span class="badge verified">verified</span>. <b>Firebase</b> also clears it via Local Emulator Suite "demo" projects requiring no real Firebase project &mdash; though a misconfigured client silently falls back to live production <sup class="cite"><a href="#src-8">[8]</a></sup> <span class="badge verified">verified</span>. <b>Clerk</b> and <b>Auth0</b> do not: Clerk's "accountless" flow still calls Clerk's servers; Auth0 has no official local mode <sup class="cite"><a href="#src-9">[9]</a></sup> <span class="badge cut">cut</span>. For the two viable vendors: Docker is a heavier install <sup class="cite"><a href="#src-10">[10]</a></sup>, real-credential seeding needs a pgcrypto pattern with a documented friction issue <sup class="cite"><a href="#src-11">[11]</a></sup>, and Supabase's free tier auto-pauses after ~a week of inactivity <sup class="cite"><a href="#src-12">[12]</a></sup>.</p>
+</section>
+
+<section id="matrix">
+  <h2>Decision matrix</h2>
+  <p>Scored 1 (weak) &ndash; 3 (strong), weighted per the requirements frame (security risk &times;3, setup/learning-curve &times;3, framework flexibility &times;2, maintenance burden &times;1 &mdash; max 25). Clerk/Auth0 excluded (cut at the hard-gate screen); "Hosted" reflects the Supabase/Firebase variant only.</p>
+  <table class="matrix">
+    <thead><tr><th>Criterion (weight)</th><th>Roll-your-own</th><th>Auth library</th><th>Hosted (Supabase/Firebase)</th></tr></thead>
+    <tbody>
+      <tr><td>Security risk (&times;3)</td><td>2</td><td>2</td><td>3</td></tr>
+      <tr><td>Setup/learning-curve (&times;3)</td><td>3</td><td>1</td><td>2</td></tr>
+      <tr><td>Framework flexibility (&times;2)</td><td>3</td><td>1</td><td>2</td></tr>
+      <tr><td>Maintenance burden (&times;1)</td><td>2</td><td>1</td><td>3</td></tr>
+      <tr class="total"><td>Weighted total / 25</td><td><b>23</b></td><td>12</td><td>22</td></tr>
+    </tbody>
+  </table>
+  <p class="caveat">Roll-your-own and hosted (Supabase/Firebase) are close; the auth-library category trails, driven mainly by framework coupling and the Lucia precedent. Re-weight freely.</p>
+</section>
+
+<section id="verdict">
+  <h2>Verdict</h2>
+  <p><b>Pick: roll-your-own email+password</b>, built to OWASP's cheat sheets. <b>Runner-up: hosted auth via Supabase/Firebase local mode</b> &mdash; genuinely close, worth revisiting once the stack is chosen. <b>Not recommended right now: a generic self-hosted auth library</b> &mdash; coupled to an unchosen framework, with the one directly comparable library (Lucia) reported deprecated for this exact scope.</p>
+  <p><b>Strongest argument against the pick:</b> under deadline pressure, a team might skip the less-visible steps (rate limiting, error-message hygiene, cookie flags) precisely because no library enforces them. Mitigation: carry the OWASP checklist into the PRD as explicit acceptance criteria.</p>
+  <p><b>Cheapest reversibility hedge:</b> isolate auth behind a small service interface (<code>authService.login()/register()/logout()</code>) so switching to Supabase/Firebase local auth later costs an implementation change, not a rewrite.</p>
+</section>
+
+<section id="open">
+  <h2>Open questions</h2>
+  <ul>
+    <li><b>Which specific library (if any) once the stack is chosen?</b> Deliberately deferred to the architecture phase.</li>
+    <li><b>Does Django's built-in auth change the library category's score?</b> Not separately evaluated as its own candidate this session.</li>
+    <li><b>Is a Google account strictly required for Firebase emulator-only demo projects?</b> Not confirmed from official docs.</li>
+    <li><b>Supabase's exact data-deletion timeline</b> past the 1-year paused-project restore window &mdash; not stated on the page retrieved.</li>
+    <li><b>Is there a sanctioned pattern for seeding real (not bare-row) test users</b> anywhere? A gap across every candidate checked.</li>
+  </ul>
+</section>
+
+<section id="sources">
+  <h2>Source appendix</h2>
+  <details class="appendix" open>
+    <summary>12 sources (click to collapse)</summary>
+    <table class="sources">
+      <tbody>
+        <tr id="src-1"><td>[1]</td><td><a href="https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html" target="_blank" rel="noopener">OWASP Password Storage Cheat Sheet</a></td><td>OWASP Foundation</td><td>undated, live</td><td>2026-10-28</td><td>high</td></tr>
+        <tr id="src-2"><td>[2]</td><td><a href="https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html" target="_blank" rel="noopener">OWASP Session Management Cheat Sheet</a></td><td>OWASP</td><td>undated, live</td><td>2026-10-28</td><td>high</td></tr>
+        <tr id="src-3"><td>[3]</td><td><a href="https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html" target="_blank" rel="noopener">OWASP Authentication Cheat Sheet</a> + OWASP Top 10 A07:2021</td><td>OWASP</td><td>2021 edition, current</td><td>2026-10-28</td><td>high</td></tr>
+        <tr id="src-4"><td>[4]</td><td>node-auth-skeleton + freeCodeCamp/Honeybadger tutorials (no single canonical URL)</td><td>GitHub community; freeCodeCamp; Honeybadger</td><td>undated</td><td>2026-10-28</td><td>low</td></tr>
+        <tr id="src-5"><td>[5]</td><td><a href="https://v3.lucia-auth.com/upgrade-v3" target="_blank" rel="noopener">Lucia Auth v3 migration guide</a> + community deprecation narrative (unconfirmed date)</td><td>v3.lucia-auth.com + community</td><td>Oct 2024 (community-reported)</td><td>2026-10-28</td><td>medium</td></tr>
+        <tr id="src-6"><td>[6]</td><td><a href="https://flask-login.readthedocs.io/" target="_blank" rel="noopener">Flask-Login docs</a>; <a href="https://github.com/heartcombo/devise" target="_blank" rel="noopener">Devise README</a>; <a href="https://authjs.dev/getting-started/providers/credentials" target="_blank" rel="noopener">Auth.js docs</a></td><td>respective maintainers</td><td>undated</td><td>2026-10-28</td><td>high</td></tr>
+        <tr id="src-7"><td>[7]</td><td><a href="https://supabase.com/docs/guides/local-development" target="_blank" rel="noopener">Supabase local development docs</a></td><td>Supabase</td><td>undated, live</td><td>2026-10-28</td><td>high</td></tr>
+        <tr id="src-8"><td>[8]</td><td><a href="https://firebase.google.com/docs/emulator-suite/connect_auth" target="_blank" rel="noopener">Firebase Local Emulator Suite docs</a></td><td>Google/Firebase</td><td>undated, live</td><td>2026-10-28</td><td>high</td></tr>
+        <tr id="src-9"><td>[9]</td><td><a href="https://clerk.com/blog/accountless-setup-clerk-init-nextjs" target="_blank" rel="noopener">Clerk accountless-setup blog</a>; Auth0 Community thread; <a href="https://github.com/primait/localauth0" target="_blank" rel="noopener">localauth0</a></td><td>Clerk; Auth0 Community; GitHub</td><td>undated</td><td>2026-10-28</td><td>medium</td></tr>
+        <tr id="src-10"><td>[10]</td><td><a href="https://supabase.com/docs/guides/local-development" target="_blank" rel="noopener">Supabase local-development docs</a> (Docker prerequisite)</td><td>Supabase</td><td>undated</td><td>2026-10-28</td><td>high</td></tr>
+        <tr id="src-11"><td>[11]</td><td>dev.to seeding guide; <a href="https://github.com/orgs/supabase/discussions/9251" target="_blank" rel="noopener">Supabase GitHub discussion #9251</a></td><td>DEV Community; Supabase GitHub</td><td>undated</td><td>2026-10-28</td><td>low-medium</td></tr>
+        <tr id="src-12"><td>[12]</td><td><a href="https://supabase.com/docs/guides/platform/free-project-pausing" target="_blank" rel="noopener">Supabase free-project-pausing docs</a></td><td>Supabase</td><td>undated, live</td><td>2026-10-28</td><td>high</td></tr>
+      </tbody>
+    </table>
+  </details>
+</section>
+
+<section id="staleness">
+  <h2>Staleness map</h2>
+  <p>Version/compatibility claims (refs [5]&ndash;[12]) should be re-checked within a month if this sits unacted-on &mdash; local-dev-mode availability, deprecation status, and pricing-tier behavior change fast. OWASP guidance (refs [1]&ndash;[3]) is comparatively stable. Highest-value re-check: whether Clerk or Auth0 have since added a genuine local/offline mode.</p>
+</section>
+
+</div>
+
+<footer>Generated by BMad Deep Recon &middot; native run, select shape &middot; 2026-10-28</footer>
+
+</body>
+</html>

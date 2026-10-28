@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GDPR for a student prototype</title>
+<style>
+  :root {
+    --bg: #ffffff; --fg: #1a1d21; --muted: #5b6168; --card: #f6f7f8; --border: #e1e4e8; --accent: #2563eb;
+    --verified-bg: #e6f4ea; --verified-fg: #1e7a34; --verified-border: #a8d8b8;
+    --medium-bg: #fff6e0; --medium-fg: #8a6500; --medium-border: #f0d78c;
+    --low-bg: #fdeee0; --low-fg: #9a4b00; --low-border: #f3c293;
+    --unverified-bg: #fde8e8; --unverified-fg: #b02a2a; --unverified-border: #f3a9a9;
+    --key-bg: #e8f0fe; --key-border: #93b4f6;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #14161a; --fg: #e8eaed; --muted: #a2a9b0; --card: #1d2024; --border: #30343a; --accent: #6ea8fe;
+      --verified-bg: #16301f; --verified-fg: #7fd99a; --verified-border: #2a5c3a;
+      --medium-bg: #332a0a; --medium-fg: #e8c766; --medium-border: #5c4c15;
+      --low-bg: #3a2210; --low-fg: #f0a868; --low-border: #6b3f1a;
+      --unverified-bg: #3a1414; --unverified-fg: #ff9b9b; --unverified-border: #7a2424;
+      --key-bg: #16213a; --key-border: #3a5a9c;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 0 20px 80px; }
+  header.page { padding: 28px 20px 20px; border-bottom: 1px solid var(--border); margin-bottom: 24px; }
+  header.page .meta { max-width: 860px; margin: 0 auto; }
+  h1 { font-size: 1.5rem; margin: 0 0 10px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; font-size: 0.82rem; color: var(--muted); }
+  .tags span { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 3px 9px; }
+  .decision { margin-top: 12px; font-size: 0.95rem; color: var(--muted); }
+  .decision b { color: var(--fg); }
+  nav.toc { position: sticky; top: 0; background: var(--bg); z-index: 10; border-bottom: 1px solid var(--border); padding: 10px 20px; margin-bottom: 28px; display: flex; gap: 14px; overflow-x: auto; font-size: 0.85rem; white-space: nowrap; }
+  nav.toc a { color: var(--muted); text-decoration: none; }
+  nav.toc a:hover { color: var(--accent); }
+  section { margin-bottom: 36px; }
+  h2 { font-size: 1.2rem; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 18px 20px; margin-bottom: 18px; }
+  .card.summary { border-left: 4px solid var(--accent); }
+  .card.key { background: var(--key-bg); border-color: var(--key-border); border-left: 4px solid var(--accent); }
+  p { margin: 0 0 12px; }
+  ul, ol { margin: 0 0 12px; padding-left: 22px; }
+  li { margin-bottom: 6px; }
+  a { color: var(--accent); }
+  sup.cite a { text-decoration: none; font-size: 0.78em; }
+  .badge { display: inline-block; font-size: 0.72rem; font-weight: 600; letter-spacing: .02em; border-radius: 5px; padding: 2px 7px; border: 1px solid; vertical-align: middle; margin-left: 6px; text-transform: uppercase; }
+  .badge.verified { background: var(--verified-bg); color: var(--verified-fg); border-color: var(--verified-border); }
+  .badge.medium { background: var(--medium-bg); color: var(--medium-fg); border-color: var(--medium-border); }
+  .badge.low { background: var(--low-bg); color: var(--low-fg); border-color: var(--low-border); }
+  .badge.unverified { background: var(--unverified-bg); color: var(--unverified-fg); border-color: var(--unverified-border); font-weight: 800; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+  table td, table th { border-bottom: 1px solid var(--border); padding: 7px 8px; text-align: left; vertical-align: top; }
+  details.appendix { border: 1px solid var(--border); border-radius: 10px; padding: 4px 16px; background: var(--card); }
+  details.appendix summary { cursor: pointer; padding: 10px 0; font-weight: 600; }
+  .caveat { font-size: 0.9rem; color: var(--muted); margin-top: 10px; }
+  footer { text-align: center; color: var(--muted); font-size: 0.8rem; margin-top: 60px; }
+</style>
+</head>
+<body>
+
+<header class="page">
+  <div class="meta">
+    <h1>GDPR for a student prototype</h1>
+    <div class="tags">
+      <span>Type: domain</span>
+      <span>Shape: explore</span>
+      <span>Created: 2026-10-28</span>
+      <span>Dimensions: 3</span>
+      <span>Validation: normal</span>
+      <span>Status: complete</span>
+    </div>
+    <p class="decision"><b>Decision this research serves:</b> What GDPR obligations realistically apply to Prompt Force (a course prototype storing weight/diet/training data), and what concrete requirements should go in the PRD.</p>
+  </div>
+</header>
+
+<nav class="toc">
+  <a href="#summary">Summary</a>
+  <a href="#applicability">Applicability</a>
+  <a href="#sikt">Datatilsynet/Sikt</a>
+  <a href="#pattern">Consent pattern</a>
+  <a href="#cross">Cross-dimension</a>
+  <a href="#recs">Recommendations</a>
+  <a href="#open">Open questions</a>
+  <a href="#sources">Sources</a>
+  <a href="#staleness">Staleness</a>
+</nav>
+
+<div class="wrap">
+
+<section id="summary">
+  <h2>Executive summary</h2>
+  <div class="card summary">
+    <p><b>GDPR is not switched off by being a small, unpublished, non-commercial student project.</b> The "purely personal activity" exemption is narrow and personal — it doesn't cover a team providing software to others <sup class="cite"><a href="#src-1">[1]</a><a href="#src-2">[2]</a></sup> <span class="badge verified">verified</span>. No carve-out exists for student/course projects.</p>
+  </div>
+  <div class="card key">
+    <p><b>The single most actionable, Norway-specific finding:</b> Sikt's notification duty is explicitly scoped on its own site to <i>research</i>, not ordinary coursework — each institution decides which project types are covered <sup class="cite"><a href="#src-11">[11]</a></sup> <span class="badge verified">verified, direct quote</span>. This is <b>not automatically</b> a research project. Ask the course coordinator or institution's Sikt/personvern contact directly.</p>
+  </div>
+  <div class="card summary">
+    <p><b>The practical path that sidesteps most complexity:</b> test and grade primarily against fictional/synthetic data — per Helsedirektoratet, genuinely fictional data isn't personal data at all <sup class="cite"><a href="#src-13">[13]</a></sup> <span class="badge medium">medium-high, single source</span>. If a real team member logs real data, get explicit opt-in consent first; diet/weight/training logs aren't automatically special-category but regulators lean broad, especially for longitudinal data <sup class="cite"><a href="#src-4">[4]</a><a href="#src-5">[5]</a><a href="#src-6">[6]</a></sup>.</p>
+    <p class="caveat">For the PRD: data minimization + a working deletion path from day one <sup class="cite"><a href="#src-9">[9]</a><a href="#src-10">[10]</a></sup>; a short plain-language consent screen if real data is ever entered <sup class="cite"><a href="#src-18">[18]</a><a href="#src-8">[8]</a></sup>; deletion doesn't need to be instant or automated — real small OSS fitness trackers use manual request flows <sup class="cite"><a href="#src-23">[23]</a><a href="#src-27">[27]</a><a href="#src-28">[28]</a></sup>.</p>
+  </div>
+</section>
+
+<section id="applicability">
+  <h2>GDPR applicability &amp; special-category health data</h2>
+  <p>GDPR's personal/household exemption (Art 2(2)(c)) covers purely private activity with no professional connection, but Recital 18 states the Regulation "still applies to controllers or processors that provide the means for processing personal data" for those activities <sup class="cite"><a href="#src-1">[1]</a><a href="#src-2">[2]</a></sup>. CJEU case law reads this narrowly <sup class="cite"><a href="#src-3">[3]</a></sup> <span class="badge medium">medium</span>. For this project: a team member logging only their own data sits close to the exempt line; the moment anyone else uses the app, GDPR applies.</p>
+  <p>Diet/weight/exercise data is <b>not automatically</b> special-category (Art 9) — only when it reveals actual health status <sup class="cite"><a href="#src-4">[4]</a></sup> — but WP29 (2015) and EDPB Guidelines 03/2020 both lean toward a broad reading for longitudinal fitness data <sup class="cite"><a href="#src-5">[5]</a><a href="#src-6">[6]</a></sup> <span class="badge medium">medium</span>. Defensible default: treat it as special-category. If so, explicit consent (Art 9(2)(a)) is the simplest basis <sup class="cite"><a href="#src-7">[7]</a></sup>, requiring a real affirmative act per EDPB Guidelines 05/2020 <sup class="cite"><a href="#src-8">[8]</a></sup>. Baseline obligations apply regardless: data minimization, storage limitation (Art 5), right to erasure (Art 17) <sup class="cite"><a href="#src-9">[9]</a><a href="#src-10">[10]</a></sup> <span class="badge verified">verified</span>.</p>
+</section>
+
+<section id="sikt">
+  <h2>Datatilsynet / Sikt — what actually applies in Norway</h2>
+  <p>No Datatilsynet.no guidance specifically for small/hobby/student projects was found (unlike Denmark's Datatilsynet) — negative finding, low confidence. An EDPB SME guide exists in Norwegian but isn't Datatilsynet's own <sup class="cite"><a href="#src-14">[14]</a></sup>.</p>
+  <p><b>Load-bearing finding:</b> Sikt's own page states its personverntjenester is "for forsking" (for research), with students covered only "i forsking," and each institution decides which project types are reported <sup class="cite"><a href="#src-11">[11]</a></sup> <span class="badge verified">verified — direct primary quote</span>. University pages describe thesis/research projects, not ordinary course assignments specifically <sup class="cite"><a href="#src-15">[15]</a></sup> <span class="badge medium">medium</span>.</p>
+  <p>Genuinely fictional/synthetic data appears to fall outside GDPR entirely per Helsedirektoratet's Normen guidance <sup class="cite"><a href="#src-13">[13]</a></sup> <span class="badge medium">medium-high, single source</span>. For real team members' own real data in a shared/gradable system, no Norway-specific guidance was found; the EU household exemption probably doesn't cleanly apply <sup class="cite"><a href="#src-17">[17]</a></sup> — this research's own inference, not a direct ruling.</p>
+</section>
+
+<section id="pattern">
+  <h2>A concrete, workable consent / minimization / deletion pattern</h2>
+  <p><b>Consent:</b> one short screen, separate from general ToS, naming what's collected and why, granular per purpose where practical, no pre-ticked boxes, easy withdrawal <sup class="cite"><a href="#src-18">[18]</a><a href="#src-8">[8]</a></sup>.</p>
+  <p><b>Minimization:</b> only collect fields a current feature uses (Art 5(1)(c)) <sup class="cite"><a href="#src-21">[21]</a></sup>; age-band-not-DOB is widely echoed practitioner practice, not confirmed regulator doctrine <sup class="cite"><a href="#src-22">[22]</a></sup> <span class="badge unverified">unverified</span>. Open Trackers achieves minimization architecturally via local-first storage <sup class="cite"><a href="#src-23">[23]</a></sup>.</p>
+  <p><b>Deletion:</b> Art 17's "without undue delay" benchmarks to one month <sup class="cite"><a href="#src-10">[10]</a></sup>; a flag-only soft delete that never progresses to real removal is non-compliant per Danish DPA guidance <sup class="cite"><a href="#src-24">[24]</a></sup>. A short, bounded soft-delete window followed by actual hard delete is legitimate practice <sup class="cite"><a href="#src-25">[25]</a></sup>. Real small OSS fitness trackers (MyTracker, Lettest) route deletion through a GitHub issue, not an automated pipeline <sup class="cite"><a href="#src-27">[27]</a><a href="#src-28">[28]</a></sup> — a soft-delete button + manual follow-up would already match or exceed this.</p>
+</section>
+
+<section id="cross">
+  <h2>Cross-dimension insight</h2>
+  <p>All three dimensions converge on the same architecture decision from different angles: EU law treats "student project" as legally irrelevant to applicability <sup class="cite"><a href="#src-1">[1]</a><a href="#src-2">[2]</a></sup>; Norwegian Sikt guidance treats "course not research" as relevant to a <i>different</i>, narrower notification duty <sup class="cite"><a href="#src-11">[11]</a></sup>; real small OSS apps treat "we're small" as a reason to keep the <i>implementation</i> simple, not a reason to skip the obligation <sup class="cite"><a href="#src-23">[23]</a><a href="#src-27">[27]</a><a href="#src-28">[28]</a></sup>. Scope the rigor to project size; don't scope the right to ask, or the honesty of the text, down to zero.</p>
+</section>
+
+<section id="recs">
+  <h2>Recommendations</h2>
+  <ol>
+    <li><b>Default to fictional/synthetic test data</b> for grading and demos. <span class="badge medium">medium-high confidence</span></li>
+    <li><b>If any real team member logs real data, get explicit opt-in consent first</b> — treat it as special-category (Art 9) to be safe. <span class="badge verified">high</span> on mechanism, <span class="badge medium">medium</span> on the Art 9 default</li>
+    <li><b>Build data minimization and a real deletion path in from day one</b> — soft-delete + manual/scripted hard-delete shortly after is legitimate. <span class="badge verified">high confidence</span></li>
+    <li><b>Ask the course coordinator or institution's Sikt contact</b> whether this course falls under the institution's Sikt agreement — the one question only they can answer. <span class="badge verified">high confidence this is the right next step</span></li>
+    <li><b>Frame it in the PRD as "low enforcement risk," not "GDPR doesn't apply."</b> The latter misrepresents the law. <span class="badge verified">high confidence</span></li>
+  </ol>
+</section>
+
+<section id="open">
+  <h2>Open questions</h2>
+  <ul>
+    <li><b>Does this course's Sikt agreement cover graded coursework, or only research?</b> The single most actionable open item — only the institution can answer.</li>
+    <li><b>Is lightly-modified "synthetic" data (based on real people) still exempt?</b> Not addressed by any source found — a caution, not a finding.</li>
+    <li><b>What does a Norway-specific minimal consent text need to say?</b> No Datatilsynet-authored template found; only EU/UK/Danish sources.</li>
+    <li><b>Is age-range-not-DOB regulator-endorsed or just convention?</b> No regulator source found making this comparison for fitness apps.</li>
+    <li><b>What's an appropriate soft-delete grace window?</b> No regulator-stated number exists; one month (Art 17) is the only hard benchmark.</li>
+  </ul>
+</section>
+
+<section id="sources">
+  <h2>Source appendix</h2>
+  <details class="appendix" open>
+    <summary>27 sources (click to collapse)</summary>
+    <table class="sources"><tbody><tr id="src-1"><td>[1]</td><td><a href="https://gdpr-info.eu/art-2-gdpr/" target="_blank" rel="noopener">gdpr-info.eu — Article 2</a></td><td>gdpr-info.eu</td><td>2016/undated mirror</td><td>2026-10-28</td><td>high</td></tr><tr id="src-2"><td>[2]</td><td><a href="https://gdpr-info.eu/recitals/no-18/" target="_blank" rel="noopener">gdpr-info.eu — Recital 18</a></td><td>gdpr-info.eu</td><td>2016/undated mirror</td><td>2026-10-28</td><td>high</td></tr><tr id="src-3"><td>[3]</td><td>CJEU Lindqvist (C-101/01) &amp; Ryneš (C-212/13), via secondary case-law summaries</td><td>various</td><td>undated</td><td>2026-10-28</td><td>medium</td></tr><tr id="src-4"><td>[4]</td><td>GDPR Article 4(15) — health data definition, via search summary</td><td>GDPR text</td><td>2016</td><td>2026-10-28</td><td>high (snippet-sourced)</td></tr><tr id="src-5"><td>[5]</td><td>Article 29 Working Party 2015 letter, via law-firm summaries</td><td>WP29</td><td>2015</td><td>2026-10-28</td><td>medium</td></tr><tr id="src-6"><td>[6]</td><td>EDPB Guidelines 03/2020, via Mondaq summary</td><td>EDPB</td><td>~2020-04-21</td><td>2026-10-28</td><td>medium</td></tr><tr id="src-7"><td>[7]</td><td><a href="https://gdpr-info.eu/art-9-gdpr/" target="_blank" rel="noopener">gdpr-info.eu — Article 9</a></td><td>gdpr-info.eu</td><td>2016/undated mirror</td><td>2026-10-28</td><td>high</td></tr><tr id="src-8"><td>[8]</td><td>EDPB Guidelines 05/2020 on consent</td><td>EDPB</td><td>2020-05-04</td><td>2026-10-28</td><td>medium-high</td></tr><tr id="src-9"><td>[9]</td><td><a href="https://gdpr-info.eu/art-5-gdpr/" target="_blank" rel="noopener">gdpr-info.eu — Article 5</a></td><td>gdpr-info.eu</td><td>2016/undated mirror</td><td>2026-10-28</td><td>high</td></tr><tr id="src-10"><td>[10]</td><td><a href="https://gdpr-info.eu/art-17-gdpr/" target="_blank" rel="noopener">gdpr-info.eu — Article 17</a></td><td>gdpr-info.eu</td><td>2016/undated mirror</td><td>2026-10-28</td><td>high</td></tr><tr id="src-11"><td>[11]</td><td><a href="https://sikt.no/tjenester/personverntjenester-forskning" target="_blank" rel="noopener">Sikt — personverntjenester for forsking</a></td><td>Sikt</td><td>undated, live</td><td>2026-10-28</td><td>high</td></tr><tr id="src-12"><td>[12]</td><td><a href="https://www.datatilsynet.no/" target="_blank" rel="noopener">Datatilsynet — personopplysninger</a></td><td>Datatilsynet</td><td>2025-03-31</td><td>2026-10-28</td><td>high</td></tr><tr id="src-13"><td>[13]</td><td><a href="https://www.helsedirektoratet.no/normen/testing-og-testdata-faktaark-43/ulike-datagrunnlag-ved-testing/syntetiske-data" target="_blank" rel="noopener">Helsedirektoratet — Normen, syntetiske data</a></td><td>Helsedirektoratet</td><td>undated</td><td>2026-10-28</td><td>medium-high</td></tr><tr id="src-14"><td>[14]</td><td><a href="https://edpb.europa.eu/sme-data-protection-guide_no" target="_blank" rel="noopener">EDPB — SME Data Protection Guide (NO)</a></td><td>EDPB</td><td>undated</td><td>2026-10-28</td><td>medium</td></tr><tr id="src-15"><td>[15]</td><td>Norwegian university student-project pages</td><td>various</td><td>various</td><td>2026-10-28</td><td>medium</td></tr><tr id="src-16"><td>[16]</td><td>Danish Datatilsynet samtykke guidance</td><td>Datatilsynet (DK)</td><td>undated</td><td>2026-10-28</td><td>low for NO</td></tr><tr id="src-17"><td>[17]</td><td>EU household-exemption secondary sources</td><td>various</td><td>undated</td><td>2026-10-28</td><td>medium</td></tr><tr id="src-18"><td>[18]</td><td><a href="https://ico.org.uk/" target="_blank" rel="noopener">ICO — What is valid consent</a></td><td>ICO (UK)</td><td>undated, live</td><td>2026-10-28</td><td>high</td></tr><tr id="src-20"><td>[20]</td><td>Diabetesforeningen app privacy policy</td><td>Diabetesforeningen (DK)</td><td>2024-10-22</td><td>2026-10-28</td><td>medium</td></tr><tr id="src-21"><td>[21]</td><td>GDPR Art 5(1)(c) fitness-app practitioner guide</td><td>dev.to / Custodia</td><td>undated</td><td>2026-10-28</td><td>medium</td></tr><tr id="src-22"><td>[22]</td><td>DOB-vs-age-range practitioner blogs</td><td>various</td><td>undated</td><td>2026-10-28</td><td>low-medium</td></tr><tr id="src-23"><td>[23]</td><td><a href="https://open-trackers.github.io/privacy" target="_blank" rel="noopener">Open Trackers — privacy policy</a></td><td>OpenAlloc</td><td>undated, live</td><td>2026-10-28</td><td>high</td></tr><tr id="src-24"><td>[24]</td><td>Danish DPA guide on erasure</td><td>Datatilsynet (DK)</td><td>undated</td><td>2026-10-28</td><td>medium</td></tr><tr id="src-25"><td>[25]</td><td>Soft-delete vendor practice</td><td>sota.io; Khoros</td><td>2026/undated</td><td>2026-10-28</td><td>medium</td></tr><tr id="src-26"><td>[26]</td><td>Erasure-rights explainer on backup scope</td><td>legiscope.com</td><td>undated</td><td>2026-10-28</td><td>medium</td></tr><tr id="src-27"><td>[27]</td><td>MyTracker privacy policy</td><td>gonespral</td><td>undated, live</td><td>2026-10-28</td><td>high</td></tr><tr id="src-28"><td>[28]</td><td>Lettest privacy policy</td><td>willarentz</td><td>undated</td><td>2026-10-28</td><td>medium</td></tr></tbody></table>
+  </details>
+</section>
+
+<section id="staleness">
+  <h2>Staleness map</h2>
+  <p>Computed via <code>recon_kit.py staleness</code> (regulatory class, 6-month window): all 9 tracked claims fresh, re-check by <b>2027-04-01</b>. GDPR regulation text itself is stable long-term. Worth re-checking sooner in practice: <b>Sikt's scoping of its own notification duty</b> [11] — a direct answer from the course coordinator should supersede this research immediately regardless of the formal date.</p>
+</section>
+
+</div>
+
+<footer>Generated by BMad Deep Recon &middot; native run, explore shape &middot; 2026-10-28</footer>
+
+</body>
+</html>

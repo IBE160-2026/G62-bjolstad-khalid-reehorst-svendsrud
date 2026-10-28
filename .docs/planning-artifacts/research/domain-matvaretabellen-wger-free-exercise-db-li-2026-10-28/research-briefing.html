@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Domain research: Matvaretabellen, wger &amp; free-exercise-db licensing</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --fg: #1a1d21;
+    --muted: #5b6168;
+    --card: #f6f7f8;
+    --border: #e1e4e8;
+    --accent: #2563eb;
+    --verified-bg: #e6f4ea; --verified-fg: #1e7a34; --verified-border: #a8d8b8;
+    --medium-bg: #fff6e0; --medium-fg: #8a6500; --medium-border: #f0d78c;
+    --low-bg: #fdeee0; --low-fg: #9a4b00; --low-border: #f3c293;
+    --unverified-bg: #fde8e8; --unverified-fg: #b02a2a; --unverified-border: #f3a9a9;
+    --disputed-bg: #2a1212; --disputed-fg: #ffffff; --disputed-border: #b02a2a;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #14161a; --fg: #e8eaed; --muted: #a2a9b0; --card: #1d2024; --border: #30343a;
+      --accent: #6ea8fe;
+      --verified-bg: #16301f; --verified-fg: #7fd99a; --verified-border: #2a5c3a;
+      --medium-bg: #332a0a; --medium-fg: #e8c766; --medium-border: #5c4c15;
+      --low-bg: #3a2210; --low-fg: #f0a868; --low-border: #6b3f1a;
+      --unverified-bg: #3a1414; --unverified-fg: #ff9b9b; --unverified-border: #7a2424;
+      --disputed-bg: #ff3b3b; --disputed-fg: #1a0505; --disputed-border: #ff6b6b;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--fg);
+    font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 0 20px 80px; }
+  header.page {
+    padding: 28px 20px 20px; border-bottom: 1px solid var(--border); margin-bottom: 24px;
+  }
+  header.page .meta { max-width: 860px; margin: 0 auto; }
+  h1 { font-size: 1.5rem; margin: 0 0 10px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; font-size: 0.82rem; color: var(--muted); }
+  .tags span { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 3px 9px; }
+  .decision { margin-top: 12px; font-size: 0.95rem; color: var(--muted); }
+  .decision b { color: var(--fg); }
+  nav.toc {
+    position: sticky; top: 0; background: var(--bg); z-index: 10;
+    border-bottom: 1px solid var(--border); padding: 10px 20px; margin-bottom: 28px;
+    display: flex; gap: 14px; overflow-x: auto; font-size: 0.85rem; white-space: nowrap;
+  }
+  nav.toc a { color: var(--muted); text-decoration: none; }
+  nav.toc a:hover { color: var(--accent); }
+  section { margin-bottom: 36px; }
+  h2 { font-size: 1.2rem; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+  h3 { font-size: 1.02rem; margin-top: 22px; }
+  .card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+    padding: 18px 20px; margin-bottom: 18px;
+  }
+  .card.summary { border-left: 4px solid var(--accent); }
+  p { margin: 0 0 12px; }
+  ul, ol { margin: 0 0 12px; padding-left: 22px; }
+  li { margin-bottom: 6px; }
+  a { color: var(--accent); }
+  sup.cite a { text-decoration: none; font-size: 0.78em; }
+  .badge {
+    display: inline-block; font-size: 0.72rem; font-weight: 600; letter-spacing: .02em;
+    border-radius: 5px; padding: 2px 7px; border: 1px solid; vertical-align: middle; margin-left: 6px;
+    text-transform: uppercase;
+  }
+  .badge.verified { background: var(--verified-bg); color: var(--verified-fg); border-color: var(--verified-border); }
+  .badge.medium { background: var(--medium-bg); color: var(--medium-fg); border-color: var(--medium-border); }
+  .badge.low { background: var(--low-bg); color: var(--low-fg); border-color: var(--low-border); }
+  .badge.unverified { background: var(--unverified-bg); color: var(--unverified-fg); border-color: var(--unverified-border); font-weight: 800; }
+  .badge.disputed { background: var(--disputed-bg); color: var(--disputed-fg); border-color: var(--disputed-border); font-weight: 800; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+  table.sources td, table.sources th { border-bottom: 1px solid var(--border); padding: 7px 8px; text-align: left; vertical-align: top; }
+  table.staleness td, table.staleness th { border-bottom: 1px solid var(--border); padding: 7px 8px; text-align: left; }
+  details.appendix { border: 1px solid var(--border); border-radius: 10px; padding: 4px 16px; background: var(--card); }
+  details.appendix summary { cursor: pointer; padding: 10px 0; font-weight: 600; }
+  .recs li { margin-bottom: 10px; }
+  .caveat { font-size: 0.9rem; color: var(--muted); margin-top: 10px; }
+  footer { text-align: center; color: var(--muted); font-size: 0.8rem; margin-top: 60px; }
+</style>
+</head>
+<body>
+
+<header class="page">
+  <div class="meta">
+    <h1>Matvaretabellen, wger &amp; free-exercise-db — licensing for Prompt Force's seed data</h1>
+    <div class="tags">
+      <span>Type: domain</span>
+      <span>Shape: explore</span>
+      <span>Created: 2026-10-28</span>
+      <span>Depth: round 1 of 2 (coverage reached)</span>
+      <span>Validation: normal</span>
+      <span>Status: complete</span>
+    </div>
+    <p class="decision"><b>Decision this research serves:</b> Whether/how Prompt Force can use Matvaretabellen (Mattilsynet), wger, and free-exercise-db to seed the nutrition and exercise databases.</p>
+  </div>
+</header>
+
+<nav class="toc">
+  <a href="#summary">Summary</a>
+  <a href="#matvaretabellen">Matvaretabellen</a>
+  <a href="#wger">wger</a>
+  <a href="#fed">free-exercise-db</a>
+  <a href="#cross">Cross-dimension</a>
+  <a href="#recs">Recommendations</a>
+  <a href="#open">Open questions</a>
+  <a href="#sources">Sources</a>
+  <a href="#staleness">Staleness</a>
+</nav>
+
+<div class="wrap">
+
+<section id="summary">
+  <h2>Executive summary</h2>
+  <div class="card summary">
+    <p>All three datasets can be used, but not uniformly, and not for everything.</p>
+    <ul>
+      <li><b>Matvaretabellen</b> — safe to use for seeding food/nutrient data. Free, no key/registration, reuse (including commercial use) permitted with attribution, via XLSX/ODS download or a public JSON API <sup class="cite"><a href="#src-1">[1]</a><a href="#src-2">[2]</a><a href="#src-3">[3]</a></sup>. The exact license label is disputed — Mattilsynet's own page says CC&nbsp;BY&nbsp;4.0 <sup class="cite"><a href="#src-1">[1]</a></sup>, the national open-data catalog says NLOD&nbsp;2.0 <sup class="cite"><a href="#src-4">[4]</a></sup> <span class="badge disputed">disputed</span> — but both are permissive, attribution-requiring, commercial-use-allowed licenses, so this does not block the decision.</li>
+      <li><b>wger</b> — safe to use the exercise/ingredient <i>data</i> via its public API (no key needed), but not uniformly licensed: server code is AGPL-3.0 (irrelevant if only the API is consumed) while the data is separately Creative-Commons-licensed <i>per entry</i> — live data mixes CC-BY-SA 3.0, CC-BY 4.0, CC-BY-SA 4.0, CC0, and ODbL <sup class="cite"><a href="#src-10">[10]</a><a href="#src-11">[11]</a><a href="#src-12">[12]</a></sup> <span class="badge verified">verified</span>. Store license + author per imported row — don't assume one blanket license.</li>
+      <li><b>free-exercise-db</b> — JSON exercise <i>text</i> is public domain (Unlicense), no attribution needed <sup class="cite"><a href="#src-5">[5]</a><a href="#src-6">[6]</a></sup> <span class="badge verified">verified</span>. Its bundled <i>images</i> are a live, unresolved risk — maintainer admits not knowing their source, a contributor thread traces likely sourcing to a non-open site, unresolved as of the latest commit <sup class="cite"><a href="#src-7">[7]</a><a href="#src-8">[8]</a></sup> <span class="badge unverified">unverified / risky</span>. <b>Do not use the images from this dataset.</b></li>
+    </ul>
+    <p class="caveat"><b>Biggest caveat:</b> none of the three gives free, zero-bookkeeping exercise images. wger's images carry real but trackable per-image attribution; free-exercise-db's images carry real, currently unresolved legal risk. The group's existing plan to use YouTube embeds for exercise demonstration video sidesteps this cleanly.</p>
+  </div>
+</section>
+
+<section id="matvaretabellen">
+  <h2>Licensing — Matvaretabellen</h2>
+  <p>Mattilsynet publishes Matvaretabellen as an openly licensed dataset. Its own terms page states the data is available under CC BY 4.0, usable freely for any purpose within the license (implying commercial use), and requires the citation "Matvaretabellen 2026. Mattilsynet. www.matvaretabellen.no" <sup class="cite"><a href="#src-1">[1]</a></sup>. It can be downloaded as XLSX or ODS with no cost, login, or registration <sup class="cite"><a href="#src-2">[2]</a></sup>, and is also exposed through a public JSON/EDN API (foods, food groups, nutrients, LanguaL codes, sources), again with no key or registration, updated annually each autumn <sup class="cite"><a href="#src-3">[3]</a></sup>.</p>
+  <p>One discrepancy surfaced: the national open-data catalog (data.norge.no, Digdir) lists the same dataset under "Norwegian Licence for Open Government Data (NLOD) 2.0" rather than CC BY 4.0, across two catalog entries <sup class="cite"><a href="#src-4">[4]</a></sup>. No source reconciles the two labels. In practice this doesn't change the decision — both licenses are permissive, attribution-requiring, commercial-use-allowed — but the exact label is <span class="badge disputed">disputed</span> rather than settled; Mattilsynet's own primary-source page <sup class="cite"><a href="#src-1">[1]</a></sup> should outweigh the third-party catalog metadata <sup class="cite"><a href="#src-4">[4]</a></sup>.</p>
+  <p><b>Confidence:</b> <span class="badge verified">verified</span> on "free, attribution-required, no key needed." <span class="badge disputed">disputed</span> on the precise license name.</p>
+</section>
+
+<section id="wger">
+  <h2>Licensing — wger</h2>
+  <p>wger's application code is AGPL-3.0-or-later, confirmed by its README and GitHub's license-detection metadata <sup class="cite"><a href="#src-10">[10]</a></sup>. Its exercise/ingredient <i>data</i> is licensed separately — the README says "see individual entries," and the docs describe the initial data as CC-BY-SA 3.0 <sup class="cite"><a href="#src-10">[10]</a><a href="#src-11">[11]</a></sup>. The live API shows this is only a partial description: <code>/api/v2/license/</code> lists five licenses actually in use — CC-BY-SA 3.0, CC-BY 4.0, CC-BY-SA 4.0, CC0 1.0, and ODbL — and a sampled exercise (id 9, "Kettlebell Swing") is tagged CC-BY-SA 4.0 with a named author, not the "3.0" the docs imply <sup class="cite"><a href="#src-12">[12]</a></sup>. <b>Rule: read the license from each entry's own field when importing — never assume one project-wide license.</b></p>
+  <p>Exercise images carry their own per-image license/attribution fields (<code>license</code>, <code>license_author</code>, <code>license_author_url</code>, <code>license_derivative_source_url</code>); some originate from Wikipedia with a per-folder sources file <sup class="cite"><a href="#src-13">[13]</a></sup>. The public JSON API (<code>wger.de/api/v2/</code>) needs no key or auth for anonymous GETs; no documented rate limit was found, though that's absence of evidence, not a confirmed absence of a limit <sup class="cite"><a href="#src-12">[12]</a></sup> <span class="badge unverified">unverified</span>.</p>
+  <p>CC BY-SA 3.0, named for the initial dataset, permits commercial use and adaptation but requires attribution and ShareAlike (adaptations must carry the same or a compatible license) <sup class="cite"><a href="#src-14">[14]</a></sup>.</p>
+  <p>One interpretive point, flagged by the research itself as an <i>inference, not a sourced finding</i>: consuming wger's data only through its API — not running/modifying its AGPL server — likely does not bring a separate client app's own code under AGPL, since AGPL's copyleft terms attach to the covered program itself, not unrelated API clients. wger itself does not state this anywhere. <span class="badge unverified">unverified — get a second opinion if load-bearing</span></p>
+  <p><b>Confidence:</b> <span class="badge verified">verified</span> on the code/data split and per-entry variability. <span class="badge low">low</span> on the AGPL-client inference and rate-limit policy.</p>
+</section>
+
+<section id="fed">
+  <h2>Licensing — free-exercise-db</h2>
+  <p>free-exercise-db (github.com/yuhonas/free-exercise-db) is licensed under The Unlicense — a public-domain dedication — confirmed independently by GitHub's license-detection metadata and the literal LICENSE.md text <sup class="cite"><a href="#src-5">[5]</a><a href="#src-6">[6]</a></sup>. No attribution requirement, no copyleft; permits commercial or non-commercial reuse "by any means." The JSON exercise fields (names, equipment, muscle groups, categories, instructions) can legally be reused in a closed-source student app with no attribution needed <sup class="cite"><a href="#src-5">[5]</a></sup> <span class="badge verified">verified</span>.</p>
+  <p>The bundled exercise <b>images</b> are a different story. In one GitHub issue, the maintainer stated he does not know where the images came from or whether they're royalty-free: "usage would be at your own risk" <sup class="cite"><a href="#src-7">[7]</a></sup>. In a separate, longer-running issue (open since 2024-08-26, still open at the time of this research), a contributor identified likely sourcing from ExRx.net — a non-open-licensed site — and called for removal; another comment argued distribution would be "plain illegal... even via GitHub"; the maintainer acknowledged the problem and proposed placeholder images, but had not acted as of the most recent commit <sup class="cite"><a href="#src-8">[8]</a></sup> <span class="badge disputed">unresolved risk</span>. The repo is otherwise actively maintained (commit within the last ~2 months) and distributed only via the GitHub repo itself — no npm package <sup class="cite"><a href="#src-9">[9]</a></sup>.</p>
+  <p><b>Confidence:</b> <span class="badge verified">verified</span> on the Unlicense status of the JSON data (two independent confirmations). High-confidence <i>absence of clearance</i> on the images — a documented, ongoing dispute, not a theoretical risk.</p>
+</section>
+
+<section id="cross">
+  <h2>Cross-dimension insight</h2>
+  <p>Each dataset split its license at a finer grain than "one license for the whole thing" — by label, by code-vs-data, or by text-vs-image (see the sections above). The implication is architectural: <b>any table that caches or seeds data from an external source needs its own license/attribution field per row</b>, not a single blanket credit line in the README — this applies equally to OFF-cached food products already flagged in the pre-PRD prep document, and to any wger-sourced exercises or images. Feed this to the architecture phase, not only the PRD's data-sourcing section.</p>
+</section>
+
+<section id="recs">
+  <h2>Recommendations</h2>
+  <ol class="recs">
+    <li><b>Use Matvaretabellen</b> for the food/nutrient seed data (XLSX/ODS or the JSON API), with the Mattilsynet citation stored in the data-sources documentation. <span class="badge verified">high confidence</span></li>
+    <li><b>Use wger's public API</b> to seed the exercise list, storing each entry's <code>license</code> and <code>license_author</code> fields rather than one project-wide line. <span class="badge verified">high confidence</span></li>
+    <li><b>Use free-exercise-db's JSON text fields only — not its bundled images.</b> Source images from wger or the group's own material instead. <span class="badge verified">high confidence</span></li>
+    <li><b>Add an attribution/license metadata column</b> to any table seeded or cached from an external source, per the cross-dimension insight above. <span class="badge verified">high confidence</span></li>
+    <li><b>Get a second opinion</b> before treating the wger/AGPL inference (above) as settled, if it becomes load-bearing for the architecture or submission. <span class="badge unverified">low confidence</span></li>
+  </ol>
+</section>
+
+<section id="open">
+  <h2>Open questions</h2>
+  <ul>
+    <li><b>Matvaretabellen's exact license name</b> (CC BY 4.0 vs NLOD 2.0) is unresolved. Next step: email matvaretabellen@mattilsynet.no, or check the GitHub source-code repo's license file linked from the API docs. <span class="badge disputed">disputed</span></li>
+    <li><b>wger's rate-limit policy</b> (if any) wasn't found documented; only tested with a single anonymous request. Next step: ask in a wger GitHub issue, or test with a short burst before relying on uninterrupted bulk seeding.</li>
+    <li><b>Whether wger offers an official bulk data dump/fixture</b> wasn't confirmed either way. Next step: check the repo for a committed fixture, or ask in an issue.</li>
+    <li><b>wger's Terms of Service page</b> returned only an anti-bot challenge during this research. Next step: retry later or request terms through another channel.</li>
+    <li><b>The AGPL/client-app inference</b> for wger hasn't been independently verified against AGPL's own FAQ language. Next step: read the AGPL FAQ directly, or ask course staff if this matters for grading/submission.</li>
+    <li><b>How many of free-exercise-db's images</b> are actually affected by the ExRx.net issue, and whether any takedown notice exists, wasn't established. Doesn't change the recommendation (avoid the images regardless) — noted for completeness.</li>
+  </ul>
+</section>
+
+<section id="sources">
+  <h2>Source appendix</h2>
+  <details class="appendix" open>
+    <summary>14 sources (click to collapse)</summary>
+    <table class="sources">
+      <thead><tr><th>#</th><th>Source</th><th>Publisher</th><th>Pub. date</th><th>Accessed</th><th>Confidence</th></tr></thead>
+      <tbody><tr id="src-1"><td>[1]</td><td><a href="https://mattilsynet.no/mat-og-drikke/matvaretabellen/opphavsrett" target="_blank" rel="noopener">Matvaretabellen — Opphavsrett (terms)</a></td><td>Mattilsynet</td><td>undated (reviewed 2026-10-26)</td><td>2026-10-28</td><td>high</td></tr><tr id="src-2"><td>[2]</td><td><a href="https://mattilsynet.no/mat-og-drikke/matvaretabellen/last-ned" target="_blank" rel="noopener">Matvaretabellen — Last ned (download)</a></td><td>Mattilsynet</td><td>undated (dated 2026-10-26)</td><td>2026-10-28</td><td>high</td></tr><tr id="src-3"><td>[3]</td><td><a href="https://www.matvaretabellen.no/en/api/" target="_blank" rel="noopener">Matvaretabellen API documentation</a></td><td>Mattilsynet / matvaretabellen.no</td><td>undated</td><td>2026-10-28</td><td>medium</td></tr><tr id="src-4"><td>[4]</td><td><a href="https://data.norge.no/en/datasets/9d082918-e3d4-4ae2-8efd-e7d025dfd52d/matvaretabellen" target="_blank" rel="noopener">Matvaretabellen dataset — data.norge.no catalog</a></td><td>data.norge.no / Digdir</td><td>issued 2023-11; updated 2025-03/2025-07</td><td>2026-10-28</td><td>medium</td></tr><tr id="src-5"><td>[5]</td><td><a href="https://github.com/yuhonas/free-exercise-db/blob/main/LICENSE.md" target="_blank" rel="noopener">free-exercise-db — LICENSE.md</a></td><td>GitHub / repo maintainer yuhonas</td><td>undated</td><td>2026-10-28</td><td>high</td></tr><tr id="src-6"><td>[6]</td><td><a href="https://api.github.com/repos/yuhonas/free-exercise-db" target="_blank" rel="noopener">free-exercise-db — repo metadata (license detection)</a></td><td>GitHub</td><td>live metadata</td><td>2026-10-28</td><td>high</td></tr><tr id="src-7"><td>[7]</td><td><a href="https://github.com/yuhonas/free-exercise-db/issues/2" target="_blank" rel="noopener">free-exercise-db — issue #2 "License of Images?"</a></td><td>GitHub issue thread</td><td>2023-06-27 to 2025-02-20</td><td>2026-10-28</td><td>high</td></tr><tr id="src-8"><td>[8]</td><td><a href="https://github.com/yuhonas/free-exercise-db/issues/13" target="_blank" rel="noopener">free-exercise-db — issue #13 "images has copyright?"</a></td><td>GitHub issue thread</td><td>opened 2024-08-26; most recent activity 2026-08-02 (ongoing)</td><td>2026-10-28</td><td>high</td></tr><tr id="src-9"><td>[9]</td><td><a href="https://api.github.com/repos/yuhonas/free-exercise-db/commits" target="_blank" rel="noopener">free-exercise-db — commits / npm registry</a></td><td>GitHub API / npm registry</td><td>commit 2026-09-27</td><td>2026-10-28</td><td>high</td></tr><tr id="src-10"><td>[10]</td><td><a href="https://github.com/wger-project/wger" target="_blank" rel="noopener">wger-project — README (License section)</a></td><td>wger-project</td><td>undated</td><td>2026-10-28</td><td>high</td></tr><tr id="src-11"><td>[11]</td><td><a href="https://wger.readthedocs.io/en/latest/" target="_blank" rel="noopener">wger — ReadTheDocs Licence page</a></td><td>wger-project</td><td>undated</td><td>2026-10-28</td><td>high</td></tr><tr id="src-12"><td>[12]</td><td><a href="https://wger.de/api/v2/license/" target="_blank" rel="noopener">wger.de — live API /api/v2/license/</a></td><td>wger.de</td><td>live data</td><td>2026-10-28</td><td>high</td></tr><tr id="src-13"><td>[13]</td><td><a href="https://wger.de/api/v2/exerciseimage/" target="_blank" rel="noopener">wger.de — live API /api/v2/exerciseimage/</a></td><td>wger.de</td><td>live data</td><td>2026-10-28</td><td>high</td></tr><tr id="src-14"><td>[14]</td><td><a href="https://creativecommons.org/licenses/by-sa/3.0/deed.en" target="_blank" rel="noopener">Creative Commons — CC BY-SA 3.0 deed</a></td><td>Creative Commons</td><td>2007 (3.0 Unported)</td><td>2026-10-28</td><td>high</td></tr></tbody>
+    </table>
+  </details>
+</section>
+
+<section id="staleness">
+  <h2>Staleness map</h2>
+  <p>Regulatory/licensing claims use a 6-month re-check window, reflecting the instruction to verify regulatory status as current regardless of a claim's age. All 11 tracked claims are fresh as of this writing.</p>
+  <table class="staleness">
+    <thead><tr><th>Claim</th><th>Pub. date</th><th>Re-check by</th></tr></thead>
+    <tbody>
+      <tr><td>free-exercise-db images — unresolved/risky provenance</td><td>2026-08</td><td><b>2027-02-01</b> (earliest)</td></tr>
+      <tr><td>All other tracked claims (10)</td><td>2026-10</td><td>2027-04-01</td></tr>
+    </tbody>
+  </table>
+  <p class="caveat">Re-run this as a Deepen/Refresh after those dates — or sooner if the team hears back from Mattilsynet, or sees movement on the free-exercise-db issues.</p>
+</section>
+
+</div>
+
+<footer>Generated by BMad Deep Recon · native run · 2026-10-28</footer>
+
+</body>
+</html>
