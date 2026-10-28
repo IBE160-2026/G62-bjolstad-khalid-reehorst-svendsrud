@@ -85,6 +85,37 @@ KI gjorde også et kort nettsøk. Det viktigste funnet: Open Food Facts har en g
 
 ---
 
+## 2026-10-28 – Gjennomgang og utbedring av øvelseslista
+
+**Verktøy:** Claude Code
+**Hvem:** Osman Khalid
+**Bakgrunn:** Øvelseslista (`.docs/planning-artifacts/ovelsesliste.md`) ble lagt inn 2026-10-28. Vi ba KI gå gjennom den før PRD-en.
+
+### Hva vi ba KI om
+
+1. Gå gjennom øvelseslista og finne feil og hull.
+2. Fikse det som måtte fikses.
+
+### Hva KI produserte
+
+- Kontrollerte at alle tall i oppsummeringen stemte, og at alle videolenkene finnes (oEmbed).
+- Fant at en hjemmebruker med bare manualer eller bare kroppsvekt ikke fikk noen ryggøvelse. Sete og baksiden av lårene manglet også.
+- La til fire øvelser (#31–34), og byttet video på tre øvelser (#16, #17, #29) der videoen passet dårlig til øvelsen eller til nybegynnere.
+
+### Hva vi selv vurderte og kontrollerte
+
+- Vi godtok forslagene om nye øvelser og nye videoer.
+- KI har bare sjekket at videoene finnes og at titlene stemmer. KI har ikke sett innholdet.
+- Spørsmålet om én eller flere muskelgrupper per øvelse (#13) tas opp på møtet.
+
+### Status
+
+- [x] Øvelseslista utbedret og pushet
+- [ ] Alle 34 videoer sett gjennom av gruppen
+- [ ] Avklart om en øvelse kan ha flere muskelgrupper
+
+---
+
 ## Mal for nye oppføringer
 
 ```markdown

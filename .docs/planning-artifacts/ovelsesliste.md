@@ -35,8 +35,8 @@ grunnlag: brief.md (30–50 øvelser, utstyrsbasert), tilbakemelding på product
 | 13 | Markløft (Deadlift) | Stang og skiver | Rygg / hele kroppen | Middels | [The Official Deadlift Checklist](https://www.youtube.com/watch?v=hCDzSR6bW10) — ATHLEAN-X™ |
 | 14 | Knebøy med stang (Barbell back squat) | Stang og skiver | Ben | Middels | [How to Squat Properly](https://www.youtube.com/watch?v=nEQQle9-0NA) — ATHLEAN-X™ |
 | 15 | Benkpress (Barbell bench press) | Stang og skiver + benk | Bryst | Middels | [The Official Bench Press Check List](https://www.youtube.com/watch?v=vthMCtgVtFw) — ATHLEAN-X™ |
-| 16 | Stående roing (Bent-over barbell row) | Stang og skiver | Rygg | Middels | [Barbell Bent Row Test](https://www.youtube.com/watch?v=HW1tV_ilN68) — ATHLEAN-X™ |
-| 17 | Militærpress (Overhead press) | Stang og skiver | Skuldre | Øvet | [Build Bigger Shoulders With Perfect Training Technique](https://www.youtube.com/watch?v=_RlRDWO2jfg) — Jeff Nippard |
+| 16 | Stående roing (Bent-over barbell row) | Stang og skiver | Rygg | Middels | [How to perform the barbell bent over row](https://www.youtube.com/watch?v=ZtTwgJTBjOQ) — Human Kinetics |
+| 17 | Militærpress (Overhead press) | Stang og skiver | Skuldre | Øvet | [Barbell Overhead Press - How To](https://www.youtube.com/watch?v=ZXpdJOLNoWw) — Bobby Maximus |
 | 18 | Kettlebell sving (Kettlebell swing) | Kettlebell | Hele kroppen | Middels | [Improve Your Kettlebell Swing](https://www.youtube.com/watch?v=PAhDt_0PjP4) — StrongFirst |
 | 19 | Kettlebell goblet squat | Kettlebell | Ben | Nybegynner | [Kettlebell Goblet Squat Technique](https://www.youtube.com/watch?v=XzQ_qk0axb4) — Postema Performance |
 | 20 | Kettlebell roing (Kettlebell row) | Kettlebell | Rygg | Nybegynner | [The Kettlebell One Arm Row](https://www.youtube.com/watch?v=c-ulxCyJxS8) — Forest Vance |
@@ -48,12 +48,27 @@ grunnlag: brief.md (30–50 øvelser, utstyrsbasert), tilbakemelding på product
 | 26 | Kabel nedtrekk (Lat pulldown, cable) | Kabelmaskin | Rygg | Nybegynner | [How to do Lat Pulldowns](https://www.youtube.com/watch?v=SALxEARiMkw) — ATHLEAN-X™ |
 | 27 | Kabel triceps pushdown (Cable tricep pushdown) | Kabelmaskin | Armer | Nybegynner | [HOW TO: Cable Triceps Pushdown](https://www.youtube.com/watch?v=_w-HpW70nSQ) — ScottHermanFitness |
 | 28 | Kabel roing sittende (Seated cable row) | Kabelmaskin | Rygg | Nybegynner | [Seated Cable Row](https://www.youtube.com/watch?v=UCXxvVItLoM) — Renaissance Periodization |
-| 29 | Beinpress (Leg press) | Beinpress/maskiner | Ben | Nybegynner | [How To Leg Press For Best Quad Growth](https://www.youtube.com/watch?v=B6rGDcfyPto) — Renaissance Periodization |
+| 29 | Beinpress (Leg press) | Beinpress/maskiner | Ben | Nybegynner | [How to do a Leg Press \| Proper Form & Technique](https://www.youtube.com/watch?v=cDGOn-yfKJA) — NASM |
 | 30 | Beincurl i maskin (Leg curl machine) | Beinpress/maskiner | Ben | Nybegynner | [Beginner's Guide: Seated Leg Curl](https://www.youtube.com/watch?v=t9sTSr-JYSs) — SilverSneakers |
+| 31 | Foroverbøyd manualroing (Bent-over dumbbell row) | Manualer | Rygg | Nybegynner | [How To: Dumbbell Bent-Over Row](https://www.youtube.com/watch?v=6TSP1TRMUzs) — ScottHermanFitness |
+| 32 | Superman | Kroppsvekt | Rygg | Nybegynner | [How to Do a Superman - Low Back Extension Exercise](https://www.youtube.com/watch?v=HAjQVUp9mS4) — Becoming Limitless with Tanessa Shears |
+| 33 | Hoftehev (Glute bridge) | Kroppsvekt | Ben | Nybegynner | [Glute Bridge Exercise - The correct way of doing it](https://www.youtube.com/watch?v=Q_Bpj91Yiis) — PostureFlow |
+| 34 | Rumensk markløft med manualer (Dumbbell Romanian deadlift) | Manualer | Ben | Middels | [Dumbbell Romanian (RDL) Deadlift \| TECHNIQUE for Beginners](https://www.youtube.com/watch?v=hQgFixeXdZo) — J2FIT Strength & Conditioning |
 
 ## Oppsummering
 
-- **30 øvelser**, som avtalt i briefen (30–50).
-- **Nivåfordeling:** 20 nybegynner, 8 middels, 2 øvet — vektet mot nybegynnere, i tråd med primærpersonaen i briefen.
-- **Utstyrsfordeling** (matcher forslaget i forberedelsesdokumentet, seksjon 1.4): kroppsvekt (6), manualer (5), stang og skiver (5), benk (1 alene, i tillegg brukt sammen med manualer/stang i 3 andre), kettlebell (3), strikk (3), trekkestang (2), kabelmaskin (3), beinpress/maskiner (2).
-- Alle 30 videolenker returnerte gyldig oEmbed-respons ved kontroll 2026-10-28 — ingen ble inkludert uten verifisering.
+- **34 øvelser**, innenfor rammen i briefen (30–50).
+- **Nivåfordeling:** 23 nybegynner, 9 middels, 2 øvet — vektet mot nybegynnere, i tråd med primærpersonaen i briefen.
+- **Utstyrsfordeling** (matcher forslaget i forberedelsesdokumentet, seksjon 1.4): kroppsvekt (8), manualer (7), stang og skiver (5), benk (1 alene, i tillegg brukt sammen med manualer/stang i 3 andre), kettlebell (3), strikk (3), trekkestang (2), kabelmaskin (3), beinpress/maskiner (2).
+- Alle 34 videolenker returnerte gyldig oEmbed-respons ved kontroll 2026-10-28 — ingen ble inkludert uten verifisering.
+
+## Endringer 2026-10-28 (Osman Khalid, med Claude Code)
+
+- **Lagt til #31–34.** Hjemmebrukere med bare manualer (uten benk) eller bare kroppsvekt fikk ingen ryggøvelse, fordi #10 krever benk. Nå har de #31 og #32. Sete og baksiden av lårene var heller ikke dekket, så #33 og #34 er lagt til. Disse er ført under «Ben» for å holde muskelgruppene uendret.
+- **Byttet video på tre øvelser:**
+  - #16: den gamle videoen var en «test», ikke en instruksjonsvideo.
+  - #17: den gamle videoen var en generell skuldervideo, ikke om militærpress.
+  - #29: den gamle videoen handlet om muskelvekst, ikke grunnleggende teknikk.
+  
+  De nye videoene er sjekket med oEmbed. De er ikke sett gjennom ennå, og det gjelder også de fire nye.
+- **Ikke avklart:** #13 markløft har to muskelgrupper («Rygg / hele kroppen»). Gruppen må bestemme om en øvelse kan ha én eller flere muskelgrupper, fordi det påvirker datamodellen.
