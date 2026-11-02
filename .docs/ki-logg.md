@@ -148,6 +148,41 @@ Det viktigste funnet: Dekningsanalysen er regnet ut fra øvelseslista og viser a
 
 ---
 
+## 2026-11-02 – Utkast til PRD
+
+**Verktøy:** Claude Code (`bmad-prd`, rask vei)
+**Hvem:** Osman Khalid
+**Bakgrunn:** Faglærer ba alle bli ferdige med PRD-en innen torsdag 5. november. Møtet torsdag 29.10 bestemte ingenting, så Osman tok på seg å skrive hele utkastet.
+
+### Hva vi ba KI om
+
+1. Lage et komplett PRD-utkast ut fra briefen, tilbakemeldingen og all researchen i `.docs/planning-artifacts/research/`.
+2. Stille de viktigste spørsmålene samlet, og merke resten som antakelser.
+
+### Hva KI produserte
+
+| Resultat | Fil |
+|---|---|
+| PRD med 30 funksjonskrav (FR-1–30), 10 ikke-funksjonelle krav, 5 brukerreiser, ordliste, åpne spørsmål og antakelser | `.docs/planning-artifacts/prds/prd-prompt-force-2026-11-02/prd.md` |
+| Teknisk underlag til arkitekturen (datamodell, strekkode, OFF, Matvaretabellen, innlogging, personvern) | `addendum.md` i samme mappe |
+| Beslutningslogg | `.memlog.md` i samme mappe |
+| Kvalitetssjekk mot BMAD-sjekklista | `review-rubric.md` i samme mappe |
+
+### Hva vi selv vurderte og kontrollerte
+
+- **Osman bestemte:** kaloriemålet tar hensyn til mål (−500 / 0 / +300 kcal), matloggen har måltider og gram, utstyret velges med lagrede utstyrsprofiler, appen er på norsk, og aldersgrensen er 16 år (KI foreslo 18).
+- **Antakelser** som KI har gjort, står samlet i §12 i PRD-en. Gruppen må godta eller endre dem.
+- **Regneeksemplene** i FR-6 er de samme som i briefen. Mål-justeringen for profil 1 (2298 / 3098 kcal) er ny og må kontrolleres.
+
+### Status
+
+- [x] PRD-utkast skrevet og lest av Osman
+- [ ] Gjennomgått av hele gruppen før torsdag 5. november
+- [ ] Antakelsene i §12 godtatt eller endret
+- [ ] Sikt-spørsmålet sendt til faglærer
+
+---
+
 ## Mal for nye oppføringer
 
 ```markdown
