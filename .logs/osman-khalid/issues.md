@@ -9,3 +9,7 @@
 - [ ] 2026-10-28 [ovelsesliste-utbedring](998-2026-10-28-20-10-12-ovelsesliste-utbedring.md) — avklare én eller flere muskelgrupper per øvelse (#13 markløft)
 - [ ] 2026-10-28 [research-trening](997-2026-10-28-20-18-12-research-trening.md) — bestemme om vi skal legge til øvelser som tetter hullene for skulder og armer (kroppsvekt/kettlebell/trekkestang)
 - [ ] 2026-10-28 [research-trening](997-2026-10-28-20-18-12-research-trening.md) — sjekke ACSM-tallet for reps mot originaldokumentet
+- [ ] 2026-11-02 [prd-utkast](996-2026-11-02-20-23-59-prd-utkast.md) — gruppen må gå gjennom PRD-en før 5.11 og godta/endre antakelsene i §12
+- [ ] 2026-11-02 [prd-utkast](996-2026-11-02-20-23-59-prd-utkast.md) — spørre faglærer om prosjektet må meldes til Sikt
+- [ ] 2026-11-02 [prd-utkast](996-2026-11-02-20-23-59-prd-utkast.md) — avklare hva som skjer når en bruker ikke vil oppgi kjønn (midlertidig påkrevd)
+- [ ] 2026-11-02 [prd-utkast](996-2026-11-02-20-23-59-prd-utkast.md) — sette PRD-en til status: final etter gjennomgangen
