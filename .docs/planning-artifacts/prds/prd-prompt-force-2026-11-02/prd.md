@@ -2,7 +2,7 @@
 title: "PRD: Prompt Force"
 status: draft
 created: 2026-11-02
-updated: 2026-11-02
+updated: 2026-11-03
 ---
 
 # PRD: Prompt Force
@@ -22,7 +22,7 @@ Features are grouped in §4 with globally numbered requirements (FR-1 …). Term
 
 ## 1. Vision
 
-Prompt Force is a mobile-friendly web app that puts training and nutrition in one place for people who are new to structured training. A beginner sets up a profile and gets a daily calorie target they understand, logs food by scanning a barcode or searching, gets exercise suggestions that fit the equipment they actually have, and logs their workouts. A daily overview ties it together.
+Prompt Force is a web app, run in the browser, that puts training and nutrition in one place for people who are new to structured training. A beginner sets up a profile and gets a daily calorie target they understand, logs food by searching or entering a barcode, gets exercise suggestions that fit the equipment they actually have, and logs their workouts. A daily overview ties it together.
 
 It takes the best parts of two category leaders, Hevy's set-by-set workout logging and Lifesum's approachable food logging, and keeps only what a beginner needs. The difference from broader platforms such as Bevel and Cora is not more features but fewer: one simple app, honest guidance, and exercise suggestions based on the user's own equipment.
 
@@ -54,8 +54,8 @@ V1 is the core loop: **profile → calorie target → log food → log training 
   Sara, 23, has just bought a gym membership and has two dumbbells at home. She found MyFitnessPal "too much". On her phone she creates an account, accepts a short consent screen and enters weight, height, age, sex, activity level and goal ("lose weight"). The app shows one number, 1 640 kcal a day, with one sentence explaining what it means. She lands on an empty daily overview with a clear "log your first meal" prompt.
   **Edge case:** she is unsure what "moderately active" means. Each activity level has a plain-language example.
 
-- **UJ-2. Sara scans her breakfast yoghurt.**
-  Logged in on her phone, she taps "Add food" under Breakfast and chooses "Scan". The camera opens, she points it at the barcode, and the product appears with kcal per 100 g. She adjusts the amount to 150 g and saves. The breakfast total and the daily overview update at once.
+- **UJ-2. Sara logs her breakfast yoghurt.**
+  Logged in on her laptop, she clicks "Add food" under Breakfast and types the barcode from the yoghurt cup. The product appears with kcal per 100 g. She adjusts the amount to 150 g and saves. The breakfast total and the daily overview update at once.
   **Edge case:** the barcode is not found. She sees "We couldn't find this product" and a button to register it manually, with the barcode already filled in. The app never shows an empty result or crashes.
 
 - **UJ-3. Sara trains at home with what she has.**
@@ -161,7 +161,7 @@ The app shows the Calorie Target as one number with one or two plain-language se
 #### FR-8: Log food by scanning a barcode
 A User can open the phone camera from a Meal, scan a Barcode and get the Food Item with kcal per 100 g.
 - The system first looks up the Barcode among shared Food Items (Open Food Facts and Matvaretabellen) and the User's own Food Items, never other Users' Food Items; only if it is not found does it ask Open Food Facts, and then saves the result as a shared Food Item.
-- Works in Safari on iPhone and Chrome on Android `[ASSUMPTION: pending the mobile spike; see §11 Q2]`. If the spike fails, FR-9 (type the barcode) and FR-11 (search) still cover food logging.
+- Camera scanning is a **Should**. The app is run in a browser on a PC (that is how the examiner runs it), so FR-9 (type the barcode) and FR-11 (search) are the main food-logging path, and camera scanning is an extra where the browser and camera allow it (HTTPS or localhost). Changed 2026-11-03; see §11 Q2.
 
 #### FR-9: Type the barcode by hand
 If the camera does not work or is not allowed, the User can type the Barcode number and get the same result as a scan.
@@ -273,7 +273,7 @@ A User has a Pro Flag (default off) that unlocks FR-29. There is no payment; the
 
 ## 5. Cross-Cutting Non-Functional Requirements
 
-- **NFR-1 Mobile first:** all v1 screens work on a phone screen from 360 px wide, in Safari (iOS) and Chrome (Android), as well as desktop browsers. Barcode scanning needs HTTPS or localhost.
+- **NFR-1 Runs in the browser:** all v1 screens work in current desktop browsers (Chrome, Safari, Firefox, Edge). The layout also adapts to narrow screens down to 360 px, but there is no native app. Camera scanning (FR-8) needs HTTPS or localhost.
 - **NFR-2 Language:** all UI text is in Norwegian (bokmål). Exercise names are Norwegian, with the English name in brackets where helpful.
 - **NFR-3 Runnable from the README:** a new developer or examiner can start the app locally by following the README, with `.env.example` and no team API keys, paid accounts or private services. Target: under 20 minutes on a clean machine.
 - **NFR-4 Seed Data:** a seed script creates fictional test users with Profiles, Equipment Profiles, Food Log Entries and Workouts across several dates (and in phase 2 one Pro user).
@@ -311,7 +311,7 @@ A User has a Pro Flag (default off) that unlocks FR-29. There is no payment; the
 
 ## 7. Platform
 
-A responsive web app, used mainly on a phone (barcode scanning, logging at the gym) and also on a laptop. No native app, PWA or offline mode in v1. Hosting: the course's Vercel setup for the group repo; local running per NFR-3 is what grading relies on.
+A web app that runs in the browser, mainly on a PC or laptop, since the submission requires that the app runs in a browser and the examiner runs it locally. The layout adapts to smaller screens. No native app, PWA or offline mode in v1. Hosting: the course's Vercel setup for the group repo; local running per NFR-3 is what grading relies on.
 
 ## 8. Non-Goals (Explicit)
 
@@ -336,7 +336,7 @@ A responsive web app, used mainly on a phone (barcode scanning, logging at the g
 
 ### 9.1 In scope (v1, must be finished and stable)
 
-**Priority.** All FRs below are **Must** except these **Should** items, which are cut first if time runs out: FR-14 (recent foods), FR-20 (filters), FR-24 (show last time), FR-27 (move between dates). If camera scanning (FR-8) does not work on iPhone after the spike, v1 ships with FR-9 and FR-11 as the food-logging path on iPhone.
+**Priority.** All FRs below are **Must** except these **Should** items, which are cut first if time runs out: FR-8 (camera scanning), FR-14 (recent foods), FR-20 (filters), FR-24 (show last time), FR-27 (move between dates). FR-9 and FR-11 are the main food-logging path.
 
 
 - Account, consent and deletion (FR-1 – FR-4)
@@ -366,7 +366,7 @@ This is a course project, so success is measured on the finished prototype, not 
 - **SM-3: The examiner can run it.** A team member who did not set up the project runs the app from the README on a clean machine in under 20 minutes. Validates NFR-3, NFR-4.
 
 **Secondary**
-- **SM-4: Barcode works on real phones.** At least 8 of 10 common Norwegian products are scanned correctly on one iPhone and one Android phone; the rest end in the manual path (FR-10). Validates FR-8 – FR-10.
+- **SM-4: Barcode lookup works.** At least 8 of 10 common Norwegian products are found when their barcode is typed in (or scanned, if FR-8 is built); the rest end in the manual path (FR-10). Validates FR-8 – FR-10.
 - **SM-5: Suggestions are correct.** Automated tests for each Equipment Profile in the research coverage table give exactly the expected Exercises. Validates FR-19.
 - **SM-6: Fast logging.** Logging a recently used food takes at most 3 taps from the Daily Overview. Validates FR-14.
 - **SM-7: Beginners understand it.** 3–5 beginners outside the group complete UJ-1 to UJ-3 on their own phone without help, and can explain their Calorie Target in their own words. Validates the beginner focus in §1 and §2.1.
@@ -379,7 +379,7 @@ This is a course project, so success is measured on the finished prototype, not 
 ## 11. Open Questions
 
 1. Does a course project storing health-like data need to be reported to Sikt? Ask the course coordinator. (Owner: group)
-2. Which barcode library works on real iPhones? Quagga2 is recommended, but the mobile spike decides. (Owner: architecture phase)
+2. Which barcode library should camera scanning use? Quagga2 is recommended. Since 2026-11-03 camera scanning is a Should (FR-8), so this no longer blocks the architecture. (Owner: architecture phase)
 3. How well does Open Food Facts cover Norwegian products? Test 10–15 products from Rema, Kiwi and Coop. (Owner: food side)
 4. Which 3–6 Exercises are added to close the Shoulder/Arm gaps, and should an Exercise be able to have more than one Muscle Group (e.g. deadlift)? (Owner: training side)
 5. Is the ACSM range of 8–12 reps for beginners confirmed in the original 2009 position stand? (Owner: training side)
@@ -391,7 +391,6 @@ This is a course project, so success is measured on the finished prototype, not 
 
 - §4.1 FR-4 — Account deletion: soft-delete at once, hard-delete by script within 30 days.
 - §4.2 FR-5 — Valid ranges: weight 30–300 kg, height 100–250 cm.
-- §4.3 FR-8 — Barcode scanning works on iPhone Safari and Android Chrome (pending spike).
 - §4.3 Notes — Macros stored, only kcal shown.
 - §4.4 FR-18 — New Users get "Home" and "Gym" Equipment Profiles by default.
 - §4.5 FR-23 — Default 3 Sets × 10 reps for new Workout Exercises (ACSM, to verify).
@@ -403,3 +402,5 @@ This is a course project, so success is measured on the finished prototype, not 
 - §4.2 FR-6 — Calorie Target for Users aged 16–17 shown with a "rough estimate" note.
 
 Confirmed by Osman Khalid on 2026-11-02 (no longer assumptions): Goal adjustment (−500 / 0 / +300), Meals with grams, saved Equipment Profiles, Norwegian UI, minimum age 16.
+
+Changed by Gustav Reehorst on 2026-11-03: the FR-8 assumption (scanning works on iPhone Safari and Android Chrome) is removed. The submission requires that the app runs in a browser and the examiner runs it on a PC, so camera scanning is now a Should, and typing the barcode (FR-9) and search (FR-11) are the main path. Updated in §1, UJ-2, FR-8, NFR-1, §7, §9.1, SM-4 and §11 Q2.

@@ -183,6 +183,36 @@ Det viktigste funnet: Dekningsanalysen er regnet ut fra øvelseslista og viser a
 
 ---
 
+## 2026-11-03 – PRD: strekkodeskanning blir «Should»
+
+**Verktøy:** Claude Code
+**Hvem:** Gustav Åbyholm Reehorst
+**Bakgrunn:** Gjennomlesing av PRD-utkastet før torsdag 5. november. Innleveringen krever at appen kjøres i en nettleser, og sensor kjører den lokalt på en PC. PRD-en var bygget rundt mobil og kameraskanning på iPhone og Android.
+
+### Hva vi ba KI om
+
+1. Lese PRD-en og researchen, og foreslå hva vi bør godta eller endre i §11 og §12.
+2. Endre PRD-en slik at appen er en nettapp for PC, med kameraskanning som et tillegg.
+
+### Hva KI produserte
+
+- Forslag til svar på alle punktene i §11 og §12 (godta 11 antakelser, endre FR-8).
+- Endringer i `prd.md`: §1, UJ-2, FR-8, NFR-1, §7, §9.1, SM-4, §11 Q2 og §12.
+
+### Hva vi selv vurderte og kontrollerte
+
+- Gustav kom med kravet om at appen bare skal kjøres i nettleser. KI sjekket sensorveiledningen: den krever ikke bare PC, men sier at sensor kjører appen selv og gjerne prøver ulike skjermstørrelser. Vi beholder derfor tilpasning til små skjermer, men mobil er ikke hovedfokus.
+- Kameraskanning (FR-8) er nå «Should». Å skrive inn strekkoden (FR-9) og søk (FR-11) er hovedveien, fordi sensor kan teste dem på PC.
+- Kjønn i kaloriformelen (§11 Q6) diskuteres fortsatt i gruppen og er ikke endret.
+
+### Status
+
+- [x] FR-8-antakelsen i §12 endret
+- [ ] Gruppen godtar endringen på møtet torsdag
+- [ ] Kjønnsspørsmålet (§11 Q6) avklart
+
+---
+
 ## Mal for nye oppføringer
 
 ```markdown
