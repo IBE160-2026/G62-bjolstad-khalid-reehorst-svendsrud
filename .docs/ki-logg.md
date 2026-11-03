@@ -33,7 +33,12 @@ Denne loggen viser hvordan gruppen bruker KI i prosjektet: hva vi har bedt om, h
 
 ### Hva vi selv vurderte og kontrollerte
 
-- **Regneeksemplene:** [Kontroller utregningene for hånd eller i kalkulator, og skriv resultatet her, f.eks. «Alle fire profiler kontrollert av Osman Khalid, stemmer.»]
+- **Regneeksemplene:** Kontrollert av Claude Code (2026-10-28) ved uavhengig utregning av Mifflin-St Jeor-formelen for alle fire profiler. Alle fire stemmer nøyaktig med tallene i briefen (BMR og kaloriemål, standard avrunding til nærmeste heltall):
+  - Profil 1 (M, 80 kg, 180 cm, 25 år, 1,55): BMR = 1805, kaloriemål = 1805 × 1,55 = 2797,75 → 2798. Stemmer.
+  - Profil 2 (K, 65 kg, 165 cm, 30 år, 1,375): BMR = 1370,25, kaloriemål = 1370,25 × 1,375 = 1884,09 → 1884. Stemmer.
+  - Profil 3 (M, 95 kg, 178 cm, 50 år, 1,2): BMR = 1817,5, kaloriemål = 1817,5 × 1,2 = 2181,0 → 2181. Stemmer.
+  - Profil 4 (K, 55 kg, 160 cm, 22 år, 1,725): BMR = 1279, kaloriemål = 1279 × 1,725 = 2206,275 → 2206. Stemmer.
+  - Noter til PRD-en: tallene er trygge å bruke som akseptansekriterier. Det er ikke verifisert om appen skal avrunde til nærmeste heltall eller runde ned/opp konsekvent — avklar dette som en del av akseptansekriteriet, siden det kan gi ±1 kcal avvik i grensetilfeller (f.eks. profil 2 og 4, som begge har desimaldel over ,0).
 - **Øvelseslista:** Utstyrskrav og nivå må gjennomgås av gruppen. Videolenkene er funnet med søk og ikke sett gjennom av KI. Hver lenke må åpnes og godkjennes av en i gruppen.
 - **Briefen:** Utkastet behandles på gruppemøtet. Viktige beslutninger som gruppen må stå inne for:
   - Primærbruker endret fra erfarne til nybegynnere og lett øvede (følger tilbakemeldingen)
@@ -43,10 +48,12 @@ Denne loggen viser hvordan gruppen bruker KI i prosjektet: hva vi har bedt om, h
 
 ### Status
 
-- [ ] Regneeksempler kontrollert
+- [x] Regneeksempler kontrollert
 - [ ] Videolenker gjennomgått
 - [x] Brief godkjent av gruppen på møtet
 - [x] Oppdatert `brief.md` committet i repoet
+
+**Oppdatering 2026-10-28:** `ovelsesliste.xlsx` nevnt over ble aldri funnet i repoet eller git-historikken — den ble tilsynelatende aldri committet etter Claude.ai-sesjonen. Se egen oppføring under for hva som er gjort med dette.
 
 ---
 
@@ -82,6 +89,36 @@ KI gjorde også et kort nettsøk. Det viktigste funnet: Open Food Facts har en g
 - [x] Research-dokumentet committet og pushet
 - [ ] Research-dokumentet gjennomgått av gruppen
 - [ ] [sjekk]-punktene testet (OFF-dekning, strekkode på mobil)
+
+---
+
+## 2026-10-28 – Kontroll av regneeksempler og ny øvelsesliste
+
+**Verktøy:** Claude Code
+**Hvem:** Karianne
+**Bakgrunn:** Fortsatt del av forberedelsene før PRD-møtet torsdag. To punkter fra forberedelsesdokumentet (seksjon 6) ble valgt ut for oppfølging: regneeksemplene for kaloriberegningen, og øvelseslista/videolenkene.
+
+### Hva vi ba KI om
+1. Kontroller de fire regneeksemplene for Mifflin-St Jeor-formelen i briefen for hånd/uavhengig.
+2. Kontroller øvelseslista (`ovelsesliste.xlsx`) og videolenkene nevnt i oppføringen fra 2026-10-13.
+
+### Hva KI produserte
+- Uavhengig utregning (Python) av alle fire testprofilenes BMR og kaloriemål — se oppdatert status i oppføringen over.
+- **Oppdaget at `ovelsesliste.xlsx` ikke finnes noe sted i repoet eller git-historikken** — søkt på filnavn, innhold og i alle commits på alle branches, uten treff. Filen ble tilsynelatende aldri lastet opp etter Claude.ai-sesjonen 2026-10-13.
+- Etter avklaring med Karianne: laget en **ny** øvelsesliste med 30 øvelser fra bunnen (ikke en gjenoppretting av den gamle, siden innholdet i den ikke er kjent). Hver video er individuelt kontrollert mot YouTubes oEmbed-API (bekrefter at videoen finnes og at tittelen stemmer med øvelsen) — ikke bare funnet med søk og antatt riktig.
+
+| Resultat | Fil |
+|---|---|
+| Ny øvelsesliste, 30 øvelser med utstyr, muskelgruppe, nivå og verifiserte videolenker | `.docs/planning-artifacts/ovelsesliste.md` |
+
+### Hva vi selv vurderte og kontrollerte
+- **Regneeksemplene:** Se fullstendig kontroll i oppføringen fra 2026-10-13 over.
+- **Øvelseslista:** Alle 30 videolenker er maskinelt bekreftet til å eksistere og ha en tittel som matcher øvelsen (oEmbed-sjekk), men **ingen av dem er sett gjennom av et menneske ennå** — det gjenstår fortsatt, per regelen i denne loggen om at alt KI lager er et utkast. Utstyrskategoriene (de samme ni som i forberedelsesdokumentet) og nivåmerkingen (nybegynner/middels/øvet) er heller ikke gruppegjennomgått.
+
+### Status
+- [x] Regneeksempler kontrollert (se 2026-10-13-oppføringen)
+- [x] Ny øvelsesliste laget med verifiserte videolenker
+- [ ] Øvelseslista gjennomgått av gruppen (utstyr, nivå, og at videoene faktisk er pedagogisk gode — ikke bare at de finnes)
 
 ---
 
