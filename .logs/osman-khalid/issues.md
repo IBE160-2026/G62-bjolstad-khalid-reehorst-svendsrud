@@ -13,3 +13,5 @@
 - [ ] 2026-11-02 [prd-utkast](996-2026-11-02-20-23-59-prd-utkast.md) — spørre faglærer om prosjektet må meldes til Sikt
 - [ ] 2026-11-02 [prd-utkast](996-2026-11-02-20-23-59-prd-utkast.md) — avklare hva som skjer når en bruker ikke vil oppgi kjønn (midlertidig påkrevd)
 - [ ] 2026-11-02 [prd-utkast](996-2026-11-02-20-23-59-prd-utkast.md) — sette PRD-en til status: final etter gjennomgangen
+- [ ] 2026-11-04 [vercel-oppsett](995-2026-11-04-16-37-25-vercel-oppsett.md) — sett Framework Preset og Root Directory i Vercel når appen finnes
+- [ ] 2026-11-04 [vercel-oppsett](995-2026-11-04-16-37-25-vercel-oppsett.md) — bekreft mukha67@himolde.no på GitHub
