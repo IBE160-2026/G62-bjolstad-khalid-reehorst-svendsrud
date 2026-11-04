@@ -4,6 +4,12 @@ Gruppeprosjekt i **IBE160 Programmering med KI** ved Høgskolen i Molde, høsten
 
 Repoet inneholder gruppens applikasjon og dokumentasjon av utvikling, testing og kvalitetssikring med KI.
 
+## Applikasjon
+
+Appen publiseres på Vercel: <https://g62promptforce.vercel.app>
+
+Siden viser 404 til den første versjonen av appen er pushet til `main`. Vercel-prosjektet ligger på kontoen til Muhammad O Khalid.
+
 ## Medlemmer
 
 - Karianne A Bjolstad
