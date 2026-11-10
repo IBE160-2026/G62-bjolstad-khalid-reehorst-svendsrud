@@ -16,5 +16,7 @@
 - [ ] 2026-11-04 [vercel-oppsett](995-2026-11-04-16-37-25-vercel-oppsett.md) — sett Framework Preset og Root Directory i Vercel når appen finnes
 - [ ] 2026-11-04 [vercel-oppsett](995-2026-11-04-16-37-25-vercel-oppsett.md) — bekreft mukha67@himolde.no på GitHub
 - [ ] 2026-11-10 [ux-konsepter](994-2026-11-10-22-16-43-ux-konsepter.md) — gruppen må se over valgt konsept A1
-- [ ] 2026-11-10 [ux-konsepter](994-2026-11-10-22-16-43-ux-konsepter.md) — kjøre BMAD UX (DESIGN.md og EXPERIENCE.md) før torsdag 12.11
+- [x] 2026-11-10 [ux-konsepter](994-2026-11-10-22-16-43-ux-konsepter.md) — kjøre BMAD UX (DESIGN.md og EXPERIENCE.md) før torsdag 12.11 (løst 2026-11-10)
 - [ ] 2026-11-10 [ux-konsepter](994-2026-11-10-22-16-43-ux-konsepter.md) — avgjøre om Impeccable-skillen skal deles i repoet
+- [ ] 2026-11-10 [ux-konsepter](994-2026-11-10-22-16-43-ux-konsepter.md) — gruppen må bekrefte fonten (Atkinson Hyperlegible)
+- [ ] 2026-11-10 [ux-konsepter](994-2026-11-10-22-16-43-ux-konsepter.md) — velge komponentbibliotek i arkitekturfasen
