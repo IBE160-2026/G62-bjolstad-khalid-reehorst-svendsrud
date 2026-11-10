@@ -5,3 +5,4 @@
 - [ ] 2026-10-28 [pre-prd-research-og-verifisering](999-2026-10-28-19-20-37-pre-prd-research-og-verifisering.md) — avklar avrundingsregel for kaloriemålet (nærmeste heltall / ned / opp)
 - [ ] 2026-10-28 [pre-prd-research-og-verifisering](999-2026-10-28-19-20-37-pre-prd-research-og-verifisering.md) — OFF-dekning av norske varer er ikke undersøkt med Deep Recon ennå
 - [ ] 2026-10-28 [pre-prd-research-og-verifisering](999-2026-10-28-19-20-37-pre-prd-research-og-verifisering.md) — øvelseslista og videolenkene er ikke gjennomgått av gruppen ennå
+- [ ] 2026-11-10 [kroppsmodell-figur-fashion-croquis](997-2026-11-10-23-50-00-kroppsmodell-figur-fashion-croquis.md) — DESIGN.md sin "Kroppsmodell-region"-komponentbeskrivelse er utdatert (beskriver fortsatt stiplet kant + tekst / skisse-stil), bør oppdateres til den nye tekstløse konturtegning-stilen
