@@ -2,12 +2,14 @@
 title: "Product Brief: Prompt Force"
 status: draft
 created: 2026-09-16
-updated: 2026-10-13
+updated: 2026-11-10
 ---
 
 # Product Brief: Prompt Force
 
 > **Revision 2026-10-13:** Updated after course feedback (IBE160, 2026-10-06). Primary user changed to beginners, v1 scope narrowed to the core flow, image estimation and free/pro moved to phase 2, external services and local running described, calorie test cases added, all `[ASSUMPTION]` markers resolved.
+>
+> **Revision 2026-11-10:** Added design-intent notes (motivating, clean, low-button front page) and exercise search from the original concept pitch, plus three new Vision ideas — an anatomical muscle-group exercise picker, curated free training programmes, and curated free recipes. The minimum age stays at 16 (see PRD §8.1); the pitch's "18 years or older" framing is kept as descriptive language only, not a new requirement.
 
 ## Executive Summary
 
@@ -42,6 +44,7 @@ Prompt Force combines training and nutrition tracking into one web app, with equ
 - **Food logging** — barcode scanning (via Open Food Facts) and manual entry.
 - **Workout logging** — exercises, sets, reps and weight over time.
 - **Equipment-aware suggestions** — based on a fixed exercise database of 30–50 exercises, each tagged with required equipment, muscle group and level. Suggestions are rule-based: an exercise is shown only if the user has all the equipment it requires.
+- **Exercise search** — users can search the exercise database by name, in addition to filtering by equipment, muscle group and level.
 - **Exercise guidance** — each exercise in the database links to an existing instructional video (embedded or linked), so this is not a separate content-production task.
 
 ## What Makes This Different
@@ -50,11 +53,13 @@ Prompt Force draws its inspiration from two apps that each do one half of the jo
 
 Prompt Force isn't first to combine training and nutrition — platforms like Bevel and Cora already exist in that space (see addendum). For a course-scoped v1, the realistic differentiation is being simpler and more approachable than those broader platforms, and being useful for beginners through equipment-aware exercise suggestions — not claiming an unfounded moat.
 
+**Design intent:** the app should feel motivating and calm, not cluttered — a clean, functional front page with few buttons, so new users are not overwhelmed. Training and food each get their own section that leads the user forward step by step. The front page shows the day's logged plan at a glance, so the user immediately sees what has already been done. Detailed visual design is worked out in the UX phase (`DESIGN.md` / `EXPERIENCE.md`), not in this brief.
+
 ## Who This Serves
 
-**Primary user: beginners and lightly experienced exercisers.** People who have started or want to start training regularly, but don't yet know which exercises to do with the equipment they have, and who want an easy way to keep track of what they eat. A typical situation: someone with a few dumbbells at home, or a new gym membership, who doesn't know where to start and finds calorie tracking tedious.
+**Primary user: beginners and lightly experienced exercisers.** People who have started or want to start training regularly, but don't yet know which exercises to do with the equipment they have, and who want an easy way to keep track of what they eat. A typical situation: someone with a few dumbbells at home, or a new gym membership, who doesn't know where to start and finds calorie tracking tedious. More broadly, the app is meant for any adult who wants a better lifestyle through training and food — to improve general health and help prevent disease — not only people who are completely new to training.
 
-What they need: clear exercise suggestions for their equipment, simple instructions on how to perform each exercise, a calorie target they understand, and food logging that is quick.
+What they need: clear exercise suggestions for their equipment, simple instructions on how to perform each exercise, a calorie target they understand, food logging that is quick, and — for people who have never used an app like this before — a short, simple introduction to how it works.
 
 **Secondary users:** more experienced exercisers who want training and nutrition in one place. They benefit from the workout log and food logging, but v1 is not designed around their needs (e.g. advanced programming).
 
@@ -128,3 +133,5 @@ Weight, diet and training data are health information. The app stores only what 
 ## Vision
 
 Over time, Prompt Force could grow from a course prototype into the tool the original concept described: a phone/wearable-connected recovery signal that earns the Body Battery comparison, AI-driven form-checking on self-recorded lifts, and training programs that adapt automatically as the user gets stronger. Longer-term, this could extend into a native mobile app, positioning Prompt Force as a single home for training, nutrition and recovery.
+
+The original concept pitch also suggested three more ideas worth revisiting once v1 is stable: an **anatomical figure** the user can click on by muscle group to jump straight to suitable exercises (a more visual alternative to today's muscle-group filter); a curated list of **simple, free training programmes** found online, shown as inspiration rather than auto-generated plans (today's non-goal on training-programme generation stays in place for v1 — see the PRD §8); and a curated list of **free recipes** found online, to pair with food logging. None of these are started before the core loop and phase 2 above are finished.

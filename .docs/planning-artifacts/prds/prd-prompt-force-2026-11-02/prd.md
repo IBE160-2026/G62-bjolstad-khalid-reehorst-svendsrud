@@ -2,7 +2,7 @@
 title: "PRD: Prompt Force"
 status: draft
 created: 2026-11-02
-updated: 2026-11-03
+updated: 2026-11-10
 ---
 
 # PRD: Prompt Force
@@ -213,8 +213,9 @@ When the User chooses an Equipment Profile, the app shows only Exercises whose r
 - Example test: a User with only dumbbells is not suggested barbell deadlift.
 - Beginner Exercises are listed first, then Intermediate, then Advanced.
 
-#### FR-20: Filter suggestions
-The User can filter Exercise Suggestions by Muscle Group and Level.
+#### FR-20: Filter and search suggestions
+The User can filter Exercise Suggestions by Muscle Group and Level, and can search the fixed Exercise list by name.
+- Search is case-insensitive and matches names that contain the search text, the same way Food search works (FR-11).
 - If no Exercise matches, the User sees a message explaining why and what to change, never an empty list.
 
 #### FR-21: Exercise detail with video
@@ -254,8 +255,9 @@ For a chosen date (today by default) the app shows: Calorie Target, kcal eaten, 
 #### FR-27: Move between dates
 The User can move to earlier dates (previous day, or pick a date) and see the Daily Overview for that date.
 
-#### FR-28: Empty states
+#### FR-28: Empty states and first-time guidance
 A new User, or a date without logs, sees short prompts ("Log your first meal", "Start a workout") instead of empty tables.
+- A User who has never used the app before sees a short, optional first-run introduction to the three steps (profile → log → train) before reaching the empty Daily Overview. It can be dismissed and does not reappear once dismissed `[ASSUMPTION]`.
 
 ### 4.7 Phase 2 (only after the core loop is stable)
 
@@ -283,6 +285,7 @@ A User has a Pro Flag (default off) that unlocks FR-29. There is no payment; the
 - **NFR-8 Testability:** calorie calculation (FR-6), Exercise Suggestions (FR-19, FR-20), kcal sums (FR-13, FR-26), access control (FR-3) and the not-found barcode path (FR-10) have automated tests.
 - **NFR-9 Responsiveness:** a saved Food Log Entry or Set appears in the Daily Overview without a manual page reload.
 - **NFR-10 Accessibility:** form fields have labels, buttons are large enough to tap on a phone, and text has sufficient contrast `[ASSUMPTION: aim for WCAG 2.1 AA basics, not a full audit]`.
+- **NFR-11 Simple front page:** the front page (Daily Overview) favours few, clear actions over many buttons, so new and returning Users immediately see what is logged for today and where to go next (Food or Training). Detailed visual design is worked out in the UX phase (`DESIGN.md` / `EXPERIENCE.md`), not in this PRD.
 
 ## 6. Constraints and Guardrails
 
@@ -354,7 +357,7 @@ A web app that runs in the browser, mainly on a PC or laptop, since the submissi
 
 ### 9.3 Vision (not planned)
 
-Recovery score from wearables, AI form-checking, adaptive training programmes, payment, native app. See the brief's addendum for the reasons and the conditions to revisit.
+Recovery score from wearables, AI form-checking, adaptive training programmes, payment, native app. Also from the original concept pitch: an anatomical-figure exercise picker (click a muscle group to jump to suggestions — a more visual version of FR-20), a curated list of free training programmes found online (shown as inspiration, not auto-generated — the non-goal on training-programme generation in §8 stays in place for v1), and a curated list of free recipes found online. See the brief's Vision section and addendum for the reasons and the conditions to revisit.
 
 ## 10. Success Metrics
 
@@ -400,7 +403,10 @@ This is a course project, so success is measured on the finished prototype, not 
 - §4.2 FR-6 / §6.4 — Calorie Target floor of 1 200 / 1 500 kcal.
 - §4.2 FR-6 — Sex is required in v1 (interim answer to §11 Q6).
 - §4.2 FR-6 — Calorie Target for Users aged 16–17 shown with a "rough estimate" note.
+- §4.6 FR-28 — First-run introduction for first-time Users, dismissible and shown once.
 
 Confirmed by Osman Khalid on 2026-11-02 (no longer assumptions): Goal adjustment (−500 / 0 / +300), Meals with grams, saved Equipment Profiles, Norwegian UI, minimum age 16.
 
 Changed by Gustav Reehorst on 2026-11-03: the FR-8 assumption (scanning works on iPhone Safari and Android Chrome) is removed. The submission requires that the app runs in a browser and the examiner runs it on a PC, so camera scanning is now a Should, and typing the barcode (FR-9) and search (FR-11) are the main path. Updated in §1, UJ-2, FR-8, NFR-1, §7, §9.1, SM-4 and §11 Q2.
+
+Changed by Karianne Bjølstad on 2026-11-10: added details from the original concept pitch. Exercise name search added to FR-20; a dismissible first-run introduction added to FR-28; a new NFR-11 on keeping the front page simple with few buttons; three new Vision ideas added to §9.3 (anatomical-figure exercise picker, curated free training programmes, curated free recipes). The confirmed minimum age of 16 (§8.1) is unchanged — the pitch's "18 years or older" framing is descriptive only.
