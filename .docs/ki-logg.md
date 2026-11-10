@@ -250,6 +250,40 @@ Det viktigste funnet: Dekningsanalysen er regnet ut fra øvelseslista og viser a
 
 ---
 
+## 2026-11-10 – UX-konsepter: to runder og valgt konsept
+
+**Verktøy:** Claude Code (Impeccable-skillen, Claude in Chrome)
+**Hvem:** Osman Khalid
+**Bakgrunn:** Neste steg etter PRD-en er UX-design. Vi fulgte arbeidsmåten fra forelesningen 9. november: generere konsepter som SVG, velge, slå sammen og kjøre nye runder. Designet er en del av vurderingen, og sensor skal se at vi har styrt prosessen selv.
+
+### Hva vi ba KI om
+
+1. Lese forelesningene fra 9. november (Panopto-transkripsjon via Claude in Chrome) og oppsummere arbeidsmåten.
+2. Skrive `PRODUCT.md` fra PRD-en og briefen, og lage tre ulike konsepter for Dagsoversikten (PC og mobil).
+3. Etter valget: lage tre app-varianter av konseptet vi likte best.
+
+### Hva KI produserte
+
+- `PRODUCT.md` (produktbeskrivelse for Impeccable).
+- Runde 1: konsept A (Kjøleskapstavla), B (Treningsdagboka) og C (Kartlobene), som SVG generert med Python.
+- Runde 2: A1 (Sidemeny), A2 (Mobil først) og A3 (To store fliser).
+- `decisions.md` og `valgt-konsept/` under `.docs/planning-artifacts/ux/`.
+
+### Hva vi selv vurderte og kontrollerte
+
+- Osman valgte A etter runde 1, men påpekte at det burde føles mer som en app. Runde 2 la derfor til sidemeny, faner nederst på mobil, egne ikoner og trykkbare kort.
+- Osman valgte A1 fordi den var renest. KI anbefalte A3, men det ble ikke fulgt.
+- Svarene om produkt, stack (ikke bestemt) og merkevare (fritt frem) ble gitt av Osman før konseptene ble laget.
+- Alle tall i skissene er fiktive og bygger på eksempelet med Sara i PRD-en.
+
+### Status
+
+- [x] Konsept valgt (A1)
+- [ ] Gruppen ser over det valgte konseptet
+- [ ] BMAD UX: `DESIGN.md` og `EXPERIENCE.md`
+
+---
+
 ## Mal for nye oppføringer
 
 ```markdown
