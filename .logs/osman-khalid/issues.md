@@ -1,10 +1,10 @@
 # Åpne punkter
 
-- [ ] 2026-10-27 [research-prd-forberedelse](999-2026-10-27-12-10-43-research-prd-forberedelse.md) — research-dokumentet må gjennomgås av gruppen før commit
-- [ ] 2026-10-27 [research-prd-forberedelse](999-2026-10-27-12-10-43-research-prd-forberedelse.md) — branch `docs/ki-logg-og-brief-status` (brief godkjent) er ikke merget til main
-- [ ] 2026-10-27 [research-prd-forberedelse](999-2026-10-27-12-10-43-research-prd-forberedelse.md) — strekkode-spike på ekte iPhone og Android
+- [x] 2026-10-27 [research-prd-forberedelse](999-2026-10-27-12-10-43-research-prd-forberedelse.md) — research-dokumentet må gjennomgås av gruppen før commit (løst 2026-11-10 — committet i f99ccd3, og Karianne gikk gjennom og oppdaterte statusene i det 28.10)
+- [x] 2026-10-27 [research-prd-forberedelse](999-2026-10-27-12-10-43-research-prd-forberedelse.md) — branch `docs/ki-logg-og-brief-status` (brief godkjent) er ikke merget til main (løst 2026-11-10 — commit b1085a4 ligger i main; PR #1 lukket)
+- [x] 2026-10-27 [research-prd-forberedelse](999-2026-10-27-12-10-43-research-prd-forberedelse.md) — strekkode-spike på ekte iPhone og Android (løst 2026-11-10 — utgår: kameraskanning ble «Should» i PRD-en 3.11, så spiken trengs bare hvis FR-8 bygges)
 - [ ] 2026-10-27 [research-prd-forberedelse](999-2026-10-27-12-10-43-research-prd-forberedelse.md) — teste hvor godt Open Food Facts dekker norske varer
-- [ ] 2026-10-27 [research-prd-forberedelse](999-2026-10-27-12-10-43-research-prd-forberedelse.md) — kontrollere regneeksempler og videolenker (se KI-loggen)
+- [x] 2026-10-27 [research-prd-forberedelse](999-2026-10-27-12-10-43-research-prd-forberedelse.md) — kontrollere regneeksempler og videolenker (se KI-loggen) (løst 2026-11-10 — regneeksemplene kontrollert av Karianne 28.10 og Gustav 3.11; videolenkene er maskinelt sjekket, og menneskelig gjennomgang følges opp i punktet om de 34 videoene)
 - [ ] 2026-10-28 [ovelsesliste-utbedring](998-2026-10-28-20-10-12-ovelsesliste-utbedring.md) — alle 34 videoer i øvelseslista må ses gjennom av gruppen
 - [ ] 2026-10-28 [ovelsesliste-utbedring](998-2026-10-28-20-10-12-ovelsesliste-utbedring.md) — avklare én eller flere muskelgrupper per øvelse (#13 markløft)
 - [ ] 2026-10-28 [research-trening](997-2026-10-28-20-18-12-research-trening.md) — bestemme om vi skal legge til øvelser som tetter hullene for skulder og armer (kroppsvekt/kettlebell/trekkestang)
