@@ -315,6 +315,37 @@ Det viktigste funnet: Dekningsanalysen er regnet ut fra øvelseslista og viser a
 
 ---
 
+## 2026-11-10 – Open Food Facts-test og ACSM-sjekk
+
+**Verktøy:** Claude Code
+**Hvem:** Osman Khalid
+**Bakgrunn:** To åpne punkter før arkitekturen: hvor godt OFF dekker norske varer (PRD §11 Q3), og om ACSM-tallet 8–12 reps stemmer med originalkilden (PRD §11 Q5). Ingen andre i gruppen hadde startet på dem.
+
+### Hva vi ba KI om
+
+1. Teste 15 vanlige norske varer mot Open Food Facts og kontrollere kcal mot Oda.
+2. Sjekke ACSM-anbefalingen mot originaldokumentet.
+
+### Hva KI produserte
+
+- `.docs/planning-artifacts/research/off-dekning-og-acsm-2026-11-10.md` med tabell, metode, begrensninger og kilder.
+- Oppdatert `research-trening-2026-10-28.md`: 8–12 reps er bekreftet.
+
+### Hva vi selv vurderte og kontrollerte
+
+- Varelisten ble laget før søket, så OFF ikke styrte utvalget. Resultat: 9 av 15 funnet med norsk oppføring og kcal, 4 delvis, 2 ikke funnet.
+- Testen er et navnesøk, ikke et strekkodeoppslag. Det står som begrensning i dokumentet.
+- PubMed-siden kunne ikke leses direkte (cookie-side). Sammendraget ble hentet fra NCBI sitt offisielle API i stedet. 8–12 reps og 2–3 dager i uka er bekreftet, men antall sett står ikke i sammendraget og er derfor fortsatt ubekreftet.
+
+### Status
+
+- [x] OFF-dekning testet med navnesøk
+- [x] ACSM 8–12 reps bekreftet
+- [ ] Teste strekkodeoppslag med strekkodene fra tabellen (SM-4)
+- [ ] Gruppen tar stilling til kcal-kontroll og manuell registrering i arkitekturen
+
+---
+
 ## Mal for nye oppføringer
 
 ```markdown
