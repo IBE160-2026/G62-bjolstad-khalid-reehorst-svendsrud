@@ -284,6 +284,37 @@ Det viktigste funnet: Dekningsanalysen er regnet ut fra øvelseslista og viser a
 
 ---
 
+## 2026-11-10 – BMAD UX: DESIGN.md og EXPERIENCE.md
+
+**Verktøy:** Claude Code (BMAD `bmad-ux`, rask vei)
+**Hvem:** Osman Khalid
+**Bakgrunn:** Når konseptet var valgt (A1), var neste steg å gjøre det om til BMAD sine to UX-filer, slik foreleseren viste 9. november.
+
+### Hva vi ba KI om
+
+1. Kjøre BMAD UX på rask vei ut fra PRD-en, briefen, `PRODUCT.md` og det valgte konseptet A1.
+
+### Hva KI produserte
+
+- `DESIGN.md`: farger, typografi, avstander, hjørner, skygger og komponenter.
+- `EXPERIENCE.md`: alle skjermer, tekstene i appen, feil- og tomtilstander, tastatur og tilgjengelighet, og fem brukerreiser med Sara.
+- Begge ligger i `.docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/`, med beslutningslogg i `.memlog.md`.
+
+### Hva vi selv vurderte og kontrollerte
+
+- Osman valgte rask vei, at fargene fra A1 låses, og at v1 bare får lys modus.
+- KI målte kontrasten: oransje #D9542B ga 4.0:1 på hvitt og er for svak til tekst. Det ble lagt til en mørkere nyanse (#B9471F, 5.3:1) for oransje tekst.
+- KI kontrollerte at eksempelprofilen til Sara gir nøyaktig 1 640 kcal med formelen i FR-6. Den første versjonen ga 1 491 og ble rettet.
+- Ingen kvalitetskontrollører ble kjørt (valgt bort for å spare tid).
+
+### Status
+
+- [x] DESIGN.md og EXPERIENCE.md skrevet
+- [ ] Gruppen bekrefter fonten (Atkinson Hyperlegible)
+- [ ] Komponentbibliotek velges i arkitekturfasen
+
+---
+
 ## Mal for nye oppføringer
 
 ```markdown
