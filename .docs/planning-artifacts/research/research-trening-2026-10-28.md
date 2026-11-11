@@ -44,7 +44,7 @@ Treningsdelen av researchen før PRD-en. Matdelen dekkes av en annen i gruppen. 
 ACSMs posisjonsdokument om styrketrening (2009) anbefaler for nybegynnere:
 - **2–3 treningsdager i uka**
 - **1–3 sett** per øvelse
-- ca. **8–12 repetisjoner** per sett. Dette tallet kommer fra en sekundærkilde, så sjekk originaldokumentet før det brukes i appen.
+- ca. **8–12 repetisjoner** per sett. **Bekreftet mot originalkilden 2026-11-10** (se `off-dekning-og-acsm-2026-11-10.md`). Antall sett (1–3) står ikke i sammendraget og er fortsatt fra en sekundærkilde.
 
 Ifølge sekundærkilder har ACSM kommet med en nyere oppdatering, men den er ikke verifisert.
 

@@ -250,6 +250,102 @@ Det viktigste funnet: Dekningsanalysen er regnet ut fra øvelseslista og viser a
 
 ---
 
+## 2026-11-10 – UX-konsepter: to runder og valgt konsept
+
+**Verktøy:** Claude Code (Impeccable-skillen, Claude in Chrome)
+**Hvem:** Osman Khalid
+**Bakgrunn:** Neste steg etter PRD-en er UX-design. Vi fulgte arbeidsmåten fra forelesningen 9. november: generere konsepter som SVG, velge, slå sammen og kjøre nye runder. Designet er en del av vurderingen, og sensor skal se at vi har styrt prosessen selv.
+
+### Hva vi ba KI om
+
+1. Lese forelesningene fra 9. november (Panopto-transkripsjon via Claude in Chrome) og oppsummere arbeidsmåten.
+2. Skrive `PRODUCT.md` fra PRD-en og briefen, og lage tre ulike konsepter for Dagsoversikten (PC og mobil).
+3. Etter valget: lage tre app-varianter av konseptet vi likte best.
+
+### Hva KI produserte
+
+- `PRODUCT.md` (produktbeskrivelse for Impeccable).
+- Runde 1: konsept A (Kjøleskapstavla), B (Treningsdagboka) og C (Kartlobene), som SVG generert med Python.
+- Runde 2: A1 (Sidemeny), A2 (Mobil først) og A3 (To store fliser).
+- `decisions.md` og `valgt-konsept/` under `.docs/planning-artifacts/ux/`.
+
+### Hva vi selv vurderte og kontrollerte
+
+- Osman valgte A etter runde 1, men påpekte at det burde føles mer som en app. Runde 2 la derfor til sidemeny, faner nederst på mobil, egne ikoner og trykkbare kort.
+- Osman valgte A1 fordi den var renest. KI anbefalte A3, men det ble ikke fulgt.
+- Svarene om produkt, stack (ikke bestemt) og merkevare (fritt frem) ble gitt av Osman før konseptene ble laget.
+- Alle tall i skissene er fiktive og bygger på eksempelet med Sara i PRD-en.
+
+### Status
+
+- [x] Konsept valgt (A1)
+- [ ] Gruppen ser over det valgte konseptet
+- [ ] BMAD UX: `DESIGN.md` og `EXPERIENCE.md`
+
+---
+
+## 2026-11-10 – BMAD UX: DESIGN.md og EXPERIENCE.md
+
+**Verktøy:** Claude Code (BMAD `bmad-ux`, rask vei)
+**Hvem:** Osman Khalid
+**Bakgrunn:** Når konseptet var valgt (A1), var neste steg å gjøre det om til BMAD sine to UX-filer, slik foreleseren viste 9. november.
+
+### Hva vi ba KI om
+
+1. Kjøre BMAD UX på rask vei ut fra PRD-en, briefen, `PRODUCT.md` og det valgte konseptet A1.
+
+### Hva KI produserte
+
+- `DESIGN.md`: farger, typografi, avstander, hjørner, skygger og komponenter.
+- `EXPERIENCE.md`: alle skjermer, tekstene i appen, feil- og tomtilstander, tastatur og tilgjengelighet, og fem brukerreiser med Sara.
+- Begge ligger i `.docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/`, med beslutningslogg i `.memlog.md`.
+
+### Hva vi selv vurderte og kontrollerte
+
+- Osman valgte rask vei, at fargene fra A1 låses, og at v1 bare får lys modus.
+- KI målte kontrasten: oransje #D9542B ga 4.0:1 på hvitt og er for svak til tekst. Det ble lagt til en mørkere nyanse (#B9471F, 5.3:1) for oransje tekst.
+- KI kontrollerte at eksempelprofilen til Sara gir nøyaktig 1 640 kcal med formelen i FR-6. Den første versjonen ga 1 491 og ble rettet.
+- Ingen kvalitetskontrollører ble kjørt (valgt bort for å spare tid).
+
+### Status
+
+- [x] DESIGN.md og EXPERIENCE.md skrevet
+- [ ] Gruppen bekrefter fonten (Atkinson Hyperlegible)
+- [ ] Komponentbibliotek velges i arkitekturfasen
+
+---
+
+## 2026-11-10 – Open Food Facts-test og ACSM-sjekk
+
+**Verktøy:** Claude Code
+**Hvem:** Osman Khalid
+**Bakgrunn:** To åpne punkter før arkitekturen: hvor godt OFF dekker norske varer (PRD §11 Q3), og om ACSM-tallet 8–12 reps stemmer med originalkilden (PRD §11 Q5). Ingen andre i gruppen hadde startet på dem.
+
+### Hva vi ba KI om
+
+1. Teste 15 vanlige norske varer mot Open Food Facts og kontrollere kcal mot Oda.
+2. Sjekke ACSM-anbefalingen mot originaldokumentet.
+
+### Hva KI produserte
+
+- `.docs/planning-artifacts/research/off-dekning-og-acsm-2026-11-10.md` med tabell, metode, begrensninger og kilder.
+- Oppdatert `research-trening-2026-10-28.md`: 8–12 reps er bekreftet.
+
+### Hva vi selv vurderte og kontrollerte
+
+- Varelisten ble laget før søket, så OFF ikke styrte utvalget. Resultat: 9 av 15 funnet med norsk oppføring og kcal, 4 delvis, 2 ikke funnet.
+- Testen er et navnesøk, ikke et strekkodeoppslag. Det står som begrensning i dokumentet.
+- PubMed-siden kunne ikke leses direkte (cookie-side). Sammendraget ble hentet fra NCBI sitt offisielle API i stedet. 8–12 reps og 2–3 dager i uka er bekreftet, men antall sett står ikke i sammendraget og er derfor fortsatt ubekreftet.
+
+### Status
+
+- [x] OFF-dekning testet med navnesøk
+- [x] ACSM 8–12 reps bekreftet
+- [ ] Teste strekkodeoppslag med strekkodene fra tabellen (SM-4)
+- [ ] Gruppen tar stilling til kcal-kontroll og manuell registrering i arkitekturen
+
+---
+
 ## Mal for nye oppføringer
 
 ```markdown
