@@ -22,3 +22,5 @@
 - [ ] 2026-11-10 [ux-konsepter](994-2026-11-10-22-16-43-ux-konsepter.md) — velge komponentbibliotek i arkitekturfasen
 - [x] 2026-11-10 [off-test-og-acsm](992-2026-11-10-22-51-08-off-test-og-acsm.md) — teste strekkodeoppslag (FR-9) med strekkodene fra OFF-tabellen (SM-4) (løst 2026-11-11 — oppslaget virker, se [strekkodetest](990-2026-11-11-13-56-59-strekkodetest.md); dekning med fysiske varer følges opp i issue #14)
 - [ ] 2026-11-10 [off-test-og-acsm](992-2026-11-10-22-51-08-off-test-og-acsm.md) — gruppen tar stilling til kcal-kontroll for OFF-data i arkitekturen
+- [ ] 2026-11-11 [prd-gjennomgang-forberedelse](987-2026-11-11-17-21-47-prd-gjennomgang-forberedelse.md) — finne en kilde for kaloriegulvet 1 200 / 1 500 kcal (FR-6)
+- [ ] 2026-11-11 [prd-gjennomgang-forberedelse](987-2026-11-11-17-21-47-prd-gjennomgang-forberedelse.md) — avklare omfang for oppskrifter og treningsprogram i v1
