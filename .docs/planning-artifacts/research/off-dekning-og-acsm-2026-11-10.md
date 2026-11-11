@@ -60,3 +60,34 @@ Av 15 vanlige norske varer fant Open Food Facts (OFF) **9 med norsk oppføring o
 - **Antall sett (1–3):** ⚠️ står ikke i sammendraget. Tallet kommer fortsatt bare fra en sekundærkilde. Standardverdien på 3 sett i FR-23 er derfor et rimelig valg, men ikke direkte bekreftet av ACSM.
 
 **Kilde:** American College of Sports Medicine. *American College of Sports Medicine position stand. Progression models in resistance training for healthy adults.* Med Sci Sports Exerc. 2009;41(3):687–708. doi:10.1249/MSS.0b013e3181915670. PMID 19204579. Sammendraget er hentet via NCBI E-utilities 2026-11-10.
+
+---
+
+# Strekkodeoppslag i Open Food Facts (2026-11-11)
+
+**Svarer på:** issue #14 (FR-9, FR-10, SM-4). Strekkodene fra tabellen over ble slått opp direkte med `GET /api/v2/product/{strekkode}`.
+
+| Vare | Strekkode | Funnet | kcal OFF | kcal Oda | Svartid |
+|---|---|---|---|---|---|
+| Tine Lettmelk 1 % | 7038010000980 | ✅ | 42 | 41 | 322 ms |
+| Tine Norvegia | 7038010013966 | ✅ | 344 | 351 | 129 ms |
+| Jarlsberg | 5000165083905 | ✅ | 351 | 351 | 117 ms |
+| Tine Gudbrandsdalsost | 7038010028441 | ✅ | 440 | 441 | 142 ms |
+| Q Lettmelk 0,5 % | 7048840081950 | ✅ | 37 | 37 | 149 ms |
+| Freia Kvikk Lunsj | 7622210816672 | ✅ | 537,5 | 536 | 130 ms |
+| Mills Kaviar | 7036110009834 | ✅ | 430 | 430 | 157 ms |
+| Stabburet Leverpostei | 7039010132435 | ✅ | 225 | 225 | 147 ms |
+| Kavli Rekeost | 7041810010400 | ✅ | 216 | 216 | 126 ms |
+| Prior Kyllingfilet | 7039610001353 | ✅ | 101 | – | 151 ms |
+| First Price Havregryn | 7311041086971 | ✅ | 364 | – | 132 ms |
+| Eldorado Jasminris | 7035620020346 | ⚠️ uten kcal | – | – | 163 ms |
+| Finnes ikke (feiltest) | 7000000000000 | ❌ HTTP 404 | – | – | 124 ms |
+| Ugyldig, 12 siffer (feiltest) | 703801000098 | ❌ HTTP 404 | – | – | 150 ms |
+
+**Funn for arkitekturen:**
+- Strekkodeoppslaget er **raskt og stabilt**: rundt 120–320 ms og ingen 503-feil, i motsetning til søke-API-et.
+- **«Ikke funnet» kommer som HTTP 404** med `status: 0`. Appen må tolke det som «varen finnes ikke» og vise registrer-selv-knappen (FR-10), ikke som en teknisk feil.
+- **En vare kan finnes uten kcal** (Eldorado Jasminris). Den skal også gå til manuell registrering (FR-10).
+- **OFF sjekker ikke om strekkoden er gyldig.** En 12-sifret kode gir bare 404. Appen bør validere EAN-13/EAN-8 (lengde og kontrollsiffer) før den spør OFF, så brukeren får beskjed om tastefeil.
+
+**Begrensning:** strekkodene kom fra OFF selv, så testen viser at oppslaget fungerer, men **ikke** dekningen. Den ekte SM-4-testen krever strekkoder fra 10 fysiske varer i kjøleskapet eller butikken.
