@@ -1,0 +1,470 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prompt Force – Oppskrifter: Middag</title>
+<style>
+  /* =========================================================================
+     KEY SCREEN: Oppskrifter — Middag (egen kategoriside)
+     Hvilken skjerm: nås via kategori-inngangskortet "Middag" på
+     oppskrifter.html (hub-siden). Del av IA-restruktureringen der hver
+     oppskrift-kategori fikk sin egen side i stedet for en fane på én lang
+     side (.memlog.md entry 85). Innholdet under er flyttet ORDRETT fra den
+     tidligere mockups/oppskrifter.html (Middag-seksjonen, entry 78/81) —
+     ingen oppskriftstekst er omskrevet i denne flyttingen.
+
+     Visuell identitet er LÅST fra DESIGN.md / mockups/mat.html (samme
+     header/nav/laptop-browser-ramme/CSS-variabler/fonter/farger — ingen
+     nye farger eller fonter er funnet opp her):
+       paper (bakgrunn):        #F7F2E9
+       surface (kort):          #FFFDF7
+       ink (tekst-primær):      #3A322B  — kontrast 11.3:1 mot papir
+       ink-sekundær:            #6B6056  — kontrast 5.5:1 mot papir
+       accent-primary "plomme": #7A3B69  — kontrast 7.1:1 mot papir
+       accent-complete "teal":  #347774  — kontrast 4.7:1 mot papir (nå brukt
+         til "bytt ut proteinet"-callouten, samme register som hjelpeknapp/
+         video-btn)
+       rule (papirlinjal):      #E4D9C6
+       on-accent:               #FFF9F0
+     Typografi: Fraunces (overskrift, .serif) + Inter-fallback-stack (brødtekst).
+
+     Nytt element på kategorisidene (ikke på hub): en liten "← Alle
+     oppskrifter"-tilbakelenke rett under header, som erstatter den gamle
+     page-tabs/category-tabs-navigasjonen ett IA-nivå ned.
+     ========================================================================= */
+
+  :root{
+    color-scheme: light;
+    --paper: #F7F2E9;
+    --surface: #FFFDF7;
+    --ink: #3A322B;
+    --ink2: #6B6056;
+    --clay: #7A3B69;
+    --clay-tint: rgba(122,59,105,0.10);
+    --sage: #347774;
+    --sage-tint: rgba(52,119,116,0.14);
+    --rule: #E4D9C6;
+    --on-accent: #FFF9F0;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: #EAE2D3;
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+  /* HUMANISTISK BRØDTEKST-SANS — i produksjon: Inter (se DESIGN.md.typography.body). */
+  /* REDAKSJONELL JOURNAL-SERIF — i produksjon: Fraunces (se DESIGN.md.typography.heading). */
+  .serif { font-family: Georgia, "Iowan Old Style", "Times New Roman", serif; }
+
+  .page { min-height: 100vh; padding: 48px 20px 80px; display: flex; flex-direction: column; align-items: center; gap: 28px; }
+
+  .laptop { width: 100%; max-width: 1180px; }
+  .bezel { background: #D8CDB8; border-radius: 22px; padding: 14px 14px 0; box-shadow: 0 30px 60px -24px rgba(90,70,40,0.35); }
+  .browser-chrome { background: #ECE4D4; border-radius: 12px 12px 0 0; padding: 11px 16px; display: flex; align-items: center; gap: 16px; }
+  .traffic { display: flex; gap: 7px; }
+  .traffic span { width: 11px; height: 11px; border-radius: 50%; display: block; }
+  .address-pill { flex: 1; background: var(--surface); border-radius: 8px; padding: 7px 14px; color: var(--ink2); font-size: 0.78rem; display: flex; align-items: center; gap: 8px; border: 1px solid var(--rule); }
+  .address-pill svg { width: 12px; height: 12px; flex-shrink: 0; }
+
+  .app-screen { background: var(--paper); padding: 40px 48px 56px; background-image: repeating-linear-gradient(to bottom, transparent, transparent 37px, var(--rule) 38px); }
+  .laptop-base { height: 14px; background: #D2C7B1; border-radius: 0 0 10px 10px; margin: 0 20px; position: relative; }
+  .laptop-base::after { content: ""; position: absolute; left: 50%; top: 0; transform: translateX(-50%); width: 86px; height: 6px; background: #C6BA9F; border-radius: 0 0 7px 7px; }
+
+  .app-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 30px; gap: 20px; flex-wrap: wrap; }
+  .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.2rem; color: var(--ink); }
+  .logo svg { width: 30px; height: 30px; }
+  .main-nav { display: flex; gap: 6px; background: var(--surface); border: 1px solid var(--rule); border-radius: 999px; padding: 5px; }
+  .main-nav a { padding: 9px 18px; border-radius: 999px; color: var(--ink2); font-size: 0.9rem; font-weight: 600; text-decoration: none; }
+  .main-nav a.active { background: var(--clay); color: var(--on-accent); }
+  .header-actions { display: flex; align-items: center; gap: 10px; }
+  .icon-btn { width: 40px; height: 40px; border-radius: 50%; background: var(--sage-tint); border: 1px solid var(--rule); color: var(--sage); font-weight: 700; font-size: 0.95rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+
+  /* --- Back link: one IA level up, replaces the old page-tabs/category-tabs on category pages --- */
+  .back-link { display: inline-flex; align-items: center; gap: 6px; font-size: 0.86rem; font-weight: 700; color: var(--clay); text-decoration: none; margin-bottom: 18px; }
+  .back-link svg { width: 15px; height: 15px; stroke: var(--clay); flex-shrink: 0; }
+
+  h1.page-title { font-size: 1.9rem; font-weight: 600; margin: 4px 0 24px; color: var(--ink); }
+  h3.card-heading { font-size: 1.02rem; font-weight: 700; margin: 0 0 4px; color: var(--ink); }
+
+  /* --- Focus ring: visible on every real interactive control, keyboard-reachable --- */
+  button:focus-visible,
+  a:focus-visible,
+  input:focus-visible {
+    outline: 2px solid var(--clay);
+    outline-offset: 2px;
+    border-radius: 10px;
+  }
+
+  .card { background: var(--surface); border: 1px solid var(--rule); border-radius: 22px; padding: 24px; box-shadow: 0 12px 26px -18px rgba(120,90,50,0.22); position: relative; }
+  .card::before { content: ""; position: absolute; top: -8px; left: 28px; width: 46px; height: 16px; background: var(--sage-tint); border: 1px solid var(--rule); transform: rotate(-3deg); border-radius: 2px; }
+
+  /* --- Full recipes, all shown expanded (stacked vertically) --- */
+  .recipe-detail { margin-bottom: 40px; }
+  .recipe-detail:last-of-type { margin-bottom: 0; }
+  .category-label { display: inline-flex; align-items: center; gap: 8px; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase; color: var(--clay); margin-bottom: 10px; }
+  .category-label .icon-dot { width: 26px; height: 26px; border-radius: 50%; background: var(--clay-tint); display: inline-flex; align-items: center; justify-content: center; }
+  .category-label .icon-dot svg { width: 14px; height: 14px; stroke: var(--clay); }
+  .recipe-title { font-size: 1.6rem; font-weight: 600; margin: 0 0 16px; color: var(--ink); }
+
+  .recipe-meta { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 26px; }
+  .meta-chip { display: inline-flex; align-items: center; gap: 6px; background: var(--paper); border: 1px solid var(--rule); border-radius: 999px; padding: 7px 14px; font-size: 0.82rem; font-weight: 700; color: var(--ink2); }
+  .meta-chip svg { width: 14px; height: 14px; stroke: var(--ink2); flex-shrink: 0; }
+
+  .recipe-body { display: grid; grid-template-columns: minmax(220px, 300px) 1fr; gap: 36px; }
+  .ingredient-list { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 9px; }
+  .ingredient-list li { font-size: 0.95rem; color: var(--ink); padding-left: 18px; position: relative; }
+  .ingredient-list li::before { content: ""; position: absolute; left: 0; top: 9px; width: 6px; height: 6px; border-radius: 50%; background: var(--clay); }
+  .method-steps { margin: 0; padding-left: 22px; display: flex; flex-direction: column; gap: 11px; }
+  .method-steps li { font-size: 0.95rem; color: var(--ink); }
+  .muted { font-weight: 400; color: var(--ink2); font-size: 0.85rem; }
+
+  /* --- "Bytt ut proteinet": small helpful/informative callout, not a primary action —
+         reuses the existing accent-complete (teal) tint token, same register as the
+         help button / video-btn, never the accent-primary (plomme/CTA) color. --- */
+  .protein-swap { display: flex; align-items: flex-start; gap: 10px; background: var(--sage-tint); border: 1px solid var(--rule); border-radius: 14px; padding: 12px 16px; margin-top: 22px; grid-column: 1 / -1; }
+  .protein-swap svg { width: 18px; height: 18px; stroke: var(--sage); flex-shrink: 0; margin-top: 2px; }
+  .protein-swap p { margin: 0; font-size: 0.88rem; color: var(--ink); line-height: 1.5; }
+  .protein-swap strong { color: var(--sage); font-weight: 700; }
+
+  .footnote { margin: 44px 0 0; font-size: 0.78rem; color: var(--ink2); line-height: 1.6; max-width: 760px; }
+
+  @media (max-width: 760px) {
+    .recipe-body { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="laptop">
+    <div class="bezel">
+      <div class="browser-chrome">
+        <div class="traffic">
+          <span style="background:#E8A87C;"></span>
+          <span style="background:#D9C27A;"></span>
+          <span style="background:#A3B98A;"></span>
+        </div>
+        <div class="address-pill">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>
+          promptforce.app/mat/oppskrifter/middag
+        </div>
+      </div>
+
+      <div class="app-screen">
+        <header class="app-header">
+          <div class="logo">
+            <svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#7A3B69"/><path d="M11 22 L16 9 L21 22 L16 18 Z" fill="#FFF9F0"/></svg>
+            Prompt Force
+          </div>
+          <nav class="main-nav">
+            <a href="#">Forside</a>
+            <a href="#">Trening</a>
+            <a class="active" href="#">Mat</a>
+          </nav>
+          <div class="header-actions">
+            <button class="icon-btn" aria-label="Hjelp – forklar denne siden" title="Trykk for en kort forklaring av denne siden">?</button>
+          </div>
+        </header>
+
+        <a class="back-link" href="oppskrifter.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+          Alle oppskrifter
+        </a>
+
+        <h1 class="page-title serif">Middag</h1>
+
+        <!-- Five full recipes, all shown expanded (stacked), each with a "bytt ut proteinet" callout for easy kjøtt/kylling <-> vegetar adjustment. -->
+
+        <section class="card recipe-detail" aria-label="Middagsoppskrift: Pastagryte med grønnsaker">
+          <span class="category-label">
+            <span class="icon-dot">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-3 3-5 6-5 9a5 5 0 0010 0c0-3-2-6-5-9z"/></svg>
+            </span>
+            Middag
+          </span>
+          <h2 class="recipe-title serif">Pastagryte med grønnsaker</h2>
+
+          <div class="recipe-meta">
+            <span class="meta-chip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l4 2"/></svg>
+              ca. 25 min
+            </span>
+            <span class="meta-chip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l3 7h6l-4.8 4.2L18 21l-6-4-6 4 1.8-6.8L3 10h6z"/></svg>
+              Nybegynnervennlig
+            </span>
+            <span class="meta-chip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v6M8 5l1.5 3M16 5l-1.5 3"/><path d="M5 11h14l-1.2 8.4A2 2 0 0115.8 21H8.2a2 2 0 01-2-1.6L5 11z"/></svg>
+              ca. 480 kcal/porsjon
+            </span>
+          </div>
+
+          <div class="recipe-body">
+            <div>
+              <h3 class="card-heading serif">Ingredienser <span class="muted">(4 porsjoner)</span></h3>
+              <ul class="ingredient-list">
+                <li>300 g fullkornspasta</li>
+                <li>400 g kjøttdeig</li>
+                <li>1 løk</li>
+                <li>2 fedd hvitløk</li>
+                <li>1 boks hermetiske tomater</li>
+                <li>1 squash i terninger</li>
+                <li>1 paprika i terninger</li>
+                <li>1 ss olivenolje</li>
+                <li>Salt og pepper</li>
+                <li>Evt. revet ost til servering</li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="card-heading serif">Fremgangsmåte</h3>
+              <ol class="method-steps">
+                <li>Kok pastaen etter anvisning på pakken.</li>
+                <li>Fres løk og hvitløk i olivenolje.</li>
+                <li>Tilsett kjøttdeig og stek til den er gjennomstekt.</li>
+                <li>Ha i squash, paprika og hermetiske tomater, la småkoke 10 minutter.</li>
+                <li>Smak til med salt og pepper.</li>
+                <li>Bland med pastaen eller server ved siden av.</li>
+              </ol>
+            </div>
+            <div class="protein-swap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h13M13 3l4 4-4 4"/><path d="M20 17H7M11 13l-4 4 4 4"/></svg>
+              <p><strong>Bytt ut proteinet:</strong> kjøttdeig kan byttes med linser eller kikerter (vegetar) eller kyllingkjøttdeig.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="card recipe-detail" aria-label="Middagsoppskrift: Enkel grytemiddag med karri">
+          <span class="category-label">
+            <span class="icon-dot">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-3 3-5 6-5 9a5 5 0 0010 0c0-3-2-6-5-9z"/></svg>
+            </span>
+            Middag
+          </span>
+          <h2 class="recipe-title serif">Enkel grytemiddag med karri</h2>
+
+          <div class="recipe-meta">
+            <span class="meta-chip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l4 2"/></svg>
+              ca. 35 min
+            </span>
+            <span class="meta-chip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l3 7h6l-4.8 4.2L18 21l-6-4-6 4 1.8-6.8L3 10h6z"/></svg>
+              Nybegynnervennlig
+            </span>
+            <span class="meta-chip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v6M8 5l1.5 3M16 5l-1.5 3"/><path d="M5 11h14l-1.2 8.4A2 2 0 0115.8 21H8.2a2 2 0 01-2-1.6L5 11z"/></svg>
+              ca. 450 kcal/porsjon
+            </span>
+          </div>
+
+          <div class="recipe-body">
+            <div>
+              <h3 class="card-heading serif">Ingredienser <span class="muted">(4 porsjoner)</span></h3>
+              <ul class="ingredient-list">
+                <li>500 g kyllingfilet i biter</li>
+                <li>1 løk</li>
+                <li>2 gulrøtter</li>
+                <li>3 poteter</li>
+                <li>2 ts karripulver</li>
+                <li>4 dl kyllingbuljong</li>
+                <li>2 dl kokosmelk (lett)</li>
+                <li>Salt og pepper</li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="card-heading serif">Fremgangsmåte</h3>
+              <ol class="method-steps">
+                <li>Skjær kylling, løk, gulrot og potet i biter.</li>
+                <li>Brun kyllingen i en gryte, ha i løk og karripulver, rør rundt.</li>
+                <li>Tilsett gulrot, potet, buljong og kokosmelk.</li>
+                <li>La det småkoke under lokk i 20–25 minutter til potetene er møre.</li>
+                <li>Smak til med salt og pepper.</li>
+              </ol>
+            </div>
+            <div class="protein-swap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h13M13 3l4 4-4 4"/><path d="M20 17H7M11 13l-4 4 4 4"/></svg>
+              <p><strong>Bytt ut proteinet:</strong> kylling kan byttes med kikerter eller tofu i terninger (vegetar).</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="card recipe-detail" aria-label="Middagsoppskrift: Ris-bowl med kylling og grønnsaker">
+          <span class="category-label">
+            <span class="icon-dot">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-3 3-5 6-5 9a5 5 0 0010 0c0-3-2-6-5-9z"/></svg>
+            </span>
+            Middag
+          </span>
+          <h2 class="recipe-title serif">Ris-bowl med kylling og grønnsaker</h2>
+
+          <div class="recipe-meta">
+            <span class="meta-chip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l4 2"/></svg>
+              ca. 25 min
+            </span>
+            <span class="meta-chip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l3 7h6l-4.8 4.2L18 21l-6-4-6 4 1.8-6.8L3 10h6z"/></svg>
+              Nybegynnervennlig
+            </span>
+            <span class="meta-chip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v6M8 5l1.5 3M16 5l-1.5 3"/><path d="M5 11h14l-1.2 8.4A2 2 0 0115.8 21H8.2a2 2 0 01-2-1.6L5 11z"/></svg>
+              ca. 460 kcal/porsjon
+            </span>
+          </div>
+
+          <div class="recipe-body">
+            <div>
+              <h3 class="card-heading serif">Ingredienser <span class="muted">(4 porsjoner)</span></h3>
+              <ul class="ingredient-list">
+                <li>3 dl ris</li>
+                <li>400 g kyllingfilet i biter</li>
+                <li>1 brokkoli i buketter</li>
+                <li>2 gulrøtter i strimler</li>
+                <li>2 ss soyasaus</li>
+                <li>1 fedd hvitløk</li>
+                <li>1 ts revet ingefær</li>
+                <li>1 ss olje</li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="card-heading serif">Fremgangsmåte</h3>
+              <ol class="method-steps">
+                <li>Kok risen etter anvisning på pakken.</li>
+                <li>Stek kylling i olje til den er gjennomstekt.</li>
+                <li>Ha i hvitløk og ingefær, stek i 1 minutt.</li>
+                <li>Tilsett brokkoli og gulrot, stek til grønnsakene er møre, men fortsatt sprø.</li>
+                <li>Tilsett soyasaus og bland godt.</li>
+                <li>Server over ris.</li>
+              </ol>
+            </div>
+            <div class="protein-swap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h13M13 3l4 4-4 4"/><path d="M20 17H7M11 13l-4 4 4 4"/></svg>
+              <p><strong>Bytt ut proteinet:</strong> kylling kan byttes med tofu eller edamamebønner (vegetar).</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="card recipe-detail" aria-label="Middagsoppskrift: Grønnsakswok med nudler">
+          <span class="category-label">
+            <span class="icon-dot">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-3 3-5 6-5 9a5 5 0 0010 0c0-3-2-6-5-9z"/></svg>
+            </span>
+            Middag
+          </span>
+          <h2 class="recipe-title serif">Grønnsakswok med nudler</h2>
+
+          <div class="recipe-meta">
+            <span class="meta-chip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l4 2"/></svg>
+              ca. 20 min
+            </span>
+            <span class="meta-chip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l3 7h6l-4.8 4.2L18 21l-6-4-6 4 1.8-6.8L3 10h6z"/></svg>
+              Nybegynnervennlig
+            </span>
+            <span class="meta-chip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v6M8 5l1.5 3M16 5l-1.5 3"/><path d="M5 11h14l-1.2 8.4A2 2 0 0115.8 21H8.2a2 2 0 01-2-1.6L5 11z"/></svg>
+              ca. 440 kcal/porsjon
+            </span>
+          </div>
+
+          <div class="recipe-body">
+            <div>
+              <h3 class="card-heading serif">Ingredienser <span class="muted">(4 porsjoner)</span></h3>
+              <ul class="ingredient-list">
+                <li>300 g eggenudler eller ris-nudler</li>
+                <li>400 g kyllingfilet i strimler</li>
+                <li>Blandede woksgrønnsaker (paprika, sukkererter, gulrot, vårløk)</li>
+                <li>3 ss soyasaus</li>
+                <li>1 fedd hvitløk</li>
+                <li>1 ts revet ingefær</li>
+                <li>1 ss olje</li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="card-heading serif">Fremgangsmåte</h3>
+              <ol class="method-steps">
+                <li>Kok nudlene etter anvisning på pakken.</li>
+                <li>Varm olje i en wok eller stor panne på høy varme.</li>
+                <li>Stek kylling til den er gjennomstekt, ha i hvitløk og ingefær.</li>
+                <li>Tilsett grønnsakene og stek raskt (2–3 minutter) til de er møre, men sprø.</li>
+                <li>Ha i nudlene og soyasausen, vend godt sammen.</li>
+              </ol>
+            </div>
+            <div class="protein-swap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h13M13 3l4 4-4 4"/><path d="M20 17H7M11 13l-4 4 4 4"/></svg>
+              <p><strong>Bytt ut proteinet:</strong> kylling kan byttes med reker eller fast tofu (vegetar).</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="card recipe-detail" aria-label="Middagsoppskrift: Sunn taco med fylt salat">
+          <span class="category-label">
+            <span class="icon-dot">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-3 3-5 6-5 9a5 5 0 0010 0c0-3-2-6-5-9z"/></svg>
+            </span>
+            Middag
+          </span>
+          <h2 class="recipe-title serif">Sunn taco med fylt salat</h2>
+
+          <div class="recipe-meta">
+            <span class="meta-chip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l4 2"/></svg>
+              ca. 25 min
+            </span>
+            <span class="meta-chip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l3 7h6l-4.8 4.2L18 21l-6-4-6 4 1.8-6.8L3 10h6z"/></svg>
+              Nybegynnervennlig
+            </span>
+            <span class="meta-chip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v6M8 5l1.5 3M16 5l-1.5 3"/><path d="M5 11h14l-1.2 8.4A2 2 0 0115.8 21H8.2a2 2 0 01-2-1.6L5 11z"/></svg>
+              ca. 500 kcal/porsjon
+            </span>
+          </div>
+
+          <div class="recipe-body">
+            <div>
+              <h3 class="card-heading serif">Ingredienser <span class="muted">(4 porsjoner)</span></h3>
+              <ul class="ingredient-list">
+                <li>8 fullkorns-tacolefser</li>
+                <li>400 g kjøttdeig</li>
+                <li>1 pose tacokrydder (eller hjemmelaget: paprikapulver, spisskummen, hvitløkpulver)</li>
+                <li>1 boks mais</li>
+                <li>1 hodesalat</li>
+                <li>2 tomater i terninger</li>
+                <li>1 avokado</li>
+                <li>1 dl lett rømme eller yoghurt naturell</li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="card-heading serif">Fremgangsmåte</h3>
+              <ol class="method-steps">
+                <li>Brun kjøttdeigen i en panne.</li>
+                <li>Tilsett tacokrydder og litt vann, la det småkoke i 5 minutter.</li>
+                <li>Varm tacolefsene etter anvisning på pakken.</li>
+                <li>Fyll lefsene med kjøttdeig, mais, salat, tomat og avokado.</li>
+                <li>Topp med rømme eller yoghurt.</li>
+              </ol>
+            </div>
+            <div class="protein-swap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h13M13 3l4 4-4 4"/><path d="M20 17H7M11 13l-4 4 4 4"/></svg>
+              <p><strong>Bytt ut proteinet:</strong> kjøttdeig kan byttes med svarte bønner eller fylte mais-/bønnerøre (vegetar).</p>
+            </div>
+          </div>
+        </section>
+
+        <p class="footnote">Oppskriftene på denne siden er inspirert av frie, offentlig tilgjengelige norske oppskriftskilder (matoppskrift.no, TINE.no, bramat.no) og omskrevet i appens egen tone — ikke eksakte sitater.</p>
+
+      </div>
+      <div class="laptop-base"></div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

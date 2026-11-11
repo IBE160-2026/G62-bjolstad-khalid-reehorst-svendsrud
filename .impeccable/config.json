@@ -1,0 +1,187 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "tiny-text",
+        "value": "*",
+        "files": [
+          "/Users/kariannebjolstad/Projects/IBE160 Projects/prompt force/G62-bjolstad-khalid-reehorst-svendsrud/.docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/.working/color-themes-1.html"
+        ],
+        "createdAt": "2026-11-10T19:42:29.440Z",
+        "reason": "Dette er et internt UX-utforskningsartefakt (color-themes-renderer) som viser 6 fargetema side ved side med token-chips og hex-koder, ikke selve produkt-UI-et. Liten tekst (chip-hex-koder ~10px, SVG-dashbord-bildetekster ~10.5-12px) er et bevisst tetthetsvalg for å få alle varianter og alle 8 tokens synlige side ved side i ett vindu, slik brukeren ba om. Selve app-designet (DESIGN.md) skal bruke normal lesbar tekststørrelse - denne begrensningen gjelder kun denne sammenligningsvisningen."
+      },
+      {
+        "rule": "undersized-ui-text",
+        "value": "*",
+        "files": [
+          ".docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/.working/color-themes-1.html"
+        ],
+        "createdAt": "2026-11-10T19:43:58.562Z",
+        "reason": "Agent: intern UX-sammenligningsartefakt (6 fargetema + 8 token-chips side ved side) - bevisst tetthetsvalg for denne filen, ikke produkt-UI. Selve DESIGN.md/app-UI skal bruke normal lesbar tekststørrelse."
+      },
+      {
+        "rule": "cream-palette",
+        "value": "*",
+        "files": [
+          ".docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/.working/direction-02-lys-luftig.html",
+          ".docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/.working/direction-02b-indigo-gull.html",
+          ".docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/.working/direction-02c-plomme-teal.html",
+          ".docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/.working/direction-02d-sennep-slate.html",
+          ".docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/.working/direction-02e-umbra-lavendel.html",
+          ".docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/.working/direction-02f-kobolt-aprikos.html"
+        ],
+        "createdAt": "2026-11-10T20:17:27.640Z",
+        "reason": "Agent: bevisst valg, ikke lat AI-default - retningen ble eksplisitt briefet som en varm papir-/dagbok-følelse ('papirfølelse, varme nøytrale toner, dagbok/journal'), så krem/beige bakgrunn ER selve designintensjonen for denne retningen. De 5 nye fargepar-variantene (02b-02f) er nesten-identiske kopier av 02 der KUN de to aksentfargene er byttet ut på brukers eksplisitte instruks om at layout/typografi/papir-bakgrunn ikke skal endres - samme sanksjonerte bakgrunn, samme begrunnelse."
+      },
+      {
+        "rule": "design-system-font",
+        "value": "*",
+        "files": [
+          ".docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/.working/*.html",
+          ".docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/mockups/*.html"
+        ],
+        "createdAt": "2026-11-10T22:27:33.090Z",
+        "reason": "Agent: falsk positiv på grunn av miljøbegrensning, ikke et reelt designavvik. Disse mockupene er statiske HTML-filer uten nettverkstilgang (per key-screens/design-directions-renderer-spec), så de kan ikke faktisk laste DESIGN.md sine produksjonsfonter (Fraunces/Inter) - de bruker system-fontstacker som proxy og dokumenterer det ekte fontnavnet i rasjonale-tekst/kommentar. Detektoren ser det RENDREDE fallback-fontnavnet (f.eks. Georgia/Roboto i dette miljøet) i stedet for den tiltenkte Fraunces/Inter-verdien, selv på den valgte vinnerfilen (direction-02c-plomme-teal.html) som DESIGN.md sine tokens faktisk ble hentet fra. Gjelder hele UX-arbeidsområdets mockup-filer, både nåværende og fremtidige key-screens/promoterte mockups."
+      },
+      {
+        "rule": "design-system-font",
+        "value": "*",
+        "files": [
+          ".docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/.working/color-themes-1.html",
+          ".docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/.working/direction-01-mork-premium.html",
+          ".docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/.working/direction-02-lys-luftig.html",
+          ".docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/.working/direction-02b-indigo-gull.html",
+          ".docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/.working/direction-02c-plomme-teal.html",
+          ".docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/.working/direction-02d-sennep-slate.html",
+          ".docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/.working/direction-02e-umbra-lavendel.html",
+          ".docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/.working/direction-02f-kobolt-aprikos.html",
+          ".docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/.working/direction-03-maksimalistisk-energi.html",
+          ".docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/.working/direction-04-redaksjonell.html",
+          ".docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/.working/direction-05-jordnaer-wellness.html",
+          ".docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/.working/direction-06-data-tungt.html",
+          ".docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/.working/direction-07-leken-vennlig.html",
+          ".docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/.working/direction-08-arkitektonisk.html",
+          ".docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/.working/direction-09-pastell-rolig.html",
+          ".docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/.working/direction-10-elektrisk-sporty.html",
+          ".docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/.working/direction-geometrisk-naturlig.html",
+          ".docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/.working/direction-grotesk-skarp.html",
+          ".docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/.working/direction-humanistisk-varm.html",
+          ".docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/.working/key-kroppsmodell.html"
+        ],
+        "createdAt": "2026-11-10T22:28:33.175Z",
+        "reason": "Agent: falsk positiv på grunn av miljøbegrensning (ikke glob - eksplisitt filliste siden wildcard-glob ikke matchet). Disse mockupene er statiske HTML uten nettverkstilgang, kan ikke faktisk laste DESIGN.md sine produksjonsfonter (Fraunces/Inter) - bruker system-fontstacker som proxy. Detektoren ser RENDRET fallback-fontnavn (Georgia/Roboto i dette miljøet) i stedet for tiltenkt verdi, selv på vinnerfilen direction-02c-plomme-teal.html som DESIGN.md sine tokens ble hentet fra."
+      },
+      {
+        "rule": "cream-palette",
+        "value": "*",
+        "files": [
+          ".docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/.working/key-kroppsmodell.html"
+        ],
+        "createdAt": "2026-11-10T22:29:36.744Z",
+        "reason": "Agent: bevisst valg, ikke lat AI-default - gjenbruker EKSAKT samme låste papir-/dagbok-bakgrunn (DESIGN.md colors.paper/#F7F2E9 + ytre #EAE2D3-ramme) som de godkjente direction-02/02c-mockupene denne key-screen-filen er pålagt å gjenbruke header/ramme-stilen fra. Samme sanksjonerte bakgrunn, samme begrunnelse som tidligere loggført for 02/02b-02f."
+      },
+      {
+        "rule": "design-system-font",
+        "value": "*",
+        "files": [
+          ".docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/mockups/dashboard.html",
+          ".docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/mockups/kroppsmodell.html"
+        ],
+        "createdAt": "2026-11-10T22:31:36.576Z",
+        "reason": "Agent: samme miljøbegrensning som .working-oppføringene (ingen nettverkstilgang, systemfont-stacker som proxy for Fraunces/Inter resolver til Georgia/Roboto i rendringsmiljoet) - disse er promoterte kopier av de allerede sanksjonerte filene."
+      },
+      {
+        "rule": "cream-palette",
+        "value": "*",
+        "files": [
+          ".docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/mockups/dashboard.html",
+          ".docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/mockups/kroppsmodell.html"
+        ],
+        "createdAt": "2026-11-10T22:31:36.597Z",
+        "reason": "Agent: bevisst papir-/dagbok-bakgrunn fra DESIGN.md (samme begrunnelse som direction-02-serien) - promoterte kopier av allerede sanksjonerte filer."
+      },
+      {
+        "rule": "cream-palette",
+        "value": "*",
+        "files": [
+          ".docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/.working/key-mat.html"
+        ],
+        "createdAt": "2026-11-11T12:01:30.537Z",
+        "reason": "Agent: bevisst papir-/dagbok-bakgrunn fra DESIGN.md (samme begrunnelse som direction-02-serien og key-kroppsmodell.html) - ny key-screen-mockup som gjenbruker eksakt samme låste header/ramme-bakgrunn."
+      },
+      {
+        "rule": "cream-palette",
+        "value": "*",
+        "files": [
+          ".docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/mockups/mat.html"
+        ],
+        "createdAt": "2026-11-11T12:01:30.563Z",
+        "reason": "Agent: bevisst papir-/dagbok-bakgrunn fra DESIGN.md (samme begrunnelse som direction-02-serien, key-kroppsmodell.html, mockups/dashboard.html og mockups/kroppsmodell.html) - promotert kopi av allerede sanksjonert fil."
+      },
+      {
+        "rule": "cream-palette",
+        "value": "*",
+        "files": [
+          ".docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/.working/key-oppskrifter-hub.html",
+          ".docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/.working/key-oppskrifter-frokost.html",
+          ".docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/.working/key-oppskrifter-lunsj.html",
+          ".docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/.working/key-oppskrifter-middag.html",
+          ".docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/.working/key-oppskrifter-mellommaltid.html"
+        ],
+        "createdAt": "2026-11-11T13:30:00.000Z",
+        "reason": "Agent: bevisst papir-/dagbok-bakgrunn fra DESIGN.md (samme begrunnelse som direction-02-serien, key-kroppsmodell.html og key-mat.html) - Oppskrifter-siden restrukturert fra én lang fane-side (tidligere key-oppskrifter.html, nå slettet) til en hub-side + fire kategori-sider, som alle gjenbruker eksakt samme låste header/ramme-bakgrunn. Denne oppføringen erstatter den forrige for key-oppskrifter.html."
+      },
+      {
+        "rule": "cream-palette",
+        "value": "*",
+        "files": [
+          ".docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/mockups/oppskrifter.html",
+          ".docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/mockups/oppskrifter-frokost.html",
+          ".docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/mockups/oppskrifter-lunsj.html",
+          ".docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/mockups/oppskrifter-middag.html",
+          ".docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/mockups/oppskrifter-mellommaltid.html"
+        ],
+        "createdAt": "2026-11-11T13:30:00.000Z",
+        "reason": "Agent: bevisst papir-/dagbok-bakgrunn fra DESIGN.md (samme begrunnelse som direction-02-serien, key-kroppsmodell.html, mockups/mat.html) - promoterte kopier av de allerede sanksjonerte .working/key-oppskrifter-*-filene (hub + fire kategorisider)."
+      },
+      {
+        "rule": "design-system-font",
+        "value": "*",
+        "files": [
+          ".docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/.working/key-oppskrifter-frokost.html",
+          ".docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/.working/key-oppskrifter-hub.html",
+          ".docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/.working/key-oppskrifter-lunsj.html",
+          ".docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/.working/key-oppskrifter-mellommaltid.html",
+          ".docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/.working/key-oppskrifter-middag.html",
+          ".docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/mockups/oppskrifter-frokost.html",
+          ".docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/mockups/oppskrifter-lunsj.html",
+          ".docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/mockups/oppskrifter-mellommaltid.html",
+          ".docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/mockups/oppskrifter-middag.html",
+          ".docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/mockups/oppskrifter.html"
+        ],
+        "createdAt": "2026-11-11T12:49:14.897Z",
+        "reason": "Agent: samme kjente miljøbegrensning som alle andre mockup-filer i denne UX-sesjonen (ingen nettverkstilgang, systemfont-stacker-proxy for Fraunces/Inter resolver til Georgia/Roboto i rendringsmiljøet) - verifisert via korrekt cwd (ux-mappen) at glob-sanksjonen fra tidligere IKKE faktisk fanger disse nye filnavnene, derfor eksplisitt filliste."
+      },
+      {
+        "rule": "cream-palette",
+        "value": "*",
+        "files": [
+          ".docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/.working/key-oppskrifter-frokost.html",
+          ".docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/.working/key-oppskrifter-hub.html",
+          ".docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/.working/key-oppskrifter-lunsj.html",
+          ".docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/.working/key-oppskrifter-mellommaltid.html",
+          ".docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/.working/key-oppskrifter-middag.html",
+          ".docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/mockups/oppskrifter-frokost.html",
+          ".docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/mockups/oppskrifter-lunsj.html",
+          ".docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/mockups/oppskrifter-mellommaltid.html",
+          ".docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/mockups/oppskrifter-middag.html",
+          ".docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/mockups/oppskrifter.html"
+        ],
+        "createdAt": "2026-11-11T12:49:14.920Z",
+        "reason": "Agent: bevisst papir-/dagbok-bakgrunn fra DESIGN.md (samme begrunnelse som alle andre mockups i denne UX-sesjonen), ikke en lat AI-default."
+      }
+    ]
+  }
+}

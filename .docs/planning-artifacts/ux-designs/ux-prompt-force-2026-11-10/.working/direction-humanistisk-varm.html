@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prompt Force – Humanistisk og varm</title>
+<style>
+  /* =========================================================================
+     TOKEN-DOKUMENTASJON — Humanistisk og varm
+     background:      #0D0B1A  (app-bakgrunn)
+     surface:          #16132A  (kort/paneler, litt lysere enn bakgrunn)
+     indigo (primær):  #8B7CF8  (strukturell: navigasjon, rammer, ikoner, kortstruktur)
+     koral (aksent):   #FF8A4C  (energi/motivasjon: CTA-knapper, kaloriring-fyll, fullført-tilstander)
+     text-primær:      #F3F1FA
+     text-sekundær:    #B8B3D1
+     ramme:            #2B2650  (avledet fra indigo-familien, lav lysstyrke)
+     indigo-tint:       rgba(139,124,248,0.14) (svak fylling bak ikoner)
+
+     Fargelogikk (lik på tvers av de tre retningene, for sammenlignbarhet):
+     Indigo er appens STRUKTURELLE/primære farge — navigasjon, kortrammer og
+     ikonbakgrunner. Koral er forbeholdt ENERGI/FREMDRIFT — kaloriringens
+     fyll, "Logg måltid/trening"-knappene og fullført-sjekkmerket. Koral
+     betyr alltid "noe skjer / noe er oppnådd".
+
+     Ingen glow/neon-shadows, ingen gradient-tekst. Minste funksjonelle
+     tekststørrelse på siden er 12px (0.75rem).
+     ========================================================================= */
+
+  :root{
+    color-scheme: dark;
+    --bg: #0D0B1A;
+    --surface: #16132A;
+    --indigo: #8B7CF8;
+    --indigo-tint: rgba(139,124,248,0.14);
+    --coral: #FF8A4C;
+    --text1: #F3F1FA;
+    --text2: #B8B3D1;
+    --border: #2B2650;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: #050507;
+    color: var(--text1);
+    /* HUMANISTISK/VARM SANS — I produksjon: Manrope (evt. Sora).
+       Samme system-stack som geometrisk-retningen (ingen nettverkstilgang),
+       men varmen hentes her fra luftigere linjeavstand, litt større
+       grunnstørrelse og mykere vekter — ikke fra selve bokstavformen. */
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 17px;
+    line-height: 1.65;
+    letter-spacing: 0.002em;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    min-height: 100vh;
+    padding: 40px 20px 72px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 26px;
+  }
+
+  .rationale {
+    width: 100%;
+    max-width: 980px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 22px 28px;
+  }
+  .rationale .tag {
+    display: inline-block;
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--indigo);
+    margin-bottom: 10px;
+  }
+  .rationale p {
+    margin: 0 0 14px;
+    color: var(--text2);
+    font-size: 0.98rem;
+    line-height: 1.7;
+    max-width: 760px;
+  }
+  .rationale p:last-of-type { margin-bottom: 16px; }
+  .font-note {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--indigo-tint);
+    border: 1px solid var(--border);
+    color: var(--text1);
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 8px 15px;
+    border-radius: 999px;
+  }
+  .font-note .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--coral); display: inline-block; }
+
+  .laptop { width: 100%; max-width: 1180px; }
+  .bezel {
+    background: #1C1B22;
+    border-radius: 24px;
+    padding: 14px 14px 0;
+    box-shadow: 0 30px 60px -24px rgba(0,0,0,0.65);
+  }
+  .browser-chrome {
+    background: #121018;
+    border-radius: 14px 14px 0 0;
+    padding: 12px 18px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .traffic { display: flex; gap: 7px; }
+  .traffic span { width: 11px; height: 11px; border-radius: 50%; display: block; }
+  .address-pill {
+    flex: 1;
+    background: #1E1B2E;
+    border-radius: 9px;
+    padding: 8px 15px;
+    color: var(--text2);
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .address-pill svg { width: 12px; height: 12px; flex-shrink: 0; }
+
+  .app-screen { background: var(--bg); padding: 40px 46px 56px; }
+  .laptop-base { height: 14px; background: #232029; border-radius: 0 0 10px 10px; margin: 0 20px; position: relative; }
+  .laptop-base::after {
+    content: ""; position: absolute; left: 50%; top: 0; transform: translateX(-50%);
+    width: 86px; height: 6px; background: #2b2833; border-radius: 0 0 7px 7px;
+  }
+
+  .app-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 40px; gap: 20px; flex-wrap: wrap; }
+  .logo { display: flex; align-items: center; gap: 11px; font-weight: 700; font-size: 1.22rem; }
+  .logo svg { width: 32px; height: 32px; }
+  .main-nav { display: flex; gap: 4px; background: var(--surface); border: 1px solid var(--border); border-radius: 999px; padding: 5px; }
+  .main-nav a { padding: 10px 19px; border-radius: 999px; color: var(--text2); font-size: 0.92rem; font-weight: 600; text-decoration: none; }
+  .main-nav a.active { background: var(--indigo); color: var(--bg); }
+  .header-actions { display: flex; align-items: center; gap: 10px; }
+  .icon-btn {
+    width: 40px; height: 40px; border-radius: 50%; background: var(--surface);
+    border: 1px solid var(--border); color: var(--text2); font-weight: 700;
+    font-size: 0.92rem; cursor: pointer; display: flex; align-items: center; justify-content: center;
+  }
+  .icon-btn:hover { border-color: var(--indigo); color: var(--text1); }
+
+  h1.page-title { font-size: 1.6rem; font-weight: 700; margin: 0 0 22px; letter-spacing: 0; }
+
+  .overview-grid { display: grid; grid-template-columns: minmax(230px, 310px) 1fr; gap: 22px; margin-bottom: 28px; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 24px; }
+  .ring-card { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; }
+  .ring-caption { color: var(--text2); font-size: 0.85rem; margin-top: 4px; }
+  .status-card { display: flex; align-items: center; gap: 18px; }
+  .status-title { margin: 0 0 4px; font-weight: 700; font-size: 1.08rem; color: var(--text1); }
+  .status-sub { margin: 0; font-weight: 600; font-size: 0.88rem; color: var(--coral); }
+
+  .actions-row { display: flex; gap: 14px; margin-bottom: 48px; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--coral); color: #2A1203; border: none; border-radius: 14px;
+    padding: 15px 26px; font-size: 0.98rem; font-weight: 700; cursor: pointer;
+    box-shadow: 0 8px 18px -6px rgba(0,0,0,0.5);
+  }
+  .btn-primary:hover { filter: brightness(1.06); }
+
+  h2.section-title { font-size: 1.14rem; font-weight: 700; margin: 0 0 18px; color: var(--text1); }
+  .entries-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; margin-bottom: 28px; }
+  .entry-card {
+    display: flex; align-items: center; gap: 17px; background: var(--surface);
+    border: 1px solid var(--border); border-radius: 20px; padding: 22px;
+    text-decoration: none; color: inherit; transition: border-color .15s ease;
+  }
+  .entry-card:hover { border-color: var(--indigo); }
+  .icon-wrap { width: 50px; height: 50px; border-radius: 14px; background: var(--indigo-tint); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .icon-wrap svg { width: 24px; height: 24px; stroke: var(--indigo); }
+  .entry-card h3 { margin: 0 0 4px; font-size: 1.02rem; font-weight: 700; }
+  .entry-card p { margin: 0; font-size: 0.87rem; color: var(--text2); line-height: 1.55; }
+  .entry-card .arrow { margin-left: auto; color: var(--text2); flex-shrink: 0; width: 20px; height: 20px; }
+
+  .empty-state {
+    display: flex; flex-direction: column; align-items: center; text-align: center; gap: 11px;
+    padding: 38px 22px; border: 1.5px dashed var(--border); border-radius: 20px; background: transparent;
+  }
+  .empty-state svg { width: 40px; height: 40px; color: var(--text2); }
+  .empty-title { margin: 0; font-weight: 700; font-size: 0.98rem; color: var(--text1); }
+  .empty-sub { margin: 0; font-size: 0.87rem; color: var(--text2); }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="rationale">
+    <span class="tag">Designretning · Humanistisk og varm</span>
+    <p>
+      Indigo (#8B7CF8) er appens strukturelle farge — den bygger navigasjon, kortrammer og
+      ikonbakgrunner, altså «huset» brukeren beveger seg i. Koral (#FF8A4C) er forbeholdt
+      energi og fremdrift: kaloriringen, «Logg»-knappene og fullført-merket, slik at koral
+      alltid betyr «noe skjer eller er oppnådd».
+    </p>
+    <p>
+      Typografisk er dette en humanistisk/varm sans med luftigere linjeavstand og litt
+      større grunnstørrelse — bygget for behagelig lengre lesing, ikke bare rask skanning.
+      Den rundere, åpnere rytmen gjør at indigo og koral oppleves vennlige snarere enn
+      skarpe, som matcher et stilrent, øyevennlig uttrykk uten å bli stivt.
+    </p>
+    <span class="font-note"><span class="dot"></span>I produksjon: Manrope (evt. Sora)</span>
+  </div>
+
+  <div class="laptop">
+    <div class="bezel">
+      <div class="browser-chrome">
+        <div class="traffic">
+          <span style="background:#FF5F57;"></span>
+          <span style="background:#FEBC2E;"></span>
+          <span style="background:#28C840;"></span>
+        </div>
+        <div class="address-pill">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>
+          promptforce.app/dashboard
+        </div>
+      </div>
+
+      <div class="app-screen">
+        <header class="app-header">
+          <div class="logo">
+            <svg viewBox="0 0 32 32"><rect width="32" height="32" rx="10" fill="#8B7CF8"/><path d="M11 22 L16 9 L21 22 L16 18 Z" fill="#0D0B1A"/></svg>
+            Prompt Force
+          </div>
+          <nav class="main-nav">
+            <a class="active" href="#">Forside</a>
+            <a href="#">Trening</a>
+            <a href="#">Mat</a>
+          </nav>
+          <div class="header-actions">
+            <button class="icon-btn" aria-label="Hjelp">?</button>
+          </div>
+        </header>
+
+        <h1 class="page-title">Dagens oversikt</h1>
+
+        <div class="overview-grid">
+          <div class="card ring-card">
+            <svg viewBox="0 0 160 160" width="150" height="150">
+              <g transform="translate(80,80)">
+                <circle r="58" style="fill:none; stroke:#2B2650; stroke-width:14;"/>
+                <circle r="58" style="fill:none; stroke:#FF8A4C; stroke-width:14; stroke-linecap:round;" stroke-dasharray="364.4" stroke-dashoffset="118" transform="rotate(-90)"/>
+                <text x="0" y="-4" text-anchor="middle" style="fill:#F3F1FA; font-size:26px; font-weight:700; font-family:inherit;">1 420</text>
+                <text x="0" y="18" text-anchor="middle" style="fill:#B8B3D1; font-size:13px; font-family:inherit;">/ 2 100 kcal</text>
+              </g>
+            </svg>
+            <div class="ring-caption">Kalorier i dag</div>
+          </div>
+
+          <div class="card status-card">
+            <svg viewBox="0 0 40 40" width="52" height="52" style="flex-shrink:0;">
+              <circle cx="20" cy="20" r="20" fill="#FF8A4C"/>
+              <path d="M11 20.5 L17 27 L29 13" style="fill:none; stroke:#0D0B1A; stroke-width:3.2; stroke-linecap:round; stroke-linejoin:round;"/>
+            </svg>
+            <div>
+              <p class="status-title">Beinøvelser</p>
+              <p class="status-sub">Fullført</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="actions-row">
+          <button class="btn-primary">Logg måltid</button>
+          <button class="btn-primary">Logg trening</button>
+        </div>
+
+        <h2 class="section-title">Utforsk</h2>
+        <div class="entries-grid">
+          <a class="entry-card" href="#">
+            <div class="icon-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 9v6M2 10v4M20 9v6M22 10v4M7 12h10"/></svg>
+            </div>
+            <div>
+              <h3>Trening</h3>
+              <p>Se dagens øvelser og din fremgang</p>
+            </div>
+            <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+          </a>
+          <a class="entry-card" href="#">
+            <div class="icon-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3v7a2 2 0 002 2 2 2 0 002-2V3M9 12v9M18 3c-1.6 0-3 1.6-3 4v4c0 1 1 1 2 1v7"/></svg>
+            </div>
+            <div>
+              <h3>Mat</h3>
+              <p>Logg måltider og se kaloriforbruk</p>
+            </div>
+            <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+
+        <div class="empty-state">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2"><circle cx="24" cy="24" r="18" stroke-dasharray="4 5"/><path d="M24 16v16M16 24h16" stroke-linecap="round"/></svg>
+          <p class="empty-title">Ingen måltider logget enda i dag</p>
+          <p class="empty-sub">Trykk «Logg måltid» for å komme i gang.</p>
+        </div>
+      </div>
+      <div class="laptop-base"></div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

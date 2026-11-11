@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prompt Force – Minimalistisk mørk premium</title>
+<style>
+  /* =========================================================================
+     TOKEN-DOKUMENTASJON — Retning 1: Minimalistisk mørk premium
+     bakgrunn:         #0A0A0B  (nær-svart, ikke ren svart — litt varme i pigmentet)
+     surface:          #121214  (kun brukt for rasjonale-boks og browser-chrome)
+     tekst-primær:     #EDEDEC  (varm off-white, ikke #FFF — unngår klinisk/skarpt uttrykk)
+     tekst-sekundær:   #8A8A8E  (dempet grå — kontrast ca. 7.2:1 mot bakgrunn)
+     gull (ÉN aksent): #B9975B  (kontrast ca. 7.2:1 mot bakgrunn begge veier — luksus-ur/
+                        eksklusiv-register, aldri "appy" oransje/grønn)
+     linje/ramme:      #232325  (nesten usynlig — brukes kun som tynn 1px skillelinje)
+     gull-tint:        rgba(185,151,91,0.10)  (ekstremt svak fylling, kun bak sjekkmerke-ring)
+
+     Fargelogikk: Dette er en ÉN-aksent-palett med vilje. Gull brukes KUN der noe
+     krever brukerens handling eller bekrefter fremgang (ring-fyll, primær-knapp,
+     aktiv-nav-understreking, sjekkmerke). Alt annet forblir monokromt gråskala.
+     Det finnes ingen sekundærfarge å forveksle med — én signal-kanal, ikke flere
+     konkurrerende "fargede bokser" som i en typisk fitness-app.
+
+     Ingen glow/neon-shadows (kun flate, nøytrale linjer/skygger), ingen gradient-
+     tekst. Minste funksjonelle tekst på siden er 11.5px (0.72rem, brukt kun på
+     sporede små-capsetiketter, aldri på løpende brødtekst).
+     ========================================================================= */
+
+  :root{
+    color-scheme: dark;
+    --bg: #0A0A0B;
+    --surface: #121214;
+    --text1: #EDEDEC;
+    --text2: #8A8A8E;
+    --gold: #B9975B;
+    --gold-tint: rgba(185,151,91,0.10);
+    --line: #232325;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: #000;
+    color: var(--text1);
+    /* RESTRIKTIV/EKSKLUSIV GROTESK — i produksjon: Söhne (Light/Buch-vekter).
+       System-stack som nærmer seg samme nøytrale, tilbakeholdne geometri: */
+    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page { min-height: 100vh; padding: 48px 20px 80px; display: flex; flex-direction: column; align-items: center; gap: 28px; }
+
+  .rationale { width: 100%; max-width: 980px; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 22px 28px; }
+  .rationale .tag { display: block; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+  .rationale p { margin: 0 0 12px; color: var(--text2); font-size: 0.92rem; line-height: 1.7; max-width: 760px; font-weight: 400; }
+  .rationale p:last-of-type { margin-bottom: 14px; }
+  .font-note { display: inline-flex; align-items: center; gap: 9px; border: 1px solid var(--line); color: var(--text1); font-size: 0.78rem; font-weight: 500; padding: 7px 14px; border-radius: 3px; letter-spacing: 0.02em; }
+  .font-note .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--gold); display: inline-block; }
+
+  .laptop { width: 100%; max-width: 1180px; }
+  .bezel { background: #1a1a1c; border-radius: 16px; padding: 14px 14px 0; box-shadow: 0 30px 60px -24px rgba(0,0,0,0.75); }
+  .browser-chrome { background: var(--surface); border-radius: 8px 8px 0 0; padding: 11px 16px; display: flex; align-items: center; gap: 16px; }
+  .traffic { display: flex; gap: 7px; }
+  .traffic span { width: 10px; height: 10px; border-radius: 50%; display: block; opacity: 0.6; }
+  .address-pill { flex: 1; background: #0e0e10; border-radius: 4px; padding: 7px 14px; color: var(--text2); font-size: 0.78rem; display: flex; align-items: center; gap: 8px; }
+  .address-pill svg { width: 12px; height: 12px; flex-shrink: 0; }
+
+  .app-screen { background: var(--bg); padding: 56px 72px 64px; }
+  .laptop-base { height: 14px; background: #1f1f22; border-radius: 0 0 8px 8px; margin: 0 20px; position: relative; }
+  .laptop-base::after { content: ""; position: absolute; left: 50%; top: 0; transform: translateX(-50%); width: 86px; height: 5px; background: #272729; border-radius: 0 0 6px 6px; }
+
+  .app-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 52px; gap: 24px; flex-wrap: wrap; padding-bottom: 20px; border-bottom: 1px solid var(--line); }
+  .logo { display: flex; align-items: center; gap: 11px; font-weight: 500; font-size: 1.02rem; letter-spacing: 0.01em; }
+  .logo .mark { width: 22px; height: 22px; border: 1.3px solid var(--gold); display: flex; align-items: center; justify-content: center; }
+  .logo .mark span { width: 5px; height: 5px; background: var(--gold); display: block; }
+  .main-nav { display: flex; gap: 34px; }
+  .main-nav a { color: var(--text2); font-size: 0.78rem; font-weight: 600; text-decoration: none; letter-spacing: 0.14em; text-transform: uppercase; padding-bottom: 22px; border-bottom: 1px solid transparent; margin-bottom: -21px; }
+  .main-nav a.active { color: var(--text1); border-bottom-color: var(--gold); }
+  .header-actions { display: flex; align-items: center; gap: 10px; }
+  .icon-btn { width: 30px; height: 30px; border-radius: 50%; background: transparent; border: 1px solid var(--line); color: var(--text2); font-weight: 500; font-size: 0.8rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+
+  .title-row { display: flex; align-items: baseline; gap: 14px; margin: 0 0 48px; flex-wrap: wrap; }
+  h1.page-title { font-size: 2rem; font-weight: 300; margin: 0; letter-spacing: -0.01em; color: var(--text1); }
+  .title-date { font-size: 0.92rem; font-weight: 400; color: var(--text2); }
+
+  .overview-row { display: grid; grid-template-columns: auto 1fr; gap: 64px; align-items: center; padding-bottom: 36px; border-bottom: 1px solid var(--line); margin-bottom: 36px; }
+  .ring-block { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
+  .ring-caption { color: var(--text2); font-size: 0.74rem; letter-spacing: 0.12em; text-transform: uppercase; }
+
+  .status-row { display: flex; align-items: center; gap: 20px; }
+  .status-check { width: 34px; height: 34px; border-radius: 50%; background: var(--gold-tint); border: 1px solid var(--gold); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .status-text p { margin: 0; }
+  .status-title { font-weight: 500; font-size: 0.98rem; color: var(--text1); margin-bottom: 4px; }
+  .status-sub { font-weight: 600; font-size: 0.72rem; color: var(--gold); letter-spacing: 0.12em; text-transform: uppercase; }
+
+  .actions-row { display: flex; gap: 16px; margin-bottom: 56px; }
+  .btn-primary { background: var(--gold); color: #0A0A0B; border: none; border-radius: 3px; padding: 14px 26px; font-size: 0.82rem; font-weight: 600; letter-spacing: 0.04em; cursor: pointer; }
+  .btn-ghost { background: transparent; color: var(--gold); border: 1px solid var(--gold); border-radius: 3px; padding: 14px 26px; font-size: 0.82rem; font-weight: 600; letter-spacing: 0.04em; cursor: pointer; }
+
+  h2.section-title { font-size: 0.74rem; font-weight: 600; margin: 0 0 20px; color: var(--text2); letter-spacing: 0.16em; text-transform: uppercase; }
+  .entries-list { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin-bottom: 48px; border-top: 1px solid var(--line); }
+  .entry-row { display: flex; align-items: center; gap: 16px; padding: 22px 18px; text-decoration: none; color: inherit; border-bottom: 1px solid var(--line); }
+  .entry-row:first-child { border-right: 1px solid var(--line); }
+  .entry-row svg.icon { width: 20px; height: 20px; stroke: var(--gold); flex-shrink: 0; }
+  .entry-row h3 { margin: 0 0 3px; font-size: 0.92rem; font-weight: 500; letter-spacing: 0.01em; }
+  .entry-row p { margin: 0; font-size: 0.8rem; color: var(--text2); line-height: 1.5; font-weight: 400; }
+  .entry-row .arrow { margin-left: auto; color: var(--text2); flex-shrink: 0; width: 16px; height: 16px; }
+
+  .empty-state { text-align: center; padding: 18px 0 0; }
+  .empty-title { margin: 0 0 4px; font-weight: 400; font-size: 0.86rem; color: var(--text2); }
+  .empty-sub { margin: 0; font-size: 0.78rem; color: var(--text2); }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="rationale">
+    <span class="tag">Designretning 1 · Minimalistisk mørk premium</span>
+    <p>
+      Paletten er bevisst én-aksent: nær-svart (#0A0A0B) og off-white (#EDEDEC) bærer alt
+      innhold, og ett dempet gull (#B9975B) er forbeholdt det eneste som betyr "handling
+      eller bekreftet fremgang" — ringfyll, primærknapp, aktiv fane, sjekkmerke. Ingen
+      fargede bokser konkurrerer om blikket, så appen leses som rolig og eksklusiv, ikke
+      som et fargerikt motivasjons-dashbord.
+    </p>
+    <p>
+      Typografisk er dette en restriktiv, tilbakeholdt grotesk i lett vekt (300), med
+      stramt tracking på tall og vidt, sporet tracking (0.12–0.18em) på små versal-
+      etiketter — en kontrast som gir luksusfølelse uten å senke lesbarheten. Linjer
+      brukes i stedet for fylte kort: strukturen er arkitektonisk, nesten nøytral.
+    </p>
+    <p>
+      Bevegelse er nesten umerkelig med vilje: kaloriringen fylles over et langt, lineært
+      forløp uten overshoot, og knapper endrer kun en svak opasitet på hover (120ms).
+      Ingen fjær, ingen "pop" — registeret skal kjennes fokusert og stille, ikke
+      motiverende-leken som en typisk fitness-app.
+    </p>
+    <span class="font-note"><span class="dot"></span>I produksjon: Söhne (Light / Buch)</span>
+  </div>
+
+  <div class="laptop">
+    <div class="bezel">
+      <div class="browser-chrome">
+        <div class="traffic">
+          <span style="background:#FF5F57;"></span>
+          <span style="background:#FEBC2E;"></span>
+          <span style="background:#28C840;"></span>
+        </div>
+        <div class="address-pill">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>
+          promptforce.app/dashboard
+        </div>
+      </div>
+
+      <div class="app-screen">
+        <header class="app-header">
+          <div class="logo">
+            <span class="mark"><span></span></span>
+            Prompt Force
+          </div>
+          <nav class="main-nav">
+            <a class="active" href="#">Forside</a>
+            <a href="#">Trening</a>
+            <a href="#">Mat</a>
+          </nav>
+          <div class="header-actions">
+            <button class="icon-btn" aria-label="Hjelp">?</button>
+          </div>
+        </header>
+
+        <div class="title-row">
+          <h1 class="page-title">Dagens oversikt</h1>
+          <span class="title-date">10. november</span>
+        </div>
+
+        <div class="overview-row">
+          <div class="ring-block">
+            <svg viewBox="0 0 160 160" width="136" height="136">
+              <g transform="translate(80,80)">
+                <circle r="62" style="fill:none; stroke:#232325; stroke-width:3;"/>
+                <circle r="62" style="fill:none; stroke:#B9975B; stroke-width:3; stroke-linecap:butt;" stroke-dasharray="389.6" stroke-dashoffset="126" transform="rotate(-90)"/>
+                <text x="0" y="-4" text-anchor="middle" style="fill:#EDEDEC; font-size:25px; font-weight:300; font-family:inherit;">1 420</text>
+                <text x="0" y="18" text-anchor="middle" style="fill:#8A8A8E; font-size:12px; font-weight:400; font-family:inherit;">/ 2 100 kcal</text>
+              </g>
+            </svg>
+            <div class="ring-caption">Kalorier i dag</div>
+          </div>
+
+          <div class="status-row">
+            <div class="status-check">
+              <svg viewBox="0 0 24 24" width="15" height="15"><path d="M4 12.5 L9.5 18 L20 6" style="fill:none; stroke:#B9975B; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round;"/></svg>
+            </div>
+            <div class="status-text">
+              <p class="status-title">Beinøvelser</p>
+              <p class="status-sub">Fullført</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="actions-row">
+          <button class="btn-primary">Logg måltid</button>
+          <button class="btn-ghost">Logg trening</button>
+        </div>
+
+        <h2 class="section-title">Utforsk</h2>
+        <div class="entries-list">
+          <a class="entry-row" href="#">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 9v6M2 10v4M20 9v6M22 10v4M7 12h10"/></svg>
+            <div>
+              <h3>Trening</h3>
+              <p>Se dagens øvelser og din fremgang</p>
+            </div>
+            <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+          </a>
+          <a class="entry-row" href="#">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3v7a2 2 0 002 2 2 2 0 002-2V3M9 12v9M18 3c-1.6 0-3 1.6-3 4v4c0 1 1 1 2 1v7"/></svg>
+            <div>
+              <h3>Mat</h3>
+              <p>Logg måltider og se kaloriforbruk</p>
+            </div>
+            <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+
+        <div class="empty-state">
+          <p class="empty-title">Ingen måltider logget enda i dag</p>
+          <p class="empty-sub">Trykk «Logg måltid» for å komme i gang.</p>
+        </div>
+      </div>
+      <div class="laptop-base"></div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

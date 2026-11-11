@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prompt Force – Mat (metodevalg og logging)</title>
+<style>
+  /* =========================================================================
+     KEY SCREEN: Mat — metodevalg og matlogging (Mat)
+     Hvilken skjerm: nås via "Logg måltid" på Forsiden, eller "Mat"-nav-pillen
+     (EXPERIENCE.md, Information Architecture-raden "Mat").
+
+     Spine-seksjoner denne mockupen illustrerer (EXPERIENCE.md):
+     - Component Patterns, raden "Metodevalg (mat)": fire likeverdige valg
+       (Søk / Skriv strekkode / Nylig brukt / Manuelt). Denne mockupen viser
+       "Nylig brukt" som forhåndsvalgt/aktiv tilstand.
+     - Component Patterns, raden "Mengde-/porsjonsfelt": vises etter valgt
+       matvare, før lagring, med live kcal-beregning (vist som sluttilstand
+       siden dette er en statisk skisse).
+     - State Patterns, raden "Strekkode ikke funnet": vist som en liten
+       sekundær alternativ-tilstand-boks nederst på siden.
+     - Flyt 7 "Sara logger en middag via metodevalg", steg 3–6, og feilveien
+       (ingen nylig brukt mat aller første gang) — vist som en liten
+       sekundær alternativ-tilstand-boks nederst på siden.
+     - Information Architecture, raden "Mat": Oppskrifter-fanen vises som en
+       egen, synlig, parallell inngang (fane-rad), uten eget utbygd innhold.
+
+     Visuell identitet er LÅST fra DESIGN.md / mockups/dashboard.html og
+     mockups/kroppsmodell.html (samme header/nav/typografi/fargetoken-verdier
+     — ingen nye farger eller fonter er funnet opp her):
+       paper (bakgrunn):        #F7F2E9
+       surface (kort):          #FFFDF7
+       ink (tekst-primær):      #3A322B  — kontrast 11.3:1 mot papir
+       ink-sekundær:            #6B6056  — kontrast 5.5:1 mot papir
+       accent-primary "plomme": #7A3B69  — kontrast 7.1:1 mot papir (CTA/valgt)
+       accent-complete "teal":  #347774  — kontrast 4.7:1 mot papir (fullført)
+       rule (papirlinjal):      #E4D9C6
+       on-accent:               #FFF9F0
+     Typografi: Fraunces (overskrift, .serif) + Inter-fallback-stack (brødtekst).
+     Ingen glow/neon-skygger, ingen gradient-tekst, ingen aksentfarge i løpende
+     brødtekst, minste funksjonelle tekst 12px.
+
+     Fargebruk-presisering for denne skjermen: teal (accent-complete) brukes
+     KUN for faktisk "fullført" (som i kroppsmodell.html). "Valgt, men ikke
+     lagret ennå" (nylig brukt-raden, mengdefeltet) bruker i stedet plomme
+     (accent-primary) — samme logikk som "aktiv/valgt" nav-pille og
+     muscle-pill[aria-pressed=true], ikke en ny fargebetydning.
+     ========================================================================= */
+
+  :root{
+    color-scheme: light;
+    --paper: #F7F2E9;
+    --surface: #FFFDF7;
+    --ink: #3A322B;
+    --ink2: #6B6056;
+    --clay: #7A3B69;
+    --clay-tint: rgba(122,59,105,0.10);
+    --sage: #347774;
+    --sage-tint: rgba(52,119,116,0.14);
+    --rule: #E4D9C6;
+    --on-accent: #FFF9F0;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: #EAE2D3;
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+  /* HUMANISTISK BRØDTEKST-SANS — i produksjon: Inter (se DESIGN.md.typography.body). */
+  /* REDAKSJONELL JOURNAL-SERIF — i produksjon: Fraunces (se DESIGN.md.typography.heading). */
+  .serif { font-family: Georgia, "Iowan Old Style", "Times New Roman", serif; }
+
+  .page { min-height: 100vh; padding: 48px 20px 80px; display: flex; flex-direction: column; align-items: center; gap: 28px; }
+
+  .laptop { width: 100%; max-width: 1180px; }
+  .bezel { background: #D8CDB8; border-radius: 22px; padding: 14px 14px 0; box-shadow: 0 30px 60px -24px rgba(90,70,40,0.35); }
+  .browser-chrome { background: #ECE4D4; border-radius: 12px 12px 0 0; padding: 11px 16px; display: flex; align-items: center; gap: 16px; }
+  .traffic { display: flex; gap: 7px; }
+  .traffic span { width: 11px; height: 11px; border-radius: 50%; display: block; }
+  .address-pill { flex: 1; background: var(--surface); border-radius: 8px; padding: 7px 14px; color: var(--ink2); font-size: 0.78rem; display: flex; align-items: center; gap: 8px; border: 1px solid var(--rule); }
+  .address-pill svg { width: 12px; height: 12px; flex-shrink: 0; }
+
+  .app-screen { background: var(--paper); padding: 40px 48px 56px; background-image: repeating-linear-gradient(to bottom, transparent, transparent 37px, var(--rule) 38px); }
+  .laptop-base { height: 14px; background: #D2C7B1; border-radius: 0 0 10px 10px; margin: 0 20px; position: relative; }
+  .laptop-base::after { content: ""; position: absolute; left: 50%; top: 0; transform: translateX(-50%); width: 86px; height: 6px; background: #C6BA9F; border-radius: 0 0 7px 7px; }
+
+  .app-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 30px; gap: 20px; flex-wrap: wrap; }
+  .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.2rem; color: var(--ink); }
+  .logo svg { width: 30px; height: 30px; }
+  .main-nav { display: flex; gap: 6px; background: var(--surface); border: 1px solid var(--rule); border-radius: 999px; padding: 5px; }
+  .main-nav a { padding: 9px 18px; border-radius: 999px; color: var(--ink2); font-size: 0.9rem; font-weight: 600; text-decoration: none; }
+  .main-nav a.active { background: var(--clay); color: var(--on-accent); }
+  .header-actions { display: flex; align-items: center; gap: 10px; }
+  .icon-btn { width: 40px; height: 40px; border-radius: 50%; background: var(--sage-tint); border: 1px solid var(--rule); color: var(--sage); font-weight: 700; font-size: 0.95rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+
+  h1.page-title { font-size: 1.9rem; font-weight: 600; margin: 4px 0 6px; color: var(--ink); }
+  .page-sub { margin: 0 0 20px; color: var(--ink2); font-size: 0.95rem; }
+
+  /* --- Secondary page-level tabs: "Logg måltid" vs. "Oppskrifter" (separate, visible, parallel entry) --- */
+  .page-tabs { display: flex; gap: 6px; background: var(--surface); border: 1px solid var(--rule); border-radius: 999px; padding: 5px; width: fit-content; margin-bottom: 30px; }
+  .page-tab { padding: 9px 20px; border-radius: 999px; color: var(--ink2); font-size: 0.86rem; font-weight: 700; text-decoration: none; border: none; background: none; font-family: inherit; cursor: pointer; }
+  .page-tab.active { background: var(--clay); color: var(--on-accent); }
+
+  h2.section-title { font-size: 1.15rem; font-weight: 600; margin: 0 0 16px; color: var(--ink); }
+  h3.card-heading { font-size: 1.02rem; font-weight: 700; margin: 0 0 4px; color: var(--ink); }
+
+  /* --- Focus ring: visible on every real interactive control, keyboard-reachable --- */
+  button:focus-visible,
+  a:focus-visible,
+  input:focus-visible {
+    outline: 2px solid var(--clay);
+    outline-offset: 2px;
+    border-radius: 10px;
+  }
+
+  /* --- Main grid: method-choice column, recent-list + mengdefelt column --- */
+  .screen-grid { display: grid; grid-template-columns: minmax(280px, 340px) 1fr; gap: 20px; align-items: start; }
+
+  .card { background: var(--surface); border: 1px solid var(--rule); border-radius: 22px; padding: 24px; box-shadow: 0 12px 26px -18px rgba(120,90,50,0.22); position: relative; }
+  .card::before { content: ""; position: absolute; top: -8px; left: 28px; width: 46px; height: 16px; background: var(--sage-tint); border: 1px solid var(--rule); transform: rotate(-3deg); border-radius: 2px; }
+
+  /* --- Four equal method choices: Søk / Skriv strekkode / Nylig brukt / Manuelt --- */
+  .method-list { list-style: none; margin: 4px 0 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+  .method-card {
+    display: flex; align-items: center; gap: 14px;
+    width: 100%;
+    background: var(--surface);
+    border: 1.5px solid var(--rule);
+    border-radius: 999px;
+    padding: 12px 20px 12px 12px;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--ink2);
+    cursor: pointer;
+    text-align: left;
+  }
+  .method-icon { width: 38px; height: 38px; border-radius: 50%; background: var(--clay-tint); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .method-icon svg { width: 18px; height: 18px; stroke: var(--clay); }
+  .method-card .method-label { flex: 1; }
+  .method-card .check { width: 18px; height: 18px; flex-shrink: 0; }
+  .method-card[aria-pressed="true"] {
+    background: var(--clay);
+    border-color: var(--clay);
+    color: var(--on-accent);
+  }
+  .method-card[aria-pressed="true"] .method-icon { background: var(--on-accent); }
+  .method-card[aria-pressed="true"] .method-icon svg { stroke: var(--clay); }
+
+  /* --- Recently used food list --- */
+  .recent-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+  .recent-row {
+    display: flex; align-items: center; gap: 14px;
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 16px;
+    padding: 14px 16px;
+    font-family: inherit;
+    font-size: 0.98rem;
+    font-weight: 700;
+    color: var(--ink);
+    cursor: pointer;
+    text-align: left;
+    box-shadow: 0 8px 20px -16px rgba(120,90,50,0.2);
+  }
+  .recent-row .food-name { flex: 1; }
+  .recent-row .food-sub { font-weight: 400; font-size: 0.82rem; color: var(--ink2); display: block; margin-top: 2px; }
+  .recent-row.selected { border-color: var(--clay); background: var(--clay-tint); }
+  .selected-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 0.78rem; font-weight: 700; color: var(--clay);
+    flex-shrink: 0;
+  }
+  .selected-badge svg { width: 14px; height: 14px; }
+
+  .list-sub { margin: 0 0 16px; font-size: 0.86rem; color: var(--ink2); }
+
+  /* --- "Valgt fra Nylig brukt" mengde-card --- */
+  .amount-card { margin-top: 18px; }
+  .amount-head { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+  .amount-icon { width: 44px; height: 44px; border-radius: 50%; background: var(--clay-tint); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .amount-icon svg { width: 21px; height: 21px; stroke: var(--clay); }
+  .selected-label { font-size: 0.85rem; font-weight: 700; color: var(--clay); margin: 0 0 2px; }
+
+  .field-row { display: flex; gap: 14px; flex-wrap: wrap; align-items: flex-end; }
+  .field { display: flex; flex-direction: column; gap: 6px; flex: 1; min-width: 120px; }
+  .field label { font-size: 0.82rem; font-weight: 700; color: var(--ink2); }
+  .field input {
+    width: 100%;
+    font-family: inherit;
+    font-size: 0.98rem;
+    color: var(--ink);
+    background: var(--paper);
+    border: 1.5px solid var(--rule);
+    border-radius: 10px;
+    padding: 10px 12px;
+  }
+  .kcal-chip {
+    display: inline-flex; flex-direction: column; gap: 2px;
+    background: var(--sage-tint); border: 1px solid var(--rule); border-radius: 14px;
+    padding: 9px 16px; flex: 1; min-width: 150px;
+  }
+  .kcal-chip .kcal-value { font-family: inherit; font-size: 1.1rem; font-weight: 700; color: var(--sage); }
+  .kcal-note { margin: 14px 0 20px; font-size: 0.82rem; color: var(--ink2); font-style: italic; }
+
+  .btn-primary { background: var(--clay); color: var(--on-accent); border: none; border-radius: 999px; padding: 15px 26px; font-size: 0.95rem; font-weight: 700; cursor: pointer; box-shadow: 0 10px 20px -8px rgba(122,59,105,0.45); font-family: inherit; }
+  .btn-secondary { background: var(--surface); color: var(--ink); border: 1.5px solid var(--rule); border-radius: 999px; padding: 13px 22px; font-size: 0.88rem; font-weight: 700; cursor: pointer; font-family: inherit; display: inline-flex; align-items: center; gap: 10px; }
+
+  /* --- Secondary alternate-state section: empty "Nylig brukt" and barcode-not-found --- */
+  .alt-section-title { margin: 32px 0 14px; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink2); }
+  .alt-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .alt-card { background: var(--surface); border: 1px dashed var(--rule); border-radius: 18px; padding: 18px 20px; }
+  .alt-tag { display: block; font-size: 0.78rem; font-weight: 700; color: var(--ink2); margin-bottom: 8px; }
+  .alt-card p { margin: 0 0 12px; font-size: 0.88rem; color: var(--ink); }
+  .alt-card p:last-of-type { margin-bottom: 0; }
+  .barcode-chip { font-family: "SF Mono", "Courier New", monospace; font-size: 0.82rem; background: var(--paper); border: 1px solid var(--rule); border-radius: 6px; padding: 2px 8px; color: var(--ink); }
+
+  @media (max-width: 760px) {
+    .screen-grid { grid-template-columns: 1fr; }
+    .alt-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="laptop">
+    <div class="bezel">
+      <div class="browser-chrome">
+        <div class="traffic">
+          <span style="background:#E8A87C;"></span>
+          <span style="background:#D9C27A;"></span>
+          <span style="background:#A3B98A;"></span>
+        </div>
+        <div class="address-pill">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>
+          promptforce.app/mat
+        </div>
+      </div>
+
+      <div class="app-screen">
+        <header class="app-header">
+          <div class="logo">
+            <svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#7A3B69"/><path d="M11 22 L16 9 L21 22 L16 18 Z" fill="#FFF9F0"/></svg>
+            Prompt Force
+          </div>
+          <nav class="main-nav">
+            <a href="#">Forside</a>
+            <a href="#">Trening</a>
+            <a class="active" href="#">Mat</a>
+          </nav>
+          <div class="header-actions">
+            <button class="icon-btn" aria-label="Hjelp – forklar denne siden" title="Trykk for en kort forklaring av denne siden">?</button>
+          </div>
+        </header>
+
+        <h1 class="page-title serif">Logg måltid</h1>
+        <p class="page-sub">Velg hvordan du vil registrere et måltid.</p>
+
+        <div class="page-tabs">
+          <a href="mat.html" class="page-tab active" aria-current="page">Logg måltid</a>
+          <a href="oppskrifter.html" class="page-tab">Oppskrifter</a>
+        </div>
+
+        <div class="screen-grid">
+
+          <!-- Column 1: four equal method choices -->
+          <div class="card">
+            <h2 class="section-title serif">Velg metode</h2>
+
+            <ul class="method-list">
+              <li>
+                <button type="button" class="method-card" aria-pressed="false">
+                  <span class="method-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="6"/><path d="M20 20l-5.5-5.5"/></svg>
+                  </span>
+                  <span class="method-label">Søk</span>
+                </button>
+              </li>
+              <li>
+                <button type="button" class="method-card" aria-pressed="false">
+                  <span class="method-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 5v14M8 5v14M12 5v14M15 5v14M20 5v14"/></svg>
+                  </span>
+                  <span class="method-label">Skriv strekkode</span>
+                </button>
+              </li>
+              <li>
+                <button type="button" class="method-card" aria-pressed="true">
+                  <span class="method-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l4 2"/></svg>
+                  </span>
+                  <span class="method-label">Nylig brukt</span>
+                  <svg class="check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>
+                </button>
+              </li>
+              <li>
+                <button type="button" class="method-card" aria-pressed="false">
+                  <span class="method-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16v4z"/><path d="M14.5 6.5l3 3"/></svg>
+                  </span>
+                  <span class="method-label">Manuelt</span>
+                </button>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Column 2: recently used foods + amount field -->
+          <div>
+            <div class="card">
+              <h2 class="section-title serif">Nylig brukt</h2>
+              <p class="list-sub">Kveldens vanlige middag, ett trykk unna. Trykk på en matvare for å fylle ut mengde.</p>
+
+              <ul class="recent-list">
+                <li>
+                  <button type="button" class="recent-row selected">
+                    <span class="food-name">Kyllingwok med ris
+                      <span class="food-sub">Sist brukt i går · 350 g</span>
+                    </span>
+                    <span class="selected-badge">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>
+                      Valgt
+                    </span>
+                  </button>
+                </li>
+                <li>
+                  <button type="button" class="recent-row">
+                    <span class="food-name">Havregrøt med banan
+                      <span class="food-sub">Sist brukt for 3 dager siden · 300 g</span>
+                    </span>
+                  </button>
+                </li>
+                <li>
+                  <button type="button" class="recent-row">
+                    <span class="food-name">Brødskive med leverpostei
+                      <span class="food-sub">Sist brukt for 4 dager siden · 1 skive</span>
+                    </span>
+                  </button>
+                </li>
+              </ul>
+            </div>
+
+            <div class="card amount-card">
+              <div class="amount-head">
+                <div class="amount-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3v7a2 2 0 002 2 2 2 0 002-2V3M9 12v9M18 3c-1.6 0-3 1.6-3 4v4c0 1 1 1 2 1v7"/></svg>
+                </div>
+                <div>
+                  <p class="selected-label">Valgt fra Nylig brukt</p>
+                  <h3 class="card-heading">Kyllingwok med ris</h3>
+                </div>
+              </div>
+
+              <div class="field-row">
+                <div class="field">
+                  <label for="f-mengde">Mengde (g)</label>
+                  <input id="f-mengde" type="number" inputmode="numeric" value="350">
+                </div>
+                <div class="kcal-chip">
+                  <span style="font-size:0.78rem; font-weight:700; color:var(--ink2);">Beregnet kalorimengde</span>
+                  <span class="kcal-value">~420 kcal</span>
+                </div>
+              </div>
+              <p class="kcal-note">Oppdateres automatisk når du endrer mengden — her vist som sluttresultatet, siden dette er en statisk skisse.</p>
+
+              <button type="button" class="btn-primary">Lagre</button>
+            </div>
+          </div>
+
+        </div>
+
+        <p class="alt-section-title">Andre tilstander (for referanse)</p>
+        <div class="alt-row">
+          <div class="alt-card">
+            <span class="alt-tag">Alternativ tilstand · «Nylig brukt» uten historikk</span>
+            <p>Du har ikke registrert noen måltider ennå, så det finnes ingen nylig brukt mat å vise her. Prøv <strong>Søk</strong> eller <strong>Manuelt</strong> i stedet.</p>
+          </div>
+          <div class="alt-card">
+            <span class="alt-tag">Alternativ tilstand · Strekkode ikke funnet</span>
+            <p>Vi fant ikke dette produktet.</p>
+            <button type="button" class="btn-secondary">
+              Registrer manuelt
+              <span class="barcode-chip">7020097009523</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+      <div class="laptop-base"></div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

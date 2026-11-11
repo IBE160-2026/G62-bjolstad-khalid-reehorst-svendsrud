@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prompt Force – Myk pastell rolig</title>
+<style>
+  /* =========================================================================
+     TOKEN-DOKUMENTASJON — Retning 9: Myk pastell rolig
+     bakgrunn (lys modus): #F8F5FB  (nesten hvit, svak lavendeltone)
+     surface (kort):        #FFFFFF
+     lavendel (dekorativ):  #C3B4E8  (blobber, aktiv fane, ring-spor-kontrast)
+     lavendel-spor (ring):  #E8E1F2  (selve ringens "tomme" bane)
+     mint (dekorativ):      #8FCDB3 / mint-fyll i ring: #6FBE9C
+     fersken (dekorativ):   #F6CDAE  (primærknapper)
+     tekst-primær:          #2D2A3A  (mørk plum — ALDRI pastell-på-pastell)
+     tekst-sekundær:        #5B5568
+     tekst-på-fersken:      #4A3420  (mørk brun, for kontrast på knapp)
+     ramme:                 #ECE6F5
+
+     Fargelogikk: Alle pastelltonene (lavendel/mint/fersken) brukes KUN som
+     dekorative flater/blobber/aksenter — all lesbar tekst står i mørk plum
+     eller mørk brun mot hvit/nesten-hvit bakgrunn, slik at WCAG AA (≥4.5:1)
+     holder selv om paletten oppleves lav-mettet og rolig. Dette er det
+     direkte motstykket til en "standard fitness-app": ingen konkurranse-rødt,
+     ingen harde kontraster, ingen prestasjonspress — paletten skal kjennes
+     nesten meditativ, som en pause fra dagen, ikke en konkurranse.
+
+     Typografi-personlighet: rund og luftig, representert i produksjon av
+     Quicksand (overskrifter, avrundede bokstavformer) kombinert med Nunito
+     Sans (brødtekst, myk men lesbar). Her tilnærmet med system-stacken under
+     og generøs line-height/letter-spacing for et "åpent" preg.
+
+     Bevegelsesimplikasjon: sakte, svevende fade/float — dekorative blobber
+     "ånder" over ~6 sekunder, innhold tones sakte inn (ingen sprett, ingen
+     rask respons). Ingen glow/neon-shadow — skygger er diffuse og nøytrale.
+     Minste funksjonelle tekststørrelse på siden er 12px (0.75rem).
+     ========================================================================= */
+
+  :root{
+    color-scheme: light;
+    --bg: #F8F5FB;
+    --surface: #FFFFFF;
+    --lavender: #C3B4E8;
+    --lavender-soft: #E8E1F2;
+    --mint: #8FCDB3;
+    --mint-fill: #6FBE9C;
+    --peach: #F6CDAE;
+    --peach-text: #4A3420;
+    --text1: #2D2A3A;
+    --text2: #5B5568;
+    --border: #ECE6F5;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: #E4E3EA;
+    color: var(--text1);
+    /* RUND/LUFTIG HUMANISTISK SANS — I produksjon: Quicksand (overskrifter) +
+       Nunito Sans (brødtekst). System-stack som nærmer seg samme myke preg: */
+    font-family: "Trebuchet MS", Verdana, -apple-system, "Segoe UI", sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    letter-spacing: 0.01em;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page { min-height: 100vh; padding: 40px 20px 72px; display: flex; flex-direction: column; align-items: center; gap: 26px; }
+
+  .rationale {
+    width: 100%; max-width: 980px; background: var(--surface);
+    border: 1px solid var(--border); border-radius: 24px; padding: 22px 28px;
+    box-shadow: 0 18px 36px -24px rgba(90,70,130,0.18);
+  }
+  .rationale .tag {
+    display: inline-block; font-size: 0.74rem; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase; color: #7E6CB0; margin-bottom: 8px;
+  }
+  .rationale p { margin: 0 0 12px; color: var(--text2); font-size: 0.95rem; line-height: 1.65; max-width: 780px; }
+  .rationale p:last-of-type { margin-bottom: 14px; }
+  .font-note {
+    display: inline-flex; align-items: center; gap: 8px; background: var(--lavender-soft);
+    border: 1px solid var(--border); color: var(--text1); font-size: 0.8rem; font-weight: 700;
+    padding: 7px 16px; border-radius: 999px;
+  }
+  .font-note .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--peach); display: inline-block; }
+
+  .laptop { width: 100%; max-width: 1180px; }
+  .bezel { background: #D9D2C9; border-radius: 22px; padding: 14px 14px 0; box-shadow: 0 30px 60px -24px rgba(0,0,0,0.3); }
+  .browser-chrome { background: #CFC7BC; border-radius: 12px 12px 0 0; padding: 11px 16px; display: flex; align-items: center; gap: 16px; }
+  .traffic { display: flex; gap: 7px; }
+  .traffic span { width: 11px; height: 11px; border-radius: 50%; display: block; }
+  .address-pill { flex: 1; background: #E6DFD3; border-radius: 8px; padding: 7px 14px; color: #6B6052; font-size: 0.78rem; display: flex; align-items: center; gap: 8px; }
+  .address-pill svg { width: 12px; height: 12px; flex-shrink: 0; }
+
+  .app-screen { background: var(--bg); padding: 0 0 52px; position: relative; overflow: hidden; }
+  .laptop-base { height: 14px; background: #C9C0B3; border-radius: 0 0 10px 10px; margin: 0 20px; position: relative; }
+  .laptop-base::after { content:""; position:absolute; left:50%; top:0; transform:translateX(-50%); width:86px; height:6px; background:#BDB3A4; border-radius:0 0 7px 7px; }
+
+  /* Dekorative svevende blobber */
+  .blob { position: absolute; border-radius: 50%; filter: blur(0px); opacity: 0.55; animation: float 7s ease-in-out infinite; }
+  .blob1 { width: 220px; height: 220px; background: var(--lavender); top: -70px; left: -60px; animation-delay: 0s; }
+  .blob2 { width: 160px; height: 160px; background: var(--mint); top: 40px; right: -50px; opacity: 0.45; animation-delay: 1.2s; }
+  .blob3 { width: 130px; height: 130px; background: var(--peach); bottom: -30px; left: 40%; opacity: 0.4; animation-delay: 2.1s; }
+  @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
+
+  .app-inner { position: relative; z-index: 1; padding: 34px 44px 10px; }
+
+  .app-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 30px; gap: 16px; flex-wrap: wrap; }
+  .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.2rem; color: var(--text1); }
+  .logo svg { width: 34px; height: 34px; }
+
+  .float-nav {
+    display: flex; gap: 4px; background: var(--surface); border: 1px solid var(--border);
+    border-radius: 999px; padding: 5px; box-shadow: 0 14px 30px -18px rgba(90,70,130,0.3);
+  }
+  .float-nav a { padding: 9px 20px; border-radius: 999px; color: var(--text2); font-size: 0.9rem; font-weight: 700; text-decoration: none; }
+  .float-nav a.active { background: var(--lavender); color: var(--text1); }
+
+  .icon-btn {
+    width: 40px; height: 40px; border-radius: 50%; background: var(--surface);
+    border: 1px solid var(--border); color: var(--text2); font-weight: 700; font-size: 0.95rem;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 10px 22px -16px rgba(90,70,130,0.3);
+  }
+  .icon-btn:hover { color: var(--text1); }
+
+  h1.page-title { text-align: center; font-size: 1.45rem; font-weight: 700; margin: 4px 0 26px; }
+
+  .ring-wrap { display: flex; justify-content: center; margin-bottom: 22px; }
+  .ring-card {
+    width: 230px; height: 230px; border-radius: 50%; background: var(--surface);
+    display: flex; align-items: center; justify-content: center; padding: 20px;
+    box-shadow: 0 24px 50px -22px rgba(90,70,130,0.32);
+  }
+  .ring-caption { text-align: center; color: var(--text2); font-size: 0.85rem; margin: -4px 0 26px; }
+
+  .status-pill {
+    display: flex; align-items: center; gap: 16px; background: var(--surface);
+    border: 1px solid var(--border); border-radius: 999px; padding: 14px 26px;
+    max-width: 420px; margin: 0 auto 26px; box-shadow: 0 16px 32px -22px rgba(90,70,130,0.26);
+  }
+  .status-title { margin: 0 0 2px; font-weight: 700; font-size: 1.02rem; color: var(--text1); }
+  .status-sub { margin: 0; font-weight: 700; font-size: 0.82rem; color: #4F8F72; letter-spacing: 0.02em; }
+
+  .actions-row { display: flex; gap: 14px; justify-content: center; margin-bottom: 42px; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--peach); color: var(--peach-text); border: none; border-radius: 999px;
+    padding: 15px 28px; font-size: 0.95rem; font-weight: 700; cursor: pointer;
+    box-shadow: 0 14px 28px -16px rgba(180,120,60,0.4);
+  }
+  .btn-primary.alt { background: var(--lavender); color: var(--text1); box-shadow: 0 14px 28px -16px rgba(120,90,180,0.4); }
+  .btn-primary:hover { filter: brightness(1.04); }
+
+  h2.section-title { text-align: center; font-size: 1.08rem; font-weight: 700; margin: 0 0 18px; color: var(--text1); }
+  .entries-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; margin-bottom: 28px; max-width: 760px; margin-left: auto; margin-right: auto; }
+  .entry-card {
+    display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px;
+    background: var(--surface); border: 1px solid var(--border); border-radius: 24px; padding: 26px 20px;
+    text-decoration: none; color: inherit; box-shadow: 0 16px 34px -22px rgba(90,70,130,0.26);
+  }
+  .icon-wrap { width: 58px; height: 58px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .icon-wrap.lav { background: var(--lavender-soft); }
+  .icon-wrap.mnt { background: #E4F3EC; }
+  .icon-wrap svg { width: 26px; height: 26px; }
+  .entry-card h3 { margin: 0; font-size: 1rem; font-weight: 700; }
+  .entry-card p { margin: 0; font-size: 0.85rem; color: var(--text2); line-height: 1.5; }
+
+  .empty-state {
+    display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px;
+    padding: 36px 20px; border: 1.5px dashed #D8CFEA; border-radius: 24px; background: rgba(255,255,255,0.5);
+    max-width: 480px; margin: 0 auto;
+  }
+  .empty-state svg { width: 42px; height: 42px; color: #9A8FBB; }
+  .empty-title { margin: 0; font-weight: 700; font-size: 0.95rem; color: var(--text1); }
+  .empty-sub { margin: 0; font-size: 0.85rem; color: var(--text2); }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="rationale">
+    <span class="tag">Designretning 9 · Myk pastell rolig</span>
+    <p>
+      Pastelltonene lavendel (#C3B4E8), mint (#8FCDB3) og fersken (#F6CDAE) brukes kun som
+      dekorative blobber og flater — all tekst står i mørk plum (#2D2A3A) eller mørk brun
+      mot hvit/nesten-hvit bakgrunn, slik at WCAG AA holder selv i en svært lav-mettet palett.
+      Dette er det direkte motstykket til en "standard fitness-app": ingen konkurranse-rødt,
+      ingen prestasjonspress i fargevalget.
+    </p>
+    <p>
+      Typografisk er registeret rundt og luftig (Quicksand til overskrifter, Nunito Sans til
+      brødtekst i produksjon), med generøs linjeavstand som senker lesefarten. Bevegelsen
+      antydes som sakte, svevende fade/float — blobbene "ånder" over ~6 sekunder i stedet for
+      å sprette — slik at helheten kjennes nesten meditativ, som en pause fra dagen.
+    </p>
+    <span class="font-note"><span class="dot"></span>I produksjon: Quicksand + Nunito Sans</span>
+  </div>
+
+  <div class="laptop">
+    <div class="bezel">
+      <div class="browser-chrome">
+        <div class="traffic">
+          <span style="background:#FF5F57;"></span>
+          <span style="background:#FEBC2E;"></span>
+          <span style="background:#28C840;"></span>
+        </div>
+        <div class="address-pill">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>
+          promptforce.app/dashboard
+        </div>
+      </div>
+
+      <div class="app-screen">
+        <div class="blob blob1"></div>
+        <div class="blob blob2"></div>
+        <div class="blob blob3"></div>
+
+        <div class="app-inner">
+          <header class="app-header">
+            <div class="logo">
+              <svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="17" fill="#C3B4E8"/><path d="M12 22c1-6 3-10 5-10s4 4 5 10" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round"/></svg>
+              Prompt Force
+            </div>
+            <nav class="float-nav">
+              <a class="active" href="#">Forside</a>
+              <a href="#">Trening</a>
+              <a href="#">Mat</a>
+            </nav>
+            <button class="icon-btn" aria-label="Hjelp">?</button>
+          </header>
+
+          <h1 class="page-title">Dagens oversikt</h1>
+
+          <div class="ring-wrap">
+            <div class="ring-card">
+              <svg viewBox="0 0 160 160" width="190" height="190">
+                <g transform="translate(80,80)">
+                  <circle r="58" style="fill:none; stroke:#E8E1F2; stroke-width:14;"/>
+                  <circle r="58" style="fill:none; stroke:#6FBE9C; stroke-width:14; stroke-linecap:round;" stroke-dasharray="364.4" stroke-dashoffset="118" transform="rotate(-90)"/>
+                  <text x="0" y="-4" text-anchor="middle" style="fill:#2D2A3A; font-size:25px; font-weight:700; font-family:inherit;">1 420</text>
+                  <text x="0" y="18" text-anchor="middle" style="fill:#5B5568; font-size:13px; font-family:inherit;">/ 2 100 kcal</text>
+                </g>
+              </svg>
+            </div>
+          </div>
+          <p class="ring-caption">Kalorier i dag</p>
+
+          <div class="status-pill">
+            <svg viewBox="0 0 40 40" width="46" height="46" style="flex-shrink:0;">
+              <circle cx="20" cy="20" r="20" fill="#8FCDB3"/>
+              <path d="M11 20.5 L17 27 L29 13" style="fill:none; stroke:#FFFFFF; stroke-width:3.2; stroke-linecap:round; stroke-linejoin:round;"/>
+            </svg>
+            <div>
+              <p class="status-title">Beinøvelser</p>
+              <p class="status-sub">Fullført</p>
+            </div>
+          </div>
+
+          <div class="actions-row">
+            <button class="btn-primary">Logg måltid</button>
+            <button class="btn-primary alt">Logg trening</button>
+          </div>
+
+          <h2 class="section-title">Utforsk</h2>
+          <div class="entries-grid">
+            <a class="entry-card" href="#">
+              <div class="icon-wrap lav">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#6B57A8" stroke-width="2" stroke-linecap="round"><path d="M4 9v6M2 10v4M20 9v6M22 10v4M7 12h10"/></svg>
+              </div>
+              <h3>Trening</h3>
+              <p>Se dagens øvelser og din fremgang</p>
+            </a>
+            <a class="entry-card" href="#">
+              <div class="icon-wrap mnt">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#3E8A68" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3v7a2 2 0 002 2 2 2 0 002-2V3M9 12v9M18 3c-1.6 0-3 1.6-3 4v4c0 1 1 1 2 1v7"/></svg>
+              </div>
+              <h3>Mat</h3>
+              <p>Logg måltider og se kaloriforbruk</p>
+            </a>
+          </div>
+
+          <div class="empty-state">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2"><circle cx="24" cy="24" r="18" stroke-dasharray="4 5"/><path d="M24 16v16M16 24h16" stroke-linecap="round"/></svg>
+            <p class="empty-title">Ingen måltider logget enda i dag</p>
+            <p class="empty-sub">Trykk «Logg måltid» for å komme i gang.</p>
+          </div>
+        </div>
+      </div>
+      <div class="laptop-base"></div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

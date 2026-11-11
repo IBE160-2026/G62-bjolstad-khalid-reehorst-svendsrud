@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prompt Force – Kroppsmodell (øvelsesvalg)</title>
+<style>
+  /* =========================================================================
+     KEY SCREEN: Kroppsmodell — øvelsesvalg via tekstliste (Trening)
+     Hvilken skjerm: nås via "Logg trening" på Forsiden (EXPERIENCE.md,
+     Information Architecture-raden "Trening").
+
+     Spine-seksjoner denne mockupen illustrerer (EXPERIENCE.md):
+     - Component Patterns, raden "Kroppsmodell": trykk på en muskelgruppe i
+       tekstlisten viser øvelseslisten for gruppen; klikk på en øvelse legger
+       den rett inn i dagens treningslogg (sett/reps/vekt-felt), ingen
+       separat detaljvisning først. Et søkefelt øverst i samme kort er en
+       likeverdig, parallell inngang til nøyaktig samme øvelsesvalg/logging —
+       treff på tvers av muskelgrupper legges rett inn akkurat som via
+       tekstlisten (speiler Mat-sidens Søk-metode, `.memlog.md` entry 73).
+     - Accessibility Floor: tekstlisten ER grensesnittet (ekte, fokuserbare
+       <button>-elementer, med synlig :focus-visible-ring) — ikke et
+       supplement til noe annet.
+     - Key Flow 6 "Sara velger en øvelse via muskelgruppelisten": Logg
+       trening → tekstliste → trykk "Ben" → benøvelser (nybegynner-nivå
+       øverst) → trykk "Knebøy" → øvelsen er lagt i dagens treningslogg med
+       åpne sett/reps/vekt-felt. Denne mockupen viser nettopp DEN tilstanden:
+       "Ben" valgt, "Knebøy" nettopp lagt til.
+
+     Visuell identitet er LÅST fra DESIGN.md / direction-02c-plomme-teal.html
+     (samme header/nav/typografi/fargetoken-verdier — ingen nye farger eller
+     fonter er funnet opp her):
+       paper (bakgrunn):        #F7F2E9
+       surface (kort):          #FFFDF7
+       ink (tekst-primær):      #3A322B  — kontrast 11.3:1 mot papir
+       ink-sekundær:            #6B6056  — kontrast 5.5:1 mot papir
+       accent-primary "plomme": #7A3B69  — kontrast 7.1:1 mot papir (CTA/valgt)
+       accent-complete "teal":  #347774  — kontrast 4.7:1 mot papir (fullført)
+       rule (papirlinjal):      #E4D9C6
+       on-accent:               #FFF9F0
+     Typografi: Fraunces (overskrift, .serif) + Inter-fallback-stack (brødtekst).
+     Ingen glow/neon-skygger, ingen gradient-tekst, ingen aksentfarge i løpende
+     brødtekst, minste funksjonelle tekst 12px (se tekstlisten .muscle-list
+     nedenfor — den anatomiske figuren som tidligere lå her er fjernet;
+     tekstlisten er nå den eneste inngangen til muskelgruppevalg, se
+     .memlog.md entry 67).
+     ========================================================================= */
+
+  :root{
+    color-scheme: light;
+    --paper: #F7F2E9;
+    --surface: #FFFDF7;
+    --ink: #3A322B;
+    --ink2: #6B6056;
+    --clay: #7A3B69;
+    --clay-tint: rgba(122,59,105,0.10);
+    --sage: #347774;
+    --sage-tint: rgba(52,119,116,0.14);
+    --rule: #E4D9C6;
+    --on-accent: #FFF9F0;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: #EAE2D3;
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+  /* HUMANISTISK BRØDTEKST-SANS — i produksjon: Inter (se DESIGN.md.typography.body). */
+  /* REDAKSJONELL JOURNAL-SERIF — i produksjon: Fraunces (se DESIGN.md.typography.heading). */
+  .serif { font-family: Georgia, "Iowan Old Style", "Times New Roman", serif; }
+
+  .page { min-height: 100vh; padding: 48px 20px 80px; display: flex; flex-direction: column; align-items: center; gap: 28px; }
+
+  .laptop { width: 100%; max-width: 1180px; }
+  .bezel { background: #D8CDB8; border-radius: 22px; padding: 14px 14px 0; box-shadow: 0 30px 60px -24px rgba(90,70,40,0.35); }
+  .browser-chrome { background: #ECE4D4; border-radius: 12px 12px 0 0; padding: 11px 16px; display: flex; align-items: center; gap: 16px; }
+  .traffic { display: flex; gap: 7px; }
+  .traffic span { width: 11px; height: 11px; border-radius: 50%; display: block; }
+  .address-pill { flex: 1; background: var(--surface); border-radius: 8px; padding: 7px 14px; color: var(--ink2); font-size: 0.78rem; display: flex; align-items: center; gap: 8px; border: 1px solid var(--rule); }
+  .address-pill svg { width: 12px; height: 12px; flex-shrink: 0; }
+
+  .app-screen { background: var(--paper); padding: 40px 48px 56px; background-image: repeating-linear-gradient(to bottom, transparent, transparent 37px, var(--rule) 38px); }
+  .laptop-base { height: 14px; background: #D2C7B1; border-radius: 0 0 10px 10px; margin: 0 20px; position: relative; }
+  .laptop-base::after { content: ""; position: absolute; left: 50%; top: 0; transform: translateX(-50%); width: 86px; height: 6px; background: #C6BA9F; border-radius: 0 0 7px 7px; }
+
+  .app-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 30px; gap: 20px; flex-wrap: wrap; }
+  .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.2rem; color: var(--ink); }
+  .logo svg { width: 30px; height: 30px; }
+  .main-nav { display: flex; gap: 6px; background: var(--surface); border: 1px solid var(--rule); border-radius: 999px; padding: 5px; }
+  .main-nav a { padding: 9px 18px; border-radius: 999px; color: var(--ink2); font-size: 0.9rem; font-weight: 600; text-decoration: none; }
+  .main-nav a.active { background: var(--clay); color: var(--on-accent); }
+  .header-actions { display: flex; align-items: center; gap: 10px; }
+  .icon-btn { width: 40px; height: 40px; border-radius: 50%; background: var(--sage-tint); border: 1px solid var(--rule); color: var(--sage); font-weight: 700; font-size: 0.95rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+  .help-hint { font-size: 0.78rem; color: var(--ink2); margin: -4px 0 26px; font-style: italic; }
+
+  h1.page-title { font-size: 1.9rem; font-weight: 600; margin: 4px 0 6px; color: var(--ink); }
+  .page-sub { margin: 0 0 30px; color: var(--ink2); font-size: 0.95rem; }
+
+  h2.section-title { font-size: 1.15rem; font-weight: 600; margin: 0 0 16px; color: var(--ink); }
+  h3.card-heading { font-size: 1.02rem; font-weight: 700; margin: 0 0 4px; color: var(--ink); }
+
+  /* --- Focus ring: visible on every real interactive control, keyboard-reachable --- */
+  button:focus-visible,
+  a:focus-visible,
+  input:focus-visible {
+    outline: 2px solid var(--clay);
+    outline-offset: 2px;
+    border-radius: 10px;
+  }
+
+  /* --- Main grid: muscle-list column, exercises+logged-card column --- */
+  .screen-grid { display: grid; grid-template-columns: minmax(300px, 360px) 1fr; gap: 20px; align-items: start; }
+
+  .card { background: var(--surface); border: 1px solid var(--rule); border-radius: 22px; padding: 24px; box-shadow: 0 12px 26px -18px rgba(120,90,50,0.22); position: relative; }
+  .card::before { content: ""; position: absolute; top: -8px; left: 28px; width: 46px; height: 16px; background: var(--sage-tint); border: 1px solid var(--rule); transform: rotate(-3deg); border-radius: 2px; }
+
+  /* --- Exercise search: a second, equal entry path into the same exercise list/logging --- */
+  .search-field { position: relative; margin: 4px 0 14px; }
+  .search-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); width: 18px; height: 18px; color: var(--ink2); pointer-events: none; }
+  .search-input {
+    width: 100%;
+    font-family: inherit;
+    font-size: 0.98rem;
+    color: var(--ink);
+    background: var(--paper);
+    border: 1.5px solid var(--rule);
+    border-radius: 999px;
+    padding: 12px 16px 12px 42px;
+  }
+  .search-input::placeholder { color: var(--ink2); opacity: 0.8; }
+  .search-results-list { margin-bottom: 18px; }
+  .search-divider { margin: 4px 0 18px; font-size: 0.86rem; color: var(--ink2); font-style: italic; }
+
+  /* --- Text list of muscle groups (the sole muscle-group control) --- */
+  .muscle-list { list-style: none; margin: 4px 0 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+  .muscle-pill {
+    display: flex; align-items: center; justify-content: space-between; gap: 10px;
+    width: 100%;
+    background: var(--surface);
+    border: 1.5px solid var(--rule);
+    border-radius: 999px;
+    padding: 16px 22px;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--ink2);
+    cursor: pointer;
+    text-align: left;
+  }
+  .muscle-pill[aria-pressed="true"] {
+    background: var(--clay);
+    border-color: var(--clay);
+    color: var(--on-accent);
+  }
+  .muscle-pill .check { width: 18px; height: 18px; flex-shrink: 0; }
+
+  /* --- Exercise list --- */
+  .exercise-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+  .exercise-row {
+    display: flex; align-items: center; gap: 14px;
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 16px;
+    padding: 14px 16px;
+    font-family: inherit;
+    font-size: 0.98rem;
+    font-weight: 700;
+    color: var(--ink);
+    cursor: pointer;
+    text-align: left;
+    box-shadow: 0 8px 20px -16px rgba(120,90,50,0.2);
+  }
+  .exercise-row .ex-name { flex: 1; }
+  .exercise-row .ex-sub { font-weight: 400; font-size: 0.82rem; color: var(--ink2); display: block; margin-top: 2px; }
+  .exercise-row.just-added { border-color: var(--sage); background: var(--sage-tint); }
+  .added-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 0.78rem; font-weight: 700; color: var(--sage);
+    flex-shrink: 0;
+  }
+  .added-badge svg { width: 14px; height: 14px; }
+
+  /* --- "Nettopp lagt til" entry card --- */
+  .logged-card { margin-top: 18px; }
+  .logged-head { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+  .logged-check { width: 44px; height: 44px; border-radius: 50%; background: var(--sage); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .logged-check svg { width: 22px; height: 22px; }
+  .logged-title-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; flex: 1; }
+  .video-btn {
+    display: flex; align-items: center; gap: 6px; flex-shrink: 0;
+    background: var(--sage-tint); color: var(--sage); border: 1px solid var(--rule);
+    border-radius: 999px; padding: 7px 14px 7px 12px; font-size: 0.82rem; font-weight: 700;
+    font-family: inherit; cursor: pointer; white-space: nowrap;
+  }
+  .video-btn:hover { background: rgba(52,119,116,0.22); }
+  .logged-label { font-size: 0.85rem; font-weight: 700; color: var(--sage); margin: 0 0 2px; }
+
+  .field-row { display: flex; gap: 14px; flex-wrap: wrap; }
+  .field { display: flex; flex-direction: column; gap: 6px; flex: 1; min-width: 100px; }
+  .field label { font-size: 0.82rem; font-weight: 700; color: var(--ink2); }
+  .field input {
+    width: 100%;
+    font-family: inherit;
+    font-size: 0.98rem;
+    color: var(--ink);
+    background: var(--paper);
+    border: 1.5px solid var(--rule);
+    border-radius: 10px;
+    padding: 10px 12px;
+  }
+  .field input::placeholder { color: var(--ink2); opacity: 0.8; }
+
+  .exercises-sub { margin: 0 0 16px; font-size: 0.86rem; color: var(--ink2); }
+
+  @media (max-width: 760px) {
+    .screen-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="laptop">
+    <div class="bezel">
+      <div class="browser-chrome">
+        <div class="traffic">
+          <span style="background:#E8A87C;"></span>
+          <span style="background:#D9C27A;"></span>
+          <span style="background:#A3B98A;"></span>
+        </div>
+        <div class="address-pill">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>
+          promptforce.app/trening
+        </div>
+      </div>
+
+      <div class="app-screen">
+        <header class="app-header">
+          <div class="logo">
+            <svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#7A3B69"/><path d="M11 22 L16 9 L21 22 L16 18 Z" fill="#FFF9F0"/></svg>
+            Prompt Force
+          </div>
+          <nav class="main-nav">
+            <a href="#">Forside</a>
+            <a class="active" href="#">Trening</a>
+            <a href="#">Mat</a>
+          </nav>
+          <div class="header-actions">
+            <button class="icon-btn" aria-label="Hjelp – forklar denne siden" title="Trykk for en kort forklaring av denne siden">?</button>
+          </div>
+        </header>
+
+        <h1 class="page-title serif">Logg trening</h1>
+        <p class="page-sub">Søk etter en øvelse, eller velg en muskelgruppe fra listen, for å se øvelser.</p>
+
+        <div class="screen-grid">
+
+          <!-- Column 1: two equal entry paths to the same exercise list/logging — search, and the muscle-group text list -->
+          <div class="card">
+            <h2 class="section-title serif">Søk etter øvelse</h2>
+            <div class="search-field">
+              <svg class="search-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="6"/><path d="M20 20l-5.5-5.5"/></svg>
+              <input type="search" class="search-input" aria-label="Søk etter øvelse" placeholder="Søk etter øvelse... (f.eks. Knebøy)" value="ben">
+            </div>
+            <p class="exercises-sub">Eksempel på søketreff for «ben» – på tvers av muskelgrupper. Statisk skisse, ikke et ekte søk.</p>
+            <ul class="exercise-list search-results-list">
+              <li>
+                <button type="button" class="exercise-row search-hit">
+                  <span class="ex-name">Knebøy (Squat)<span class="ex-sub">Ben</span></span>
+                </button>
+              </li>
+              <li>
+                <button type="button" class="exercise-row search-hit">
+                  <span class="ex-name">Beinpress (Leg press)<span class="ex-sub">Ben</span></span>
+                </button>
+              </li>
+              <li>
+                <button type="button" class="exercise-row search-hit">
+                  <span class="ex-name">Hofteløft (Hip thrust)<span class="ex-sub">Ben</span></span>
+                </button>
+              </li>
+            </ul>
+
+            <p class="search-divider">… eller velg muskelgruppe</p>
+
+            <h2 class="section-title serif">Velg muskelgruppe</h2>
+
+            <ul class="muscle-list">
+              <li>
+                <button type="button" class="muscle-pill" aria-pressed="false">
+                  Skuldre
+                </button>
+              </li>
+              <li>
+                <button type="button" class="muscle-pill" aria-pressed="false">
+                  Bryst
+                </button>
+              </li>
+              <li>
+                <button type="button" class="muscle-pill" aria-pressed="false">
+                  Mage / kjerne
+                </button>
+              </li>
+              <li>
+                <button type="button" class="muscle-pill" aria-pressed="false">
+                  Armer
+                </button>
+              </li>
+              <li>
+                <button type="button" class="muscle-pill" aria-pressed="true">
+                  Ben
+                  <svg class="check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>
+                </button>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Column 2: exercises for the selected group + just-logged entry -->
+          <div>
+            <div class="card">
+              <h2 class="section-title serif">Benøvelser</h2>
+              <p class="exercises-sub">Nybegynner-nivå øverst. Trykk på en øvelse for å legge den rett inn i dagens treningslogg.</p>
+
+              <ul class="exercise-list">
+                <li>
+                  <button type="button" class="exercise-row just-added">
+                    <span class="ex-name">Knebøy (Squat)
+                      <span class="ex-sub">Nybegynner · kroppsvekt eller manualer</span>
+                    </span>
+                    <span class="added-badge">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>
+                      Lagt til
+                    </span>
+                  </button>
+                </li>
+                <li>
+                  <button type="button" class="exercise-row">
+                    <span class="ex-name">Utfall (Lunge)
+                      <span class="ex-sub">Nybegynner · kroppsvekt eller manualer</span>
+                    </span>
+                  </button>
+                </li>
+                <li>
+                  <button type="button" class="exercise-row">
+                    <span class="ex-name">Beinpress (Leg press)
+                      <span class="ex-sub">Nybegynner · maskin</span>
+                    </span>
+                  </button>
+                </li>
+                <li>
+                  <button type="button" class="exercise-row">
+                    <span class="ex-name">Hofteløft (Hip thrust)
+                      <span class="ex-sub">Nybegynner · kroppsvekt eller manualer · rompe</span>
+                    </span>
+                  </button>
+                </li>
+                <li>
+                  <button type="button" class="exercise-row">
+                    <span class="ex-name">Rumensk markløft (Romanian deadlift)
+                      <span class="ex-sub">Nybegynner · manualer eller stang · rompe</span>
+                    </span>
+                  </button>
+                </li>
+                <li>
+                  <button type="button" class="exercise-row">
+                    <span class="ex-name">Legghéving (Calf raise)
+                      <span class="ex-sub">Nybegynner · kroppsvekt eller manualer</span>
+                    </span>
+                  </button>
+                </li>
+              </ul>
+            </div>
+
+            <div class="card logged-card">
+              <div class="logged-head">
+                <div class="logged-check">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#FFF9F0" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>
+                </div>
+                <div class="logged-title-row">
+                  <div>
+                    <p class="logged-label">Nettopp lagt til i dagens treningslogg</p>
+                    <h3 class="card-heading">Knebøy (Squat)</h3>
+                  </div>
+                  <button type="button" class="video-btn" aria-label="Se video av riktig teknikk for Knebøy">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                    Se video
+                  </button>
+                </div>
+              </div>
+              <div class="field-row">
+                <div class="field">
+                  <label for="f-sett">Sett</label>
+                  <input id="f-sett" type="number" inputmode="numeric" placeholder="f.eks. 3">
+                </div>
+                <div class="field">
+                  <label for="f-reps">Reps</label>
+                  <input id="f-reps" type="number" inputmode="numeric" placeholder="f.eks. 10">
+                </div>
+                <div class="field">
+                  <label for="f-vekt">Vekt (kg)</label>
+                  <input id="f-vekt" type="number" inputmode="decimal" placeholder="f.eks. 10">
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="laptop-base"></div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

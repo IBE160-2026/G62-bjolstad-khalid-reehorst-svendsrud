@@ -1,0 +1,516 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prompt Force – fargetema-varianter</title>
+<style>
+  /* =========================================================================
+     TOKEN-DOKUMENTASJON (for gjenbruk i DESIGN.md)
+     Hver variant setter sine fasit-verdier som CSS custom properties direkte
+     på sitt <article class="variant"> i inline style-attributtet. Her er en
+     lesbar oppsummering av de samme verdiene, samlet på ett sted:
+
+     Variant 1 – Rolig og trygg
+       background:      #0F172A
+       surface:         #1A2740
+       primary/accent:  #5EEAD4
+       success:         #4ADE80
+       warning/error:   #FCA5A5
+       text-primary:    #F1F5F9
+       text-secondary:  #94A3B8
+       border:          #2D3B55
+
+     Variant 2 – Energisk og motiverende
+       background:      #181512
+       surface:         #241D17
+       primary/accent:  #FF8A4C
+       success:         #7CDB7A
+       warning/error:   #FF6B6B
+       text-primary:    #FFF7F0
+       text-secondary:  #C9BCAE
+       border:          #3A2E24
+
+     Variant 3 – Nøytral / klinisk-stilren (mørk)
+       background:      #121212
+       surface:         #1E1E1E
+       primary/accent:  #6FA8FF
+       success:         #4CAF82
+       warning/error:   #E0586B
+       text-primary:    #EDEDED
+       text-secondary:  #A6A6A6
+       border:          #333333
+
+     Variant 3 – bonus: samme tema i lys modus
+       background:      #F5F7FA
+       surface:         #FFFFFF
+       primary/accent:  #2F6FE0
+       success:         #1E8E55
+       warning/error:   #C23B51
+       text-primary:    #1A1A1A
+       text-secondary:  #5B5B5B
+       border:          #D9DEE5
+
+     Variant 4 – Varm og personlig
+       background:      #241712
+       surface:         #32221A
+       primary/accent:  #E8A662
+       success:         #8FBC6B
+       warning/error:   #E2704F
+       text-primary:    #FBF1E7
+       text-secondary:  #C8AD98
+       border:          #4A3528
+
+     Variant 5 – Naturlig og jordnær
+       background:      #11170F
+       surface:         #1E2A1A
+       primary/accent:  #9CAE7C
+       success:         #B4C98A
+       warning/error:   #D9815A
+       text-primary:    #EDEFE6
+       text-secondary:  #ABB29B
+       border:          #35402E
+
+     Variant 6 – Premium og fokusert
+       background:      #0D0B1A
+       surface:         #171430
+       primary/accent:  #8B7CF8
+       success:         #5FD6A8
+       warning/error:   #F4718C
+       text-primary:    #F3F1FA
+       text-secondary:  #AEA8CC
+       border:          #2B2650
+
+     Kontrastkontroll (WCAG 2.1 AA, relativ luminans): text-primary og
+     text-secondary er beregnet mot BÅDE background og surface for alle
+     varianter og ligger i alle tilfeller over 4.5:1 (lavest observert:
+     text-secondary/surface i "Nøytral/klinisk-stilren" lys-bonus ≈ 6.8:1,
+     mørke varianter laveste ≈ 5.8:1). Accent mot background ligger alltid
+     over 3:1 (brukt til ikoner/ramme/grafiske elementer). Knappetekst bruker
+     variantens EGEN background-farge (ikke en fast svart/hvit) oppå accent-
+     fyllet, noe som i alle seks mørke varianter gir 5.8–13.3:1. Success og
+     warning/error brukes kun som fyllfarge på ikoner/sjekkmerker/kort, ikke
+     som løpende tekst oppå background – unngår grensetilfeller der enkelte
+     av disse tonene ville ligget tett på 3:1-grensa for grafiske objekter.
+     ========================================================================= */
+
+  :root{
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: #090909;
+    color: #eaeaea;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  body { padding: 28px 24px 56px; }
+  .page-head { max-width: 980px; margin: 0 auto 28px; }
+  .page-head h1 { font-size: 1.5rem; margin: 0 0 8px; }
+  .page-head p { margin: 0; color: #b7b7b7; font-size: 0.92rem; line-height: 1.5; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+    gap: 22px;
+    max-width: 1500px;
+    margin: 0 auto;
+  }
+
+  .variant {
+    border-radius: 20px;
+    padding: 20px 20px 22px;
+    background: var(--bg);
+    color: var(--text1);
+    border: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .variant-head h2 { margin: 0 0 4px; font-size: 1.2rem; letter-spacing: -0.01em; }
+  .variant-head .emo {
+    margin: 0 0 10px;
+    color: var(--text2);
+    font-size: 0.9rem;
+    font-style: italic;
+    line-height: 1.4;
+  }
+  .register-tag {
+    display: inline-block;
+    font-size: 0.66rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 3px 9px;
+    border-radius: 999px;
+    background: var(--surface);
+    color: var(--text2);
+    border: 1px solid var(--border);
+  }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+  }
+  .chip {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 6px 9px 6px 7px;
+    min-width: 0;
+  }
+  .chip .swatch {
+    width: 18px;
+    height: 18px;
+    border-radius: 5px;
+    flex-shrink: 0;
+    border: 1px solid rgba(255,255,255,0.14);
+  }
+  .chip .chip-text { display: flex; flex-direction: column; line-height: 1.2; }
+  .chip .chip-role {
+    color: var(--text1);
+    font-size: 0.66rem;
+    font-weight: 600;
+  }
+  .chip .chip-hex {
+    color: var(--text2);
+    font-size: 0.64rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+
+  .card-wrap {
+    background: transparent;
+    border-radius: 14px;
+    overflow: hidden;
+  }
+  .card-wrap svg { display: block; width: 100%; height: auto; }
+
+  .bonus-light {
+    margin-top: 2px;
+    border-radius: 12px;
+    padding: 10px 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .bonus-light .bonus-label {
+    font-size: 0.64rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 700;
+    margin-right: 2px;
+  }
+  .bonus-light .mini-swatch {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+    border: 1px solid rgba(0,0,0,0.12);
+    flex-shrink: 0;
+  }
+  .bonus-light .mini-btn {
+    margin-left: auto;
+    border-radius: 7px;
+    padding: 5px 10px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    border: none;
+  }
+</style>
+</head>
+<body>
+
+  <div class="page-head">
+    <h1>Prompt Force — fargetema-varianter</h1>
+    <p>
+      Seks forslag til fargetema for treningslogg/kostholdslogg-appen, alle vist i mørk modus
+      (primær opplevelse). Variantene varierer i emosjonelt register, ikke bare i fargenyanse.
+      Hver variant viser fargetoken-chips (bakgrunn, flate, accent, suksess, varsel/feil,
+      tekst primær/sekundær, ramme) og et SVG-utsnitt av «dagens oversikt». Én variant har
+      også en liten bonus-rad som antyder lys modus.
+    </p>
+  </div>
+
+  <div class="grid">
+
+    <!-- ============================== VARIANT 1 ============================== -->
+    <article class="variant" style="--bg:#0F172A; --surface:#1A2740; --accent:#5EEAD4; --success:#4ADE80; --warn:#FCA5A5; --text1:#F1F5F9; --text2:#94A3B8; --border:#2D3B55;">
+      <div class="variant-head">
+        <span class="register-tag">Rolig · trygg</span>
+        <h2>Rolig og trygg</h2>
+        <p class="emo">«Her kan du senke skuldrene og bygge gode vaner i ditt eget tempo.»</p>
+      </div>
+
+      <div class="chips">
+        <div class="chip"><span class="swatch" style="background:#0F172A;"></span><span class="chip-text"><span class="chip-role">Bakgrunn</span><span class="chip-hex">#0F172A</span></span></div>
+        <div class="chip"><span class="swatch" style="background:#1A2740;"></span><span class="chip-text"><span class="chip-role">Flate</span><span class="chip-hex">#1A2740</span></span></div>
+        <div class="chip"><span class="swatch" style="background:#5EEAD4;"></span><span class="chip-text"><span class="chip-role">Accent</span><span class="chip-hex">#5EEAD4</span></span></div>
+        <div class="chip"><span class="swatch" style="background:#4ADE80;"></span><span class="chip-text"><span class="chip-role">Suksess</span><span class="chip-hex">#4ADE80</span></span></div>
+        <div class="chip"><span class="swatch" style="background:#FCA5A5;"></span><span class="chip-text"><span class="chip-role">Varsel/feil</span><span class="chip-hex">#FCA5A5</span></span></div>
+        <div class="chip"><span class="swatch" style="background:#F1F5F9;"></span><span class="chip-text"><span class="chip-role">Tekst, primær</span><span class="chip-hex">#F1F5F9</span></span></div>
+        <div class="chip"><span class="swatch" style="background:#94A3B8;"></span><span class="chip-text"><span class="chip-role">Tekst, sekundær</span><span class="chip-hex">#94A3B8</span></span></div>
+        <div class="chip"><span class="swatch" style="background:#2D3B55;"></span><span class="chip-text"><span class="chip-role">Ramme</span><span class="chip-hex">#2D3B55</span></span></div>
+      </div>
+
+      <div class="card-wrap">
+        <svg viewBox="0 0 320 200" width="100%">
+          <rect x="0" y="0" width="320" height="200" rx="18" style="fill:var(--surface); stroke:var(--border); stroke-width:1.5;"/>
+          <text x="18" y="26" style="fill:var(--text2); font-size:12px; letter-spacing:.04em;">I DAG</text>
+          <g transform="translate(70,80)">
+            <circle r="38" style="fill:none; stroke:var(--border); stroke-width:10;"/>
+            <circle r="38" style="fill:none; stroke:var(--accent); stroke-width:10; stroke-linecap:round;" stroke-dasharray="238.76" stroke-dashoffset="77.31" transform="rotate(-90)"/>
+            <text x="0" y="-2" text-anchor="middle" style="fill:var(--text1); font-size:17px; font-weight:700;">1 420</text>
+            <text x="0" y="16" text-anchor="middle" style="fill:var(--text2); font-size:10.5px;">/ 2 100 kcal</text>
+          </g>
+          <g transform="translate(132,56)">
+            <circle cx="14" cy="14" r="14" style="fill:var(--success);"/>
+            <path d="M7 14.5 L12 19.5 L21 9" style="fill:none; stroke:var(--bg); stroke-width:2.4; stroke-linecap:round; stroke-linejoin:round;"/>
+            <text x="34" y="12" style="fill:var(--text1); font-size:13px; font-weight:600;">Beinøvelser</text>
+            <text x="34" y="27" style="fill:var(--text2); font-size:11px;">Fullført</text>
+          </g>
+          <g transform="translate(132,96)">
+            <rect width="156" height="36" rx="10" style="fill:var(--accent);"/>
+            <text x="78" y="23" text-anchor="middle" style="fill:var(--bg); font-size:13px; font-weight:700;">Logg måltid</text>
+          </g>
+        </svg>
+      </div>
+    </article>
+
+    <!-- ============================== VARIANT 2 ============================== -->
+    <article class="variant" style="--bg:#181512; --surface:#241D17; --accent:#FF8A4C; --success:#7CDB7A; --warn:#FF6B6B; --text1:#FFF7F0; --text2:#C9BCAE; --border:#3A2E24;">
+      <div class="variant-head">
+        <span class="register-tag">Energisk · motiverende</span>
+        <h2>Energisk og motiverende</h2>
+        <p class="emo">«Kjenn pulsen! Hver logging er en liten seier — kom igjen!»</p>
+      </div>
+
+      <div class="chips">
+        <div class="chip"><span class="swatch" style="background:#181512;"></span><span class="chip-text"><span class="chip-role">Bakgrunn</span><span class="chip-hex">#181512</span></span></div>
+        <div class="chip"><span class="swatch" style="background:#241D17;"></span><span class="chip-text"><span class="chip-role">Flate</span><span class="chip-hex">#241D17</span></span></div>
+        <div class="chip"><span class="swatch" style="background:#FF8A4C;"></span><span class="chip-text"><span class="chip-role">Accent</span><span class="chip-hex">#FF8A4C</span></span></div>
+        <div class="chip"><span class="swatch" style="background:#7CDB7A;"></span><span class="chip-text"><span class="chip-role">Suksess</span><span class="chip-hex">#7CDB7A</span></span></div>
+        <div class="chip"><span class="swatch" style="background:#FF6B6B;"></span><span class="chip-text"><span class="chip-role">Varsel/feil</span><span class="chip-hex">#FF6B6B</span></span></div>
+        <div class="chip"><span class="swatch" style="background:#FFF7F0;"></span><span class="chip-text"><span class="chip-role">Tekst, primær</span><span class="chip-hex">#FFF7F0</span></span></div>
+        <div class="chip"><span class="swatch" style="background:#C9BCAE;"></span><span class="chip-text"><span class="chip-role">Tekst, sekundær</span><span class="chip-hex">#C9BCAE</span></span></div>
+        <div class="chip"><span class="swatch" style="background:#3A2E24;"></span><span class="chip-text"><span class="chip-role">Ramme</span><span class="chip-hex">#3A2E24</span></span></div>
+      </div>
+
+      <div class="card-wrap">
+        <svg viewBox="0 0 320 200" width="100%">
+          <rect x="0" y="0" width="320" height="200" rx="18" style="fill:var(--surface); stroke:var(--border); stroke-width:1.5;"/>
+          <text x="18" y="26" style="fill:var(--text2); font-size:12px; letter-spacing:.04em;">I DAG</text>
+          <g transform="translate(70,80)">
+            <circle r="38" style="fill:none; stroke:var(--border); stroke-width:10;"/>
+            <circle r="38" style="fill:none; stroke:var(--accent); stroke-width:10; stroke-linecap:round;" stroke-dasharray="238.76" stroke-dashoffset="77.31" transform="rotate(-90)"/>
+            <text x="0" y="-2" text-anchor="middle" style="fill:var(--text1); font-size:17px; font-weight:700;">1 420</text>
+            <text x="0" y="16" text-anchor="middle" style="fill:var(--text2); font-size:10.5px;">/ 2 100 kcal</text>
+          </g>
+          <g transform="translate(132,56)">
+            <circle cx="14" cy="14" r="14" style="fill:var(--success);"/>
+            <path d="M7 14.5 L12 19.5 L21 9" style="fill:none; stroke:var(--bg); stroke-width:2.4; stroke-linecap:round; stroke-linejoin:round;"/>
+            <text x="34" y="12" style="fill:var(--text1); font-size:13px; font-weight:600;">Beinøvelser</text>
+            <text x="34" y="27" style="fill:var(--text2); font-size:11px;">Fullført</text>
+          </g>
+          <g transform="translate(132,96)">
+            <rect width="156" height="36" rx="10" style="fill:var(--accent);"/>
+            <text x="78" y="23" text-anchor="middle" style="fill:var(--bg); font-size:13px; font-weight:700;">Logg måltid</text>
+          </g>
+        </svg>
+      </div>
+    </article>
+
+    <!-- ============================== VARIANT 3 ============================== -->
+    <article class="variant" style="--bg:#121212; --surface:#1E1E1E; --accent:#6FA8FF; --success:#4CAF82; --warn:#E0586B; --text1:#EDEDED; --text2:#A6A6A6; --border:#333333;">
+      <div class="variant-head">
+        <span class="register-tag">Nøytral · klinisk-stilren</span>
+        <h2>Nøytral og klinisk-stilren</h2>
+        <p class="emo">«Ren oversikt, rolige tall — ingen støy, bare fakta.»</p>
+      </div>
+
+      <div class="chips">
+        <div class="chip"><span class="swatch" style="background:#121212;"></span><span class="chip-text"><span class="chip-role">Bakgrunn</span><span class="chip-hex">#121212</span></span></div>
+        <div class="chip"><span class="swatch" style="background:#1E1E1E;"></span><span class="chip-text"><span class="chip-role">Flate</span><span class="chip-hex">#1E1E1E</span></span></div>
+        <div class="chip"><span class="swatch" style="background:#6FA8FF;"></span><span class="chip-text"><span class="chip-role">Accent</span><span class="chip-hex">#6FA8FF</span></span></div>
+        <div class="chip"><span class="swatch" style="background:#4CAF82;"></span><span class="chip-text"><span class="chip-role">Suksess</span><span class="chip-hex">#4CAF82</span></span></div>
+        <div class="chip"><span class="swatch" style="background:#E0586B;"></span><span class="chip-text"><span class="chip-role">Varsel/feil</span><span class="chip-hex">#E0586B</span></span></div>
+        <div class="chip"><span class="swatch" style="background:#EDEDED;"></span><span class="chip-text"><span class="chip-role">Tekst, primær</span><span class="chip-hex">#EDEDED</span></span></div>
+        <div class="chip"><span class="swatch" style="background:#A6A6A6;"></span><span class="chip-text"><span class="chip-role">Tekst, sekundær</span><span class="chip-hex">#A6A6A6</span></span></div>
+        <div class="chip"><span class="swatch" style="background:#333333;"></span><span class="chip-text"><span class="chip-role">Ramme</span><span class="chip-hex">#333333</span></span></div>
+      </div>
+
+      <div class="card-wrap">
+        <svg viewBox="0 0 320 200" width="100%">
+          <rect x="0" y="0" width="320" height="200" rx="18" style="fill:var(--surface); stroke:var(--border); stroke-width:1.5;"/>
+          <text x="18" y="26" style="fill:var(--text2); font-size:12px; letter-spacing:.04em;">I DAG</text>
+          <g transform="translate(70,80)">
+            <circle r="38" style="fill:none; stroke:var(--border); stroke-width:10;"/>
+            <circle r="38" style="fill:none; stroke:var(--accent); stroke-width:10; stroke-linecap:round;" stroke-dasharray="238.76" stroke-dashoffset="77.31" transform="rotate(-90)"/>
+            <text x="0" y="-2" text-anchor="middle" style="fill:var(--text1); font-size:17px; font-weight:700;">1 420</text>
+            <text x="0" y="16" text-anchor="middle" style="fill:var(--text2); font-size:10.5px;">/ 2 100 kcal</text>
+          </g>
+          <g transform="translate(132,56)">
+            <circle cx="14" cy="14" r="14" style="fill:var(--success);"/>
+            <path d="M7 14.5 L12 19.5 L21 9" style="fill:none; stroke:var(--bg); stroke-width:2.4; stroke-linecap:round; stroke-linejoin:round;"/>
+            <text x="34" y="12" style="fill:var(--text1); font-size:13px; font-weight:600;">Beinøvelser</text>
+            <text x="34" y="27" style="fill:var(--text2); font-size:11px;">Fullført</text>
+          </g>
+          <g transform="translate(132,96)">
+            <rect width="156" height="36" rx="10" style="fill:var(--accent);"/>
+            <text x="78" y="23" text-anchor="middle" style="fill:var(--bg); font-size:13px; font-weight:700;">Logg måltid</text>
+          </g>
+        </svg>
+      </div>
+
+      <!-- Bonus: samme tema i lys modus (liten antydning, ikke hovedfokus) -->
+      <div class="bonus-light" style="background:#F5F7FA; border:1px solid #D9DEE5;">
+        <span class="bonus-label" style="color:#1A1A1A;">Bonus: lys modus</span>
+        <span class="mini-swatch" style="background:#F5F7FA; border-color:#D9DEE5;"></span>
+        <span class="mini-swatch" style="background:#FFFFFF;"></span>
+        <span class="mini-swatch" style="background:#2F6FE0;"></span>
+        <span class="mini-swatch" style="background:#1E8E55;"></span>
+        <span class="mini-swatch" style="background:#C23B51;"></span>
+        <span style="font-size:0.66rem; color:#5B5B5B; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;">
+          #F5F7FA · #FFFFFF · #2F6FE0 · #1E8E55 · #C23B51 · tekst #1A1A1A / #5B5B5B
+        </span>
+        <button class="mini-btn" style="background:#2F6FE0; color:#FFFFFF;">Logg måltid</button>
+      </div>
+    </article>
+
+    <!-- ============================== VARIANT 4 ============================== -->
+    <article class="variant" style="--bg:#241712; --surface:#32221A; --accent:#E8A662; --success:#8FBC6B; --warn:#E2704F; --text1:#FBF1E7; --text2:#C8AD98; --border:#4A3528;">
+      <div class="variant-head">
+        <span class="register-tag">Varm · personlig</span>
+        <h2>Varm og personlig</h2>
+        <p class="emo">«Som en god venn som heier på deg — varmt og nært, aldri strengt.»</p>
+      </div>
+
+      <div class="chips">
+        <div class="chip"><span class="swatch" style="background:#241712;"></span><span class="chip-text"><span class="chip-role">Bakgrunn</span><span class="chip-hex">#241712</span></span></div>
+        <div class="chip"><span class="swatch" style="background:#32221A;"></span><span class="chip-text"><span class="chip-role">Flate</span><span class="chip-hex">#32221A</span></span></div>
+        <div class="chip"><span class="swatch" style="background:#E8A662;"></span><span class="chip-text"><span class="chip-role">Accent</span><span class="chip-hex">#E8A662</span></span></div>
+        <div class="chip"><span class="swatch" style="background:#8FBC6B;"></span><span class="chip-text"><span class="chip-role">Suksess</span><span class="chip-hex">#8FBC6B</span></span></div>
+        <div class="chip"><span class="swatch" style="background:#E2704F;"></span><span class="chip-text"><span class="chip-role">Varsel/feil</span><span class="chip-hex">#E2704F</span></span></div>
+        <div class="chip"><span class="swatch" style="background:#FBF1E7;"></span><span class="chip-text"><span class="chip-role">Tekst, primær</span><span class="chip-hex">#FBF1E7</span></span></div>
+        <div class="chip"><span class="swatch" style="background:#C8AD98;"></span><span class="chip-text"><span class="chip-role">Tekst, sekundær</span><span class="chip-hex">#C8AD98</span></span></div>
+        <div class="chip"><span class="swatch" style="background:#4A3528;"></span><span class="chip-text"><span class="chip-role">Ramme</span><span class="chip-hex">#4A3528</span></span></div>
+      </div>
+
+      <div class="card-wrap">
+        <svg viewBox="0 0 320 200" width="100%">
+          <rect x="0" y="0" width="320" height="200" rx="18" style="fill:var(--surface); stroke:var(--border); stroke-width:1.5;"/>
+          <text x="18" y="26" style="fill:var(--text2); font-size:12px; letter-spacing:.04em;">I DAG</text>
+          <g transform="translate(70,80)">
+            <circle r="38" style="fill:none; stroke:var(--border); stroke-width:10;"/>
+            <circle r="38" style="fill:none; stroke:var(--accent); stroke-width:10; stroke-linecap:round;" stroke-dasharray="238.76" stroke-dashoffset="77.31" transform="rotate(-90)"/>
+            <text x="0" y="-2" text-anchor="middle" style="fill:var(--text1); font-size:17px; font-weight:700;">1 420</text>
+            <text x="0" y="16" text-anchor="middle" style="fill:var(--text2); font-size:10.5px;">/ 2 100 kcal</text>
+          </g>
+          <g transform="translate(132,56)">
+            <circle cx="14" cy="14" r="14" style="fill:var(--success);"/>
+            <path d="M7 14.5 L12 19.5 L21 9" style="fill:none; stroke:var(--bg); stroke-width:2.4; stroke-linecap:round; stroke-linejoin:round;"/>
+            <text x="34" y="12" style="fill:var(--text1); font-size:13px; font-weight:600;">Beinøvelser</text>
+            <text x="34" y="27" style="fill:var(--text2); font-size:11px;">Fullført</text>
+          </g>
+          <g transform="translate(132,96)">
+            <rect width="156" height="36" rx="10" style="fill:var(--accent);"/>
+            <text x="78" y="23" text-anchor="middle" style="fill:var(--bg); font-size:13px; font-weight:700;">Logg måltid</text>
+          </g>
+        </svg>
+      </div>
+    </article>
+
+    <!-- ============================== VARIANT 5 ============================== -->
+    <article class="variant" style="--bg:#11170F; --surface:#1E2A1A; --accent:#9CAE7C; --success:#B4C98A; --warn:#D9815A; --text1:#EDEFE6; --text2:#ABB29B; --border:#35402E;">
+      <div class="variant-head">
+        <span class="register-tag">Naturlig · jordnær</span>
+        <h2>Naturlig og jordnær</h2>
+        <p class="emo">«Jordnær ro — bygg helsa di steg for steg, i ditt eget tempo.»</p>
+      </div>
+
+      <div class="chips">
+        <div class="chip"><span class="swatch" style="background:#11170F;"></span><span class="chip-text"><span class="chip-role">Bakgrunn</span><span class="chip-hex">#11170F</span></span></div>
+        <div class="chip"><span class="swatch" style="background:#1E2A1A;"></span><span class="chip-text"><span class="chip-role">Flate</span><span class="chip-hex">#1E2A1A</span></span></div>
+        <div class="chip"><span class="swatch" style="background:#9CAE7C;"></span><span class="chip-text"><span class="chip-role">Accent</span><span class="chip-hex">#9CAE7C</span></span></div>
+        <div class="chip"><span class="swatch" style="background:#B4C98A;"></span><span class="chip-text"><span class="chip-role">Suksess</span><span class="chip-hex">#B4C98A</span></span></div>
+        <div class="chip"><span class="swatch" style="background:#D9815A;"></span><span class="chip-text"><span class="chip-role">Varsel/feil</span><span class="chip-hex">#D9815A</span></span></div>
+        <div class="chip"><span class="swatch" style="background:#EDEFE6;"></span><span class="chip-text"><span class="chip-role">Tekst, primær</span><span class="chip-hex">#EDEFE6</span></span></div>
+        <div class="chip"><span class="swatch" style="background:#ABB29B;"></span><span class="chip-text"><span class="chip-role">Tekst, sekundær</span><span class="chip-hex">#ABB29B</span></span></div>
+        <div class="chip"><span class="swatch" style="background:#35402E;"></span><span class="chip-text"><span class="chip-role">Ramme</span><span class="chip-hex">#35402E</span></span></div>
+      </div>
+
+      <div class="card-wrap">
+        <svg viewBox="0 0 320 200" width="100%">
+          <rect x="0" y="0" width="320" height="200" rx="18" style="fill:var(--surface); stroke:var(--border); stroke-width:1.5;"/>
+          <text x="18" y="26" style="fill:var(--text2); font-size:12px; letter-spacing:.04em;">I DAG</text>
+          <g transform="translate(70,80)">
+            <circle r="38" style="fill:none; stroke:var(--border); stroke-width:10;"/>
+            <circle r="38" style="fill:none; stroke:var(--accent); stroke-width:10; stroke-linecap:round;" stroke-dasharray="238.76" stroke-dashoffset="77.31" transform="rotate(-90)"/>
+            <text x="0" y="-2" text-anchor="middle" style="fill:var(--text1); font-size:17px; font-weight:700;">1 420</text>
+            <text x="0" y="16" text-anchor="middle" style="fill:var(--text2); font-size:10.5px;">/ 2 100 kcal</text>
+          </g>
+          <g transform="translate(132,56)">
+            <circle cx="14" cy="14" r="14" style="fill:var(--success);"/>
+            <path d="M7 14.5 L12 19.5 L21 9" style="fill:none; stroke:var(--bg); stroke-width:2.4; stroke-linecap:round; stroke-linejoin:round;"/>
+            <text x="34" y="12" style="fill:var(--text1); font-size:13px; font-weight:600;">Beinøvelser</text>
+            <text x="34" y="27" style="fill:var(--text2); font-size:11px;">Fullført</text>
+          </g>
+          <g transform="translate(132,96)">
+            <rect width="156" height="36" rx="10" style="fill:var(--accent);"/>
+            <text x="78" y="23" text-anchor="middle" style="fill:var(--bg); font-size:13px; font-weight:700;">Logg måltid</text>
+          </g>
+        </svg>
+      </div>
+    </article>
+
+    <!-- ============================== VARIANT 6 ============================== -->
+    <article class="variant" style="--bg:#0D0B1A; --surface:#171430; --accent:#8B7CF8; --success:#5FD6A8; --warn:#F4718C; --text1:#F3F1FA; --text2:#AEA8CC; --border:#2B2650;">
+      <div class="variant-head">
+        <span class="register-tag">Premium · fokusert</span>
+        <h2>Premium og fokusert</h2>
+        <p class="emo">«Skjerpet fokus, premium følelse — for deg som tar helsa på alvor.»</p>
+      </div>
+
+      <div class="chips">
+        <div class="chip"><span class="swatch" style="background:#0D0B1A;"></span><span class="chip-text"><span class="chip-role">Bakgrunn</span><span class="chip-hex">#0D0B1A</span></span></div>
+        <div class="chip"><span class="swatch" style="background:#171430;"></span><span class="chip-text"><span class="chip-role">Flate</span><span class="chip-hex">#171430</span></span></div>
+        <div class="chip"><span class="swatch" style="background:#8B7CF8;"></span><span class="chip-text"><span class="chip-role">Accent</span><span class="chip-hex">#8B7CF8</span></span></div>
+        <div class="chip"><span class="swatch" style="background:#5FD6A8;"></span><span class="chip-text"><span class="chip-role">Suksess</span><span class="chip-hex">#5FD6A8</span></span></div>
+        <div class="chip"><span class="swatch" style="background:#F4718C;"></span><span class="chip-text"><span class="chip-role">Varsel/feil</span><span class="chip-hex">#F4718C</span></span></div>
+        <div class="chip"><span class="swatch" style="background:#F3F1FA;"></span><span class="chip-text"><span class="chip-role">Tekst, primær</span><span class="chip-hex">#F3F1FA</span></span></div>
+        <div class="chip"><span class="swatch" style="background:#AEA8CC;"></span><span class="chip-text"><span class="chip-role">Tekst, sekundær</span><span class="chip-hex">#AEA8CC</span></span></div>
+        <div class="chip"><span class="swatch" style="background:#2B2650;"></span><span class="chip-text"><span class="chip-role">Ramme</span><span class="chip-hex">#2B2650</span></span></div>
+      </div>
+
+      <div class="card-wrap">
+        <svg viewBox="0 0 320 200" width="100%">
+          <rect x="0" y="0" width="320" height="200" rx="18" style="fill:var(--surface); stroke:var(--border); stroke-width:1.5;"/>
+          <text x="18" y="26" style="fill:var(--text2); font-size:12px; letter-spacing:.04em;">I DAG</text>
+          <g transform="translate(70,80)">
+            <circle r="38" style="fill:none; stroke:var(--border); stroke-width:10;"/>
+            <circle r="38" style="fill:none; stroke:var(--accent); stroke-width:10; stroke-linecap:round;" stroke-dasharray="238.76" stroke-dashoffset="77.31" transform="rotate(-90)"/>
+            <text x="0" y="-2" text-anchor="middle" style="fill:var(--text1); font-size:17px; font-weight:700;">1 420</text>
+            <text x="0" y="16" text-anchor="middle" style="fill:var(--text2); font-size:10.5px;">/ 2 100 kcal</text>
+          </g>
+          <g transform="translate(132,56)">
+            <circle cx="14" cy="14" r="14" style="fill:var(--success);"/>
+            <path d="M7 14.5 L12 19.5 L21 9" style="fill:none; stroke:var(--bg); stroke-width:2.4; stroke-linecap:round; stroke-linejoin:round;"/>
+            <text x="34" y="12" style="fill:var(--text1); font-size:13px; font-weight:600;">Beinøvelser</text>
+            <text x="34" y="27" style="fill:var(--text2); font-size:11px;">Fullført</text>
+          </g>
+          <g transform="translate(132,96)">
+            <rect width="156" height="36" rx="10" style="fill:var(--accent);"/>
+            <text x="78" y="23" text-anchor="middle" style="fill:var(--bg); font-size:13px; font-weight:700;">Logg måltid</text>
+          </g>
+        </svg>
+      </div>
+    </article>
+
+  </div>
+</body>
+</html>

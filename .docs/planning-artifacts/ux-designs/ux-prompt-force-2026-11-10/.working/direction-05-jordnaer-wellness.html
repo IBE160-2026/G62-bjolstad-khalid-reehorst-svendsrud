@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prompt Force – Varm jordnær wellness</title>
+<style>
+  /* =========================================================================
+     TOKEN-DOKUMENTASJON — Retning 5: Varm jordnær wellness
+     --bg            #F2E6D3  (sand/papir — lys modus, bevisst motsats av mørk standard)
+     --surface       #FBF3E7  (kort/paneler, varm off-white)
+     --surface-soft  #ECDFC7  (sekundær flate, dash-kanter, tom-tilstand)
+     --terracotta        #C1623D  (vivid — ring-fyll, ikon-fyll, dekorativt. IKKE brukt som tekstbunn)
+     --terracotta-deep   #96482B  (knapp-bunn — mørkere terrakotta for AA-kontrast mot lys tekst)
+     --olive         #5B6B4F  (strukturell sekundærfarge — aktiv nav, ramme-aksent)
+     --olive-deep    #3F4A38  (mørk olivgrønn — ikon-strøk, liten tekst på olivgrønn bunn)
+     --text1         #3A3226  (primær tekst — varm mørk brun, ikke sort)
+     --text2         #6B6150  (sekundær tekst — varm gråbrun, AA-sjekket)
+     --border        #E4D4BC  (lav-kontrast kantlinje, sandfarget)
+     --text-oncolor  #FBF3E7  (tekst på terrakotta/oliv-bunn)
+
+     Fargelogikk: Varme jordtoner (sand-bakgrunn, terrakotta, dyp oliv) framfor
+     den kjølige mørke indigo/koral-paletten appen ellers har utforsket. Terrakotta
+     bærer all energi/fremdrift (ring, knapper), oliv er strukturell ro (nav,
+     kort-aksenter) — ingen av dem er "varsel"-farger, de leser som jord og
+     planter, ikke som sport-app-rødt. Lys modus er et bevisst valg her: det
+     forsterker "dagslys/naturlig"-registeret som mørk modus ikke kan gi.
+
+     Typografi-personlighet: humanistisk/rundet sans med myke bokstavformer og
+     generøs linjehøyde — vennlig og lesbar uten å kjennes "lekent barnslig".
+     I PRODUKSJON representerer dette fonten Nunito (rundede terminaler, varm
+     x-høyde); systemstacken under er nærmeste tilgjengelige approksimasjon.
+
+     Bevegelsesimplikasjon: mykt og langsomt — "innåndende". Hover/overganger
+     bruker lange easing-kurver (420–600ms) i stedet for de raske 150ms-hoppene
+     man ellers ser i fitness-UI, og kaloriringen har en svak, treg puls
+     (4s, skala 1→1.012) som antyder rolig åndedrett, ikke en teller som tikker.
+
+     Hvorfor forskjellig fra "standard fitness-app": standard fitness-UI er
+     nesten alltid kjølig, skarpt og "prestasjons"-kodet (sort/blått/rødt,
+     harde kanter, rask feedback). Denne retningen er bevisst det motsatte:
+     varm, organisk, nesten spa-aktig — for brukere som vil at trening/kosthold
+     skal kjennes som egenomsorg, ikke konkurranse. Fortsatt fullt lesbar og
+     funksjonell, ikke dekorativ på bekostning av innhold.
+
+     Ingen glow/neon-shadows, ingen gradient-tekst. Minste funksjonelle
+     tekststørrelse: 12px.
+     ========================================================================= */
+
+  :root{
+    color-scheme: light;
+    --bg: #F2E6D3;
+    --surface: #FBF3E7;
+    --surface-soft: #ECDFC7;
+    --terracotta: #C1623D;
+    --terracotta-deep: #96482B;
+    --olive: #5B6B4F;
+    --olive-deep: #3F4A38;
+    --text1: #3A3226;
+    --text2: #6B6150;
+    --border: #E4D4BC;
+    --text-oncolor: #FBF3E7;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: #E8DCC6;
+    color: var(--text1);
+    /* HUMANISTISK/RUNDET SANS — I produksjon: Nunito.
+       Nærmeste systemstack-approksimasjon (rundere terminaler der tilgjengelig): */
+    font-family: "Avenir Next", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    min-height: 100vh;
+    padding: 40px 20px 72px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 26px;
+  }
+
+  .rationale {
+    width: 100%;
+    max-width: 980px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 22px 28px;
+  }
+  .rationale .tag {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--terracotta-deep);
+    margin-bottom: 8px;
+  }
+  .rationale p {
+    margin: 0 0 12px;
+    color: var(--text2);
+    font-size: 0.95rem;
+    line-height: 1.65;
+    max-width: 780px;
+  }
+  .rationale p:last-of-type { margin-bottom: 14px; }
+  .font-note {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--surface-soft);
+    border: 1px solid var(--border);
+    color: var(--text1);
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 7px 16px;
+    border-radius: 999px;
+  }
+  .font-note .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--terracotta); display: inline-block; }
+
+  .laptop { width: 100%; max-width: 1180px; }
+  .bezel {
+    background: #1C1B22;
+    border-radius: 22px;
+    padding: 14px 14px 0;
+    box-shadow: 0 30px 60px -24px rgba(0,0,0,0.55);
+  }
+  .browser-chrome {
+    background: #121018;
+    border-radius: 12px 12px 0 0;
+    padding: 11px 16px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .traffic { display: flex; gap: 7px; }
+  .traffic span { width: 11px; height: 11px; border-radius: 50%; display: block; }
+  .address-pill {
+    flex: 1;
+    background: #1E1B2E;
+    border-radius: 8px;
+    padding: 7px 14px;
+    color: #B8B3D1;
+    font-size: 0.78rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .address-pill svg { width: 12px; height: 12px; flex-shrink: 0; }
+
+  .app-screen { background: var(--bg); padding: 40px 48px 56px; }
+  .laptop-base { height: 14px; background: #232029; border-radius: 0 0 10px 10px; margin: 0 20px; position: relative; }
+  .laptop-base::after {
+    content: ""; position: absolute; left: 50%; top: 0; transform: translateX(-50%);
+    width: 86px; height: 6px; background: #2b2833; border-radius: 0 0 7px 7px;
+  }
+
+  .app-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 38px; gap: 20px; flex-wrap: wrap; }
+  .logo { display: flex; align-items: center; gap: 11px; font-weight: 800; font-size: 1.22rem; color: var(--text1); }
+  .logo svg { width: 36px; height: 36px; }
+  .main-nav { display: flex; gap: 4px; background: var(--surface); border: 1px solid var(--border); border-radius: 999px; padding: 5px; }
+  .main-nav a { padding: 10px 20px; border-radius: 999px; color: var(--text2); font-size: 0.92rem; font-weight: 700; text-decoration: none; transition: background .45s ease, color .45s ease; }
+  .main-nav a.active { background: var(--olive); color: var(--text-oncolor); }
+  .header-actions { display: flex; align-items: center; gap: 10px; }
+  .icon-btn {
+    width: 40px; height: 40px; border-radius: 50%; background: var(--surface);
+    border: 1px solid var(--border); color: var(--text2); font-weight: 700;
+    font-size: 0.9rem; cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: border-color .45s ease, color .45s ease;
+  }
+  .icon-btn:hover { border-color: var(--terracotta); color: var(--terracotta-deep); }
+
+  h1.page-title { font-size: 1.6rem; font-weight: 800; margin: 0 0 22px; letter-spacing: -0.005em; color: var(--text1); }
+
+  .overview-grid { display: grid; grid-template-columns: minmax(230px, 310px) 1fr; gap: 20px; margin-bottom: 28px; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 28px; padding: 24px; }
+  .ring-card { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; }
+  .ring-card svg { animation: breathe 4s ease-in-out infinite; transform-origin: center; }
+  @keyframes breathe {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.012); }
+  }
+  .ring-caption { color: var(--text2); font-size: 0.85rem; margin-top: 4px; font-weight: 600; }
+  .status-card { display: flex; align-items: center; gap: 20px; }
+  .status-title { margin: 0 0 3px; font-weight: 800; font-size: 1.08rem; color: var(--text1); }
+  .status-sub { margin: 0; font-weight: 700; font-size: 0.88rem; color: var(--terracotta-deep); letter-spacing: 0.01em; }
+
+  .actions-row { display: flex; gap: 16px; margin-bottom: 46px; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--terracotta-deep); color: var(--text-oncolor); border: none; border-radius: 999px;
+    padding: 15px 28px; font-size: 0.96rem; font-weight: 800; cursor: pointer;
+    box-shadow: 0 10px 20px -10px rgba(150,72,43,0.45);
+    transition: transform .4s ease, filter .4s ease;
+  }
+  .btn-primary:hover { filter: brightness(1.08); transform: translateY(-1px); }
+  .btn-secondary {
+    background: transparent; color: var(--olive-deep); border: 1.5px solid var(--olive);
+    border-radius: 999px; padding: 15px 28px; font-size: 0.96rem; font-weight: 800; cursor: pointer;
+    transition: background .4s ease;
+  }
+  .btn-secondary:hover { background: var(--surface-soft); }
+
+  h2.section-title { font-size: 1.12rem; font-weight: 800; margin: 0 0 16px; color: var(--text1); }
+  .entries-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; margin-bottom: 28px; }
+  .entry-card {
+    display: flex; align-items: center; gap: 18px; background: var(--surface);
+    border: 1px solid var(--border); border-radius: 30px; padding: 22px;
+    text-decoration: none; color: inherit; transition: border-color .45s ease, transform .45s ease;
+  }
+  .entry-card:hover { border-color: var(--terracotta); transform: translateY(-2px); }
+  .icon-wrap {
+    width: 52px; height: 52px; flex-shrink: 0;
+    border-radius: 46% 54% 58% 42% / 52% 44% 56% 48%;
+    background: var(--surface-soft);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .icon-wrap svg { width: 26px; height: 26px; }
+  .entry-card h3 { margin: 0 0 3px; font-size: 1.02rem; font-weight: 800; color: var(--text1); }
+  .entry-card p { margin: 0; font-size: 0.86rem; color: var(--text2); line-height: 1.5; }
+  .entry-card .arrow { margin-left: auto; color: var(--text2); flex-shrink: 0; width: 20px; height: 20px; }
+
+  .empty-state {
+    display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px;
+    padding: 36px 22px; border: 1.5px dashed var(--border); border-radius: 32px;
+    background: var(--surface-soft);
+  }
+  .empty-state svg { width: 42px; height: 42px; color: var(--olive); }
+  .empty-title { margin: 0; font-weight: 800; font-size: 0.97rem; color: var(--text1); }
+  .empty-sub { margin: 0; font-size: 0.86rem; color: var(--text2); }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="rationale">
+    <span class="tag">Designretning 5 · Varm jordnær wellness</span>
+    <p>
+      Sand (#F2E6D3), terrakotta (#C1623D/#96482B) og dyp oliv (#5B6B4F) bytter ut
+      appens kjølige mørke indigo/koral-palett med jordtoner — terrakotta bærer
+      energi og fremdrift (ring, knapper), oliv er den rolige strukturelle
+      sekundærfargen. Lys modus er et bevisst valg her for å forsterke
+      «dagslys og natur»-registeret.
+    </p>
+    <p>
+      Typografisk er dette en humanistisk/rundet sans med myke bokstavformer —
+      vennlig og lesbart uten å bli barnslig. Bevegelsen er myk og langsom:
+      lange 420–600ms-overganger og en svak, treg puls på kaloriringen («innåndende»)
+      i stedet for raske hopp. Dette skiller seg fra standard fitness-UI, som
+      nesten alltid er kjølig og prestasjons-kodet — her skal trening og mat
+      kjennes som egenomsorg.
+    </p>
+    <span class="font-note"><span class="dot"></span>I produksjon: Nunito</span>
+  </div>
+
+  <div class="laptop">
+    <div class="bezel">
+      <div class="browser-chrome">
+        <div class="traffic">
+          <span style="background:#FF5F57;"></span>
+          <span style="background:#FEBC2E;"></span>
+          <span style="background:#28C840;"></span>
+        </div>
+        <div class="address-pill">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>
+          promptforce.app/dashboard
+        </div>
+      </div>
+
+      <div class="app-screen">
+        <header class="app-header">
+          <div class="logo">
+            <svg viewBox="0 0 36 36">
+              <path d="M18 3 C9 3 4 10 4 18 C4 27 10 33 18 33 C26 33 32 27 32 18 C32 11 28 6 22 4 C25 9 24 15 18 16 C13 17 12 11 18 3 Z" fill="#C1623D"/>
+            </svg>
+            Prompt Force
+          </div>
+          <nav class="main-nav">
+            <a class="active" href="#">Forside</a>
+            <a href="#">Trening</a>
+            <a href="#">Mat</a>
+          </nav>
+          <div class="header-actions">
+            <button class="icon-btn" aria-label="Hjelp">?</button>
+          </div>
+        </header>
+
+        <h1 class="page-title">Dagens oversikt</h1>
+
+        <div class="overview-grid">
+          <div class="card ring-card">
+            <svg viewBox="0 0 160 160" width="150" height="150">
+              <g transform="translate(80,80)">
+                <circle r="58" style="fill:none; stroke:#ECDFC7; stroke-width:16; stroke-linecap:round;"/>
+                <circle r="58" style="fill:none; stroke:#C1623D; stroke-width:16; stroke-linecap:round;" stroke-dasharray="364.4" stroke-dashoffset="118" transform="rotate(-90)"/>
+                <text x="0" y="-4" text-anchor="middle" style="fill:#3A3226; font-size:26px; font-weight:800; font-family:inherit;">1 420</text>
+                <text x="0" y="18" text-anchor="middle" style="fill:#6B6150; font-size:13px; font-weight:600; font-family:inherit;">/ 2 100 kcal</text>
+              </g>
+            </svg>
+            <div class="ring-caption">Kalorier i dag</div>
+          </div>
+
+          <div class="card status-card">
+            <svg viewBox="0 0 44 44" width="56" height="56" style="flex-shrink:0;">
+              <circle cx="22" cy="22" r="22" fill="#5B6B4F"/>
+              <path d="M12 22.5 L18.5 29 L32 14.5" style="fill:none; stroke:#FBF3E7; stroke-width:3.4; stroke-linecap:round; stroke-linejoin:round;"/>
+            </svg>
+            <div>
+              <p class="status-title">Beinøvelser</p>
+              <p class="status-sub">Fullført</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="actions-row">
+          <button class="btn-primary">Logg måltid</button>
+          <button class="btn-secondary">Logg trening</button>
+        </div>
+
+        <h2 class="section-title">Utforsk</h2>
+        <div class="entries-grid">
+          <a class="entry-card" href="#">
+            <div class="icon-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#5B6B4F" stroke-width="2" stroke-linecap="round"><path d="M4 9v6M2 10v4M20 9v6M22 10v4M7 12h10"/></svg>
+            </div>
+            <div>
+              <h3>Trening</h3>
+              <p>Se dagens øvelser og din fremgang</p>
+            </div>
+            <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+          </a>
+          <a class="entry-card" href="#">
+            <div class="icon-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#C1623D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3v7a2 2 0 002 2 2 2 0 002-2V3M9 12v9M18 3c-1.6 0-3 1.6-3 4v4c0 1 1 1 2 1v7"/></svg>
+            </div>
+            <div>
+              <h3>Mat</h3>
+              <p>Logg måltider og se kaloriforbruk</p>
+            </div>
+            <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+
+        <div class="empty-state">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2"><circle cx="24" cy="24" r="18" stroke-dasharray="4 5"/><path d="M24 16v16M16 24h16" stroke-linecap="round"/></svg>
+          <p class="empty-title">Ingen måltider logget enda i dag</p>
+          <p class="empty-sub">Ta det i ditt eget tempo — trykk «Logg måltid» når du er klar.</p>
+        </div>
+      </div>
+      <div class="laptop-base"></div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

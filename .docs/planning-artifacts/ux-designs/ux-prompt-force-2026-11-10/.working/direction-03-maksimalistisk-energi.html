@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prompt Force – Dristig maksimalistisk energi</title>
+<style>
+  /* =========================================================================
+     TOKEN-DOKUMENTASJON — Retning 3: Dristig maksimalistisk energi
+     bg (bakgrunn):        #0A0A0A  (nesten svart — scene for fargeblokkene)
+     surface (panel):      #141414  (svakt lysere flate, kun for kort uten fargeblokk)
+     yellow (blokk 1):     #FFE500  (høy-energi varsel/fremdrift — "noe skjer nå")
+     pink (blokk 2):       #FF2D6B  (CTA / handling — "trykk her")
+     cyan (blokk 3):       #00E0FF  (sekundær energi — kontrastblokk, mat-modul)
+     ink (tekst på farge): #0A0A0A  (svart tekst oppå de mettede blokkene — garantert AA)
+     paper (tekst på mørk):#F5F4EF  (nær-hvit tekst oppå svart bakgrunn)
+     grid-line:            #262626  (strukturlinjer/rammer på mørk flate)
+
+     Fargelogikk: tre mettede farger (gul/rosa/cyan) brukes som EGNE flater —
+     ikke som tynne aksent-streker — fordi retningen skal kjennes som en
+     sportsmerke-kampanje: hver modul "eier" sin farge (gul = status/fremdrift,
+     rosa = handling/CTA, cyan = mat-modulen som motvekt til treningens gult).
+     All tekst oppå farge er sort (garantert kontrast), all tekst på svart er
+     nær-hvit — ingen glow eller neon-skygge er brukt, kontrasten skapes av
+     FLATE og tykke sorte konturer, ikke lys.
+
+     Typografi-personlighet: svært tung display-grotesk i store størrelser,
+     store bokstaver, negativ bokstavavstand på overskrifter — bygget for å
+     leses i fart, ikke for finlesning. Dette er bevisst det MOTSATTE av en
+     rolig helse-app: registeret lånes fra sportsmerke-plakater (Nike/Gymshark-
+     kampanjestil), ikke fra kliniske helseapper, for å gjøre loggingen til en
+     seiersfølelse i stedet for en plikt.
+
+     Bevegelsesimplikasjon (statisk mockup, beskrevet): rask og punchy —
+     knapper ville "smelle" ned 2px ved trykk, kaloriringen ville spraye fylling
+     inn i stedet for å glide, og "fullført"-merket ville zoome inn med en kort
+     strek-burst (vist statisk her som soltegn). Ingen loop-animasjoner —
+     bevegelse er alltid kort og feirende, aldri dekorativ i bakgrunnen.
+     ========================================================================= */
+
+  :root{
+    color-scheme: dark;
+    --bg: #0A0A0A;
+    --surface: #141414;
+    --yellow: #FFE500;
+    --pink: #FF2D6B;
+    --cyan: #00E0FF;
+    --ink: #0A0A0A;
+    --paper: #F5F4EF;
+    --paper-dim: #B9B6AC;
+    --grid: #262626;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: #000000;
+    color: var(--paper);
+    /* TUNG DISPLAY-GROTESK — I produksjon: "Archivo Black" (overskrifter) +
+       "Inter" (brødtekst/knapper). System-stack som nærmer seg samme
+       tunge, kompakte energien innen systemfont-grensene: */
+    font-family: -apple-system, BlinkMacSystemFont, "Arial Black", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    min-height: 100vh;
+    padding: 40px 20px 72px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 26px;
+  }
+
+  .rationale {
+    width: 100%;
+    max-width: 1000px;
+    background: var(--surface);
+    border: 2px solid var(--grid);
+    border-radius: 4px;
+    padding: 20px 26px;
+  }
+  .rationale .tag {
+    display: inline-block;
+    font-size: 0.74rem;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--yellow);
+    margin-bottom: 8px;
+  }
+  .rationale p {
+    margin: 0 0 12px;
+    color: var(--paper-dim);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    max-width: 800px;
+  }
+  .rationale p:last-of-type { margin-bottom: 14px; }
+  .font-note {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--ink);
+    border: 2px solid var(--pink);
+    color: var(--paper);
+    font-size: 0.8rem;
+    font-weight: 800;
+    padding: 7px 14px;
+    border-radius: 3px;
+  }
+  .font-note .dot { width: 8px; height: 8px; background: var(--pink); display: inline-block; }
+
+  .laptop { width: 100%; max-width: 1180px; }
+  .bezel {
+    background: #1C1B1B;
+    border-radius: 22px;
+    padding: 14px 14px 0;
+    box-shadow: 0 30px 60px -24px rgba(0,0,0,0.75);
+  }
+  .browser-chrome {
+    background: #111111;
+    border-radius: 12px 12px 0 0;
+    padding: 11px 16px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .traffic { display: flex; gap: 7px; }
+  .traffic span { width: 11px; height: 11px; border-radius: 50%; display: block; }
+  .address-pill {
+    flex: 1;
+    background: #1E1E1E;
+    border-radius: 8px;
+    padding: 7px 14px;
+    color: #9A9A9A;
+    font-size: 0.78rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .address-pill svg { width: 12px; height: 12px; flex-shrink: 0; }
+
+  .app-screen { background: var(--bg); padding: 36px 44px 52px; }
+  .laptop-base { height: 14px; background: #1C1B1B; border-radius: 0 0 10px 10px; margin: 0 20px; position: relative; }
+  .laptop-base::after {
+    content: ""; position: absolute; left: 50%; top: 0; transform: translateX(-50%);
+    width: 86px; height: 6px; background: #262626; border-radius: 0 0 7px 7px;
+  }
+
+  .app-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 34px; gap: 20px; flex-wrap: wrap; border-bottom: 3px solid var(--grid); padding-bottom: 18px; }
+  .logo { display: flex; align-items: center; gap: 10px; font-weight: 900; font-size: 1.3rem; letter-spacing: -0.02em; text-transform: uppercase; }
+  .logo svg { width: 34px; height: 34px; }
+  .main-nav { display: flex; gap: 2px; }
+  .main-nav a { padding: 10px 18px; color: var(--paper-dim); font-size: 0.88rem; font-weight: 800; text-decoration: none; text-transform: uppercase; letter-spacing: 0.03em; border: 2px solid transparent; border-radius: 3px; }
+  .main-nav a.active { background: var(--yellow); color: var(--ink); border-color: var(--yellow); }
+  .header-actions { display: flex; align-items: center; gap: 10px; }
+  .icon-btn {
+    width: 40px; height: 40px; border-radius: 3px; background: transparent;
+    border: 2px solid var(--grid); color: var(--paper);
+    font-size: 0.95rem; font-weight: 900; cursor: pointer; display: flex; align-items: center; justify-content: center;
+  }
+  .icon-btn:hover { border-color: var(--pink); color: var(--pink); }
+
+  h1.page-title {
+    font-size: 2.4rem;
+    font-weight: 900;
+    margin: 0 0 22px;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+    line-height: 1.02;
+  }
+
+  .overview-grid { display: grid; grid-template-columns: minmax(220px, 300px) 1fr; gap: 20px; margin-bottom: 28px; }
+  .block { border-radius: 6px; padding: 24px; border: 3px solid var(--ink); }
+  .ring-block { background: var(--surface); border-color: var(--grid); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; }
+  .ring-caption { color: var(--paper-dim); font-size: 0.85rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; margin-top: 4px; }
+  .status-block { background: var(--yellow); display: flex; align-items: center; gap: 18px; }
+  .status-title { margin: 0 0 3px; font-weight: 900; font-size: 1.2rem; color: var(--ink); text-transform: uppercase; letter-spacing: -0.01em; }
+  .status-sub { margin: 0; font-weight: 900; font-size: 0.88rem; color: var(--ink); letter-spacing: 0.03em; text-transform: uppercase; }
+
+  .actions-row { display: flex; gap: 16px; margin-bottom: 46px; flex-wrap: wrap; }
+  .btn-primary {
+    color: var(--ink); border: 3px solid var(--ink); border-radius: 4px;
+    padding: 16px 28px; font-size: 1rem; font-weight: 900; cursor: pointer;
+    text-transform: uppercase; letter-spacing: 0.02em;
+    box-shadow: 5px 5px 0 0 var(--ink);
+  }
+  .btn-primary.b-pink { background: var(--pink); }
+  .btn-primary.b-cyan { background: var(--cyan); }
+  .btn-primary:hover { transform: translate(2px, 2px); box-shadow: 3px 3px 0 0 var(--ink); }
+
+  h2.section-title { font-size: 1.3rem; font-weight: 900; margin: 0 0 18px; color: var(--paper); text-transform: uppercase; letter-spacing: -0.01em; }
+  .entries-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; margin-bottom: 28px; }
+  .entry-card {
+    display: flex; align-items: center; gap: 16px; border-radius: 6px; padding: 22px;
+    text-decoration: none; color: var(--ink); border: 3px solid var(--ink);
+  }
+  .entry-card.e-yellow { background: var(--yellow); }
+  .entry-card.e-cyan { background: var(--cyan); }
+  .icon-wrap { width: 50px; height: 50px; border-radius: 50%; background: var(--ink); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .icon-wrap svg { width: 26px; height: 26px; stroke: var(--yellow); }
+  .entry-card.e-cyan .icon-wrap svg { stroke: var(--cyan); }
+  .entry-card h3 { margin: 0 0 3px; font-size: 1.15rem; font-weight: 900; text-transform: uppercase; letter-spacing: -0.01em; }
+  .entry-card p { margin: 0; font-size: 0.88rem; color: var(--ink); line-height: 1.4; font-weight: 700; }
+  .entry-card .arrow { margin-left: auto; color: var(--ink); flex-shrink: 0; width: 24px; height: 24px; }
+
+  .empty-state {
+    display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px;
+    padding: 34px 20px; border: 3px dashed var(--grid); border-radius: 6px; background: var(--surface);
+  }
+  .empty-state svg { width: 40px; height: 40px; color: var(--pink); }
+  .empty-title { margin: 0; font-weight: 900; font-size: 1rem; color: var(--paper); text-transform: uppercase; }
+  .empty-sub { margin: 0; font-size: 0.86rem; color: var(--paper-dim); font-weight: 600; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="rationale">
+    <span class="tag">Designretning 3 · Dristig maksimalistisk energi</span>
+    <p>
+      Tre mettede farger — gul (#FFE500), rosa (#FF2D6B) og cyan (#00E0FF) — brukes som
+      EGNE flater, ikke tynne aksentstreker, slik at hver modul «eier» sin farge: gul er
+      status/fremdrift, rosa er handling/CTA, cyan er mat-modulens motvekt til treningens
+      gult. All tekst oppå farge er sort for garantert kontrast — ingen glow, kun tykke
+      sorte konturer og harde skygger gir energien.
+    </p>
+    <p>
+      Typografisk er dette en svært tung display-grotesk i store størrelser, store bokstaver
+      og negativ bokstavavstand — bygget for å leses i fart, lånt fra sportsmerke-plakater
+      (Nike/Gymshark-kampanjestil) heller enn kliniske helseapper. Bevegelsen ville vært rask
+      og punchy — knapper «smeller» ned ved trykk, fullført-merket zoomer inn med en
+      strek-burst — aldri dekorativ bakgrunnsbevegelse, alltid en kort feiring.
+    </p>
+    <span class="font-note"><span class="dot"></span>I produksjon: Archivo Black (overskrifter) + Inter (brødtekst)</span>
+  </div>
+
+  <div class="laptop">
+    <div class="bezel">
+      <div class="browser-chrome">
+        <div class="traffic">
+          <span style="background:#FF5F57;"></span>
+          <span style="background:#FEBC2E;"></span>
+          <span style="background:#28C840;"></span>
+        </div>
+        <div class="address-pill">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>
+          promptforce.app/dashboard
+        </div>
+      </div>
+
+      <div class="app-screen">
+        <header class="app-header">
+          <div class="logo">
+            <svg viewBox="0 0 32 32"><rect width="32" height="32" rx="4" fill="#FFE500"/><path d="M9 23 L16 7 L23 23 L16 18 Z" fill="#0A0A0A"/></svg>
+            Prompt Force
+          </div>
+          <nav class="main-nav">
+            <a class="active" href="#">Forside</a>
+            <a href="#">Trening</a>
+            <a href="#">Mat</a>
+          </nav>
+          <div class="header-actions">
+            <button class="icon-btn" aria-label="Hjelp">?</button>
+          </div>
+        </header>
+
+        <h1 class="page-title">Dagens oversikt</h1>
+
+        <div class="overview-grid">
+          <div class="block ring-block">
+            <svg viewBox="0 0 160 160" width="150" height="150">
+              <g transform="translate(80,80)">
+                <circle r="64" style="fill:none; stroke:#262626; stroke-width:20;"/>
+                <circle r="64" style="fill:none; stroke:#FF2D6B; stroke-width:20; stroke-linecap:round;" stroke-dasharray="402.1" stroke-dashoffset="130.3" transform="rotate(-90)"/>
+                <text x="0" y="-4" text-anchor="middle" style="fill:#F5F4EF; font-size:28px; font-weight:900; font-family:inherit;">1 420</text>
+                <text x="0" y="20" text-anchor="middle" style="fill:#B9B6AC; font-size:13px; font-weight:800; font-family:inherit;">/ 2 100 KCAL</text>
+              </g>
+            </svg>
+            <div class="ring-caption">Kalorier i dag</div>
+          </div>
+
+          <div class="block status-block">
+            <svg viewBox="0 0 60 60" width="60" height="60" style="flex-shrink:0;">
+              <g stroke="#0A0A0A" stroke-width="2.2" stroke-linecap="round">
+                <line x1="30" y1="0" x2="30" y2="10"/>
+                <line x1="30" y1="50" x2="30" y2="60"/>
+                <line x1="0" y1="30" x2="10" y2="30"/>
+                <line x1="50" y1="30" x2="60" y2="30"/>
+                <line x1="8" y1="8" x2="15" y2="15"/>
+                <line x1="45" y1="45" x2="52" y2="52"/>
+                <line x1="8" y1="52" x2="15" y2="45"/>
+                <line x1="45" y1="15" x2="52" y2="8"/>
+              </g>
+              <circle cx="30" cy="30" r="17" fill="#0A0A0A"/>
+              <path d="M22 31 L28 37 L39 23" style="fill:none; stroke:#FFE500; stroke-width:3.4; stroke-linecap:round; stroke-linejoin:round;"/>
+            </svg>
+            <div>
+              <p class="status-title">Beinøvelser</p>
+              <p class="status-sub">Fullført!</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="actions-row">
+          <button class="btn-primary b-pink">Logg måltid</button>
+          <button class="btn-primary b-cyan">Logg trening</button>
+        </div>
+
+        <h2 class="section-title">Utforsk</h2>
+        <div class="entries-grid">
+          <a class="entry-card e-yellow" href="#">
+            <div class="icon-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 9v6M2 10v4M20 9v6M22 10v4M7 12h10"/></svg>
+            </div>
+            <div>
+              <h3>Trening</h3>
+              <p>Se dagens øvelser og din fremgang</p>
+            </div>
+            <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+          </a>
+          <a class="entry-card e-cyan" href="#">
+            <div class="icon-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3v7a2 2 0 002 2 2 2 0 002-2V3M9 12v9M18 3c-1.6 0-3 1.6-3 4v4c0 1 1 1 2 1v7"/></svg>
+            </div>
+            <div>
+              <h3>Mat</h3>
+              <p>Logg måltider og se kaloriforbruk</p>
+            </div>
+            <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+
+        <div class="empty-state">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="24" cy="24" r="18" stroke-dasharray="4 5"/><path d="M24 16v16M16 24h16" stroke-linecap="round"/></svg>
+          <p class="empty-title">Ingen måltider logget enda i dag</p>
+          <p class="empty-sub">Trykk «Logg måltid» for å komme i gang.</p>
+        </div>
+      </div>
+      <div class="laptop-base"></div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

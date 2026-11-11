@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prompt Force – Oppskrifter</title>
+<style>
+  /* =========================================================================
+     KEY SCREEN: Oppskrifter — HUB-side (restrukturert fra én lang fane-side)
+     Hvilken skjerm: nås via "Oppskrifter"-fanen i mockups/mat.html (samme
+     fane-rad som "Logg måltid" — se mat.html page-tabs).
+
+     IA-endring (.memlog.md entry 85): i stedet for én lang side med alle
+     kategoriene stablet under hverandre bak kategori-faner, er denne siden
+     nå en ren HUB/landingsside med FIRE kategori-inngangskort (Frokost,
+     Lunsj, Middag, Mellommåltid). Hvert kort lenker videre til kategoriens
+     EGEN side (oppskrifter-frokost.html / -lunsj.html / -middag.html /
+     -mellommaltid.html), som bærer de fulle oppskriftene (flyttet dit
+     ordrett, se de fire filene). Kategori-fane-raden (.category-tabs) som
+     fantes på den gamle ettsides-versjonen er derfor fjernet herfra — den
+     styrte en IA-dybde som nå er løst opp i egne sider i stedet.
+
+     Kategori-inngangskortet gjenbruker EKSISTERENDE entry-card-komponenten
+     (DESIGN.md Components, mocket først i mockups/dashboard.html sin
+     "Utforsk"-seksjon: Trening/Mat) ordrett — samme flate/kant/skygge/
+     ikon-sirkel/pil-til-høyre/hele-kortet-klikkbart-mønster, kun utvidet
+     med to ekstra tekstlinjer (antall oppskrifter + én eksempel-oppskrift)
+     i stedet for én beskrivelseslinje. Ingen ny komponent er funnet opp.
+
+     Spine-seksjoner denne mockupen illustrerer (EXPERIENCE.md):
+     - Information Architecture, raden "Mat": "Egen oppskrifter-fane (gratis,
+       inspirasjon — scope-utvidelse) ligger parallelt, ikke blandet med
+       matsøket." Denne siden ER den fanen (nå hub + 4 undersider).
+     - DESIGN.md Components, raden "Oppskrift-kort" (recipe-card) og den nye
+       "Kategori-inngangskort"-beskrivelsen.
+
+     Visuell identitet er LÅST fra DESIGN.md / mockups/mat.html (samme
+     header/nav/page-tab-rad/laptop-browser-ramme/CSS-variabler/fonter/farger
+     — ingen nye farger eller fonter er funnet opp her):
+       paper (bakgrunn):        #F7F2E9
+       surface (kort):          #FFFDF7
+       ink (tekst-primær):      #3A322B  — kontrast 11.3:1 mot papir
+       ink-sekundær:            #6B6056  — kontrast 5.5:1 mot papir
+       accent-primary "plomme": #7A3B69  — kontrast 7.1:1 mot papir (CTA/valgt/aktiv kategori)
+       accent-complete "teal":  #347774  — kontrast 4.7:1 mot papir
+       rule (papirlinjal):      #E4D9C6
+       on-accent:               #FFF9F0
+     Typografi: Fraunces (overskrift, .serif) + Inter-fallback-stack (brødtekst).
+     Ingen glow/neon-skygger, ingen gradient-tekst, ingen aksentfarge i løpende
+     brødtekst, minste funksjonelle tekst 12px.
+     ========================================================================= */
+
+  :root{
+    color-scheme: light;
+    --paper: #F7F2E9;
+    --surface: #FFFDF7;
+    --ink: #3A322B;
+    --ink2: #6B6056;
+    --clay: #7A3B69;
+    --clay-tint: rgba(122,59,105,0.10);
+    --sage: #347774;
+    --sage-tint: rgba(52,119,116,0.14);
+    --rule: #E4D9C6;
+    --on-accent: #FFF9F0;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: #EAE2D3;
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+  /* HUMANISTISK BRØDTEKST-SANS — i produksjon: Inter (se DESIGN.md.typography.body). */
+  /* REDAKSJONELL JOURNAL-SERIF — i produksjon: Fraunces (se DESIGN.md.typography.heading). */
+  .serif { font-family: Georgia, "Iowan Old Style", "Times New Roman", serif; }
+
+  .page { min-height: 100vh; padding: 48px 20px 80px; display: flex; flex-direction: column; align-items: center; gap: 28px; }
+
+  .laptop { width: 100%; max-width: 1180px; }
+  .bezel { background: #D8CDB8; border-radius: 22px; padding: 14px 14px 0; box-shadow: 0 30px 60px -24px rgba(90,70,40,0.35); }
+  .browser-chrome { background: #ECE4D4; border-radius: 12px 12px 0 0; padding: 11px 16px; display: flex; align-items: center; gap: 16px; }
+  .traffic { display: flex; gap: 7px; }
+  .traffic span { width: 11px; height: 11px; border-radius: 50%; display: block; }
+  .address-pill { flex: 1; background: var(--surface); border-radius: 8px; padding: 7px 14px; color: var(--ink2); font-size: 0.78rem; display: flex; align-items: center; gap: 8px; border: 1px solid var(--rule); }
+  .address-pill svg { width: 12px; height: 12px; flex-shrink: 0; }
+
+  .app-screen { background: var(--paper); padding: 40px 48px 56px; background-image: repeating-linear-gradient(to bottom, transparent, transparent 37px, var(--rule) 38px); }
+  .laptop-base { height: 14px; background: #D2C7B1; border-radius: 0 0 10px 10px; margin: 0 20px; position: relative; }
+  .laptop-base::after { content: ""; position: absolute; left: 50%; top: 0; transform: translateX(-50%); width: 86px; height: 6px; background: #C6BA9F; border-radius: 0 0 7px 7px; }
+
+  .app-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 30px; gap: 20px; flex-wrap: wrap; }
+  .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.2rem; color: var(--ink); }
+  .logo svg { width: 30px; height: 30px; }
+  .main-nav { display: flex; gap: 6px; background: var(--surface); border: 1px solid var(--rule); border-radius: 999px; padding: 5px; }
+  .main-nav a { padding: 9px 18px; border-radius: 999px; color: var(--ink2); font-size: 0.9rem; font-weight: 600; text-decoration: none; }
+  .main-nav a.active { background: var(--clay); color: var(--on-accent); }
+  .header-actions { display: flex; align-items: center; gap: 10px; }
+  .icon-btn { width: 40px; height: 40px; border-radius: 50%; background: var(--sage-tint); border: 1px solid var(--rule); color: var(--sage); font-weight: 700; font-size: 0.95rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+
+  h1.page-title { font-size: 1.9rem; font-weight: 600; margin: 4px 0 6px; color: var(--ink); }
+  .page-sub { margin: 0 0 20px; color: var(--ink2); font-size: 0.95rem; }
+
+  /* --- Secondary page-level tabs: "Logg måltid" vs. "Oppskrifter" (separate, visible, parallel entry) --- */
+  .page-tabs { display: flex; gap: 6px; background: var(--surface); border: 1px solid var(--rule); border-radius: 999px; padding: 5px; width: fit-content; margin-bottom: 30px; }
+  .page-tab { padding: 9px 20px; border-radius: 999px; color: var(--ink2); font-size: 0.86rem; font-weight: 700; text-decoration: none; border: none; background: none; font-family: inherit; cursor: pointer; display: inline-block; }
+  .page-tab.active { background: var(--clay); color: var(--on-accent); }
+
+  h2.section-title { font-size: 1.15rem; font-weight: 600; margin: 0 0 16px; color: var(--ink); }
+
+  /* --- Focus ring: visible on every real interactive control, keyboard-reachable --- */
+  button:focus-visible,
+  a:focus-visible,
+  input:focus-visible {
+    outline: 2px solid var(--clay);
+    outline-offset: 2px;
+    border-radius: 10px;
+  }
+
+  /* --- Category entry cards: reuses the existing entry-card component
+         (DESIGN.md Components, first mocked in mockups/dashboard.html's
+         "Utforsk" grid) verbatim — same surface/border/radius/shadow/
+         icon-circle/arrow/whole-card-clickable pattern. Only addition:
+         an extra "count" and "example recipe" text line per card. --- */
+  .entries-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 8px; }
+  .entry-card { display: flex; align-items: flex-start; gap: 16px; background: var(--surface); border: 1px solid var(--rule); border-radius: 20px; padding: 20px; text-decoration: none; color: inherit; box-shadow: 0 8px 20px -16px rgba(120,90,50,0.2); }
+  .icon-wrap { width: 48px; height: 48px; border-radius: 50%; background: var(--clay-tint); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .icon-wrap svg { width: 23px; height: 23px; stroke: var(--clay); }
+  .entry-card h3 { margin: 0 0 4px; font-size: 1.02rem; font-weight: 700; color: var(--ink); }
+  .entry-card .entry-count { margin: 0 0 4px; font-size: 0.86rem; font-weight: 600; color: var(--ink2); }
+  .entry-card .entry-example { margin: 0; font-size: 0.82rem; font-style: italic; color: var(--ink2); }
+  .entry-card .arrow { margin-left: auto; margin-top: 2px; color: var(--ink2); flex-shrink: 0; width: 20px; height: 20px; }
+
+  .footnote { margin: 36px 0 0; font-size: 0.78rem; color: var(--ink2); line-height: 1.6; max-width: 760px; }
+
+  @media (max-width: 760px) {
+    .entries-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="laptop">
+    <div class="bezel">
+      <div class="browser-chrome">
+        <div class="traffic">
+          <span style="background:#E8A87C;"></span>
+          <span style="background:#D9C27A;"></span>
+          <span style="background:#A3B98A;"></span>
+        </div>
+        <div class="address-pill">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>
+          promptforce.app/mat/oppskrifter
+        </div>
+      </div>
+
+      <div class="app-screen">
+        <header class="app-header">
+          <div class="logo">
+            <svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#7A3B69"/><path d="M11 22 L16 9 L21 22 L16 18 Z" fill="#FFF9F0"/></svg>
+            Prompt Force
+          </div>
+          <nav class="main-nav">
+            <a href="#">Forside</a>
+            <a href="#">Trening</a>
+            <a class="active" href="#">Mat</a>
+          </nav>
+          <div class="header-actions">
+            <button class="icon-btn" aria-label="Hjelp – forklar denne siden" title="Trykk for en kort forklaring av denne siden">?</button>
+          </div>
+        </header>
+
+        <h1 class="page-title serif">Oppskrifter</h1>
+        <p class="page-sub">Litt inspirasjon til neste måltid — ingen søk eller logging her, bare oppskrifter å lese.</p>
+
+        <div class="page-tabs">
+          <a href="mat.html" class="page-tab">Logg måltid</a>
+          <a href="oppskrifter.html" class="page-tab active" aria-current="page">Oppskrifter</a>
+        </div>
+
+        <h2 class="section-title serif">Velg en kategori</h2>
+        <div class="entries-grid">
+
+          <a class="entry-card" href="oppskrifter-frokost.html">
+            <div class="icon-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="7"/><path d="M8 6h8M9 3.5h6"/></svg>
+            </div>
+            <div>
+              <h3 class="serif">Frokost</h3>
+              <p class="entry-count">4 oppskrifter</p>
+              <p class="entry-example">bl.a. Proteinrik yoghurtbowl</p>
+            </div>
+            <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+          </a>
+
+          <a class="entry-card" href="oppskrifter-lunsj.html">
+            <div class="icon-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="8" rx="2"/><path d="M4 10c0-3 3-6 8-6s8 3 8 6"/></svg>
+            </div>
+            <div>
+              <h3 class="serif">Lunsj</h3>
+              <p class="entry-count">3 oppskrifter</p>
+              <p class="entry-example">bl.a. Middelhavsbowl med cottage cheese</p>
+            </div>
+            <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+          </a>
+
+          <a class="entry-card" href="oppskrifter-middag.html">
+            <div class="icon-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-3 3-5 6-5 9a5 5 0 0010 0c0-3-2-6-5-9z"/></svg>
+            </div>
+            <div>
+              <h3 class="serif">Middag</h3>
+              <p class="entry-count">5 oppskrifter</p>
+              <p class="entry-example">bl.a. Pastagryte med grønnsaker</p>
+            </div>
+            <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+          </a>
+
+          <a class="entry-card" href="oppskrifter-mellommaltid.html">
+            <div class="icon-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6l-1 5h3l-7 13-1-9H6l3-9z"/></svg>
+            </div>
+            <div>
+              <h3 class="serif">Mellommåltid</h3>
+              <p class="entry-count">4 oppskrifter</p>
+              <p class="entry-example">bl.a. Mango-smoothie med gresk yoghurt</p>
+            </div>
+            <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+          </a>
+
+        </div>
+
+        <p class="footnote">Oppskriftene på disse sidene er inspirert av frie, offentlig tilgjengelige norske oppskriftskilder (matoppskrift.no, TINE.no, bramat.no) og omskrevet i appens egen tone — ikke eksakte sitater. De tre Lunsj-oppskriftene er inspirert av TINE.no og matoppskrift.no spesielt.</p>
+
+      </div>
+      <div class="laptop-base"></div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

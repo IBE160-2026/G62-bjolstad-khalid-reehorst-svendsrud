@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prompt Force – Grotesk og skarp</title>
+<style>
+  /* =========================================================================
+     TOKEN-DOKUMENTASJON — Grotesk og skarp
+     background:      #0D0B1A  (app-bakgrunn)
+     surface:          #16132A  (kort/paneler, litt lysere enn bakgrunn)
+     indigo (primær):  #8B7CF8  (strukturell: navigasjon, rammer, ikoner, kortstruktur)
+     koral (aksent):   #FF8A4C  (energi/motivasjon: CTA-knapper, kaloriring-fyll, fullført-tilstander)
+     text-primær:      #F3F1FA
+     text-sekundær:    #B8B3D1
+     ramme:            #2B2650  (avledet fra indigo-familien, lav lysstyrke)
+     indigo-tint:       rgba(139,124,248,0.14) (svak fylling bak ikoner)
+
+     Fargelogikk (lik på tvers av de tre retningene, for sammenlignbarhet):
+     Indigo er appens STRUKTURELLE/primære farge — navigasjon, kortrammer og
+     ikonbakgrunner. Koral er forbeholdt ENERGI/FREMDRIFT — kaloriringens
+     fyll, "Logg måltid/trening"-knappene og fullført-sjekkmerket. Koral
+     betyr alltid "noe skjer / noe er oppnådd".
+
+     Ingen glow/neon-shadows, ingen gradient-tekst. Minste funksjonelle
+     tekststørrelse på siden er 12px (0.75rem) — selv i denne skarpere
+     retningen er brødtekst/funksjonell tekst IKKE strammet ned for stilens
+     skyld; kun overskrifter/labels har fått mer tegn-/sporingskarakter.
+     ========================================================================= */
+
+  :root{
+    color-scheme: dark;
+    --bg: #0D0B1A;
+    --surface: #16132A;
+    --indigo: #8B7CF8;
+    --indigo-tint: rgba(139,124,248,0.14);
+    --coral: #FF8A4C;
+    --text1: #F3F1FA;
+    --text2: #B8B3D1;
+    --border: #2B2650;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: #050507;
+    color: var(--text1);
+    /* TIGHT MODERNE GROTESK — I produksjon: Space Grotesk (evt. Söhne).
+       System-stack-vri: prioriterer plattformens egen UI-font (ui-sans-serif /
+       system-ui) foran den generiske -apple-system-kjeden, som på de fleste
+       plattformer gir en noe mer geometrisk/teknisk grunntone enn de to andre
+       retningene — forsterket her med stramere sporing på overskrifter. */
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    min-height: 100vh;
+    padding: 40px 20px 72px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 26px;
+  }
+
+  .rationale {
+    width: 100%;
+    max-width: 980px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px 26px;
+  }
+  .rationale .tag {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--indigo);
+    margin-bottom: 8px;
+  }
+  .rationale p {
+    margin: 0 0 12px;
+    color: var(--text2);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    letter-spacing: 0;
+    max-width: 760px;
+  }
+  .rationale p:last-of-type { margin-bottom: 14px; }
+  .font-note {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--indigo-tint);
+    border: 1px solid var(--border);
+    color: var(--text1);
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 7px 14px;
+    border-radius: 8px;
+  }
+  .font-note .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--coral); display: inline-block; }
+
+  .laptop { width: 100%; max-width: 1180px; }
+  .bezel {
+    background: #1C1B22;
+    border-radius: 16px;
+    padding: 14px 14px 0;
+    box-shadow: 0 30px 60px -24px rgba(0,0,0,0.65);
+  }
+  .browser-chrome {
+    background: #121018;
+    border-radius: 8px 8px 0 0;
+    padding: 11px 16px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .traffic { display: flex; gap: 7px; }
+  .traffic span { width: 11px; height: 11px; border-radius: 50%; display: block; }
+  .address-pill {
+    flex: 1;
+    background: #1E1B2E;
+    border-radius: 6px;
+    padding: 7px 14px;
+    color: var(--text2);
+    font-size: 0.78rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .address-pill svg { width: 12px; height: 12px; flex-shrink: 0; }
+
+  .app-screen { background: var(--bg); padding: 36px 44px 52px; }
+  .laptop-base { height: 14px; background: #232029; border-radius: 0 0 8px 8px; margin: 0 20px; position: relative; }
+  .laptop-base::after {
+    content: ""; position: absolute; left: 50%; top: 0; transform: translateX(-50%);
+    width: 86px; height: 6px; background: #2b2833; border-radius: 0 0 5px 5px;
+  }
+
+  .app-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 36px; gap: 20px; flex-wrap: wrap; }
+  .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.2rem; letter-spacing: -0.02em; }
+  .logo svg { width: 32px; height: 32px; }
+  .main-nav { display: flex; gap: 4px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 4px; }
+  .main-nav a { padding: 9px 18px; border-radius: 7px; color: var(--text2); font-size: 0.88rem; font-weight: 700; letter-spacing: -0.005em; text-decoration: none; }
+  .main-nav a.active { background: var(--indigo); color: var(--bg); }
+  .header-actions { display: flex; align-items: center; gap: 10px; }
+  .icon-btn {
+    width: 38px; height: 38px; border-radius: 9px; background: var(--surface);
+    border: 1px solid var(--border); color: var(--text2); font-weight: 700;
+    font-size: 0.9rem; cursor: pointer; display: flex; align-items: center; justify-content: center;
+  }
+  .icon-btn:hover { border-color: var(--indigo); color: var(--text1); }
+
+  h1.page-title { font-size: 1.6rem; font-weight: 700; margin: 0 0 20px; letter-spacing: -0.025em; }
+
+  .overview-grid { display: grid; grid-template-columns: minmax(220px, 300px) 1fr; gap: 20px; margin-bottom: 26px; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 22px; }
+  .ring-card { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; }
+  .ring-caption { color: var(--text2); font-size: 0.82rem; margin-top: 2px; letter-spacing: 0; }
+  .status-card { display: flex; align-items: center; gap: 18px; }
+  .status-title { margin: 0 0 3px; font-weight: 700; font-size: 1.05rem; color: var(--text1); letter-spacing: -0.01em; }
+  .status-sub { margin: 0; font-weight: 700; font-size: 0.85rem; color: var(--coral); text-transform: uppercase; letter-spacing: 0.04em; }
+
+  .actions-row { display: flex; gap: 14px; margin-bottom: 44px; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--coral); color: #2A1203; border: none; border-radius: 9px;
+    padding: 14px 24px; font-size: 0.95rem; font-weight: 700; letter-spacing: -0.005em; cursor: pointer;
+    box-shadow: 0 8px 18px -6px rgba(0,0,0,0.5);
+  }
+  .btn-primary:hover { filter: brightness(1.06); }
+
+  h2.section-title { font-size: 1.1rem; font-weight: 700; margin: 0 0 16px; color: var(--text1); letter-spacing: -0.015em; }
+  .entries-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 26px; }
+  .entry-card {
+    display: flex; align-items: center; gap: 16px; background: var(--surface);
+    border: 1px solid var(--border); border-radius: 12px; padding: 20px;
+    text-decoration: none; color: inherit; transition: border-color .15s ease;
+  }
+  .entry-card:hover { border-color: var(--indigo); }
+  .icon-wrap { width: 48px; height: 48px; border-radius: 9px; background: var(--indigo-tint); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .icon-wrap svg { width: 24px; height: 24px; stroke: var(--indigo); }
+  .entry-card h3 { margin: 0 0 3px; font-size: 1rem; font-weight: 700; letter-spacing: -0.01em; }
+  .entry-card p { margin: 0; font-size: 0.85rem; color: var(--text2); line-height: 1.5; letter-spacing: 0; }
+  .entry-card .arrow { margin-left: auto; color: var(--text2); flex-shrink: 0; width: 20px; height: 20px; }
+
+  .empty-state {
+    display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px;
+    padding: 34px 20px; border: 1.5px dashed var(--border); border-radius: 12px; background: transparent;
+  }
+  .empty-state svg { width: 40px; height: 40px; color: var(--text2); }
+  .empty-title { margin: 0; font-weight: 700; font-size: 0.95rem; color: var(--text1); letter-spacing: -0.005em; }
+  .empty-sub { margin: 0; font-size: 0.85rem; color: var(--text2); letter-spacing: 0; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="rationale">
+    <span class="tag">Designretning · Grotesk og skarp</span>
+    <p>
+      Indigo (#8B7CF8) er appens strukturelle farge — den bygger navigasjon, kortrammer og
+      ikonbakgrunner, altså «huset» brukeren beveger seg i. Koral (#FF8A4C) er forbeholdt
+      energi og fremdrift: kaloriringen, «Logg»-knappene og fullført-merket, slik at koral
+      alltid betyr «noe skjer eller er oppnådd».
+    </p>
+    <p>
+      Typografisk er dette en tight, moderne grotesk med mer karakter og negativ sporing i
+      overskrifter/labels — gir et skarpere, mer «teknisk» førsteinntrykk. Brødtekst og
+      funksjonell tekst er bevisst IKKE strammet inn på samme måte: linjeavstand og
+      tegnavstand der holdes nøytral, slik at stilen aldri går på bekostning av lesbarhet.
+    </p>
+    <span class="font-note"><span class="dot"></span>I produksjon: Space Grotesk (evt. Söhne)</span>
+  </div>
+
+  <div class="laptop">
+    <div class="bezel">
+      <div class="browser-chrome">
+        <div class="traffic">
+          <span style="background:#FF5F57;"></span>
+          <span style="background:#FEBC2E;"></span>
+          <span style="background:#28C840;"></span>
+        </div>
+        <div class="address-pill">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>
+          promptforce.app/dashboard
+        </div>
+      </div>
+
+      <div class="app-screen">
+        <header class="app-header">
+          <div class="logo">
+            <svg viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="#8B7CF8"/><path d="M11 22 L16 9 L21 22 L16 18 Z" fill="#0D0B1A"/></svg>
+            Prompt Force
+          </div>
+          <nav class="main-nav">
+            <a class="active" href="#">Forside</a>
+            <a href="#">Trening</a>
+            <a href="#">Mat</a>
+          </nav>
+          <div class="header-actions">
+            <button class="icon-btn" aria-label="Hjelp">?</button>
+          </div>
+        </header>
+
+        <h1 class="page-title">Dagens oversikt</h1>
+
+        <div class="overview-grid">
+          <div class="card ring-card">
+            <svg viewBox="0 0 160 160" width="150" height="150">
+              <g transform="translate(80,80)">
+                <circle r="58" style="fill:none; stroke:#2B2650; stroke-width:14;"/>
+                <circle r="58" style="fill:none; stroke:#FF8A4C; stroke-width:14; stroke-linecap:round;" stroke-dasharray="364.4" stroke-dashoffset="118" transform="rotate(-90)"/>
+                <text x="0" y="-4" text-anchor="middle" style="fill:#F3F1FA; font-size:26px; font-weight:700; letter-spacing:-0.02em; font-family:inherit;">1 420</text>
+                <text x="0" y="18" text-anchor="middle" style="fill:#B8B3D1; font-size:13px; font-family:inherit;">/ 2 100 kcal</text>
+              </g>
+            </svg>
+            <div class="ring-caption">Kalorier i dag</div>
+          </div>
+
+          <div class="card status-card">
+            <svg viewBox="0 0 40 40" width="52" height="52" style="flex-shrink:0;">
+              <circle cx="20" cy="20" r="20" fill="#FF8A4C"/>
+              <path d="M11 20.5 L17 27 L29 13" style="fill:none; stroke:#0D0B1A; stroke-width:3.2; stroke-linecap:round; stroke-linejoin:round;"/>
+            </svg>
+            <div>
+              <p class="status-title">Beinøvelser</p>
+              <p class="status-sub">Fullført</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="actions-row">
+          <button class="btn-primary">Logg måltid</button>
+          <button class="btn-primary">Logg trening</button>
+        </div>
+
+        <h2 class="section-title">Utforsk</h2>
+        <div class="entries-grid">
+          <a class="entry-card" href="#">
+            <div class="icon-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 9v6M2 10v4M20 9v6M22 10v4M7 12h10"/></svg>
+            </div>
+            <div>
+              <h3>Trening</h3>
+              <p>Se dagens øvelser og din fremgang</p>
+            </div>
+            <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+          </a>
+          <a class="entry-card" href="#">
+            <div class="icon-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3v7a2 2 0 002 2 2 2 0 002-2V3M9 12v9M18 3c-1.6 0-3 1.6-3 4v4c0 1 1 1 2 1v7"/></svg>
+            </div>
+            <div>
+              <h3>Mat</h3>
+              <p>Logg måltider og se kaloriforbruk</p>
+            </div>
+            <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+
+        <div class="empty-state">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2"><circle cx="24" cy="24" r="18" stroke-dasharray="4 5"/><path d="M24 16v16M16 24h16" stroke-linecap="round"/></svg>
+          <p class="empty-title">Ingen måltider logget enda i dag</p>
+          <p class="empty-sub">Trykk «Logg måltid» for å komme i gang.</p>
+        </div>
+      </div>
+      <div class="laptop-base"></div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

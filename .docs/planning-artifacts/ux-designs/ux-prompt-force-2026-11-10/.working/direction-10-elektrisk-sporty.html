@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prompt Force – Høy-kontrast sporty/elektrisk</title>
+<style>
+  /* =========================================================================
+     TOKEN-DOKUMENTASJON — Retning 10: Høy-kontrast sporty/elektrisk
+     bakgrunn (mørk base):   #0A0A0A  (nær-svart)
+     surface (kort/paneler): #161616
+     surface-2 (diagonalt):  #1E1E1E
+     elektrisk lime (ENESTE aksent): #D7FF3B  (ren flate-/tekstfarge, IKKE glow)
+     tekst-primær:            #F5F5F5
+     tekst-sekundær:          #9A9A9A
+     tekst-på-lime (knapp):   #0A0A0A
+     ramme:                   #2A2A2A
+
+     Fargelogikk: Nær-svart base brytes av ÉN elektrisk limefarge som eneste
+     aksent. Lime brukes KUN som flat farge (bakgrunn på knapper/badges eller
+     tekst/stroke) — aldri som box-shadow-glød eller "neon"-utflytende kant.
+     Kontrasten alene skaper energien, ikke lyseffekter. Dette er det rene
+     motstykket til en "standard fitness-app" sin vennlige blåfarge og
+     avrundede ro: dette skal kjennes som en pre-workout-boost/kickstart.
+
+     Typografi-personlighet: tung, kondensert og sportslig — representerer
+     Oswald/Archivo Black i produksjon (kondenserte, fete overskrifter i caps
+     med stram bokstavavstand). Tilnærmet her med høy font-weight (800-900),
+     uppercase og negativ letter-spacing i system-stacken.
+
+     Bevegelsesimplikasjon: rask og brå ("slam") — korte, kontante
+     overganger (ca. 120-150ms, lett overshoot) i stedet for mykt fade.
+     Antydet i mockupen med én kort, ikke-repeterende "slam"-animasjon på
+     fullført-merket, slik at det er tydelig men ikke distraherende i et
+     statisk bilde. Skygger er harde/offset (sticker-stil), ikke blur/glow.
+     Minste funksjonelle tekststørrelse på siden er 12px (0.75rem).
+     ========================================================================= */
+
+  :root{
+    color-scheme: dark;
+    --bg: #0A0A0A;
+    --surface: #161616;
+    --surface2: #1E1E1E;
+    --lime: #D7FF3B;
+    --text1: #F5F5F5;
+    --text2: #9A9A9A;
+    --border: #2A2A2A;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: #000000;
+    color: var(--text1);
+    /* KONDENSERT/TUNG SPORTSSANS — I produksjon: Oswald (overskrifter, caps,
+       kondensert) + system sans til brødtekst. Tilnærming under: */
+    font-family: -apple-system, "Segoe UI", Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page { min-height: 100vh; padding: 40px 20px 72px; display: flex; flex-direction: column; align-items: center; gap: 26px; }
+
+  .rationale {
+    width: 100%; max-width: 980px; background: var(--surface);
+    border: 1px solid var(--border); border-radius: 4px; padding: 20px 26px;
+  }
+  .rationale .tag {
+    display: inline-block; font-size: 0.72rem; font-weight: 900;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--lime); margin-bottom: 8px;
+  }
+  .rationale p { margin: 0 0 12px; color: var(--text2); font-size: 0.95rem; line-height: 1.6; max-width: 780px; }
+  .rationale p:last-of-type { margin-bottom: 14px; }
+  .font-note {
+    display: inline-flex; align-items: center; gap: 8px; background: var(--surface2);
+    border: 1px solid var(--border); color: var(--text1); font-size: 0.8rem; font-weight: 800;
+    padding: 7px 14px; border-radius: 2px; text-transform: uppercase; letter-spacing: 0.04em;
+  }
+  .font-note .dot { width: 8px; height: 8px; background: var(--lime); display: inline-block; }
+
+  .laptop { width: 100%; max-width: 1180px; }
+  .bezel { background: #141414; border-radius: 16px; padding: 14px 14px 0; box-shadow: 0 30px 60px -24px rgba(0,0,0,0.8); }
+  .browser-chrome { background: #0F0F0F; border-radius: 6px 6px 0 0; padding: 11px 16px; display: flex; align-items: center; gap: 16px; }
+  .traffic { display: flex; gap: 7px; }
+  .traffic span { width: 11px; height: 11px; border-radius: 50%; display: block; }
+  .address-pill { flex: 1; background: #1A1A1A; border-radius: 4px; padding: 7px 14px; color: var(--text2); font-size: 0.78rem; display: flex; align-items: center; gap: 8px; }
+  .address-pill svg { width: 12px; height: 12px; flex-shrink: 0; }
+
+  .app-screen { background: var(--bg); padding: 0 0 50px; position: relative; overflow: hidden; }
+  .laptop-base { height: 14px; background: #1C1C1C; border-radius: 0 0 8px 8px; margin: 0 20px; position: relative; }
+  .laptop-base::after { content:""; position:absolute; left:50%; top:0; transform:translateX(-50%); width:86px; height:6px; background:#141414; border-radius:0 0 6px 6px; }
+
+  /* Diagonal bakgrunnsform bak hero */
+  .diag-bg {
+    position: absolute; top: 0; left: 0; right: 0; height: 290px;
+    background: var(--surface);
+    clip-path: polygon(0 0, 100% 0, 100% 78%, 0 100%);
+    z-index: 0;
+  }
+  .diag-bg::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: -2px; height: 6px;
+    background: var(--lime); clip-path: polygon(0 100%, 100% 0, 100% 100%, 0 100%);
+  }
+
+  .app-inner { position: relative; z-index: 1; padding: 30px 44px 10px; }
+
+  .app-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 30px; gap: 16px; flex-wrap: wrap; }
+  .logo { display: flex; align-items: center; gap: 10px; font-weight: 900; font-size: 1.2rem; text-transform: uppercase; letter-spacing: -0.01em; }
+  .logo svg { width: 32px; height: 32px; }
+
+  .main-nav { display: flex; gap: 22px; }
+  .main-nav a {
+    color: var(--text2); font-size: 0.85rem; font-weight: 800; text-decoration: none;
+    text-transform: uppercase; letter-spacing: 0.04em; padding-bottom: 6px; border-bottom: 3px solid transparent;
+  }
+  .main-nav a.active { color: var(--text1); border-bottom-color: var(--lime); }
+
+  .icon-btn {
+    width: 36px; height: 36px; background: var(--surface2); border: 1px solid var(--border);
+    color: var(--text2); font-weight: 900; font-size: 0.9rem; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 20% 100%);
+  }
+  .icon-btn:hover { color: var(--lime); border-color: var(--lime); }
+
+  h1.page-title {
+    font-size: 1.5rem; font-weight: 900; text-transform: uppercase; letter-spacing: -0.01em;
+    margin: 0 0 24px; display: flex; align-items: center; gap: 10px;
+  }
+  h1.page-title::before { content: ""; width: 10px; height: 22px; background: var(--lime); display: inline-block; }
+
+  .hero-grid { display: grid; grid-template-columns: 240px 1fr; gap: 20px; margin-bottom: 26px; align-items: stretch; }
+
+  .ring-card {
+    background: var(--surface2); border: 1px solid var(--border);
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%, 0 14px);
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; padding: 20px;
+  }
+  .ring-caption { color: var(--text2); font-size: 0.82rem; margin-top: 4px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  .right-col { display: flex; flex-direction: column; gap: 14px; }
+
+  .status-card {
+    display: flex; align-items: center; gap: 18px; background: var(--surface);
+    border: 1px solid var(--border); padding: 18px 22px; flex: 1;
+  }
+  .status-title { margin: 0 0 3px; font-weight: 800; font-size: 1.02rem; color: var(--text1); text-transform: uppercase; letter-spacing: 0.01em; }
+  .status-sub { margin: 0; font-weight: 900; font-size: 0.85rem; color: var(--lime); letter-spacing: 0.04em; text-transform: uppercase; }
+  .badge-slam { animation: slam 0.5s cubic-bezier(.2,1.4,.4,1) both; }
+  @keyframes slam { 0% { transform: scale(0.6) rotate(-8deg); opacity: 0; } 70% { transform: scale(1.08) rotate(2deg); opacity: 1; } 100% { transform: scale(1) rotate(0); } }
+
+  .actions-row { display: flex; gap: 2px; flex: 1; }
+  .btn-primary {
+    flex: 1; background: var(--lime); color: #0A0A0A; border: none;
+    padding: 18px 20px; font-size: 0.95rem; font-weight: 900; cursor: pointer;
+    text-transform: uppercase; letter-spacing: 0.03em;
+    box-shadow: 5px 5px 0 #000000;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 8% 100%);
+  }
+  .btn-primary.alt { background: var(--text1); color: #0A0A0A; clip-path: polygon(0 0, 92% 0, 100% 100%, 0 100%); }
+  .btn-primary:hover { filter: brightness(0.96); }
+
+  h2.section-title {
+    font-size: 1.05rem; font-weight: 900; margin: 36px 0 16px; text-transform: uppercase; letter-spacing: 0.02em;
+    display: flex; align-items: center; gap: 10px;
+  }
+  h2.section-title::after { content:""; flex:1; height:1px; background: var(--border); }
+
+  .entries-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; margin-bottom: 26px; }
+  .entry-card {
+    display: flex; align-items: center; gap: 16px; background: var(--surface);
+    border: 1px solid var(--border); border-top: 3px solid var(--lime); padding: 22px;
+    text-decoration: none; color: inherit;
+    clip-path: polygon(0 0, 100% 0, 100% 86%, 92% 100%, 0 100%);
+  }
+  .entry-card:hover { border-color: var(--lime); }
+  .icon-wrap { width: 46px; height: 46px; background: var(--surface2); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .icon-wrap svg { width: 22px; height: 22px; stroke: var(--lime); }
+  .entry-card h3 { margin: 0 0 3px; font-size: 1rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.01em; }
+  .entry-card p { margin: 0; font-size: 0.85rem; color: var(--text2); line-height: 1.45; }
+  .entry-card .arrow { margin-left: auto; color: var(--lime); flex-shrink: 0; width: 20px; height: 20px; }
+
+  .empty-state {
+    display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px;
+    padding: 32px 20px; border: 2px dashed var(--border); background: transparent;
+  }
+  .empty-state svg { width: 38px; height: 38px; color: var(--text2); }
+  .empty-title { margin: 0; font-weight: 800; font-size: 0.95rem; color: var(--text1); text-transform: uppercase; letter-spacing: 0.01em; }
+  .empty-sub { margin: 0; font-size: 0.85rem; color: var(--text2); }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="rationale">
+    <span class="tag">Designretning 10 · Høy-kontrast sporty/elektrisk</span>
+    <p>
+      Nær-svart base (#0A0A0A/#161616) brytes av ÉN elektrisk lime (#D7FF3B) som eneste
+      aksent — brukt som ren flate-/tekstfarge, aldri som glød eller skygge-effekt, slik at
+      kontrasten i seg selv skaper energien. Dette er det rene motstykket til en
+      "standard fitness-app" sin vennlige blåfarge og avrundede ro: dette skal kjennes som
+      en pre-workout-boost, ikke en rolig coach.
+    </p>
+    <p>
+      Typografien er tung, kondensert og sportslig (representerer Oswald/Archivo Black i
+      produksjon), satt i caps med stram bokstavavstand for å kjennes som et kommandospråk.
+      Skråstilte korthjørner og en diagonal bakgrunnsform antyder fart, og bevegelsen er
+      rask og brå ("slam") — korte, kontante overganger i stedet for mykt fade.
+    </p>
+    <span class="font-note"><span class="dot"></span>I produksjon: Oswald (overskrifter)</span>
+  </div>
+
+  <div class="laptop">
+    <div class="bezel">
+      <div class="browser-chrome">
+        <div class="traffic">
+          <span style="background:#FF5F57;"></span>
+          <span style="background:#FEBC2E;"></span>
+          <span style="background:#28C840;"></span>
+        </div>
+        <div class="address-pill">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>
+          promptforce.app/dashboard
+        </div>
+      </div>
+
+      <div class="app-screen">
+        <div class="diag-bg"></div>
+
+        <div class="app-inner">
+          <header class="app-header">
+            <div class="logo">
+              <svg viewBox="0 0 32 32"><polygon points="4,28 14,4 20,4 10,28" fill="#D7FF3B"/><polygon points="16,28 22,14 28,14 22,28" fill="#F5F5F5"/></svg>
+              Prompt Force
+            </div>
+            <nav class="main-nav">
+              <a class="active" href="#">Forside</a>
+              <a href="#">Trening</a>
+              <a href="#">Mat</a>
+            </nav>
+            <button class="icon-btn" aria-label="Hjelp">?</button>
+          </header>
+
+          <h1 class="page-title">Dagens oversikt</h1>
+
+          <div class="hero-grid">
+            <div class="ring-card">
+              <svg viewBox="0 0 160 160" width="150" height="150">
+                <g transform="translate(80,80)">
+                  <circle r="58" style="fill:none; stroke:#2A2A2A; stroke-width:14;"/>
+                  <circle r="58" style="fill:none; stroke:#D7FF3B; stroke-width:14; stroke-linecap:butt;" stroke-dasharray="364.4" stroke-dashoffset="118" transform="rotate(-90)"/>
+                  <text x="0" y="-4" text-anchor="middle" style="fill:#F5F5F5; font-size:26px; font-weight:900; font-family:inherit;">1420</text>
+                  <text x="0" y="18" text-anchor="middle" style="fill:#9A9A9A; font-size:12px; font-weight:700; font-family:inherit; letter-spacing:0.04em;">/ 2100 KCAL</text>
+                </g>
+              </svg>
+              <div class="ring-caption">Kalorier i dag</div>
+            </div>
+
+            <div class="right-col">
+              <div class="status-card">
+                <svg class="badge-slam" viewBox="0 0 40 40" width="48" height="48" style="flex-shrink:0;">
+                  <polygon points="20,2 38,20 20,38 2,20" fill="#D7FF3B"/>
+                  <path d="M11 20.5 L17 27 L29 13" style="fill:none; stroke:#0A0A0A; stroke-width:3.4; stroke-linecap:round; stroke-linejoin:round;"/>
+                </svg>
+                <div>
+                  <p class="status-title">Beinøvelser</p>
+                  <p class="status-sub">Fullført</p>
+                </div>
+              </div>
+              <div class="actions-row">
+                <button class="btn-primary">Logg måltid</button>
+                <button class="btn-primary alt">Logg trening</button>
+              </div>
+            </div>
+          </div>
+
+          <h2 class="section-title">Utforsk</h2>
+          <div class="entries-grid">
+            <a class="entry-card" href="#">
+              <div class="icon-wrap">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 9v6M2 10v4M20 9v6M22 10v4M7 12h10"/></svg>
+              </div>
+              <div>
+                <h3>Trening</h3>
+                <p>Se dagens øvelser og din fremgang</p>
+              </div>
+              <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+            </a>
+            <a class="entry-card" href="#">
+              <div class="icon-wrap">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3v7a2 2 0 002 2 2 2 0 002-2V3M9 12v9M18 3c-1.6 0-3 1.6-3 4v4c0 1 1 1 2 1v7"/></svg>
+              </div>
+              <div>
+                <h3>Mat</h3>
+                <p>Logg måltider og se kaloriforbruk</p>
+              </div>
+              <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+            </a>
+          </div>
+
+          <div class="empty-state">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2"><circle cx="24" cy="24" r="18" stroke-dasharray="4 5"/><path d="M24 16v16M16 24h16" stroke-linecap="round"/></svg>
+            <p class="empty-title">Ingen måltider logget enda i dag</p>
+            <p class="empty-sub">Trykk «Logg måltid» for å komme i gang.</p>
+          </div>
+        </div>
+      </div>
+      <div class="laptop-base"></div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
