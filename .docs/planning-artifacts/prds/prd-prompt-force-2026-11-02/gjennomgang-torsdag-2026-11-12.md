@@ -42,8 +42,23 @@ Dette er et forslag til møtet, ikke en beslutning. Gruppen går gjennom lista, 
 | Q7 Teknologi og arbeidsfordeling | Torsdag, se [teknologinotatet](../../research/teknologivalg-forslag-2026-11-11.md) |
 | Q8 Videoene gjennomgått | Skjema klart, fordeles på fire (#6) |
 
+## Del 4: faglærers tilbakemelding (12.11)
+
+Faglærer la inn [tilbakemelding på PRD-en](tilbakemelding-prd.md) samme morgen. Samlet inntrykk: «en sterk PRD». Forslagene under er våre, ikke faglærers.
+
+| # | Faglærer peker på | Alvor | Forslag til hva vi gjør | Gruppens svar |
+|---|---|---|---|---|
+| 4.1 | «Should»-lista kutter det som bærer idéen: FR-14 (nylig brukt) og FR-24 (sist gang) | Høy | **Flytt FR-14 og FR-24 til Must.** La FR-20 (filter, ikke navnesøk), FR-27 og FR-8 være kuttkandidater. Sett prioritet på hver FR. | |
+| 4.2 | Mange FR-er mangler testbare konsekvenser (FR-7, 13, 14, 15, 17, 22, 24, 25, 27, og tall i FR-1 og FR-11) | Høy | **Godta faglærers eksempler** (5 forsøk / 15 min for FR-1, minst 100 matvarer i FR-11, «Første gang» i FR-24) og skriv konsekvenser for resten med `bmad-prd` (update). | |
+| 4.3 | Plattform beskrevet ulikt: SM-1 og SM-7 sier telefon, §7 sier PC | Medium | **Godta:** «Primær testenhet er Chrome på PC. Alle skjermer brukbare på 360 px uten horisontal scrolling.» Omformuler SM-1 og SM-7. Stemmer med begge UX-forslagene. | |
+| 4.4 | Brukertester med utenforstående gir ekte helsedata | Medium | **Godta:** testpersoner får en oppdiktet profil. Ekte data først etter svar om Sikt (#5). | |
+| 4.5 | Fase 2-bildefunksjonen mangler regler for feil, tidsavbrudd, kostnad og tredjepart | Medium | **Godta faglærers tekst** som konsekvenser i FR-29 (mock-svar, 15 sek grense, 20 kall per dag, varsel før sending). Lav risiko, fordi det er fase 2. | |
+| 5 | Småfeil: §9.1 sier «NFR-1 – NFR-10» (NFR-11 finnes); UJ-3 bruker «Home (dumbbells)», men FR-18 sier Home = bare kroppsvekt; «examiner» og «sensor» står ikke i glossaret | Lav | **Rett alle** i samme oppdatering. | |
+
+**Refleksjonsspørsmål 1** (hvilke antakelser er kontrollert, og hvordan): vi kan svare konkret. FR-6-tallene er kontrollert to ganger (Karianne 28.10 og Gustav 3.11), ACSM 8–12 reps mot originalkilden (11.11), og Open Food Facts-dekningen med test (10.–11.11). Se KI-loggen.
+
 ## Etter møtet
 
-1. Oppdater `prd.md`: fjern `[ASSUMPTION]` fra det som er godtatt, endre det som ble endret, og oppdater §11 og §12.
+1. Oppdater `prd.md` med `bmad-prd` (update): fjern `[ASSUMPTION]` fra det som er godtatt, endre det som ble endret, legg inn svarene på faglærers punkter (del 4), og oppdater §11 og §12.
 2. Sett `status: final` og legg til en linje i endringsloggen nederst.
 3. Lukk issue #2 med «Fixes #2» i commit-meldingen.
