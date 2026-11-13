@@ -1,6 +1,6 @@
-# Teknologivalg: forslag til arkitekturmøtet
+# Teknologivalg: forslag til arkitekturen
 
-**Dato:** 2026-11-11, oppdatert 2026-11-12 · **Av:** Osman Khalid med Claude Code · **Status:** forslag. Gruppen bestemmer på torsdag (`bmad-architecture`).
+**Dato:** 2026-11-11, oppdatert 2026-11-12 · **Av:** Osman Khalid med Claude Code · **Status:** forslag. Gruppen bestemmer i arkitekturfasen (`bmad-architecture`).
 
 > **Oppdatert 12.11:** faglærer la inn [technology.md](../architecture/technology.md) som referanse for arkitekturen. Den beskriver hans eget oppsett (Next.js + FastAPI + Postgres + Docker). Det er lagt til som alternativ D, og anbefalingen nederst er skrevet om.
 
@@ -31,7 +31,7 @@ Notatet bygger på det vi allerede har: PRD-en, PRD-tillegget (datamodell, Open 
 
 - **Hva:** SvelteKit med TypeScript, Drizzle og SQLite/Turso som i A. Komponenter enten egne eller fra et Svelte-bibliotek. Vitest og Playwright.
 - **Fordeler:** enklere og kortere kode enn Next.js. Ett prosjekt. Fungerer på Vercel med en adapter.
-- **Ulemper:** mindre økosystem og færre eksempler, så KI-en treffer sjeldnere første gang. Ingen i gruppen har brukt det (`[ASSUMPTION]`, sjekk på torsdag).
+- **Ulemper:** mindre økosystem og færre eksempler, så KI-en treffer sjeldnere første gang. Ingen i gruppen har brukt det (`[ASSUMPTION]`, sjekk med gruppen).
 
 ### C. React (Vite) + Express API (to deler)
 
@@ -74,7 +74,7 @@ Valget står i praksis mellom **A** og **D**. Frontend blir uansett Next.js med 
 
 I begge tilfeller: ta med mock-fallback, seeding og oppstartsvakter fra faglærers oppsett.
 
-## Spørsmål til torsdag
+## Spørsmål til gruppen
 
 0. Er faglærers technology.md ment som en anbefaling for oss, eller bare som inspirasjon? Spør ham direkte.
 1. Har noen i gruppen erfaring med React, Next.js, Svelte eller Python? Det kan veie tyngre enn tabellen over.

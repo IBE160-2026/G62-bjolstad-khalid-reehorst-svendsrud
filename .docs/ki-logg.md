@@ -346,6 +346,37 @@ Det viktigste funnet: Dekningsanalysen er regnet ut fra øvelseslista og viser a
 
 ---
 
+## 2026-11-13 – PRD oppdatert og satt til «final»
+
+**Verktøy:** Claude Code (BMAD `bmad-prd`, update)
+**Hvem:** Osman Khalid, etter godkjenning fra gruppen
+**Bakgrunn:** Gruppen godkjente alle forslagene i `gjennomgang-torsdag-2026-11-12.md` i Discord 12.11, og faglærer la inn formativ tilbakemelding på PRD-en samme dag.
+
+### Hva vi ba KI om
+
+1. Oppdatere PRD-en med gruppens beslutninger og faglærers fem forbedringspunkter, og sette den til «final».
+
+### Hva KI produserte
+
+- Oppdatert `prd.md`: prioritet på alle FR-er, FR-14 og FR-24 til «Must», testbare konsekvenser på elleve FR-er, PC som primær testenhet, oppdiktede profiler i brukertester, regler for bildefunksjonen i fase 2, og rettede småfeil. §11 og §12 er skrevet om etter hva som er besvart.
+- Nye linjer i `.memlog.md` og i endringsloggen nederst i PRD-en.
+
+### Hva vi selv vurderte og kontrollerte
+
+- Gruppen bestemte kjønn (påkrevd), at oppskrifter og treningsprogram kommer etter v1, og at UX-designene slås sammen. Teknologi er ikke avklart.
+- Faglærer pekte på muskelgrupper som blokkerende før arkitekturen, og gruppen hadde ikke svart. Osman bestemte én primær og 0–2 sekundære muskelgrupper; gruppen kan protestere i issue #7.
+- KI la inn en ny antakelse (maks 5 000 g per matlogg i FR-13). Den er merket `[ASSUMPTION]`, ikke skjult.
+- Kaloriegulvet på 1 200 / 1 500 kcal er godtatt, men mangler fortsatt en kilde. Det står som `[NOTE FOR PM]`.
+- BMAD sine kvalitetskontrollører ble ikke kjørt på denne oppdateringen.
+
+### Status
+
+- [x] PRD satt til «final»
+- [ ] Finne kilde for kaloriegulvet
+- [ ] Lage felles UX-design (A1 + runde 3)
+
+---
+
 ## Mal for nye oppføringer
 
 ```markdown

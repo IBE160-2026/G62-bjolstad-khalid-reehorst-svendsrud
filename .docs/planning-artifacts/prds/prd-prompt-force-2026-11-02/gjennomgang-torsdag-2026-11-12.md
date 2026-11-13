@@ -1,8 +1,18 @@
-# PRD-gjennomgang torsdag 12. november
+# PRD-gjennomgang 12. november
 
 **Forberedt:** 2026-11-11 av Osman Khalid med Claude Code · **Gjelder:** issue #2 (godkjenne antakelsene og sette PRD-en til «final»)
 
-Dette er et forslag til møtet, ikke en beslutning. Gruppen går gjennom lista, krysser av «Godta» eller skriver hva som skal endres. Etterpå oppdateres [`prd.md`](prd.md), og `status` settes til `final`. Mål: ferdig på 10–15 minutter.
+Forslagene ble sendt til gruppen i Discord 12.11. Det ble ikke holdt noe møte.
+
+> **Resultat (12.11):** gruppen godkjente alle forslagene i Discord. På punktene merket «Diskuter» ble det bestemt:
+> - **Kjønn** (#10, issue #3): påkrevd i v1, med en kort forklaring.
+> - **Oppskrifter og treningsprogram:** kommer etter v1 (blir under «Vision»).
+> - **UX-design** (issue #9): slå sammen A1 og runde 3.
+> - **Teknologi:** ikke avklart, tas i arkitekturfasen.
+>
+> I tillegg bestemte Osman 13.11 at en øvelse har én primær og 0–2 sekundære muskelgrupper (§11 Q4, issue #7), fordi faglærer pekte på det som blokkerende før arkitekturen. Gruppen kan protestere i issue #7.
+>
+> PRD-en ble oppdatert og satt til `final` 13.11 (se endringsloggen nederst i [`prd.md`](prd.md)).
 
 ## Del 1: de 12 antakelsene i §12
 
@@ -44,7 +54,7 @@ Dette er et forslag til møtet, ikke en beslutning. Gruppen går gjennom lista, 
 
 ## Del 4: faglærers tilbakemelding (12.11)
 
-Faglærer la inn [tilbakemelding på PRD-en](tilbakemelding-prd.md) samme morgen. Samlet inntrykk: «en sterk PRD». Forslagene under er våre, ikke faglærers.
+Faglærer la inn [tilbakemelding på PRD-en](tilbakemelding-prd.md) 12.11. Samlet inntrykk: «en sterk PRD». Forslagene under er våre, ikke faglærers. Alle ble godkjent.
 
 | # | Faglærer peker på | Alvor | Forslag til hva vi gjør | Gruppens svar |
 |---|---|---|---|---|
@@ -57,7 +67,7 @@ Faglærer la inn [tilbakemelding på PRD-en](tilbakemelding-prd.md) samme morgen
 
 **Refleksjonsspørsmål 1** (hvilke antakelser er kontrollert, og hvordan): vi kan svare konkret. FR-6-tallene er kontrollert to ganger (Karianne 28.10 og Gustav 3.11), ACSM 8–12 reps mot originalkilden (11.11), og Open Food Facts-dekningen med test (10.–11.11). Se KI-loggen.
 
-## Etter møtet
+## Etter godkjenningen (gjort 13.11)
 
 1. Oppdater `prd.md` med `bmad-prd` (update): fjern `[ASSUMPTION]` fra det som er godtatt, endre det som ble endret, legg inn svarene på faglærers punkter (del 4), og oppdater §11 og §12.
 2. Sett `status: final` og legg til en linje i endringsloggen nederst.

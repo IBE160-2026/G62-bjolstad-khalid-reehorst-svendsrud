@@ -25,8 +25,8 @@ Planleggingsfasen (BMAD) pågår. Appen er ikke bygget ennå, så installasjon o
 |---|---|
 | Product brief | Godkjent av faglærer |
 | Research | Ferdig |
-| PRD | Utkast, gjennomgås 12.11 ([issue #2](https://github.com/IBE160-2026/G62-bjolstad-khalid-reehorst-svendsrud/issues/2)) |
-| UX-design | To forslag, gruppen velger ett ([issue #9](https://github.com/IBE160-2026/G62-bjolstad-khalid-reehorst-svendsrud/issues/9)) |
+| PRD | Ferdig (final 13.11), med faglærers tilbakemelding innarbeidet |
+| UX-design | To forslag; gruppen har valgt å slå dem sammen ([issue #9](https://github.com/IBE160-2026/G62-bjolstad-khalid-reehorst-svendsrud/issues/9)) |
 | Arkitektur, epics og stories | Neste |
 | Kode og tester | Ikke startet |
 
