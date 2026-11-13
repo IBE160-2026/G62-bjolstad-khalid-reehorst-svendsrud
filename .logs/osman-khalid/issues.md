@@ -19,7 +19,7 @@
 - [x] 2026-11-10 [ux-konsepter](994-2026-11-10-22-16-43-ux-konsepter.md) — kjøre BMAD UX (DESIGN.md og EXPERIENCE.md) før torsdag 12.11 (løst 2026-11-10)
 - [ ] 2026-11-10 [ux-konsepter](994-2026-11-10-22-16-43-ux-konsepter.md) — avgjøre om Impeccable-skillen skal deles i repoet
 - [ ] 2026-11-10 [ux-konsepter](994-2026-11-10-22-16-43-ux-konsepter.md) — gruppen må bekrefte fonten (Atkinson Hyperlegible)
-- [ ] 2026-11-10 [ux-konsepter](994-2026-11-10-22-16-43-ux-konsepter.md) — velge komponentbibliotek i arkitekturfasen
+- [x] 2026-11-10 [ux-konsepter](994-2026-11-10-22-16-43-ux-konsepter.md) — velge komponentbibliotek i arkitekturfasen (løst 2026-11-13 — shadcn/ui i arkitekturen, se [arkitektur](983-2026-11-13-12-04-14-arkitektur.md))
 - [x] 2026-11-10 [off-test-og-acsm](992-2026-11-10-22-51-08-off-test-og-acsm.md) — teste strekkodeoppslag (FR-9) med strekkodene fra OFF-tabellen (SM-4) (løst 2026-11-11 — oppslaget virker, se [strekkodetest](990-2026-11-11-13-56-59-strekkodetest.md); dekning med fysiske varer følges opp i issue #14)
 - [ ] 2026-11-10 [off-test-og-acsm](992-2026-11-10-22-51-08-off-test-og-acsm.md) — gruppen tar stilling til kcal-kontroll for OFF-data i arkitekturen
 - [ ] 2026-11-11 [prd-gjennomgang-forberedelse](987-2026-11-11-17-21-47-prd-gjennomgang-forberedelse.md) — finne en kilde for kaloriegulvet 1 200 / 1 500 kcal (FR-6)
@@ -29,3 +29,4 @@
 - [x] 2026-11-12 [faglarer-tilbakemelding](985-2026-11-12-16-46-40-faglarer-tilbakemelding.md) — spørre faglærer om technology.md er en anbefaling eller bare inspirasjon (løst 2026-11-12 — faglærer i forelesningen: frivillig, teller ikke på karakteren)
 - [x] 2026-11-12 [faglarer-tilbakemelding](985-2026-11-12-16-46-40-faglarer-tilbakemelding.md) — oppdatere PRD-en med bmad-prd etter møtet, inkludert faglærers punkter (løst 2026-11-13 — se [prd-final](984-2026-11-13-11-51-31-prd-final.md))
 - [ ] 2026-11-13 [prd-final](984-2026-11-13-11-51-31-prd-final.md) — lage felles UX-design fra A1 og runde 3 (issue #9)
+- [ ] 2026-11-13 [arkitektur](983-2026-11-13-12-04-14-arkitektur.md) — lage epics og stories (bmad-create-epics-and-stories)
