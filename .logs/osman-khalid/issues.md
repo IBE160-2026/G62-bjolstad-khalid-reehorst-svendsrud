@@ -26,6 +26,6 @@
 - [x] 2026-11-11 [prd-gjennomgang-forberedelse](987-2026-11-11-17-21-47-prd-gjennomgang-forberedelse.md) — avklare omfang for oppskrifter og treningsprogram i v1 (løst 2026-11-12 — gruppen: etter v1, se [prd-final](984-2026-11-13-11-51-31-prd-final.md))
 - [ ] 2026-11-11 [repo-gjennomgang-og-readme](986-2026-11-11-17-34-35-repo-gjennomgang-og-readme.md) — slette den gamle branchen docs/ki-logg-og-brief-status
 - [ ] 2026-11-11 [repo-gjennomgang-og-readme](986-2026-11-11-17-34-35-repo-gjennomgang-og-readme.md) — legge til installasjon, kjøring, testbrukere og tester i README når koden finnes
-- [ ] 2026-11-12 [faglarer-tilbakemelding](985-2026-11-12-16-46-40-faglarer-tilbakemelding.md) — spørre faglærer om technology.md er en anbefaling eller bare inspirasjon
+- [x] 2026-11-12 [faglarer-tilbakemelding](985-2026-11-12-16-46-40-faglarer-tilbakemelding.md) — spørre faglærer om technology.md er en anbefaling eller bare inspirasjon (løst 2026-11-12 — faglærer i forelesningen: frivillig, teller ikke på karakteren)
 - [x] 2026-11-12 [faglarer-tilbakemelding](985-2026-11-12-16-46-40-faglarer-tilbakemelding.md) — oppdatere PRD-en med bmad-prd etter møtet, inkludert faglærers punkter (løst 2026-11-13 — se [prd-final](984-2026-11-13-11-51-31-prd-final.md))
 - [ ] 2026-11-13 [prd-final](984-2026-11-13-11-51-31-prd-final.md) — lage felles UX-design fra A1 og runde 3 (issue #9)
