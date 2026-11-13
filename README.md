@@ -27,7 +27,8 @@ Planleggingsfasen (BMAD) pågår. Appen er ikke bygget ennå, så installasjon o
 | Research | Ferdig |
 | PRD | Ferdig (final 13.11), med faglærers tilbakemelding innarbeidet |
 | UX-design | To forslag; gruppen har valgt å slå dem sammen ([issue #9](https://github.com/IBE160-2026/G62-bjolstad-khalid-reehorst-svendsrud/issues/9)) |
-| Arkitektur, epics og stories | Neste |
+| Arkitektur | Ferdig 13.11: Next.js + FastAPI + PostgreSQL i Docker Compose ([arkitektur](.docs/planning-artifacts/architecture/architecture-prompt-force-2026-11-13/ARCHITECTURE-SPINE.md)) |
+| Epics og stories | Neste |
 | Kode og tester | Ikke startet |
 
 Oppgaver og åpne spørsmål følges opp i [GitHub Issues](https://github.com/IBE160-2026/G62-bjolstad-khalid-reehorst-svendsrud/issues).

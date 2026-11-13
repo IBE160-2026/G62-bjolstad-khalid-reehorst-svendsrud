@@ -377,6 +377,36 @@ Det viktigste funnet: Dekningsanalysen er regnet ut fra øvelseslista og viser a
 
 ---
 
+## 2026-11-13 – Arkitektur (BMAD architecture)
+
+**Verktøy:** Claude Code (BMAD `bmad-architecture`, rask vei)
+**Hvem:** Osman Khalid
+**Bakgrunn:** PRD-en var ferdig, og gruppen (Osman og CoolMellon) godtok teknologiforslaget: faglærers oppsett, forenklet. Faglærer sa 12.11 at sensor kjører appen med Docker.
+
+### Hva vi ba KI om
+
+1. Lage arkitekturen (BMAD sin «architecture spine») ut fra PRD-en, UX, research og faglærers technology.md.
+
+### Hva KI produserte
+
+- `ARCHITECTURE-SPINE.md` med 17 arkitekturbeslutninger (AD-1 til AD-17), konvensjoner, versjoner, diagrammer (avhengigheter, Docker Compose, datamodell, mappestruktur) og en tabell som kobler hvert krav i PRD-en til modul og beslutning.
+- Beslutningslogg i `.memlog.md`.
+
+### Hva vi selv vurderte og kontrollerte
+
+- Versjonene er sjekket direkte i npm, PyPI og Docker Hub 13.11, ikke tatt fra KI-ens hukommelse. Websøkene ga sprikende svar, så registrene ble brukt i stedet.
+- BMAD sin lint-sjekk fant én feil (beslutningene sto i feil rekkefølge), som ble rettet.
+- En gjennomgang der vi lette etter steder to utviklere kan bygge ting som ikke passer sammen, fant fire hull. De ble tettet: hvilken modul som eier hvert regnestykke, hvem som sjekker samtykke, hvem som lager standard utstyrsprofiler, og hvordan kalorimålet lagres.
+- To antakelser er merket: TypeScript-versjon, og at kalorimålet ikke har historikk.
+- BMAD sine kontrollører som subagenter ble ikke kjørt; gjennomgangen ble gjort i samme økt.
+
+### Status
+
+- [x] Arkitektur ferdig
+- [ ] Epics og stories
+
+---
+
 ## Mal for nye oppføringer
 
 ```markdown
