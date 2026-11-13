@@ -5,3 +5,4 @@
 - [ ] 2026-11-13 [strekkodetest-sm4](998-2026-11-13-12-25-31-strekkodetest-sm4.md) — gruppen tar stilling til kcal-kontroll mot kJ og «prøv igjen» ved HTTP 429 (issue #14)
 - [x] 2026-11-13 [strekkodetest-sm4](998-2026-11-13-12-25-31-strekkodetest-sm4.md) — legge resultatet som kommentar på issue #14 (løst 2026-11-13)
 - [ ] 2026-11-13 [strekkodetest-sm4](998-2026-11-13-12-25-31-strekkodetest-sm4.md) — Osman lukker issue #14 når han har sett del 2
+- [ ] 2026-11-13 [review-pr-16](997-2026-11-13-14-39-28-review-pr-16.md) — avklare de tre Vercel-prosjektene, to ser ut som duplikater (issue #15)
