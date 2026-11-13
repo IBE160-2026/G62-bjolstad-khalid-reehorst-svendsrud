@@ -3,6 +3,8 @@
 **Dato:** 2026-11-11, oppdatert 2026-11-12 · **Av:** Osman Khalid med Claude Code · **Status:** forslag. Gruppen bestemmer i arkitekturfasen (`bmad-architecture`).
 
 > **Oppdatert 12.11:** faglærer la inn [technology.md](../architecture/technology.md) som referanse for arkitekturen. Den beskriver hans eget oppsett (Next.js + FastAPI + Postgres + Docker). Det er lagt til som alternativ D, og anbefalingen nederst er skrevet om.
+>
+> **Oppdatert 13.11 etter forelesningen 12.11:** faglærer sa at **sensor kjører appen via en Docker-fil i repoet**, og at technology.md er **frivillig** og ikke teller på karakteren (tilpass den og fjern det dere ikke trenger, f.eks. betaling). Antakelsen om at vi bør unngå Docker var derfor feil. Anbefalingen er endret til D.
 
 Notatet bygger på det vi allerede har: PRD-en, PRD-tillegget (datamodell, Open Food Facts, Matvaretabellen) og Kariannes research om [innlogging](technical-login-authentication-approach-selection-2026-10-28/research.md) og [strekkode](technical-barcode-scanning-library-selection-2026-10-28/research.md). Det gjentar ikke de valgene, men viser hvordan de passer inn i hvert alternativ.
 
@@ -10,7 +12,7 @@ Notatet bygger på det vi allerede har: PRD-en, PRD-tillegget (datamodell, Open 
 
 | Krav | Kilde | Betyr for teknologien |
 |---|---|---|
-| Sensor kjører appen lokalt fra README, uten våre nøkler eller kontoer, på under 20 min | NFR-3, SM-3 | Databasen må kunne kjøre lokalt uten oppsett (helst en fil). Ingen Docker-krav. |
+| Sensor kjører appen lokalt fra README, uten våre nøkler eller kontoer, på under 20 min | NFR-3, SM-3 | ~~Ingen Docker-krav~~ **Rettet 13.11:** sensor kjører appen med Docker (forelesning 12.11). Repoet må ha en Docker Compose-fil som starter alt med én kommando, uten våre nøkler. |
 | Appen publiseres på Vercel | README, vercel-oppsett | Bør passe Vercel uten triks. En lokal databasefil lagres ikke på Vercel, så produksjon trenger en database på nett. |
 | Seed-data med testbrukere | NFR-4 | Et seed-skript som kjøres med én kommando. |
 | Automatiske tester av kalorier, forslag, tilgang og «ikke funnet» | NFR-8 | Testverktøy for logikk, og gjerne ende-til-ende. |
@@ -44,8 +46,8 @@ Notatet bygger på det vi allerede har: PRD-en, PRD-tillegget (datamodell, Open 
 - **Hva:** frontend i Next.js med Tailwind og shadcn/ui, og et eget API i Python med FastAPI og SQLAlchemy. I faglærers oppsett kjører alt i Docker Compose med Postgres. Kilde: [technology.md](../architecture/technology.md).
 - **Det vi bør ta med uansett alternativ:** prinsippet om **mock-fallback**. Hver ekstern tjeneste gir et testsvar når nøkkelen mangler, så appen kjører uten hemmeligheter. Det er akkurat det NFR-3 og NFR-5 krever. Også seeding ved oppstart med demokontoer bare lokalt, og at appen nekter å starte i produksjon uten hemmelig nøkkel.
 - **Fordeler:** samme oppsett som faglærer bruker, så det er lettere å få hjelp og følge forelesningene. Python er ofte enklere å lese for logikk (kalorier, forslag), og pytest er godt for testene i NFR-8. Tydelig skille mellom frontend og backend.
-- **Ulemper:** to språk og to prosjekter. Docker gjør det tyngre for sensor å kjøre appen (NFR-3), og passer ikke Vercel. Faglærer bruker Railway. Det meste i oppsettet hans (betaling, e-post, Redis, backup, innholdstjeneste) trenger ikke vi.
-- **Lettversjon for oss:** Next.js + FastAPI med SQLAlchemy mot **SQLite lokalt (uten Docker)** og Postgres i produksjon. SQLAlchemy støtter begge, så sensor slipper Docker. Hosting må avklares (Vercel for frontend, og Vercel Python-funksjoner eller Railway for API-et).
+- **Ulemper:** to språk og to prosjekter. Passer ikke Vercel direkte. Faglærer bruker Railway. Det meste i oppsettet hans (betaling, e-post, Redis, backup, innholdstjeneste) trenger ikke vi.
+- **Forenklet versjon for oss:** Next.js + FastAPI + Postgres i **Docker Compose**, som sensor forventer. Dropp det vi ikke trenger: betaling, e-post, Redis, backup, watchdog og innholdstjeneste. Caddy (HTTPS) trengs bare hvis kameraskanning (FR-8) bygges. ~~SQLite uten Docker~~ er ikke lenger nødvendig. Hosting må avklares (Vercel for frontend, og Vercel Python-funksjoner eller Railway for API-et).
 
 ## Sammenligning
 
@@ -65,18 +67,22 @@ Notatet bygger på det vi allerede har: PRD-en, PRD-tillegget (datamodell, Open 
 - **Kamera:** Quagga2, bare hvis FR-8 bygges (issue #4).
 - **Hemmeligheter:** bare i `.env` (git-ignorert) og i Vercel sine miljøvariabler, med `.env.example` i repoet.
 
-## Anbefaling (oppdatert 12.11)
+## Anbefaling (oppdatert 13.11)
 
-Valget står i praksis mellom **A** og **D**. Frontend blir uansett Next.js med Tailwind og shadcn/ui.
+**Velg D: faglærers oppsett, forenklet.** Next.js (Tailwind, shadcn/ui) + FastAPI (SQLAlchemy, Alembic) + Postgres, alt startet med Docker Compose.
 
-- **Velg A** hvis enkel kjøring for sensor og Vercel veier tyngst. Ett prosjekt, ett språk, ingen Docker.
-- **Velg D (lettversjon)** hvis det veier tyngst å følge faglærers referanse og få hjelp i forelesningene. Dropp Docker og bruk SQLite lokalt, så sensor fortsatt kommer i gang raskt.
+Hvorfor D nå:
+- Sensor kjører appen med Docker, så A sin største fordel (ingen Docker) faller bort.
+- Det er samme oppsett som i forelesningene, så det er lettere å følge med og få hjelp.
+- Python og pytest passer godt til logikken vi skal teste (kalorier, forslag, tilgang).
 
-I begge tilfeller: ta med mock-fallback, seeding og oppstartsvakter fra faglærers oppsett.
+Ta med fra faglærers oppsett: mock-fallback for alle eksterne tjenester (Open Food Facts, og bildemodellen i fase 2), seeding med testbrukere ved oppstart, og at appen nekter å starte i produksjon uten hemmelig nøkkel. Fjern resten.
+
+A (Next.js alene) er fortsatt et godt alternativ hvis gruppen heller vil ha ett språk; da må den også pakkes i Docker.
 
 ## Spørsmål til gruppen
 
-0. Er faglærers technology.md ment som en anbefaling for oss, eller bare som inspirasjon? Spør ham direkte.
+0. ~~Er faglærers technology.md ment som en anbefaling?~~ **Besvart 12.11:** frivillig, teller ikke på karakteren. Tilpass den til appen.
 1. Har noen i gruppen erfaring med React, Next.js, Svelte eller Python? Det kan veie tyngre enn tabellen over.
 2. Godtar vi Turso som database på nett, eller vil vi bare kjøre lokalt og la Vercel vente?
 3. Komponentbibliotek (issue #12): shadcn/ui, eller egne komponenter?
