@@ -504,6 +504,33 @@ Det viktigste funnet: Dekningsanalysen er regnet ut fra øvelseslista og viser a
 
 ---
 
+## 2026-11-13 – Felles UX-design, revisjon 2
+
+**Verktøy:** Claude Code
+**Hvem:** Osman Khalid, etter tilbakemelding fra Karianne på PR #17
+**Bakgrunn:** Karianne syntes fargene var i ubalanse, savnet notatbok-stilen fra runde 3 og ville ha en mer stilren font.
+
+### Hva vi ba KI om
+
+1. Rette designet etter Kariannes tilbakemelding. Osman valgte Inter som eneste font.
+
+### Hva KI produserte
+
+- Ny mockup `imports/felles-design-v2-i-dag.html` (PC og mobil) og oppdatert `DESIGN.md`, `.memlog.md` og `ux/konsepter/decisions.md`.
+
+### Hva vi selv vurderte og kontrollerte
+
+- KI fant at runde 3-mockupen egentlig viste Georgia, fordi Fraunces aldri ble lastet inn. Derfor så det felles designet annerledes ut enn Karianne forventet.
+- Oppskriftssidene ble ikke tatt inn i v1, fordi gruppen 12.11 bestemte at oppskrifter kommer etter v1. De beholdes som design for fase 2.
+- Karianne må godkjenne revisjonen.
+
+### Status
+
+- [x] Notatbok-linjer, roligere farger og Inter
+- [ ] Karianne godkjenner PR #17
+
+---
+
 ## Mal for nye oppføringer
 
 ```markdown

@@ -28,3 +28,11 @@ Her skriver vi ned hva vi velger etter hver runde, slik at prosessen kan følges
 - **Tatt ut:** teal fra runde 3, fordi den er nesten lik den grønne (kontrast 1,04 mellom dem). Kaloriringen fra runde 3, fordi PRD-en ber om ett tall med en setning (FR-7).
 - Resultatet står i `../../ux-designs/ux-prompt-force-2026-11-10/DESIGN.md` og `EXPERIENCE.md`.
 
+## Revisjon 2 (2026-11-13, tilbakemelding fra Karianne på PR #17)
+
+- **Notatbok-stilen tilbake:** linjer i bakgrunnen hver 38px som i runde 3, og dagens lapp er et linjert notatark med marg.
+- **Roligere farger:** plomme er eneste fylte farge (knapp og aktiv meny). Grønn og oransje bare som magneter og ikoner; tallene står i vanlig tekstfarge.
+- **Font:** Inter overalt. Fraunces ble for lite stilren (runde 3-mockupen viste egentlig Georgia, fordi Fraunces ikke var lastet inn).
+- **Oppskriftssidene** fra runde 3 beholdes som design for fase 2. Oppskrifter er utenfor v1 (gruppens beslutning 12.11).
+- Mockup: `../../ux-designs/ux-prompt-force-2026-11-10/imports/felles-design-v2-i-dag.html`.
+
