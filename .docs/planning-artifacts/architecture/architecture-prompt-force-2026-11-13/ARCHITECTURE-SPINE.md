@@ -179,7 +179,7 @@ A layer may only call the layer to its right. `overview` may call other modules'
 | psycopg | 3.3.9 |
 | Pydantic / pydantic-settings | 2.14.3 / 2.16.2 |
 | argon2-cffi | 25.1.0 |
-| httpx | 0.28.1 |
+| httpx2 (test client) | 2.16.0 |
 | pytest | 9.2.0 |
 | Node.js (Docker `node:24`) | 24 LTS |
 | Next.js | 16.4.6 |

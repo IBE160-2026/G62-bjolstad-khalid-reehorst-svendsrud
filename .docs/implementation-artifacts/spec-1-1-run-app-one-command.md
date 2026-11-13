@@ -77,6 +77,7 @@ context:
 - **`@types/node`** set to `^24` (matches the `node:24` image; Vitest 5.1.0 requires `^22 || >=24`, the generator's `^20` conflicted).
 - **Generator output kept:** `cacheComponents`, `partialPrefetching` and the `@tailwindcss/turbopack` CSS rule from `create-next-app` 16.4.6; Geist fonts, dark-mode CSS and template SVGs removed (tokens/fonts are story 1.2). `frontend/AGENTS.md` is generator output and is re-added by `next dev`.
 - **Known warning:** Starlette warns that `httpx` with `TestClient` is deprecated in favour of `httpx2`; the spine pins `httpx 0.28.1`, so it is left as is.
+- **httpx2 (after review, 13.11):** CoolMellon flagged the warning in the PR #16 discussion. The dev dependency was switched to `httpx2==2.16.0` (verified on PyPI) and the spine's Stack row updated; 18 tests pass with no warning. The frozen intent still names httpx 0.28.1; this is a test-only deviation.
 - **No bind mounts:** containers run the built image, so code changes need `docker compose up --build` (documented in README).
 
 ## Spec Change Log
