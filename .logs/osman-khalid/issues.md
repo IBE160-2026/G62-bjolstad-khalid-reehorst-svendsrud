@@ -33,3 +33,4 @@
 - [x] 2026-11-13 [epics-og-stories](982-2026-11-13-12-17-52-epics-og-stories.md) — starte implementasjonen med story 1.1 (løst 2026-11-13 — se [story-1-1-kjor-appen](981-2026-11-13-12-36-36-story-1-1-kjor-appen.md))
 - [x] 2026-11-13 [story-1-1-kjor-appen](981-2026-11-13-12-36-36-story-1-1-kjor-appen.md) — avklare httpx-versjon: Starlette vil ha httpx2 i TestClient, arkitekturen låser httpx 0.28.1 (løst 2026-11-13 — byttet til httpx2 2.16.0)
 - [ ] 2026-11-13 [story-1-1-kjor-appen](981-2026-11-13-12-36-36-story-1-1-kjor-appen.md) — vurdere hot reload (bind mounts) i docker-compose for utvikling
+- [ ] 2026-11-13 [merge-pr-16](979-2026-11-13-17-46-12-merge-pr-16.md) — flette PR #17 (felles UX-design) når den er godkjent, deretter starte story 1.2
