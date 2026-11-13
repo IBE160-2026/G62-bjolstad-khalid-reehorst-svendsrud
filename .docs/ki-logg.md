@@ -476,6 +476,34 @@ Det viktigste funnet: Dekningsanalysen er regnet ut fra øvelseslista og viser a
 
 ---
 
+## 2026-11-13 – Felles UX-design (A1 + runde 3)
+
+**Verktøy:** Claude Code (BMAD `bmad-ux`, oppdatering)
+**Hvem:** Osman Khalid, etter gruppens avstemning 12.11
+**Bakgrunn:** Osman (A1) og Karianne (runde 3) laget hvert sitt UX-design. Gruppen stemte for å slå dem sammen. Det felles designet trengs før story 1.2 (meny og design).
+
+### Hva vi ba KI om
+
+1. Slå sammen designene: utseendet fra runde 3, fargekodene og strukturen fra A1 (Osmans valg).
+
+### Hva KI produserte
+
+- Ny `DESIGN.md` og oppdatert `EXPERIENCE.md` i `ux-designs/ux-prompt-force-2026-11-10/`, med beslutningene i `.memlog.md` og `ux/konsepter/decisions.md`.
+
+### Hva vi selv vurderte og kontrollerte
+
+- KI målte kontrasten for alle fargepar. Teal fra runde 3 og grønn fra A1 hadde kontrast 1,04 mot hverandre, altså nesten like, og ville gjort «fullført» og «mat» forvekslbare. Teal ble tatt ut.
+- Grønn tekst ble gjort mørkere (#2A7350), fordi den opprinnelige grønne bare så vidt nådde 4,5:1 på papirbakgrunnen.
+- Kaloriringen fra runde 3 ble ikke tatt med, fordi PRD-en (FR-7) ber om ett tall med en forklarende setning.
+- Gruppen har ikke sett det ferdige resultatet ennå.
+
+### Status
+
+- [x] Felles DESIGN.md og EXPERIENCE.md
+- [ ] Gruppen ser over det felles designet (issue #9)
+
+---
+
 ## Mal for nye oppføringer
 
 ```markdown

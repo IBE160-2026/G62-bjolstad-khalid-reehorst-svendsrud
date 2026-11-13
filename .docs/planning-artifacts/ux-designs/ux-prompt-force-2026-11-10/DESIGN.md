@@ -1,78 +1,80 @@
 ---
 name: Prompt Force
-description: Calm, app-like web app for beginners that puts training and food in one place. Visual world from the chosen concept A1 "Sidemeny" (the fridge planner board). Light mode only in v1.
+description: Calm, app-like training and food journal for beginners. Merged design (2026-11-13) — the paper-journal look from UX round 3 with the category colours and structure of concept A1. Light mode only in v1.
 status: final
-updated: 2026-11-10
+updated: 2026-11-13
 sources:
   - ../../prds/prd-prompt-force-2026-11-02/prd.md
   - ../../briefs/brief-prompt-force-2026-09-16/brief.md
   - ../../../../PRODUCT.md
   - ../../ux/valgt-konsept/README.md
+  - ../../ux/runde-3/DESIGN.md
 colors:
-  ink: '#1E2A2F'
-  muted: '#5B6B70'
-  board: '#F7F8F6'
-  card: '#FFFFFF'
-  line: '#DCE2E0'
-  nav-active: '#E8EFEC'
+  paper: '#F7F2E9'
+  surface: '#FFFDF7'
+  ink: '#3A322B'
+  ink-secondary: '#6B6056'
+  rule: '#E4D9C6'
+  accent: '#7A3B69'
+  accent-tint: '#F1E7EE'
+  on-accent: '#FFF9F0'
   food: '#2F7D55'
-  food-tint: '#E6F1EA'
+  food-text: '#2A7350'
+  food-tint: '#E5EFE6'
   training: '#D9542B'
   training-text: '#B9471F'
-  training-tint: '#FBEAE3'
+  training-tint: '#F8E6DC'
   note: '#F2C14E'
-  note-paper: '#FFFBEA'
-  note-edge: '#EFE3B5'
+  note-paper: '#FFF8E2'
+  tape: '#E6DCC4'
   error: '#B42318'
-  error-tint: '#FDECEA'
-  focus-ring: '#1E2A2F'
+  error-tint: '#FBE9E6'
+  focus-ring: '#3A322B'
 typography:
   display:
-    fontFamily: 'Atkinson Hyperlegible'
+    fontFamily: 'Fraunces'
     fontSize: 48px
     fontWeight: '700'
     lineHeight: '1.05'
-    letterSpacing: -0.01em
-  display-sm:
-    fontFamily: 'Atkinson Hyperlegible'
-    fontSize: 38px
-    fontWeight: '700'
-    lineHeight: '1.1'
   title:
-    fontFamily: 'Atkinson Hyperlegible'
+    fontFamily: 'Fraunces'
     fontSize: 30px
-    fontWeight: '700'
+    fontWeight: '600'
     lineHeight: '1.2'
   heading:
-    fontFamily: 'Atkinson Hyperlegible'
-    fontSize: 20px
-    fontWeight: '700'
+    fontFamily: 'Fraunces'
+    fontSize: 19px
+    fontWeight: '600'
     lineHeight: '1.3'
   body:
-    fontFamily: 'Atkinson Hyperlegible'
+    fontFamily: 'Inter'
     fontSize: 16px
     fontWeight: '400'
-    lineHeight: '1.5'
+    lineHeight: '1.6'
   body-strong:
-    fontFamily: 'Atkinson Hyperlegible'
+    fontFamily: 'Inter'
     fontSize: 16px
-    fontWeight: '700'
-    lineHeight: '1.5'
+    fontWeight: '600'
+    lineHeight: '1.6'
   small:
-    fontFamily: 'Atkinson Hyperlegible'
+    fontFamily: 'Inter'
     fontSize: 14px
     fontWeight: '400'
-    lineHeight: '1.45'
+    lineHeight: '1.5'
   label:
-    fontFamily: 'Atkinson Hyperlegible'
-    fontSize: 12px
-    fontWeight: '400'
+    fontFamily: 'Inter'
+    fontSize: 13px
+    fontWeight: '600'
     lineHeight: '1.3'
+  button:
+    fontFamily: 'Inter'
+    fontSize: 15px
+    fontWeight: '700'
+    lineHeight: '1'
 rounded:
-  sm: 8px
-  md: 12px
-  lg: 16px
-  xl: 18px
+  sm: 10px
+  md: 14px
+  lg: 20px
   full: 9999px
 spacing:
   '1': 4px
@@ -84,25 +86,25 @@ spacing:
   '8': 32px
   '10': 40px
   '12': 48px
-  sidebar-width: 230px
+  sidebar-width: 232px
   tab-bar-height: 72px
   content-max: 1040px
   margin-mobile: 16px
 components:
   sidebar:
-    background: '{colors.card}'
+    background: '{colors.surface}'
     width: '{spacing.sidebar-width}'
-    border-right: '1px solid {colors.line}'
+    border-right: '1px solid {colors.rule}'
   sidebar-item-active:
-    background: '{colors.nav-active}'
-    foreground: '{colors.ink}'
-    radius: '{rounded.md}'
+    background: '{colors.accent-tint}'
+    foreground: '{colors.accent}'
+    radius: '{rounded.full}'
   tab-bar:
-    background: '{colors.card}'
+    background: '{colors.surface}'
     height: '{spacing.tab-bar-height}'
-    border-top: '1px solid {colors.line}'
+    border-top: '1px solid {colors.rule}'
   week-strip-day-active:
-    background: '{colors.card}'
+    background: '{colors.surface}'
     border: '2px solid {colors.ink}'
     radius: '{rounded.md}'
   magnet-food:
@@ -115,108 +117,125 @@ components:
     radius: '{rounded.full}'
   day-note:
     background: '{colors.note-paper}'
-    border: '1px solid {colors.note-edge}'
+    border: '1px solid {colors.rule}'
     radius: '{rounded.md}'
     pin: '{colors.note}'
   section-card:
-    background: '{colors.card}'
-    border: '1px solid {colors.line}'
+    background: '{colors.surface}'
+    border: '1px solid {colors.rule}'
     radius: '{rounded.lg}'
+    tape: '{colors.tape}'
   button-primary:
-    background: '{colors.ink}'
-    foreground: '{colors.card}'
+    background: '{colors.accent}'
+    foreground: '{colors.on-accent}'
     radius: '{rounded.full}'
-    height: 54px
+    height: 52px
   button-secondary:
-    background: '{colors.card}'
+    background: '{colors.surface}'
     foreground: '{colors.ink}'
-    border: '2px solid {colors.ink}'
+    border: '1.5px solid {colors.rule}'
     radius: '{rounded.full}'
-    height: 54px
-  text-action-food:
-    foreground: '{colors.food}'
+    height: 52px
+  method-option:
+    background: '{colors.surface}'
+    border: '1.5px solid {colors.rule}'
+    radius: '{rounded.full}'
+    selected-background: '{colors.accent}'
+    selected-foreground: '{colors.on-accent}'
+  status-complete-food:
+    foreground: '{colors.food-text}'
+  status-complete-training:
+    foreground: '{colors.training-text}'
   input:
-    background: '{colors.card}'
-    border: '1px solid {colors.muted}'
+    background: '{colors.surface}'
+    border: '1.5px solid {colors.rule}'
     radius: '{rounded.sm}'
     height: 48px
   input-error:
     border: '2px solid {colors.error}'
     message: '{colors.error}'
+  help-button:
+    background: '{colors.accent-tint}'
+    foreground: '{colors.accent}'
+    radius: '{rounded.full}'
+    size: 40px
 ---
 
 ## Brand & Style
 
-Prompt Force should feel like the planning board on a family fridge: a calm white surface where the week is laid out, small coloured magnets show what is done, and a yellow note says the one thing that matters today. It is motivating without being loud, and it never overwhelms a beginner (PRODUCT.md, principle 1: fewer, clearer actions).
+Prompt Force is a calm training and food journal: warm paper instead of clinical white, a serif for headings like a notebook title, and a plain sans for everything you read and type. It motivates without shouting and never overwhelms a beginner (PRODUCT.md, principle 1).
 
-It is a web app in the browser, but it behaves and looks like an app, with persistent navigation, authored icons and tappable cards, not like a document or a marketing page. There is no hero imagery, no gradients and no glass effects. Brand lives in three details: the week strip with its magnets, the pinned yellow day note, and the green and orange that always mean Food and Training.
+This is the **merged design** the group voted for on 2026-11-12. It takes the look of UX round 3 (Karianne: paper, Fraunces + Inter, plum as the action colour, tape on cards) and the structure and colour meaning of concept A1 (Osman: sidebar, week strip with magnets, the day note with one number, green = food, orange = training). Round 3's teal was dropped because it is almost the same colour as food green (contrast 1.04 between them).
 
-Chosen through two concept rounds (see `../../ux/konsepter/decisions.md`). Reference layout: `imports/valgt-konsept-a1-dagsoversikt.svg`. This file wins on conflict with the sketch.
+It is a web app that behaves like an app: persistent navigation, authored icons and tappable cards. No gradients, no glass, no hero images. Reference layouts: `imports/valgt-konsept-a1-dagsoversikt.svg` (structure) and `../../ux/runde-3/mockups/` (look of food logging and the muscle-group list). This file wins on conflict with either.
 
 ## Colors
 
-The palette is restrained: tinted neutrals for the board, plus two category colours and one note colour, each with exactly one job.
+Warm neutrals for the page, one action colour, two category colours and one note colour. Every colour has one job.
 
-- **Ink (`#1E2A2F`)** is all primary text, the primary button fill, the active day outline and the focus ring. 13.8:1 on `{colors.board}`.
-- **Muted (`#5B6B70`)** is secondary text: dates, "Sist: 8 kg", item lists under a meal, attribution. At least 5.2:1 on every surface. Never used for anything the user must read to act.
-- **Board (`#F7F8F6`)** is the page background. **Card (`#FFFFFF`)** is cards, the sidebar and the tab bar. **Line (`#DCE2E0`)** is hairline dividers only, never text.
-- **Food green (`#2F7D55`)** means food, everywhere: the food magnet, the Mat card's icon disc, "+ Legg til" text actions in food lists. 5.0:1 on white, so it can carry text. **Food tint (`#E6F1EA`)** is selected rows and chips in the food flow.
-- **Training orange (`#D9542B`)** means training: the training magnet and the Trening icon disc. It is 4.0:1 on white, so it is **never used for text**. Orange text uses **training-text (`#B9471F`, 5.3:1)**. **Training tint (`#FBEAE3`)** is selected rows in the training flow.
-- **Note yellow (`#F2C14E`)** is only the pin on the day note. **Note paper (`#FFFBEA`)** with **note edge (`#EFE3B5`)** is the note itself. Yellow is never a button or a status.
-- **Error (`#B42318`)** is reserved for validation errors and destructive confirmations (delete account). Being over the calorie target is **not** an error and is not red (see EXPERIENCE.md, State Patterns).
+- **Paper (`#F7F2E9`)** is the page background. **Surface (`#FFFDF7`)** is cards, the sidebar, the tab bar and inputs. **Rule (`#E4D9C6`)** is hairlines and borders, never text.
+- **Ink (`#3A322B`)** is all main text and the focus ring (11.3:1 on paper). **Ink-secondary (`#6B6056`)** is supporting text such as dates and "Sist: …" (5.5:1).
+- **Plum (`#7A3B69`)** is the action colour: primary buttons, the active navigation item, the selected method in the food sheet and links (7.1:1 on paper; on-accent text 7.6:1). It never means a category.
+- **Food green**: `#2F7D55` for the food magnet and icon discs; `#2A7350` for any green text, such as "+ Legg til" and "fullført" on the Mat card (5.1:1). **Food tint (`#E5EFE6`)** is selected rows in the food flow.
+- **Training orange**: `#D9542B` for the training magnet and icon discs only (3.6:1, enough for non-text); `#B9471F` for orange text, such as "Fullført" on the Trening card (4.7:1). **Training tint (`#F8E6DC`)** is selected rows in the training flow.
+- **Note yellow (`#F2C14E`)** is only the pin on the day note; **note paper (`#FFF8E2`)** is the note itself. **Tape (`#E6DCC4`)** is the small tape strip on section cards.
+- **Error (`#B42318`)** is for validation errors and destructive confirmations only. Being over the calorie target is not an error and is never red.
 
-Avoid: more category colours, coloured page backgrounds, green or orange as large fills behind text, and red for anything that is not an error.
+Avoid: new category colours, coloured page backgrounds, green or orange as large fills behind text, plum on anything that is not an action.
 
 ## Typography
 
-One family throughout: **Atkinson Hyperlegible** (free, self-hosted), chosen for legibility for beginners and readers of every level. Use tabular numerals (`font-variant-numeric: tabular-nums`) wherever kcal, grams, sets, reps or weights line up in columns. `[ASSUMPTION: confirm the typeface with the group]`
+Two families, both from Google Fonts and self-hosted in the app: **Fraunces** for display, page titles and card headings, and **Inter** for everything else. Fallbacks: Georgia, serif for Fraunces; system-ui, sans-serif for Inter. Use tabular numerals (`font-variant-numeric: tabular-nums`) wherever kcal, grams, sets, reps or weights line up.
 
 | Role | Size / weight | Use |
 |---|---|---|
-| `{typography.display}` | 48 / 700 | Only the "kcal igjen" number on the day note (desktop) |
-| `{typography.display-sm}` | 38 / 700 | The same number on mobile |
-| `{typography.title}` | 30 / 700 | Page title: "I dag", "Mat", "Trening" |
-| `{typography.heading}` | 20 / 700 | Card titles |
-| `{typography.body}` / `body-strong` | 16 / 400·700 | Rows; bold for meal and exercise names |
-| `{typography.small}` | 14 / 400 | Secondary lines, dates |
-| `{typography.label}` | 12 / 400 | Tab-bar labels, week-strip weekday names, attribution |
+| `{typography.display}` | Fraunces 48 / 700 (38 on mobile) | Only the "kcal igjen" number on the day note |
+| `{typography.title}` | Fraunces 30 / 600 | Page titles: "I dag", "Mat", "Trening" |
+| `{typography.heading}` | Fraunces 19 / 600 | Card and section headings |
+| `{typography.body}` / `body-strong` | Inter 16 / 400·600 | Rows; meal and exercise names in 600 |
+| `{typography.small}` | Inter 14 / 400 | Dates, "Sist: …", attribution |
+| `{typography.label}` | Inter 13 / 600 | Tab-bar labels, weekday names, status labels |
+| `{typography.button}` | Inter 15 / 700 | Buttons and method options |
 
-Never set body text below 14 px. Headings are sentence case. No italics and no all-caps labels.
+Never set running text in Fraunces and never below 13 px. Sentence case everywhere; no all-caps labels.
 
 ## Layout & Spacing
 
-4-based scale (`{spacing.1}` to `{spacing.12}`). Groups are tight (8 to 12 px inside a row) and separated generously (24 to 32 px between cards).
+4-based scale. Tight inside a row (8–12 px), generous between cards (24–32 px).
 
-- **Desktop (≥ 1024 px):** fixed sidebar (`{spacing.sidebar-width}`) on the left; content to the right with a max width of `{spacing.content-max}`. On "I dag" the order is page title and date, then the week strip across the full width, then a three-column row: the day note with the two primary buttons under it, the Mat card and the Trening card.
-- **Tablet (768 to 1023 px):** the sidebar collapses to icons only (72 px); the Mat and Trening cards stack under the note.
-- **Mobile (< 768 px, down to 360 px):** no sidebar; the bottom tab bar (`{spacing.tab-bar-height}`) holds I dag, Mat, Trening and Profil. Single column: week strip, note, Mat card, Trening card. Side margin `{spacing.margin-mobile}`.
+- **Desktop (≥ 1024 px):** fixed sidebar (`{spacing.sidebar-width}`) on the left, content up to `{spacing.content-max}`. On "I dag": page title and date, the week strip across the full width, then the day note with the two primary buttons under it next to the Mat and Trening cards.
+- **Tablet (768–1023 px):** the sidebar collapses to icons; the cards stack under the note.
+- **Mobile (< 768 px, down to 360 px):** no sidebar; bottom tab bar (`{spacing.tab-bar-height}`) with I dag, Mat, Trening and Profil; one column; side margin `{spacing.margin-mobile}`. A help button sits in the top bar on every size.
 
 ## Elevation & Depth
 
-Almost flat. Cards sit on the board with a 1 px `{colors.line}` border plus one soft shadow (`0 3px 8px rgba(30, 42, 47, 0.06)`). Bottom sheets and dialogs use one stronger shadow (`0 12px 32px rgba(30, 42, 47, 0.18)`) over a 40% ink scrim. No other shadow levels and no hard offset shadows.
+Almost flat, like paper on a desk. Cards have a 1 px `{colors.rule}` border and one soft shadow (`0 2px 6px rgba(58, 50, 43, 0.06)`). Sheets and dialogs use `0 12px 32px rgba(58, 50, 43, 0.18)` over a 35 % ink scrim. No other levels, no hard offset shadows.
 
 ## Shapes
 
-Soft and friendly, but not bubbly: `{rounded.sm}` (8 px) for inputs, `{rounded.md}` (12 px) for the active day, the sidebar item and the day note, `{rounded.lg}` (16 px) for cards and sheets, and `{rounded.full}` for buttons, magnets and icon discs. The phone-frame radius in the concept sketch is presentation only and is not a token.
+Rounded and friendly: `{rounded.sm}` (10 px) for inputs, `{rounded.md}` (14 px) for the active day and the day note, `{rounded.lg}` (20 px) for cards and sheets, `{rounded.full}` for buttons, method options, the active navigation item, magnets and icon discs.
 
 ## Components
 
-- **Sidebar / tab bar:** icon (24 px, 2 px stroke, round caps) plus label. The active item is ink and bold on `{colors.nav-active}`; inactive items are muted. Icons are drawn from one outline set (house, bowl, dumbbell, calendar, person). No emoji.
-- **Week strip:** seven equal cells, Monday to Sunday. Each has a weekday label (`label`) over the date (`body`). The active day has a white fill with a 2 px ink outline. Under each past or current day sit up to two magnets: green if food was logged, orange if a workout was logged. Future days are muted with no magnets.
-- **Day note:** note paper with the yellow pin circle centred on the top edge. Contents: the date (`small`, muted), the number in `display`, one sentence in `body` ("igjen av dagens mål på 1 640"), and one optional supporting line in `small`. Exactly one note per screen.
-- **Section card (Mat / Trening):** white card with a header row (36 px icon disc in the category colour with a white icon, title in `heading`, summary on the right in `small` muted, chevron). Rows are separated by `{colors.line}`: name in `body-strong`, value right-aligned with tabular numerals, secondary line in `small` muted. An empty row shows a green "+ Legg til" text action.
-- **Buttons:** primary is an ink pill with white text and an optional leading icon; secondary is a white pill with a 2 px ink outline. Height 54 px desktop and 52 px mobile; minimum tap target 44 × 44 px. At most one primary button per view.
-- **Inputs:** 48 px high, 1 px muted border, a label above (never placeholder-only). Error: 2 px `{colors.error}` border and the message below in error colour, starting with what to fix.
-- **Attribution line:** `label`, muted, at the bottom of every screen that shows food data: "Data fra Open Food Facts og Matvaretabellen 2026".
+- **Sidebar / tab bar:** outline icons (24 px, 2 px stroke, round caps: house, bowl, dumbbell, calendar, person) plus a label. The active item is plum on `{colors.accent-tint}` in a pill; inactive items are ink-secondary. No emoji.
+- **Week strip:** seven cells, Monday–Sunday, weekday (`label`) over date (`body`). The selected day has a surface fill and a 2 px ink outline. Past and current days carry up to two magnets: green when food is logged, orange when a workout is logged. Future days are ink-secondary with no magnets.
+- **Day note:** note paper with the yellow pin centred on the top edge. Date (`small`), the number in `display`, one sentence in `body` ("igjen av dagens mål på 1 640"), and at most one supporting line. One per screen.
+- **Section card (Mat / Trening):** surface card with a small tape strip on the top-left edge; header with a 36 px icon disc in the category colour (white icon), title in `heading`, summary in `small`, chevron. Rows separated by rule lines; names in `body-strong`, values right-aligned with tabular numerals. Completed status uses the category text colour.
+- **Food method picker:** four pill options of equal size — Søk · Skriv strekkode · Nylig brukt · Manuelt — each with an outline icon; the selected one is plum with on-accent text and a check.
+- **Muscle-group list:** a plain vertical list of pill rows (Skuldre, Bryst, Mage/kjerne, Armer, Ben, Rygg) on Trening, with the same selected style as the method picker; beside it the exercise search field and Level chips.
+- **Buttons:** primary is a plum pill with on-accent text; secondary is a surface pill with a rule border and ink text. 52 px high, minimum tap target 44 × 44 px, at most one primary button per view.
+- **Inputs:** 48 px, label above (never placeholder-only), 1.5 px rule border; error state 2 px `{colors.error}` border with the message below, starting with what to fix.
+- **Help button:** a 40 px round "?" in the top bar, plum on accent-tint; opens a short explanation of the current screen.
+- **Attribution line:** `small`, ink-secondary, at the bottom of every screen with food data: "Data fra Open Food Facts og Matvaretabellen 2026".
 
 ## Do's and Don'ts
 
 | Do | Don't |
 |---|---|
-| Use green only for food and orange only for training | Use green or orange for success, warning or decoration |
-| Use `{colors.training-text}` for any orange text | Put text in `#D9542B` |
-| Show one big number (the day note) per screen | Stack several big stat numbers or progress rings |
-| Keep one primary button per view | Put two filled pill buttons side by side |
+| Use green only for food and orange only for training | Bring back teal, or use green/orange for success or warnings |
+| Use `#2A7350` for green text and `#B9471F` for orange text | Put text in `#2F7D55` or `#D9542B` |
+| Use plum only for actions and the active navigation item | Use plum for a category or a status |
+| Show one big number (the day note) per screen | Add a calorie ring or several big stat numbers |
+| Use Fraunces only for titles, headings and the day-note number | Set body text, buttons or labels in Fraunces |
+| Keep one primary button per view | Put two plum buttons side by side |
 | Draw icons from one outline set | Use emoji or mixed icon styles |
-| Keep cards flat with one soft shadow | Nest cards inside cards |
-| Keep the board light and calm | Add dark mode, gradients or coloured page backgrounds in v1 |
