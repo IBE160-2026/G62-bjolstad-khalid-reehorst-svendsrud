@@ -1,0 +1,7 @@
+@import "tailwindcss";
+
+/* Design tokens arrive in story 1.2. */
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
