@@ -29,4 +29,5 @@
 - [x] 2026-11-12 [faglarer-tilbakemelding](985-2026-11-12-16-46-40-faglarer-tilbakemelding.md) — spørre faglærer om technology.md er en anbefaling eller bare inspirasjon (løst 2026-11-12 — faglærer i forelesningen: frivillig, teller ikke på karakteren)
 - [x] 2026-11-12 [faglarer-tilbakemelding](985-2026-11-12-16-46-40-faglarer-tilbakemelding.md) — oppdatere PRD-en med bmad-prd etter møtet, inkludert faglærers punkter (løst 2026-11-13 — se [prd-final](984-2026-11-13-11-51-31-prd-final.md))
 - [ ] 2026-11-13 [prd-final](984-2026-11-13-11-51-31-prd-final.md) — lage felles UX-design fra A1 og runde 3 (issue #9)
-- [ ] 2026-11-13 [arkitektur](983-2026-11-13-12-04-14-arkitektur.md) — lage epics og stories (bmad-create-epics-and-stories)
+- [x] 2026-11-13 [arkitektur](983-2026-11-13-12-04-14-arkitektur.md) — lage epics og stories (bmad-create-epics-and-stories) (løst 2026-11-13 — se [epics-og-stories](982-2026-11-13-12-17-52-epics-og-stories.md))
+- [ ] 2026-11-13 [epics-og-stories](982-2026-11-13-12-17-52-epics-og-stories.md) — starte implementasjonen med story 1.1
