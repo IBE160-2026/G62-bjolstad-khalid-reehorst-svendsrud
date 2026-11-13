@@ -438,6 +438,36 @@ Det viktigste funnet: Dekningsanalysen er regnet ut fra øvelseslista og viser a
 
 ---
 
+## 2026-11-13 – Strekkodetest med varer hjemme (SM-4)
+
+**Verktøy:** Claude Code
+**Hvem:** Gustav Åbyholm Reehorst
+**Bakgrunn:** Ossi04 ba i Discord om strekkodene fra 10 varer hjemme, så vi kunne kjøre den ekte strekkodetesten (issue #14).
+
+### Hva vi ba KI om
+
+1. Finne strekkodene til 10 norske varer på Open Food Facts.
+2. Slå dem opp i OFF-API-et og legge resultatet i en egen mappe i repoet, med bilder.
+
+### Hva KI produserte
+
+- `.docs/planning-artifacts/research/strekkodetest-fysiske-varer-2026-11-13/research.md` med tabell, funn og begrensninger.
+- `bilder/` med en generert EAN-13-strekkode per vare.
+
+### Hva vi selv vurderte og kontrollerte
+
+- Gustav bekreftet at alle 10 varene finnes hjemme.
+- Kontrollsifrene ble sjekket, og alle bildene ble lest tilbake med strekkodeleseren zxing-cpp. Alle ga riktig tall.
+- kcal ble kontrollert mot kJ i samme oppføring. Akasiehonning har feil kcal (95 i stedet for 329). Det er et funn for arkitekturen.
+- Utvalget kom fra OFF sin liste over populære varer, så 10 av 10 overvurderer dekningen. Det står som begrensning i dokumentet.
+
+### Status
+
+- [x] Strekkodeoppslag testet med 10 varer hjemme
+- [ ] Gruppen tar stilling til kcal-kontroll mot kJ og håndtering av HTTP 429
+
+---
+
 ## Mal for nye oppføringer
 
 ```markdown

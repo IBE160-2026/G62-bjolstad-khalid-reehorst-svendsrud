@@ -38,7 +38,7 @@ Oppgaver og åpne spørsmål følges opp i [GitHub Issues](https://github.com/IB
 **Planlegging (BMAD)**
 - [Product brief](.docs/planning-artifacts/briefs/brief-prompt-force-2026-09-16/) med tilbakemelding fra faglærer
 - [PRD](.docs/planning-artifacts/prds/prd-prompt-force-2026-11-02/prd.md), med [tillegg](.docs/planning-artifacts/prds/prd-prompt-force-2026-11-02/addendum.md) (datamodell og tekniske detaljer)
-- [Research](.docs/planning-artifacts/research/): trening, GDPR, datalisenser, strekkode, innlogging, Open Food Facts-dekning og forslag til teknologivalg
+- [Research](.docs/planning-artifacts/research/): trening, GDPR, datalisenser, strekkode, innlogging, Open Food Facts-dekning, [strekkodetest med varer hjemme](.docs/planning-artifacts/research/strekkodetest-fysiske-varer-2026-11-13/research.md) og forslag til teknologivalg
 - [Øvelsesliste](.docs/planning-artifacts/ovelsesliste.md) og [gjennomgang med forslag til nye øvelser](.docs/planning-artifacts/ovelsesliste-gjennomgang-2026-11-11.md)
 
 **UX-design**
