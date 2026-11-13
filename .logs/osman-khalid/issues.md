@@ -28,9 +28,10 @@
 - [ ] 2026-11-11 [repo-gjennomgang-og-readme](986-2026-11-11-17-34-35-repo-gjennomgang-og-readme.md) — legge til installasjon, kjøring, testbrukere og tester i README når koden finnes
 - [x] 2026-11-12 [faglarer-tilbakemelding](985-2026-11-12-16-46-40-faglarer-tilbakemelding.md) — spørre faglærer om technology.md er en anbefaling eller bare inspirasjon (løst 2026-11-12 — faglærer i forelesningen: frivillig, teller ikke på karakteren)
 - [x] 2026-11-12 [faglarer-tilbakemelding](985-2026-11-12-16-46-40-faglarer-tilbakemelding.md) — oppdatere PRD-en med bmad-prd etter møtet, inkludert faglærers punkter (løst 2026-11-13 — se [prd-final](984-2026-11-13-11-51-31-prd-final.md))
-- [ ] 2026-11-13 [prd-final](984-2026-11-13-11-51-31-prd-final.md) — lage felles UX-design fra A1 og runde 3 (issue #9)
+- [x] 2026-11-13 [prd-final](984-2026-11-13-11-51-31-prd-final.md) — lage felles UX-design fra A1 og runde 3 (issue #9) (løst 2026-11-13 — se [felles-ux-design](980-2026-11-13-14-02-59-felles-ux-design.md))
 - [x] 2026-11-13 [arkitektur](983-2026-11-13-12-04-14-arkitektur.md) — lage epics og stories (bmad-create-epics-and-stories) (løst 2026-11-13 — se [epics-og-stories](982-2026-11-13-12-17-52-epics-og-stories.md))
 - [x] 2026-11-13 [epics-og-stories](982-2026-11-13-12-17-52-epics-og-stories.md) — starte implementasjonen med story 1.1 (løst 2026-11-13 — se [story-1-1-kjor-appen](981-2026-11-13-12-36-36-story-1-1-kjor-appen.md))
 - [x] 2026-11-13 [story-1-1-kjor-appen](981-2026-11-13-12-36-36-story-1-1-kjor-appen.md) — avklare httpx-versjon: Starlette vil ha httpx2 i TestClient, arkitekturen låser httpx 0.28.1 (løst 2026-11-13 — byttet til httpx2 2.16.0)
 - [ ] 2026-11-13 [story-1-1-kjor-appen](981-2026-11-13-12-36-36-story-1-1-kjor-appen.md) — vurdere hot reload (bind mounts) i docker-compose for utvikling
 - [ ] 2026-11-13 [merge-pr-16](979-2026-11-13-17-46-12-merge-pr-16.md) — flette PR #17 (felles UX-design) når den er godkjent, deretter starte story 1.2
+- [ ] 2026-11-13 [ux-revisjon-2](978-2026-11-13-18-39-19-ux-revisjon-2.md) — Karianne må godkjenne revisjon 2 av designet i PR #17
