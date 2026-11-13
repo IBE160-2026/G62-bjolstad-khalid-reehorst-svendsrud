@@ -407,6 +407,37 @@ Det viktigste funnet: Dekningsanalysen er regnet ut fra øvelseslista og viser a
 
 ---
 
+## 2026-11-13 – Epics og stories (BMAD)
+
+**Verktøy:** Claude Code (BMAD `bmad-create-epics-and-stories`)
+**Hvem:** Osman Khalid
+**Bakgrunn:** PRD og arkitektur var ferdige. Neste steg er å dele kravene opp i epics og stories, slik at hver story kan bygges i et eget kontekstvindu (forelesning 12.11).
+
+### Hva vi ba KI om
+
+1. Hente ut alle krav fra PRD, arkitektur og UX, og foreslå epics.
+2. Skrive stories med akseptansekriterier, én epic om gangen, og kontrollere dekning og avhengigheter.
+
+### Hva KI produserte
+
+- `.docs/planning-artifacts/epics.md`: 30 FR, 11 NFR, krav fra arkitekturen og 18 UX-krav, 7 epics og 32 stories med Given/When/Then-kriterier og en «Covers:»-linje som peker tilbake til kravene.
+
+### Hva vi selv vurderte og kontrollerte
+
+- Osman godkjente hvert steg og hver epic underveis.
+- UX: gruppen stemte for å slå sammen A1 og runde 3. Osman valgte at stories bygger på A1 sin struktur og henter metodevalg, muskelgruppeliste og hjelpeknapp fra runde 3. Farger og fonter tas i én story når det felles designet er valgt.
+- Osmans idé om Open Food Facts (no.openfoodfacts.org) ble story 3.7: import av norske varer til lokal database.
+- CoolMellon fant 10 norske strekkoder. Alle ble funnet, men honning hadde feil kcal i Open Food Facts (95 i stedet for rundt 300). Det er dokumentert, og grensene i issue #13 hadde ikke fanget det.
+- Sluttkontrollen fant én avhengighet til en senere story (3.1 → 3.2), som ble rettet. Alle krav er dekket av minst én story (sjekket med skript).
+
+### Status
+
+- [x] Epics og stories
+- [ ] Felles UX-design (A1 + runde 3)
+- [ ] Starte implementasjon med story 1.1
+
+---
+
 ## Mal for nye oppføringer
 
 ```markdown

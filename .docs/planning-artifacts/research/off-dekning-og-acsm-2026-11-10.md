@@ -91,3 +91,29 @@ Av 15 vanlige norske varer fant Open Food Facts (OFF) **9 med norsk oppføring o
 - **OFF sjekker ikke om strekkoden er gyldig.** En 12-sifret kode gir bare 404. Appen bør validere EAN-13/EAN-8 (lengde og kontrollsiffer) før den spør OFF, så brukeren får beskjed om tastefeil.
 
 **Begrensning:** strekkodene kom fra OFF selv, så testen viser at oppslaget fungerer, men **ikke** dekningen. Den ekte SM-4-testen krever strekkoder fra 10 fysiske varer i kjøleskapet eller butikken.
+
+---
+
+# Strekkoder fra CoolMellon (2026-11-13)
+
+CoolMellon fant 10 norske produkter på Open Food Facts og delte strekkodene i Discord. Alle ble slått opp med `GET /api/v2/product/{strekkode}`.
+
+| Strekkode | Produkt | EAN gyldig | Funnet | kcal/100 g |
+|---|---|---|---|---|
+| 7033330013290 | Bremykt Mykere | ✅ | ✅ | 703 |
+| 7039010081320 | Idun Tomatketchup | ✅ | ✅ | 95 |
+| 7036110008844 | Mills Peanut Butter | ✅ | ✅ | 610 |
+| 7038010010187 | TINE Meierismør | ✅ | ✅ | 742 |
+| 7026450051051 | Honningcentralen Akasiehonning | ✅ | ✅ | **95 ⚠️** |
+| 7038010054471 | TINE Cottage Cheese Original | ✅ | ✅ | 96 |
+| 7044416013141 | AXA Bjørn Lettkokte Havregryn | ✅ | ✅ | 367 |
+| 7038010000980 | TINE Lettmelk 1,0 % | ✅ | ✅ | 42 |
+| 7021010001057 | Nugatti | ✅ | ✅ | 527 |
+| 7039010132435 | Stabburet Leverpostei | ✅ | ✅ | 225 |
+
+**Funn:**
+- Alle 10 ble funnet med kcal, og alle EAN-kodene er gyldige.
+- **Feil i kildedata:** honning har normalt rundt 300–330 kcal per 100 g, men Open Food Facts oppgir 95. Grensene foreslått i issue #13 (under 5 eller over 900 kcal) hadde ikke fanget dette. Kontrollen bør derfor heller sammenligne med energien regnet ut fra protein, karbohydrat og fett når de finnes, eller la brukeren rette verdien.
+- **Begrensning:** produktene ble funnet på Open Food Facts, så testen viser at oppslaget virker, men ikke dekningen. SM-4 trenger fortsatt strekkoder fra fysiske varer.
+- Strekkodene brukes som testdata i mock-adapteren (story 3.3 i `epics.md`).
+
