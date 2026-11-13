@@ -459,11 +459,19 @@ Det viktigste funnet: Dekningsanalysen er regnet ut fra øvelseslista og viser a
 - Gustav bekreftet at alle 10 varene finnes hjemme.
 - Kontrollsifrene ble sjekket, og alle bildene ble lest tilbake med strekkodeleseren zxing-cpp. Alle ga riktig tall.
 - kcal ble kontrollert mot kJ i samme oppføring. Akasiehonning har feil kcal (95 i stedet for 329). Det er et funn for arkitekturen.
-- Utvalget kom fra OFF sin liste over populære varer, så 10 av 10 overvurderer dekningen. Det står som begrensning i dokumentet.
+- Utvalget kom fra OFF sin liste over populære varer, så 10 av 10 overvurderer dekningen. Derfor ble det gjort en del 2.
+
+### Del 2: 10 tilfeldige varer, fotografert
+
+- Gustav fotograferte 10 tilfeldige varer og ga bildene til ChatGPT, som leste av strekkodene.
+- Claude Code kontrollerte tallene med kontrollsiffer, nettleserens strekkodeleser og manuell avlesning. **ChatGPT hadde lest 2 av 10 feil** (én kode som ikke finnes, én med feil kontrollsiffer), og gjettet feil navn på tre varer. Med de rettede tallene ble alle 10 funnet.
+- Fant en ny datafeil i OFF: Carlsberg har 0,146 kJ i stedet for rundt 146.
+- Metadata (EXIF) ble fjernet fra bildene før de ble lagt i repoet.
 
 ### Status
 
 - [x] Strekkodeoppslag testet med 10 varer hjemme
+- [x] SM-4: 10 tilfeldige varer testet, 10 av 10 funnet
 - [ ] Gruppen tar stilling til kcal-kontroll mot kJ og håndtering av HTTP 429
 
 ---
