@@ -31,3 +31,4 @@
 - [x] 2026-11-13 [prd-final](984-2026-11-13-11-51-31-prd-final.md) — lage felles UX-design fra A1 og runde 3 (issue #9) (løst 2026-11-13 — se [felles-ux-design](980-2026-11-13-14-02-59-felles-ux-design.md))
 - [x] 2026-11-13 [arkitektur](983-2026-11-13-12-04-14-arkitektur.md) — lage epics og stories (bmad-create-epics-and-stories) (løst 2026-11-13 — se [epics-og-stories](982-2026-11-13-12-17-52-epics-og-stories.md))
 - [ ] 2026-11-13 [epics-og-stories](982-2026-11-13-12-17-52-epics-og-stories.md) — starte implementasjonen med story 1.1
+- [ ] 2026-11-13 [ux-revisjon-2](978-2026-11-13-18-39-19-ux-revisjon-2.md) — Karianne må godkjenne revisjon 2 av designet i PR #17
