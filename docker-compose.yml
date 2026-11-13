@@ -1,0 +1,57 @@
+# One command starts everything: docker compose up --build
+# Only the frontend publishes a port (3000); backend and db stay inside the Docker network.
+
+services:
+  db:
+    image: postgres:18
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-promptforce}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-promptforce}
+      POSTGRES_DB: ${POSTGRES_DB:-promptforce}
+    volumes:
+      - pgdata:/var/lib/postgresql
+      - ./db/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U \"$$POSTGRES_USER\" -d \"$$POSTGRES_DB\""]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  backend:
+    build: ./backend
+    environment:
+      APP_ENV: ${APP_ENV:-local}
+      SESSION_SECRET: ${SESSION_SECRET-change-me-local-only}
+      DATABASE_URL: ${DATABASE_URL:-postgresql+psycopg://promptforce:promptforce@db:5432/promptforce}
+      TEST_DATABASE_URL: ${TEST_DATABASE_URL:-postgresql+psycopg://promptforce:promptforce@db:5432/promptforce_test}
+      APP_URL: ${APP_URL:-http://localhost:3000}
+      OFF_MODE: ${OFF_MODE:-mock}
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/health', timeout=3)"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 10s
+
+  frontend:
+    build: ./frontend
+    environment:
+      API_INTERNAL_URL: http://backend:8000
+      NEXT_TELEMETRY_DISABLED: "1"
+    ports:
+      - "3000:3000"
+    depends_on:
+      backend:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://localhost:3000/api/health').then(r => process.exit(r.ok ? 0 : 1)).catch(() => process.exit(1))"]
+      interval: 10s
+      timeout: 10s
+      retries: 30
+      start_period: 30s
+
+volumes:
+  pgdata:
