@@ -15,10 +15,10 @@ export function Sidebar() {
       className="sticky top-0 hidden h-dvh w-rail shrink-0 flex-col border-r border-border bg-card md:flex lg:w-sidebar"
     >
       <div className="flex h-top-bar items-center justify-center px-3 lg:justify-start lg:px-6">
-        <span aria-hidden="true" className="text-heading font-bold text-foreground lg:hidden">
+        <span aria-hidden="true" className="text-heading font-medium text-foreground lg:hidden">
           PF
         </span>
-        <span className="sr-only text-heading font-bold text-foreground lg:not-sr-only">
+        <span className="sr-only text-heading font-medium text-foreground lg:not-sr-only">
           {APP_NAME}
         </span>
       </div>
@@ -31,7 +31,7 @@ export function Sidebar() {
                 href={href}
                 title={label}
                 aria-current={active ? "page" : undefined}
-                className={`flex min-h-12 items-center justify-center gap-3 rounded-full px-3 text-body font-semibold transition-colors lg:justify-start lg:px-4 ${
+                className={`flex min-h-12 items-center justify-center gap-3 rounded-full px-3 text-body font-medium transition-colors lg:justify-start lg:px-4 ${
                   active
                     ? "bg-accent text-accent-foreground"
                     : "text-muted-foreground hover:bg-muted hover:text-foreground"

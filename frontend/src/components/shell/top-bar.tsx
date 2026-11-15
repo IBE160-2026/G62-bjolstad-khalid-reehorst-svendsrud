@@ -10,7 +10,7 @@ export function TopBar() {
 
   return (
     <header className="sticky top-0 z-10 flex h-top-bar items-center justify-between gap-4 border-b border-border bg-background px-margin-mobile md:px-8">
-      <h1 className="truncate text-heading font-semibold text-foreground md:text-title">
+      <h1 className="truncate text-heading font-medium text-foreground md:text-title md:font-light">
         {pageTitle(pathname)}
       </h1>
       <ThemeToggle />

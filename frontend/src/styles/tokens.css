@@ -1,16 +1,16 @@
 /*
  * Design tokens: the single swap point for colours, type, radii, spacing and shadows.
  *
- * Values are placeholders from the merged design on `ux/felles-design`
- * (.docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/DESIGN.md) until the
- * group finalises PR #17. Changing a value here must never require a component change.
+ * Values come from DESIGN.md revision 3 on `ux/felles-design` (PR #17), which takes
+ * Karianne's final design (Manrope, plum-dark mode). Green/orange category colours are kept
+ * until the group decides. Changing a value here must never require a component change.
  *
  * Names follow shadcn/ui so its components can use them later. Note the shadcn meaning:
  *   --primary  = DESIGN `accent` (plum, the only action colour)
  *   --accent   = DESIGN `accent-tint` (hover/active tint behind plum)
  *   --border   = DESIGN `rule`, --ring = DESIGN `focus-ring`
- * Dark values are not in DESIGN.md; they are derived (warm dark surfaces, lighter plum)
- * and checked in CONTRAST.md.
+ * Dark values are DESIGN.md `colors-dark`; every pair is checked in CONTRAST.md.
+ * In dark mode --primary is a button fill only; plum text uses --accent-foreground.
  */
 
 :root {
@@ -62,11 +62,11 @@
   /* Shape */
   --rounded-sm: 10px;
   --rounded-md: 14px;
-  --rounded-lg: 20px;
+  --rounded-lg: 18px;
   --radius: var(--rounded-md); /* shadcn base radius */
 
   /* Layout */
-  --sidebar-width: 232px;
+  --sidebar-width: 210px;
   --rail-width: 80px;
   --top-bar-height: 64px;
   --tab-bar-height: 72px;
@@ -75,30 +75,30 @@
   --page-rule-gap: 38px;
 
   /* Type */
-  --font-family: var(--font-inter), system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-family: var(--font-manrope), system-ui, -apple-system, "Segoe UI", sans-serif;
 
   color-scheme: light;
 }
 
 [data-theme="dark"] {
-  --background: #1e1a17;
-  --foreground: #f2eae0;
-  --card: #29231f;
-  --card-foreground: #f2eae0;
-  --popover: #29231f;
-  --popover-foreground: #f2eae0;
-  --secondary: #29231f;
-  --secondary-foreground: #f2eae0;
-  --muted: #1e1a17;
-  --muted-foreground: #bdb0a2;
-  --border: #4a4038;
-  --input: #4a4038;
-  --ring: #f2eae0;
+  --background: #221a1f; /* paper */
+  --foreground: #f3e9ee; /* ink */
+  --card: #2b2229; /* surface */
+  --card-foreground: #f3e9ee;
+  --popover: #2b2229;
+  --popover-foreground: #f3e9ee;
+  --secondary: #2b2229;
+  --secondary-foreground: #f3e9ee;
+  --muted: #221a1f;
+  --muted-foreground: #b9a3ae; /* ink-secondary */
+  --border: #453640; /* rule */
+  --input: #453640;
+  --ring: #f3e9ee;
 
-  --primary: #d9a3c8;
-  --primary-foreground: #2a1525;
-  --accent: #3d2737;
-  --accent-foreground: #e6b9d8;
+  --primary: #a86cc0; /* button fill only; nudged from #A569BD for 4.5:1 with on-accent */
+  --primary-foreground: #201620;
+  --accent: #352c3a; /* accent-tint */
+  --accent-foreground: #d8b2e3; /* accent-text: plum text on tints and surfaces */
 
   --food: #5fb98a;
   --food-text: #7cc9a0;
@@ -108,12 +108,12 @@
   --training-tint: #3d2920;
 
   --note: #f2c14e;
-  --note-paper: #2e2920;
-  --note-line: #453e2c;
-  --tape: #4a4234;
+  --note-paper: #2e2420;
+  --note-line: #4a3a30;
+  --tape: #3a2e28;
 
   --destructive: #f28b7f;
-  --destructive-foreground: #1e1a17;
+  --destructive-foreground: #221a1f;
   --error-tint: #3f201c;
 
   --elevation-card: 0 2px 6px rgba(0, 0, 0, 0.35);

@@ -34,5 +34,6 @@
 - [x] 2026-11-13 [story-1-1-kjor-appen](981-2026-11-13-12-36-36-story-1-1-kjor-appen.md) — avklare httpx-versjon: Starlette vil ha httpx2 i TestClient, arkitekturen låser httpx 0.28.1 (løst 2026-11-13 — byttet til httpx2 2.16.0)
 - [ ] 2026-11-13 [story-1-1-kjor-appen](981-2026-11-13-12-36-36-story-1-1-kjor-appen.md) — vurdere hot reload (bind mounts) i docker-compose for utvikling
 - [ ] 2026-11-13 [merge-pr-16](979-2026-11-13-17-46-12-merge-pr-16.md) — flette PR #17 (felles UX-design) når den er godkjent, deretter starte story 1.2
-- [ ] 2026-11-15 [story-1-2-app-skall](976-2026-11-15-13-01-00-story-1-2-app-skall.md) — pushe og lage PR for story 1.2
-- [ ] 2026-11-15 [story-1-2-app-skall](976-2026-11-15-13-01-00-story-1-2-app-skall.md) — bytte plassholderverdiene i tokens.css når det endelige designet i PR #17 er klart
+- [x] 2026-11-15 [story-1-2-app-skall](976-2026-11-15-13-01-00-story-1-2-app-skall.md) — pushe og lage PR for story 1.2 (løst 2026-11-15 — PR #18)
+- [x] 2026-11-15 [story-1-2-app-skall](976-2026-11-15-13-01-00-story-1-2-app-skall.md) — bytte plassholderverdiene i tokens.css når det endelige designet i PR #17 er klart (løst 2026-11-15 — se [design-rev-3](975-2026-11-15-15-15-00-design-rev-3.md))
+- [ ] 2026-11-15 [design-rev-3](975-2026-11-15-15-15-00-design-rev-3.md) — gruppa må bestemme om Mat og Trening beholder grønt og oransje (Karianne sitt design har én lilla farge)

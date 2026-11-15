@@ -22,7 +22,7 @@ export function TabBar() {
               <Link
                 href={href}
                 aria-current={active ? "page" : undefined}
-                className={`flex min-h-14 w-full max-w-24 flex-col items-center justify-center gap-1 rounded-full px-2 text-label font-semibold transition-colors ${
+                className={`flex min-h-14 w-full max-w-24 flex-col items-center justify-center gap-1 rounded-full px-2 text-label font-medium transition-colors ${
                   active ? "bg-accent text-accent-foreground" : "text-muted-foreground hover:text-foreground"
                 }`}
               >

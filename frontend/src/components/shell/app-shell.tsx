@@ -10,7 +10,7 @@ export function AppShell({ children }: { children: ReactNode }) {
     <div className="flex min-h-dvh">
       <a
         href="#innhold"
-        className="sr-only z-30 rounded-full bg-card px-4 py-3 text-body font-semibold text-foreground focus:not-sr-only focus:fixed focus:top-2 focus:left-2"
+        className="sr-only z-30 rounded-full bg-card px-4 py-3 text-body font-medium text-foreground focus:not-sr-only focus:fixed focus:top-2 focus:left-2"
       >
         Hopp til innhold
       </a>

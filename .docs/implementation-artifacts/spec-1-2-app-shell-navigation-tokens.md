@@ -72,7 +72,8 @@ context:
 - **I dag title:** the root page uses `{ absolute: "I dag · Prompt Force" }`, since the layout's title template does not apply to a page in the same segment.
 - **Extra:** a "Hopp til innhold" skip link was added. The help button ("?") is not built; the spec asks only for the title and the theme toggle.
 - **Breakpoints:** sidebar/rail/tab bar visibility is CSS-only and was checked manually in Chrome at 1280, 900 and 360 px (no horizontal scroll); jsdom tests cover links, names and `aria-current`.
-- **Fonts:** `next/font/google` downloads Inter at build or dev time, so it needs network access then.
+- **Design rev 3 (2026-11-15):** tokens now follow DESIGN.md revision 3 (Karianne's final design): Manrope, `colors-dark`, sidebar 210 px, card radius 18 px. Dark `--primary` is a button fill only; plum text in dark mode uses `--accent-foreground`.
+- **Fonts:** `next/font/google` downloads Manrope at build or dev time, so it needs network access then.
 
 ## Spec Change Log
 

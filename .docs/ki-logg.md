@@ -507,6 +507,35 @@ Det viktigste funnet: Dekningsanalysen er regnet ut fra øvelseslista og viser a
 
 ---
 
+## 2026-11-15 – Design revisjon 3 (Karianne sitt endelige design)
+
+**Verktøy:** Claude Code
+**Hvem:** Osman Khalid
+**Bakgrunn:** Karianne delte sitt endelige design i Claude Design (font, farger og mørk modus). Det skulle inn i DESIGN.md (PR #17) og i appen (PR #18).
+
+### Hva vi ba KI om
+
+1. Lese designet hennes og sammenligne det med DESIGN.md og appen.
+2. Ta inn det som var avklart (Manrope og mørk modus) og beholde grønt og oransje til gruppa bestemmer seg.
+
+### Hva KI produserte
+
+- DESIGN.md revisjon 3: Manrope, mørke farger (`colors-dark`), sidemeny 210 px, kort 18 px, knapper 50 px.
+- Nye verdier i `tokens.css`, ny kontrasttabell og Manrope i appen.
+
+### Hva vi selv vurderte og kontrollerte
+
+- To av de mørke fargene var under kravet 4,5:1 (lilla tekst på aktivt menypunkt 3,4:1 og knappetekst 4,47:1). KI foreslo små justeringer, og alle par passerer nå.
+- Tynn skrift (300) brukes bare på store tall og titler, så brødteksten er lett å lese.
+- Tester, lint og build passerer, og lys og mørk modus ble sjekket i nettleseren.
+
+### Status
+
+- [x] DESIGN.md og appen oppdatert
+- [ ] Gruppa bestemmer grønt/oransje eller én lilla farge
+
+---
+
 ## Mal for nye oppføringer
 
 ```markdown
