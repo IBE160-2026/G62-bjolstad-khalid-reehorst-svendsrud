@@ -38,7 +38,7 @@ development_status:
   epic-1: in-progress
   1-1-run-the-app-with-one-command: done
   1-2-app-shell-with-navigation-and-design-tokens: done
-  1-3-create-an-account: review
+  1-3-create-an-account: done
   1-4-log-in-and-log-out: backlog
   1-5-give-consent-before-health-data: backlog
   1-6-delete-my-account: backlog
