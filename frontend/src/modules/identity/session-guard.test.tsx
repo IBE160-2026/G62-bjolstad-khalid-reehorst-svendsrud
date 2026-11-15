@@ -133,6 +133,59 @@ describe("SessionGuard", () => {
   });
 });
 
+describe("SessionGuard profile step", () => {
+  const PROFILE_NOT_FOUND = {
+    data: undefined,
+    error: { error: { code: "profile_not_found", message: "Du har ikke satt opp profilen ennå." } },
+  };
+  const PROFILE = { target_kcal: 1640 };
+
+  function mockApi(me: unknown, profile: unknown) {
+    getMock.mockImplementation((path: string) =>
+      Promise.resolve(path === "/api/profile" ? profile : me),
+    );
+  }
+
+  it.each(["/", "/mat", "/profil"])(
+    "sends a consented user without a profile from %s to /profiloppsett",
+    async (pathname) => {
+      mockApi({ data: CONSENTED, error: undefined }, PROFILE_NOT_FOUND);
+
+      renderGuard(pathname);
+
+      await waitFor(() => expect(replaceMock).toHaveBeenCalledWith("/profiloppsett"));
+      expect(replaceMock).toHaveBeenCalledOnce();
+    },
+  );
+
+  it("keeps a consented user with a profile on /", async () => {
+    mockApi({ data: CONSENTED, error: undefined }, { data: PROFILE, error: undefined });
+
+    const client = renderGuard("/");
+
+    await waitFor(() => expect(client.getQueryState(["profile"])?.status).toBe("success"));
+    expect(replaceMock).not.toHaveBeenCalled();
+  });
+
+  it("keeps a user without a profile on /profiloppsett", async () => {
+    mockApi({ data: CONSENTED, error: undefined }, PROFILE_NOT_FOUND);
+
+    const client = renderGuard("/profiloppsett");
+
+    await waitFor(() => expect(client.getQueryState(["profile"])?.status).toBe("error"));
+    expect(replaceMock).not.toHaveBeenCalled();
+  });
+
+  it("does not ask for the profile before consent", async () => {
+    mockApi({ data: NOT_CONSENTED, error: undefined }, PROFILE_NOT_FOUND);
+
+    renderGuard("/profiloppsett");
+
+    await waitFor(() => expect(replaceMock).toHaveBeenCalledWith("/samtykke"));
+    expect(getMock).not.toHaveBeenCalledWith("/api/profile");
+  });
+});
+
 describe("guardRedirect", () => {
   it("puts a gone session before consent", () => {
     expect(guardRedirect("/", true, null)).toBe("/logg-inn");
@@ -147,7 +200,22 @@ describe("guardRedirect", () => {
   it("routes on consent", () => {
     expect(guardRedirect("/mat", false, null)).toBe("/samtykke");
     expect(guardRedirect("/samtykke", false, null)).toBeNull();
-    expect(guardRedirect("/samtykke", false, "2026-11-15T12:00:00Z")).toBe("/");
+    // Consented on /samtykke: wait for the profile answer, then route on it.
+    expect(guardRedirect("/samtykke", false, "2026-11-15T12:00:00Z")).toBeNull();
+    expect(guardRedirect("/samtykke", false, "2026-11-15T12:00:00Z", true)).toBe("/");
     expect(guardRedirect("/mat", false, "2026-11-15T12:00:00Z")).toBeNull();
+  });
+
+  it("routes on the profile after consent", () => {
+    const at = "2026-11-15T12:00:00Z";
+    expect(guardRedirect("/", false, at, false)).toBe("/profiloppsett");
+    expect(guardRedirect("/samtykke", false, at, false)).toBe("/profiloppsett");
+    expect(guardRedirect("/profiloppsett", false, at, false)).toBeNull();
+    expect(guardRedirect("/profiloppsett", false, at, true)).toBeNull();
+    expect(guardRedirect("/", false, at, true)).toBeNull();
+    expect(guardRedirect("/", false, at, undefined)).toBeNull();
+    // Order: session, then consent, then profile.
+    expect(guardRedirect("/profiloppsett", false, null, false)).toBe("/samtykke");
+    expect(guardRedirect("/profiloppsett", true, at, false)).toBe("/logg-inn");
   });
 });

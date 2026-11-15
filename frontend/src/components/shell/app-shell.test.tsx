@@ -62,6 +62,22 @@ describe("AppShell", () => {
     expect(getMock).toHaveBeenCalledWith("/api/identity/me");
   });
 
+  it("renders /profiloppsett without navigation but checks the session", async () => {
+    getMock.mockResolvedValue({
+      data: undefined,
+      error: { error: { code: "unauthorized", message: "Du må logge inn." } },
+    });
+
+    renderShell("/profiloppsett");
+
+    expect(screen.getByRole("heading", { level: 1, name: "Profiloppsett" })).toBeInTheDocument();
+    expect(screen.queryByRole("navigation")).not.toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: "Profil" })).not.toBeInTheDocument();
+    expect(screen.getByText("Innhold")).toBeInTheDocument();
+    await waitFor(() => expect(replaceMock).toHaveBeenCalledWith("/logg-inn"));
+    expect(getMock).toHaveBeenCalledWith("/api/identity/me");
+  });
+
   it("sends a user without consent from app pages to /samtykke", async () => {
     getMock.mockResolvedValue({
       data: { id: "1", email: "ola@eksempel.no", consent_at: null },

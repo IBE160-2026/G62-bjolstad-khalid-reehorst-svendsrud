@@ -20,7 +20,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   if (isAuthPath(pathname)) return <AuthLayout title={pageTitle(pathname)}>{children}</AuthLayout>;
   if (isGatePath(pathname)) {
-    // Logged-in steps before the app (consent): no navigation, but the session is checked.
+    // Logged-in steps before the app (consent, profile setup): no navigation, but the session is checked.
     return (
       <>
         <SessionGuard />

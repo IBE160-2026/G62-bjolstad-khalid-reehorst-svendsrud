@@ -54,7 +54,7 @@ describe("ConsentForm", () => {
     expect(button).toBeDisabled();
   });
 
-  it("stores consent, updates the user and continues to /", async () => {
+  it("stores consent, updates the user and continues to /profiloppsett", async () => {
     const user = { id: "1", email: "ola@eksempel.no", consent_at: "2026-11-15T12:00:00Z" };
     postMock.mockResolvedValue({ data: user, error: undefined });
     const { client, checkbox, button } = renderForm();
@@ -62,7 +62,7 @@ describe("ConsentForm", () => {
     fireEvent.click(checkbox);
     fireEvent.click(button);
 
-    await waitFor(() => expect(replaceMock).toHaveBeenCalledWith("/"));
+    await waitFor(() => expect(replaceMock).toHaveBeenCalledWith("/profiloppsett"));
     expect(postMock).toHaveBeenCalledWith("/api/identity/consent");
     expect(client.getQueryData(ME_QUERY_KEY)).toEqual(user);
   });

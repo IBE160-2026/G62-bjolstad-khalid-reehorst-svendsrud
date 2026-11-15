@@ -16,6 +16,7 @@ from app.core.db import Base
 from app.modules.identity import service
 from app.modules.identity.models import Session as UserSession
 from app.modules.identity.models import User
+from app.modules.profile.models import Profile
 from tests.conftest import _truncate_tables
 
 NOW = datetime(2026, 11, 15, 12, 0, tzinfo=UTC)
@@ -104,6 +105,36 @@ def test_purge_cutoff_is_exactly_30_days(factory: sessionmaker[Session]) -> None
         db.commit()
 
     assert _emails(factory) == ["nesten@eksempel.no"]
+
+
+def test_purge_removes_the_profile_of_a_purged_user(factory: sessionmaker[Session]) -> None:
+    """Checks the migrated FK (not just the model): the profile row goes with the user."""
+    with factory() as db:
+        user = _add_user(db, "gammel@eksempel.no", NOW - timedelta(days=31))
+        db.add(
+            Profile(
+                user_id=user.id,
+                sex="female",
+                weight_kg=82,
+                height_cm=162,
+                age=23,
+                activity_level="light",
+                goal="lose",
+                target_kcal=1640,
+                floor_applied=False,
+                created_at=NOW,
+                updated_at=NOW,
+            )
+        )
+        db.commit()
+
+    with factory() as db:
+        assert service.purge_deleted(db, NOW) == 1
+        db.commit()
+
+    assert _emails(factory) == []
+    with factory() as db:
+        assert list(db.scalars(select(Profile))) == []
 
 
 def test_every_foreign_key_to_users_cascades() -> None:

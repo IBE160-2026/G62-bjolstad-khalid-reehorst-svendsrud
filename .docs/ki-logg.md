@@ -755,6 +755,34 @@ Det viktigste funnet: Dekningsanalysen er regnet ut fra øvelseslista og viser a
 
 ---
 
+## 2026-11-15 – Story 2.1 (kaloriemål)
+
+**Verktøy:** Claude Code (BMAD `bmad-build`)
+**Hvem:** Osman Khalid
+**Bakgrunn:** Nybegynnere skal få ett kaloritall forklart på vanlig norsk, uten å lære formler.
+
+### Hva vi ba KI om
+
+1. Bygge Profiloppsett og utregningen av kaloriemålet etter PRD-en og arkitekturen.
+
+### Hva KI produserte
+
+- Spec, `profile`-modul med utregningsfunksjon, profiltabell, API, siden Profiloppsett og nye tester.
+
+### Hva vi selv vurderte og kontrollerte
+
+- Osman godkjente spec-en før koding.
+- Testene sjekker at alle eksempelprofilene i PRD-en gir nøyaktig riktig tall (blant annet Sara: 1 640 kcal).
+- Tre KI-kontrollører fant 17 punkter: 5 rettet (blant annet at feilmeldinger på valgknapper ikke ble lest opp av skjermleser), 12 avvist med begrunnelse.
+- Kilden for minstegrensen 1 200/1 500 kcal mangler fortsatt.
+
+### Status
+
+- [x] Story 2.1 bygget og testet
+- [ ] Review av PR fra gruppen
+
+---
+
 ## Mal for nye oppføringer
 
 ```markdown
