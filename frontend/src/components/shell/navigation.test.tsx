@@ -31,6 +31,12 @@ describe("nav items", () => {
     expect(pageTitle("/trening")).toBe("Trening");
     expect(pageTitle("/ukjent")).toBe("Prompt Force");
   });
+
+  it("titles the account pages without adding them to the navigation", () => {
+    expect(pageTitle("/opprett-konto")).toBe("Opprett konto");
+    expect(pageTitle("/samtykke")).toBe("Samtykke");
+    expect(NAV_ITEMS.map((item) => item.href)).not.toContain("/opprett-konto");
+  });
 });
 
 describe("Sidebar", () => {

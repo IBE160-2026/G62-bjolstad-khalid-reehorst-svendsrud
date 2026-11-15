@@ -1,0 +1,58 @@
+"""Request and response bodies for /api/identity."""
+
+import uuid
+from typing import Annotated
+
+from pydantic import AfterValidator, BaseModel
+from pydantic_core import PydanticCustomError
+
+from app.core.errors import FIELD_MESSAGE_ERROR
+
+EMAIL_MAX_LENGTH = 254
+PASSWORD_MIN_LENGTH = 8
+PASSWORD_MAX_LENGTH = 128
+
+EMAIL_MISSING_MESSAGE = "Skriv inn e-postadressen din."
+EMAIL_INVALID_MESSAGE = "Skriv inn en gyldig e-postadresse."
+PASSWORD_TOO_SHORT_MESSAGE = "Velg et passord på minst 8 tegn."
+PASSWORD_TOO_LONG_MESSAGE = "Velg et passord på høyst 128 tegn."
+
+
+def _field_error(message: str) -> PydanticCustomError:
+    return PydanticCustomError(FIELD_MESSAGE_ERROR, message)
+
+
+def is_valid_email(email: str) -> bool:
+    """Simple check: one @, non-empty local part, a domain with a dot, at most 254 chars."""
+    if len(email) > EMAIL_MAX_LENGTH or email.count("@") != 1 or any(c.isspace() for c in email):
+        return False
+    local, domain = email.split("@")
+    labels = domain.split(".")
+    return bool(local) and len(labels) > 1 and all(labels)
+
+
+def _check_email(value: str) -> str:
+    email = value.strip().lower()
+    if not email:
+        raise _field_error(EMAIL_MISSING_MESSAGE)
+    if not is_valid_email(email):
+        raise _field_error(EMAIL_INVALID_MESSAGE)
+    return email
+
+
+def _check_password(value: str) -> str:
+    if len(value) < PASSWORD_MIN_LENGTH:
+        raise _field_error(PASSWORD_TOO_SHORT_MESSAGE)
+    if len(value) > PASSWORD_MAX_LENGTH:
+        raise _field_error(PASSWORD_TOO_LONG_MESSAGE)
+    return value
+
+
+class RegisterRequest(BaseModel):
+    email: Annotated[str, AfterValidator(_check_email)]
+    password: Annotated[str, AfterValidator(_check_password)]
+
+
+class UserResponse(BaseModel):
+    id: uuid.UUID
+    email: str

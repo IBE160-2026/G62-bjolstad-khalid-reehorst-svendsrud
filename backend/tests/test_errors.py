@@ -13,7 +13,7 @@ def test_unknown_api_route_returns_not_found_envelope(client: TestClient) -> Non
 
 
 def test_wrong_method_returns_envelope(client: TestClient) -> None:
-    response = client.post("/api/health")
+    response = client.post("/api/health")  # client sends a matching Origin
 
     assert response.status_code == 405
     assert response.json()["error"]["code"] == "method_not_allowed"
@@ -31,6 +31,7 @@ def test_validation_error_returns_envelope(app: FastAPI, client: TestClient) -> 
     assert set(body) == {"error"}
     assert body["error"]["code"] == "validation_error"
     assert body["error"]["message"]
+    assert body["error"]["fields"] == [{"field": "limit", "message": "Sjekk verdien i dette feltet."}]
 
 
 def test_http_exception_with_code_and_message_is_passed_through(

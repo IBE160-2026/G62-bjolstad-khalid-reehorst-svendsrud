@@ -24,3 +24,9 @@
 - source_spec: `.docs/implementation-artifacts/spec-1-2-app-shell-navigation-tokens.md`
   summary: Add an AppShell render test that the skip link targets the main landmark.
   evidence: Renaming `#innhold` or the `main` id would silently break the skip link; no test renders AppShell.
+- source_spec: `.docs/implementation-artifacts/spec-1-3-create-an-account.md`
+  summary: Add a Playwright smoke test that registers through the Next.js proxy and checks the `pf_session` cookie and redirect.
+  evidence: Backend tests use TestClient and Vitest mocks the API client, so a proxy that drops `Origin` or `Set-Cookie` would pass every test; fits story 1.4 when logged-in routing exists.
+- source_spec: `.docs/implementation-artifacts/spec-1-3-create-an-account.md`
+  summary: Check that Safari keeps the `Secure` session cookie on `http://localhost` (unverified, medium if true).
+  evidence: Verified in Chrome only; if Safari drops it, registration succeeds but the user is not logged in. Settle by registering in current Safari; fix by tying `secure` to the `APP_URL` scheme.

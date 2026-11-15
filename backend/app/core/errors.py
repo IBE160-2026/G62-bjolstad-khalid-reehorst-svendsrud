@@ -12,9 +12,17 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 logger = logging.getLogger(__name__)
 
 
+class FieldError(BaseModel):
+    """One invalid input field, shown inline under that field in the UI."""
+
+    field: str
+    message: str
+
+
 class ErrorBody(BaseModel):
     code: str
     message: str
+    fields: list[FieldError] | None = None
 
 
 class ErrorResponse(BaseModel):
@@ -24,15 +32,27 @@ class ErrorResponse(BaseModel):
 class AppError(Exception):
     """Raise from services/routers to return a specific code and Norwegian message."""
 
-    def __init__(self, status_code: int, code: str, message: str) -> None:
+    def __init__(
+        self,
+        status_code: int,
+        code: str,
+        message: str,
+        fields: list[FieldError] | None = None,
+    ) -> None:
         super().__init__(message)
         self.status_code = status_code
         self.code = code
         self.message = message
+        self.fields = fields
 
 
 VALIDATION_MESSAGE = "Forespørselen er ugyldig. Sjekk feltene og prøv igjen."
 INTERNAL_MESSAGE = "Noe gikk galt. Prøv igjen om litt."
+
+# Pydantic error type whose message is already user-facing Norwegian text.
+FIELD_MESSAGE_ERROR = "field_message"
+MISSING_FIELD_MESSAGE = "Fyll ut dette feltet."
+INVALID_FIELD_MESSAGE = "Sjekk verdien i dette feltet."
 
 # Default code and Norwegian message per HTTP status.
 _STATUS_ERRORS: dict[int, tuple[str, str]] = {
@@ -46,9 +66,14 @@ _STATUS_ERRORS: dict[int, tuple[str, str]] = {
 }
 
 
-def error_response(status_code: int, code: str, message: str) -> JSONResponse:
-    body = ErrorResponse(error=ErrorBody(code=code, message=message))
-    return JSONResponse(status_code=status_code, content=body.model_dump())
+def error_response(
+    status_code: int,
+    code: str,
+    message: str,
+    fields: list[FieldError] | None = None,
+) -> JSONResponse:
+    body = ErrorResponse(error=ErrorBody(code=code, message=message, fields=fields))
+    return JSONResponse(status_code=status_code, content=body.model_dump(exclude_none=True))
 
 
 def _fallback(status_code: int) -> tuple[str, str]:
@@ -65,7 +90,7 @@ def _fallback(status_code: int) -> tuple[str, str]:
 
 async def _handle_app_error(_: Request, exc: Exception) -> JSONResponse:
     assert isinstance(exc, AppError)
-    return error_response(exc.status_code, exc.code, exc.message)
+    return error_response(exc.status_code, exc.code, exc.message, exc.fields)
 
 
 async def _handle_http_exception(_: Request, exc: Exception) -> JSONResponse:
@@ -80,8 +105,30 @@ async def _handle_http_exception(_: Request, exc: Exception) -> JSONResponse:
     return response
 
 
+def _field_errors(exc: RequestValidationError) -> list[FieldError]:
+    """Map pydantic errors to one Norwegian message per field; never echo input values."""
+    fields: list[FieldError] = []
+    seen: set[str] = set()
+    for error in exc.errors():
+        loc = [str(part) for part in error.get("loc", ()) if not isinstance(part, int)]
+        # Drop the source ("body", "query", ...) and keep the field path.
+        name = ".".join(loc[1:])
+        if not name or name in seen:
+            continue
+        seen.add(name)
+        if error.get("type") == FIELD_MESSAGE_ERROR:
+            message = str(error.get("msg"))
+        elif error.get("type") == "missing":
+            message = MISSING_FIELD_MESSAGE
+        else:
+            message = INVALID_FIELD_MESSAGE
+        fields.append(FieldError(field=name, message=message))
+    return fields
+
+
 async def _handle_validation_error(_: Request, exc: Exception) -> JSONResponse:
-    return error_response(422, "validation_error", VALIDATION_MESSAGE)
+    assert isinstance(exc, RequestValidationError)
+    return error_response(422, "validation_error", VALIDATION_MESSAGE, _field_errors(exc) or None)
 
 
 async def _handle_unexpected(request: Request, exc: Exception) -> JSONResponse:
