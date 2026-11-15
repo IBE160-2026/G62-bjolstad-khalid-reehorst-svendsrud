@@ -42,7 +42,7 @@ Her skriver vi ned hva vi velger etter hver runde, slik at prosessen kan følges
 - **Font:** Manrope overalt. Tynn vekt (300) bare på det store tallet og sidetitlene; brødtekst i 400 så den er lett å lese.
 - **Mørk modus:** Karianne sin plommemørke palett. To verdier justert for kontrast 4,5:1: knappefargen `#A569BD` → `#A86CC0`, og lilla tekst på lys bakgrunn bruker `#D8B2E3`.
 - **Mål:** sidemeny 210 px, kort med 18 px hjørner, knapper 50 px.
-- **Åpent:** designet hennes viser Mat og Trening i én lilla farge. Grønn og oransje beholdes til gruppa har bestemt seg, fordi de gjør kortene lette å skille (avstemning 12.11).
+- **Mat og Trening:** én lilla farge, som i designet hennes (se under).
 - Designet: https://claude.ai/artifact/MHV9YS6r1wm3h8wF4qAjhz (8 skjermer: I dag, Mat, Trening og Oppskrifter for PC og mobil).
 - **Avgjort samme dag:** én lilla markeringsfarge (`#9C5E87`, tekst `#7D3F5E`) for både Mat og Trening, som i Karianne sitt design. Erstatter grønt/oransje fra avstemningen 12.11. Mat og Trening skilles med ikon og navn; ukestripen har fortsatt to magneter (venstre = mat, høyre = trening).
 - **Magnetene i ukestripen er fjernet**, som i Karianne sitt design. Hva som er logget en dag, ser man på Mat- og Trening-kortene når dagen er valgt. Oppdatert i DESIGN.md, EXPERIENCE.md og UX-DR3/Story 6.3 i epics.md.
