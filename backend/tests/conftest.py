@@ -12,7 +12,7 @@ from sqlalchemy import Engine, create_engine, make_url, text
 from sqlalchemy.exc import OperationalError
 from sqlalchemy.orm import Session, sessionmaker
 
-from app.core.db import get_db
+from app.core.db import get_session_factory
 from app.core.settings import get_settings
 from app.main import create_app
 
@@ -69,29 +69,40 @@ def db_session(test_engine: Engine) -> Iterator[Session]:
         session.close()
 
 
+def _truncate_tables(engine: Engine) -> None:
+    with engine.begin() as conn:
+        conn.execute(text("TRUNCATE TABLE users, sessions CASCADE"))
+
+
 @pytest.fixture
-def app(test_engine: Engine) -> Iterator[FastAPI]:
+def test_session_factory(test_engine: Engine) -> sessionmaker[Session]:
+    return sessionmaker(bind=test_engine, autoflush=False, expire_on_commit=False)
+
+
+@pytest.fixture
+def app(test_engine: Engine, test_session_factory: sessionmaker[Session]) -> Iterator[FastAPI]:
+    """The real app and the real get_db; only the session factory points at the test DB."""
     application = create_app()
-    factory = sessionmaker(bind=test_engine, autoflush=False, expire_on_commit=False)
-
-    def override_get_db() -> Iterator[Session]:
-        session = factory()
-        try:
-            yield session
-            session.commit()
-        except Exception:
-            session.rollback()
-            raise
-        finally:
-            session.close()
-
-    application.dependency_overrides[get_db] = override_get_db
+    application.dependency_overrides[get_session_factory] = lambda: test_session_factory
     yield application
     application.dependency_overrides.clear()
+    _truncate_tables(test_engine)
 
 
 @pytest.fixture
 def client(app: FastAPI) -> Iterator[TestClient]:
+    """Acts like the browser on APP_URL: every request carries a matching Origin."""
     # Do not re-raise server errors so the 500 envelope can be asserted.
+    with TestClient(
+        app,
+        headers={"Origin": get_settings().app_url},
+        raise_server_exceptions=False,
+    ) as test_client:
+        yield test_client
+
+
+@pytest.fixture
+def bare_client(app: FastAPI) -> Iterator[TestClient]:
+    """A client that sends no Origin header unless a test adds one."""
     with TestClient(app, raise_server_exceptions=False) as test_client:
         yield test_client

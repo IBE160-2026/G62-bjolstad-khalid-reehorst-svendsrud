@@ -7,13 +7,14 @@ from sqlalchemy import create_engine, pool
 
 from app.core.db import Base
 from app.core.settings import get_settings
+from app.modules.identity import models as identity_models  # noqa: F401
 
 config = context.config
 
 if config.config_file_name is not None:
     fileConfig(config.config_file_name, disable_existing_loggers=False)
 
-# Import every module's models before this line once they exist, so autogenerate sees them.
+# Import every module's models above, so autogenerate sees them.
 target_metadata = Base.metadata
 
 

@@ -592,6 +592,33 @@ Det viktigste funnet: Dekningsanalysen er regnet ut fra øvelseslista og viser a
 
 ---
 
+## 2026-11-15 – Story 1.3 (opprett konto)
+
+**Verktøy:** Claude Code (BMAD `bmad-build`)
+**Hvem:** Osman Khalid
+**Bakgrunn:** Brukerne må kunne lage en konto før vi kan lagre data som bare de ser.
+
+### Hva vi ba KI om
+
+1. Bygge registrering etter arkitekturen: sikre passord, innlogging med server-sesjon og beskyttelse mot falske skjema fra andre nettsider.
+
+### Hva KI produserte
+
+- Spec, tabellene `users` og `sessions`, registrerings-endepunkt, Origin-sjekk, siden «Opprett konto» og 21 nye tester.
+
+### Hva vi selv vurderte og kontrollerte
+
+- Osman godkjente spec-en før koding.
+- Tre KI-kontrollører fant 24 punkter: 4 ble rettet (blant annet at en tom APP_URL kunne slå av sikkerhetssjekken), 2 utsatt og 18 avvist med begrunnelse (se spec-fila).
+- Registrering ble testet gjennom den ekte appen: riktig cookie og passord lagret som Argon2id-hash.
+
+### Status
+
+- [x] Story 1.3 bygget og testet
+- [ ] Review av PR fra gruppen
+
+---
+
 ## Mal for nye oppføringer
 
 ```markdown

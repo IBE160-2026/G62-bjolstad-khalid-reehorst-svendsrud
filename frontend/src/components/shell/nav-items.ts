@@ -25,7 +25,15 @@ export function isActive(pathname: string, href: string): boolean {
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
+/** Titles for routes that are not in the navigation (account pages). */
+const OTHER_TITLES: Readonly<Record<string, string>> = {
+  "/opprett-konto": "Opprett konto",
+  "/samtykke": "Samtykke",
+};
+
 /** Title shown in the top bar for the current route. */
 export function pageTitle(pathname: string): string {
+  const other = Object.entries(OTHER_TITLES).find(([href]) => isActive(pathname, href));
+  if (other) return other[1];
   return NAV_ITEMS.find((item) => isActive(pathname, item.href))?.label ?? APP_NAME;
 }

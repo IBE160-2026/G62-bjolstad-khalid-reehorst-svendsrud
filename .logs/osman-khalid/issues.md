@@ -39,3 +39,5 @@
 - [x] 2026-11-15 [story-1-2-app-skall](976-2026-11-15-13-01-00-story-1-2-app-skall.md) — pushe og lage PR for story 1.2 (løst 2026-11-15 — PR #18)
 - [x] 2026-11-15 [story-1-2-app-skall](976-2026-11-15-13-01-00-story-1-2-app-skall.md) — bytte plassholderverdiene i tokens.css når det endelige designet i PR #17 er klart (løst 2026-11-15 — se [design-rev-3](975-2026-11-15-15-15-00-design-rev-3.md))
 - [x] 2026-11-15 [design-rev-3](975-2026-11-15-15-15-00-design-rev-3.md) — gruppa må bestemme om Mat og Trening beholder grønt og oransje (Karianne sitt design har én lilla farge) (løst 2026-11-15 — Osman valgte én lilla farge)
+- [x] 2026-11-15 [story-1-3-opprett-konto](974-2026-11-15-16-05-00-story-1-3-opprett-konto.md) — pushe og lage PR for story 1.3 (løst 2026-11-15 — PR #19)
+- [ ] 2026-11-15 [story-1-3-opprett-konto](974-2026-11-15-16-05-00-story-1-3-opprett-konto.md) — sjekke at Safari beholder innloggings-cookien på localhost
