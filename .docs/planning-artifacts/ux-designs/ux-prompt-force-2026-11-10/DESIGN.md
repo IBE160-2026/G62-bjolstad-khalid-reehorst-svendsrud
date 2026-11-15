@@ -2,8 +2,8 @@
 name: Prompt Force
 description: Calm, app-like training and food journal for beginners. Merged design (2026-11-13) — the paper-journal look from UX round 3 with the category colours and structure of concept A1. Light mode by default, dark mode as a user choice (PRD NFR-12).
 status: final
-updated: 2026-11-13
-revision: 2 (Karianne's feedback 13.11: notebook lines, calmer colours, Inter only)
+updated: 2026-11-15
+revision: 3 (Karianne's final design 15.11: Manrope, dark-mode palette; green/orange kept pending group answer)
 sources:
   - ../../prds/prd-prompt-force-2026-11-02/prd.md
   - ../../briefs/brief-prompt-force-2026-09-16/brief.md
@@ -32,51 +32,74 @@ colors:
   error: '#B42318'
   error-tint: '#FBE9E6'
   focus-ring: '#3A322B'
+colors-dark:
+  paper: '#221A1F'
+  surface: '#2B2229'
+  ink: '#F3E9EE'
+  ink-secondary: '#B9A3AE'
+  rule: '#453640'
+  accent: '#A86CC0'
+  accent-text: '#D8B2E3'
+  accent-tint: '#352C3A'
+  on-accent: '#201620'
+  food: '#5FB98A'
+  food-text: '#7CC9A0'
+  food-tint: '#1F3329'
+  training: '#EE7D55'
+  training-text: '#F29470'
+  training-tint: '#3D2920'
+  note: '#F2C14E'
+  note-paper: '#2E2420'
+  note-line: '#4A3A30'
+  tape: '#3A2E28'
+  error: '#F28B7F'
+  error-tint: '#3F201C'
+  focus-ring: '#F3E9EE'
 typography:
   display:
-    fontFamily: 'Inter'
+    fontFamily: 'Manrope'
     fontSize: 48px
-    fontWeight: '700'
+    fontWeight: '300'
     lineHeight: '1.05'
   title:
-    fontFamily: 'Inter'
+    fontFamily: 'Manrope'
     fontSize: 30px
-    fontWeight: '600'
+    fontWeight: '300'
     lineHeight: '1.2'
   heading:
-    fontFamily: 'Inter'
+    fontFamily: 'Manrope'
     fontSize: 19px
-    fontWeight: '600'
+    fontWeight: '500'
     lineHeight: '1.3'
   body:
-    fontFamily: 'Inter'
+    fontFamily: 'Manrope'
     fontSize: 16px
     fontWeight: '400'
     lineHeight: '1.6'
   body-strong:
-    fontFamily: 'Inter'
+    fontFamily: 'Manrope'
     fontSize: 16px
-    fontWeight: '600'
+    fontWeight: '500'
     lineHeight: '1.6'
   small:
-    fontFamily: 'Inter'
+    fontFamily: 'Manrope'
     fontSize: 14px
     fontWeight: '400'
     lineHeight: '1.5'
   label:
-    fontFamily: 'Inter'
+    fontFamily: 'Manrope'
     fontSize: 13px
-    fontWeight: '600'
+    fontWeight: '500'
     lineHeight: '1.3'
   button:
-    fontFamily: 'Inter'
+    fontFamily: 'Manrope'
     fontSize: 15px
-    fontWeight: '700'
+    fontWeight: '500'
     lineHeight: '1'
 rounded:
   sm: 10px
   md: 14px
-  lg: 20px
+  lg: 18px
   full: 9999px
 spacing:
   '1': 4px
@@ -88,7 +111,7 @@ spacing:
   '8': 32px
   '10': 40px
   '12': 48px
-  sidebar-width: 232px
+  sidebar-width: 210px
   tab-bar-height: 72px
   content-max: 1040px
   margin-mobile: 16px
@@ -135,13 +158,13 @@ components:
     background: '{colors.accent}'
     foreground: '{colors.on-accent}'
     radius: '{rounded.full}'
-    height: 52px
+    height: 50px
   button-secondary:
     background: '{colors.surface}'
     foreground: '{colors.ink}'
     border: '1.5px solid {colors.rule}'
     radius: '{rounded.full}'
-    height: 52px
+    height: 50px
   method-option:
     background: '{colors.surface}'
     border: '1.5px solid {colors.rule}'
@@ -169,13 +192,15 @@ components:
 
 ## Brand & Style
 
-Prompt Force is a calm training and food journal that looks like a notebook: warm lined paper instead of clinical white, a day note like a sheet torn from a notepad, tape on the cards, and one clean sans (Inter) for everything. It motivates without shouting and never overwhelms a beginner (PRODUCT.md, principle 1).
+Prompt Force is a calm training and food journal that looks like a notebook: warm lined paper instead of clinical white, a day note like a sheet torn from a notepad, tape on the cards, and one clean sans (Manrope) for everything. It motivates without shouting and never overwhelms a beginner (PRODUCT.md, principle 1).
 
 This is the **merged design** the group voted for on 2026-11-12. It takes the look of UX round 3 (Karianne: lined paper, plum as the action colour, tape on cards) and the structure and colour meaning of concept A1 (Osman: sidebar, week strip with magnets, the day note with one number, green = food, orange = training). Round 3's teal was dropped because it is almost the same colour as food green (contrast 1.04 between them).
 
 **Revision 2 (2026-11-13, Karianne's feedback on PR #17):** the notebook lines from round 3 are back on the page and on the day note; colours are calmer (plum is the only filled colour, green and orange only as magnets and icons, numbers in ink); and the type is Inter only, because Fraunces did not feel clean enough. Reference mockup: `imports/felles-design-v2-i-dag.html`. Karianne's recipe pages (`../../ux/runde-3/mockups/oppskrifter*.html`) are kept as the design for phase 2; recipes are out of scope for v1 (group decision 2026-11-12).
 
 It is a web app that behaves like an app: persistent navigation, authored icons and tappable cards. No gradients, no glass, no hero images. Reference layouts: `imports/valgt-konsept-a1-dagsoversikt.svg` (structure) and `../../ux/runde-3/mockups/` (look of food logging and the muscle-group list). This file wins on conflict with either.
+
+**Revision 3 (2026-11-15, Karianne's final design in Claude Design):** the font is Manrope, with light weights for the big number and page titles and 400 for body text so it stays easy to read. Dark mode uses her plum-dark palette (`colors-dark`); two values were adjusted to pass 4.5:1 (accent `#A569BD` → `#A86CC0` for button text, and plum text on tints uses `accent-text` `#D8B2E3`). Sidebar 210 px, cards 18 px radius, buttons 50 px. Her design shows Mat and Trening in one mauve colour; green and orange are kept here until the group decides, because they keep the two cards apart at a glance (group vote 2026-11-12).
 
 ## Colors
 
@@ -191,23 +216,25 @@ Warm neutrals for the page, one action colour, two category colours and one note
 
 **Balance rule:** at most one filled colour per screen (the plum primary button). Category colours appear only as small marks (magnets, icons, "+ Legg til"); values and numbers stay in ink.
 
+**Dark mode** (`colors-dark`, PRD NFR-12): a plum-tinted dark paper with the same notebook lines in `rule`, lighter plum for actions and lighter green and orange for marks. Plum text on tints (the active navigation item, links) uses `accent-text`. Every text pair meets 4.5:1; contrast is listed in `frontend/src/styles/CONTRAST.md`. Light is always the default.
+
 Avoid: new category colours, coloured page backgrounds, green or orange as large fills behind text, plum on anything that is not an action.
 
 ## Typography
 
-One family: **Inter** (Google Fonts, self-hosted in the app) for everything, from the day-note number to labels. Hierarchy comes from size and weight, not from a second typeface. Fallback: system-ui, -apple-system, "Segoe UI", sans-serif. Use tabular numerals (`font-variant-numeric: tabular-nums`) wherever kcal, grams, sets, reps or weights line up.
+One family: **Manrope** (Google Fonts, self-hosted in the app) for everything, from the day-note number to labels. Hierarchy comes from size and weight, not from a second typeface. Fallback: system-ui, -apple-system, "Segoe UI", sans-serif. Use tabular numerals (`font-variant-numeric: tabular-nums`) wherever kcal, grams, sets, reps or weights line up.
 
 | Role | Size / weight | Use |
 |---|---|---|
-| `{typography.display}` | Inter 48 / 700 (38 on mobile) | Only the "kcal igjen" number on the day note |
-| `{typography.title}` | Inter 30 / 600 | Page titles: "I dag", "Mat", "Trening" |
-| `{typography.heading}` | Inter 19 / 600 | Card and section headings |
-| `{typography.body}` / `body-strong` | Inter 16 / 400·600 | Rows; meal and exercise names in 600 |
-| `{typography.small}` | Inter 14 / 400 | Dates, "Sist: …", attribution |
-| `{typography.label}` | Inter 13 / 600 | Tab-bar labels, weekday names, status labels |
-| `{typography.button}` | Inter 15 / 700 | Buttons and method options |
+| `{typography.display}` | Manrope 48 / 300 (38 on mobile) | Only the "kcal igjen" number on the day note |
+| `{typography.title}` | Manrope 30 / 300 | Page titles: "I dag", "Mat", "Trening" |
+| `{typography.heading}` | Manrope 19 / 500 | Card and section headings |
+| `{typography.body}` / `body-strong` | Manrope 16 / 400·500 | Rows; meal and exercise names in 500 |
+| `{typography.small}` | Manrope 14 / 400 | Dates, "Sist: …", attribution |
+| `{typography.label}` | Manrope 13 / 500 | Tab-bar labels, weekday names, status labels |
+| `{typography.button}` | Manrope 15 / 500 | Buttons and method options |
 
-Never set text below 13 px. Sentence case everywhere; no all-caps labels.
+Never set text below 13 px, and never use weight 300 below 30 px. Sentence case everywhere; no all-caps labels.
 
 ## Layout & Spacing
 
@@ -223,7 +250,7 @@ Almost flat, like paper on a desk. The day note is tilted −0.6° like a sheet 
 
 ## Shapes
 
-Rounded and friendly: `{rounded.sm}` (10 px) for inputs, `{rounded.md}` (14 px) for the active day and the day note, `{rounded.lg}` (20 px) for cards and sheets, `{rounded.full}` for buttons, method options, the active navigation item, magnets and icon discs.
+Rounded and friendly: `{rounded.sm}` (10 px) for inputs, `{rounded.md}` (14 px) for the active day and the day note, `{rounded.lg}` (18 px) for cards and sheets, `{rounded.full}` for buttons, method options, the active navigation item, magnets and icon discs.
 
 ## Components
 
@@ -233,7 +260,7 @@ Rounded and friendly: `{rounded.sm}` (10 px) for inputs, `{rounded.md}` (14 px) 
 - **Section card (Mat / Trening):** surface card with a small tape strip on the top-left edge; header with a 36 px icon disc in the category tint with the icon in the category colour, title in `heading`, summary in `small`, chevron. Rows separated by rule lines; names in `body-strong`, values right-aligned in ink with tabular numerals. Completed status uses the category text colour.
 - **Food method picker:** four pill options of equal size — Søk · Skriv strekkode · Nylig brukt · Manuelt — each with an outline icon; the selected one is plum with on-accent text and a check.
 - **Muscle-group list:** a plain vertical list of pill rows (Skuldre, Bryst, Mage/kjerne, Armer, Ben, Rygg) on Trening, with the same selected style as the method picker; beside it the exercise search field and Level chips.
-- **Buttons:** primary is a plum pill with on-accent text; secondary is a surface pill with a rule border and ink text. 52 px high, minimum tap target 44 × 44 px, at most one primary button per view.
+- **Buttons:** primary is a plum pill with on-accent text; secondary is a surface pill with a rule border and ink text. 50 px high, minimum tap target 44 × 44 px, at most one primary button per view.
 - **Inputs:** 48 px, label above (never placeholder-only), 1.5 px rule border; error state 2 px `{colors.error}` border with the message below, starting with what to fix.
 - **Help button:** a 40 px round "?" in the top bar, plum on accent-tint; opens a short explanation of the current screen.
 - **Attribution line:** `small`, ink-secondary, at the bottom of every screen with food data: "Data fra Open Food Facts og Matvaretabellen 2026".
@@ -247,6 +274,6 @@ Rounded and friendly: `{rounded.sm}` (10 px) for inputs, `{rounded.md}` (14 px) 
 | Use `#2A7350` for green text and `#B9471F` for orange text | Put text in `#2F7D55` or `#D9542B` |
 | Use plum only for actions and the active navigation item | Use plum for a category or a status |
 | Show one big number (the day note) per screen | Add a calorie ring or several big stat numbers |
-| Use Inter for all text; build hierarchy with size and weight | Add a second typeface or a decorative serif |
+| Use Manrope for all text; build hierarchy with size and weight | Add a second typeface or a decorative serif |
 | Keep one primary button per view | Put two plum buttons side by side |
 | Draw icons from one outline set | Use emoji or mixed icon styles |

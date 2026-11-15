@@ -36,3 +36,11 @@ Her skriver vi ned hva vi velger etter hver runde, slik at prosessen kan følges
 - **Oppskriftssidene** fra runde 3 beholdes som design for fase 2. Oppskrifter er utenfor v1 (gruppens beslutning 12.11).
 - Mockup: `../../ux-designs/ux-prompt-force-2026-11-10/imports/felles-design-v2-i-dag.html`.
 
+
+## Revisjon 3 (2026-11-15, Karianne sitt endelige design i Claude Design)
+
+- **Font:** Manrope overalt. Tynn vekt (300) bare på det store tallet og sidetitlene; brødtekst i 400 så den er lett å lese.
+- **Mørk modus:** Karianne sin plommemørke palett. To verdier justert for kontrast 4,5:1: knappefargen `#A569BD` → `#A86CC0`, og lilla tekst på lys bakgrunn bruker `#D8B2E3`.
+- **Mål:** sidemeny 210 px, kort med 18 px hjørner, knapper 50 px.
+- **Åpent:** designet hennes viser Mat og Trening i én lilla farge. Grønn og oransje beholdes til gruppa har bestemt seg, fordi de gjør kortene lette å skille (avstemning 12.11).
+- Designet: https://claude.ai/artifact/MHV9YS6r1wm3h8wF4qAjhz (8 skjermer: I dag, Mat, Trening og Oppskrifter for PC og mobil).
