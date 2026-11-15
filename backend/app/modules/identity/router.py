@@ -13,9 +13,14 @@ from app.core.auth import (
 from app.core.clock import Now
 from app.core.db import DbSession
 from app.modules.identity import service
+from app.modules.identity.models import User
 from app.modules.identity.schemas import LoginRequest, RegisterRequest, UserResponse
 
 router = APIRouter(prefix="/api/identity", tags=["identity"])
+
+
+def _user_response(user: User) -> UserResponse:
+    return UserResponse(id=user.id, email=user.email, consent_at=user.consent_at)
 
 
 @router.post(
@@ -28,7 +33,7 @@ def register(body: RegisterRequest, response: Response, db: DbSession, now: Now)
     """Public: no authentication required. Creates the account and logs the user in."""
     registration = service.register(db, body.email, body.password, now)
     set_session_cookie(response, registration.session_token)
-    return UserResponse(id=registration.user.id, email=registration.user.email)
+    return _user_response(registration.user)
 
 
 @router.post("/login", response_model=UserResponse, operation_id="login")
@@ -49,7 +54,7 @@ def login(
         db.commit()
         raise
     set_session_cookie(response, result.session_token)
-    return UserResponse(id=result.user.id, email=result.user.email)
+    return _user_response(result.user)
 
 
 @router.post(
@@ -68,4 +73,12 @@ def logout(current_user: CurrentUser, db: DbSession) -> Response:
 
 @router.get("/me", response_model=UserResponse, operation_id="me")
 def me(current_user: CurrentUser) -> UserResponse:
-    return UserResponse(id=current_user.id, email=current_user.email)
+    return UserResponse(
+        id=current_user.id, email=current_user.email, consent_at=current_user.consent_at
+    )
+
+
+@router.post("/consent", response_model=UserResponse, operation_id="give_consent")
+def give_consent(current_user: CurrentUser, db: DbSession, now: Now) -> UserResponse:
+    """Records consent to storing health data. Requires login, not consent."""
+    return _user_response(service.give_consent(db, current_user.id, now))

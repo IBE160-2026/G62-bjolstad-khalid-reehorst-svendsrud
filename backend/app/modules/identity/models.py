@@ -25,6 +25,8 @@ class User(Base):
     failed_login_count: Mapped[int] = mapped_column(Integer, default=0, server_default="0")
     first_failed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     locked_until: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    # When the user agreed to health data being stored (GDPR art. 9); null = not yet.
+    consent_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
 
 
 class Session(Base):

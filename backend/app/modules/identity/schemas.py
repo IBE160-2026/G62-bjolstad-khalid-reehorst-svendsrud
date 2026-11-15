@@ -1,6 +1,7 @@
 """Request and response bodies for /api/identity."""
 
 import uuid
+from datetime import datetime
 from typing import Annotated
 
 from pydantic import AfterValidator, BaseModel
@@ -71,3 +72,5 @@ class LoginRequest(BaseModel):
 class UserResponse(BaseModel):
     id: uuid.UUID
     email: str
+    # Null until the user has given consent to storing health data (story 1.5).
+    consent_at: datetime | None

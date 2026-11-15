@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useRef, useState, type FormEvent } from "react";
 
 import { ApiError, useRegister } from "./api";
+import { CONSENT_PATH } from "./routes";
 import { INPUT_CLASS, PRIMARY_BUTTON_CLASS } from "./styles";
 import {
   REGISTER_FIELDS,
@@ -12,8 +13,6 @@ import {
   type FieldErrors,
   type RegisterField,
 } from "./validation";
-
-export const CONSENT_PATH = "/samtykke";
 
 function isRegisterField(field: string): field is RegisterField {
   return (REGISTER_FIELDS as readonly string[]).includes(field);

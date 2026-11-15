@@ -226,6 +226,48 @@
           }
         }
       }
+    },
+    "/api/identity/consent": {
+      "post": {
+        "tags": [
+          "identity"
+        ],
+        "summary": "Give Consent",
+        "description": "Records consent to storing health data. Requires login, not consent.",
+        "operationId": "give_consent",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -353,12 +395,25 @@
           "email": {
             "type": "string",
             "title": "Email"
+          },
+          "consent_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Consent At"
           }
         },
         "type": "object",
         "required": [
           "id",
-          "email"
+          "email",
+          "consent_at"
         ],
         "title": "UserResponse"
       }

@@ -674,6 +674,33 @@ Det viktigste funnet: Dekningsanalysen er regnet ut fra øvelseslista og viser a
 
 ---
 
+## 2026-11-15 – Story 1.5 (samtykke før helsedata)
+
+**Verktøy:** Claude Code (BMAD `bmad-build`)
+**Hvem:** Osman Khalid
+**Bakgrunn:** Vekt, mat og trening er helsedata (GDPR art. 9), så brukeren må aktivt samtykke før noe lagres.
+
+### Hva vi ba KI om
+
+1. Bygge samtykkeskjermen og en felles sjekk som stopper helsedata uten samtykke.
+
+### Hva KI produserte
+
+- Spec, `consent_at` i databasen, samtykke-endepunkt, `require_consent`-sjekken, samtykkeskjermen og nye tester.
+
+### Hva vi selv vurderte og kontrollerte
+
+- Osman godkjente spec-en før koding.
+- Tre KI-kontrollører fant 17 punkter: 4 rettet (blant annet at avkrysningsboksen var for liten å trykke på mobil), 13 avvist med begrunnelse.
+- Samtykketeksten er skrevet av KI ut fra PRD-en; gruppa bør lese den.
+
+### Status
+
+- [x] Story 1.5 bygget og testet
+- [ ] Review av PR fra gruppen
+
+---
+
 ## Mal for nye oppføringer
 
 ```markdown
