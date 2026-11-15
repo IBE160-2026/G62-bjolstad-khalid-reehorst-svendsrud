@@ -533,6 +533,7 @@ Det viktigste funnet: Dekningsanalysen er regnet ut fra øvelseslista og viser a
 
 - [x] DESIGN.md og appen oppdatert
 - [x] Én lilla farge for Mat og Trening (Osman valgte Karianne sitt forslag)
+- [x] Magnetene i ukestripen fjernet, som i Karianne sitt design
 
 ---
 
