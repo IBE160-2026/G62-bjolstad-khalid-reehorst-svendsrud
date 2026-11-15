@@ -1,8 +1,9 @@
 """Database access for identity. Only the identity service calls this."""
 
+import uuid
 from datetime import datetime
 
-from sqlalchemy import select
+from sqlalchemy import delete, select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session as DbSessionType
 
@@ -15,6 +16,11 @@ class EmailTakenError(Exception):
 
 def get_user_by_email(db: DbSessionType, email: str) -> User | None:
     return db.scalars(select(User).where(User.email == email)).one_or_none()
+
+
+def get_user_by_email_for_update(db: DbSessionType, email: str) -> User | None:
+    """Lock the user row so concurrent logins cannot lose a failure count."""
+    return db.scalars(select(User).where(User.email == email).with_for_update()).one_or_none()
 
 
 def add_user(db: DbSessionType, email: str, password_hash: str) -> User:
@@ -34,3 +40,19 @@ def add_session(db: DbSessionType, user: User, token_hash: str, expires_at: date
     db.add(session)
     db.flush()
     return session
+
+
+def get_session_by_token_hash(db: DbSessionType, token_hash: str) -> Session | None:
+    return db.scalars(select(Session).where(Session.token_hash == token_hash)).one_or_none()
+
+
+def get_user(db: DbSessionType, user_id: uuid.UUID) -> User | None:
+    return db.get(User, user_id)
+
+
+def delete_session(db: DbSessionType, session_id: uuid.UUID) -> None:
+    db.execute(delete(Session).where(Session.id == session_id))
+
+
+def delete_session_by_token_hash(db: DbSessionType, token_hash: str) -> None:
+    db.execute(delete(Session).where(Session.token_hash == token_hash))
