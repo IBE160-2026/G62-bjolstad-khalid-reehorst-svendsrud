@@ -619,6 +619,34 @@ Det viktigste funnet: Dekningsanalysen er regnet ut fra øvelseslista og viser a
 
 ---
 
+## 2026-11-15 – Story 1.4 (logg inn og ut)
+
+**Verktøy:** Claude Code (BMAD `bmad-build`)
+**Hvem:** Osman Khalid
+**Bakgrunn:** Brukerne må kunne logge inn igjen, logge ut på en delt PC, og være beskyttet mot passordgjetting.
+
+### Hva vi ba KI om
+
+1. Bygge innlogging, utlogging, sperre etter 5 feil og omdirigering etter arkitekturen.
+
+### Hva KI produserte
+
+- Spec, endepunkter for innlogging/utlogging/«hvem er jeg», sperre i databasen, siden «Logg inn», «Logg ut» på Profil og nye tester.
+
+### Hva vi selv vurderte og kontrollerte
+
+- Osman godkjente spec-en før koding.
+- Tre KI-kontrollører fant 18 punkter: 3 rettet (blant annet at en ny bruker kunne bli sendt feil etter en gammel utløpt innlogging), 15 avvist med begrunnelse.
+- To kjente risikoer er bevisst godtatt: sperren viser hvilke e-poster som har konto, og noen som kjenner e-posten kan holde kontoen låst.
+- Tester viser sperren, at den går ut, og at én bruker ikke ser en annens data.
+
+### Status
+
+- [x] Story 1.4 bygget og testet
+- [ ] Review av PR fra gruppen
+
+---
+
 ## Mal for nye oppføringer
 
 ```markdown
