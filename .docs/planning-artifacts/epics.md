@@ -52,6 +52,7 @@ FR26 (Must): For a chosen date (today by default), the Daily Overview shows Calo
 FR27 (Should): The user can move to earlier dates (previous day or date picker); future dates cannot be chosen; logging on a past date counts toward that date.
 FR28 (Must): A new user, or a date without logs, sees short prompts ("Logg ditt første måltid", "Start en økt") instead of empty tables. A first-time user sees a short, dismissible introduction to the three steps that never reappears once dismissed.
 FR29 (Phase 2): A Pro user can photograph one food item and get an estimated name and kcal, always labelled as an estimate and editable. Mock Mode returns "Egg, 1 stk, 78 kcal (estimat)"; failures, missing kcal or >15 s fall back to manual registration; max 20 calls per day; the user is told before sending that the photo goes to an external service.
+FR31 (Should): A user who forgot their password can request a reset link by email and set a new password. Same answer whether or not the email has an account; the link is single-use, expires after 60 minutes and only its hash is stored; a new password logs the user out everywhere and clears the lockout; at most 3 reset emails per account per hour; locally, emails go to a mail catcher, never really sent.
 FR30 (Phase 2): Users have a Pro Flag (default off) set in Seed Data or by a developer; non-Pro users opening FR29 see it is a Pro feature and nothing is sent.
 
 ### NonFunctional Requirements
@@ -152,12 +153,13 @@ FR27: Epic 6 - Move between dates (Should)
 FR28: Epic 2 (first-run introduction), Epic 6 (empty states on the overview); Epics 3 and 5 own empty states in their own sections
 FR29: Epic 7 - Photo-based calorie estimate (phase 2)
 FR30: Epic 7 - Pro Flag (phase 2)
+FR31: Epic 1 - Reset a forgotten password by email
 
 ## Epic List
 
 ### Epic 1: Account and safe login
 A visitor can create an account, give consent, log in and out, and delete the account; the app runs with one Docker Compose command and has its shell (navigation, design tokens). Every later epic builds on this.
-**FRs covered:** FR1, FR2, FR3, FR4 (account)
+**FRs covered:** FR1, FR2, FR3, FR4 (account), FR31
 
 ### Epic 2: Profile and calorie target
 A logged-in user enters body data and gets one calorie target explained in plain Norwegian, after a short first-run introduction.
@@ -348,6 +350,37 @@ So that my health data does not stay in the app after I stop using it.
 **Given** users soft-deleted more than 30 days ago
 **When** `python -m app.cli purge` runs
 **Then** those users and all their user-owned rows are removed for good, and the command reports how many accounts were purged
+
+### Story 1.7: Reset a forgotten password (Should)
+
+As a user who has forgotten my password,
+I want to get a link by email and choose a new password,
+So that I can get back into my account without asking anyone.
+
+**Covers:** FR31, FR1, AD-3, AD-7
+
+**Acceptance Criteria:**
+
+**Given** the login page
+**When** I choose "Glemt passord?" and submit my email on `/glemt-passord`
+**Then** I always see "Hvis e-posten har en konto, har vi sendt deg en lenke.", whether or not the account exists
+**And** if the account exists (and is not deleted), an email with a single-use link to `/nytt-passord` is sent; the link expires after 60 minutes and only a hash of its token is stored
+
+**Given** a valid link
+**When** I choose a new password of at least 8 characters
+**Then** the password is stored as a new Argon2id hash, the link stops working, all my sessions are deleted, the login lockout is cleared, and I am sent to `/logg-inn` with "Passordet er endret. Logg inn med det nye passordet."
+
+**Given** an expired, used or unknown link
+**When** I open it or submit a new password
+**Then** I see "Lenken er utløpt eller allerede brukt. Be om en ny." with a link to `/glemt-passord`, and nothing changes
+
+**Given** more than 3 reset requests for one account within an hour
+**When** another is made
+**Then** no further email is sent, and the visitor still sees the same message as always
+
+**Given** the app runs with Docker Compose
+**When** a reset email is sent
+**Then** it lands in a local mail catcher (web inbox on its own port) and is never really sent; automated tests use the mock adapter; real sending only happens when SMTP settings are configured
 
 ## Epic 2: Profile and calorie target
 

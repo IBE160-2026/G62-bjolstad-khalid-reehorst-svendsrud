@@ -43,3 +43,5 @@
 - [ ] 2026-11-15 [story-1-3-opprett-konto](974-2026-11-15-16-05-00-story-1-3-opprett-konto.md) — sjekke at Safari beholder innloggings-cookien på localhost
 - [x] 2026-11-15 [story-1-4-logg-inn-ut](973-2026-11-15-17-30-00-story-1-4-logg-inn-ut.md) — pushe og lage PR for story 1.4 (løst 2026-11-15 — PR #20)
 - [ ] 2026-11-15 [story-1-4-logg-inn-ut](973-2026-11-15-17-30-00-story-1-4-logg-inn-ut.md) — vurdere sperre per nettverk i tillegg til per konto
+- [x] 2026-11-15 [glemt-passord-plan](972-2026-11-15-21-00-00-glemt-passord-plan.md) — pushe og lage PR for planendringen (FR-31, Story 1.7) (løst 2026-11-15 — PR #21)
+- [ ] 2026-11-15 [glemt-passord-plan](972-2026-11-15-21-00-00-glemt-passord-plan.md) — bygge Story 1.7 (glemt passord) etter 1.5 og 1.6

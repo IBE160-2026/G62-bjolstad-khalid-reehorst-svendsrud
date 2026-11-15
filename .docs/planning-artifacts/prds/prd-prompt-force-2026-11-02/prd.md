@@ -100,7 +100,7 @@ V1 is the core loop: **profile → calorie target → log food → log training 
 
 ### 4.1 Account and Privacy
 
-**Description:** A User registers with email and password and logs in to reach their own data. Before any health data is stored, the User gives explicit consent on a short, plain-language screen. The User can delete individual logs and their whole account. Realizes UJ-1, UJ-5.
+**Description:** A User registers with email and password and logs in to reach their own data. Before any health data is stored, the User gives explicit consent on a short, plain-language screen. The User can delete individual logs and their whole account, and can set a new password by email if they forget it. Realizes UJ-1, UJ-5.
 
 #### FR-1: Register and log in · Must
 A visitor can create an account with email and password, log in and log out.
@@ -122,6 +122,14 @@ A User can only read and change their own Profile, Equipment Profiles, Food Log 
 A User can delete a single Food Log Entry, a single Set, a whole Workout and their whole account.
 - Deleting the account removes the User's Profile, Equipment Profiles, logs and User-created Food Items, or makes them unrecoverable, within 30 days: soft-delete at once, hard-delete by script (see research GDPR).
 - A deleted account can no longer log in.
+
+#### FR-31: Reset a forgotten password · Should
+A User who has forgotten their password can ask for a reset link by email and choose a new password.
+- The answer to a reset request is the same whether or not the email has an account (no account enumeration).
+- The link works once and expires after 60 minutes. Only a hash of its token is stored.
+- Setting a new password logs the User out everywhere and clears the login lockout (FR-1).
+- At most 3 reset emails per account per hour.
+- Locally and for the examiner, emails go to a local mail catcher in Docker Compose and are never really sent; real sending only happens when a mail server is configured.
 
 ### 4.2 Profile and Calorie Target
 
@@ -317,7 +325,7 @@ A User has a Pro Flag (default off) that unlocks FR-29. There is no payment; the
 
 ### 6.2 Cost
 
-- V1 uses only free services: Open Food Facts (no key), Matvaretabellen (open data), YouTube embeds.
+- V1 uses only free services: Open Food Facts (no key), Matvaretabellen (open data), YouTube embeds. Password-reset emails (FR-31) go to a free local mail catcher; a real mail server is optional.
 - Phase 2's image model is paid per call, so Mock Mode is the default and real calls only happen when a key is set.
 
 ### 6.3 Data licences
@@ -358,10 +366,10 @@ A web app that runs in the browser, mainly on a PC or laptop, since the submissi
 
 ### 9.1 In scope (v1, must be finished and stable)
 
-**Priority.** Each FR heading states its priority. All are **Must** except the **Should** items, which are cut first if time runs out: FR-8 (camera scanning), FR-20 (filters by Muscle Group and Level; name search stays Must) and FR-27 (move between dates). FR-14 (recent foods) and FR-24 (show last time) are **Must**, because they carry the product's thesis (fast logging, «what did I lift last time»), UJ-3 and SM-6. Changed 2026-11-13 after the lecturer's feedback. FR-9 and FR-11 are the main food-logging path.
+**Priority.** Each FR heading states its priority. All are **Must** except the **Should** items, which are cut first if time runs out: FR-8 (camera scanning), FR-20 (filters by Muscle Group and Level; name search stays Must), FR-27 (move between dates) and FR-31 (reset a forgotten password). FR-14 (recent foods) and FR-24 (show last time) are **Must**, because they carry the product's thesis (fast logging, «what did I lift last time»), UJ-3 and SM-6. Changed 2026-11-13 after the lecturer's feedback. FR-9 and FR-11 are the main food-logging path.
 
 
-- Account, consent and deletion (FR-1 – FR-4)
+- Account, consent, deletion and password reset (FR-1 – FR-4, FR-31)
 - Profile and Calorie Target with Goal (FR-5 – FR-7)
 - Food logging: scan, type barcode, search, manual, Meals, recent foods (FR-8 – FR-16)
 - Fixed exercise list, Equipment Profiles, Exercise Suggestions, videos (FR-17 – FR-21)
@@ -429,3 +437,5 @@ Changed by Osman Khalid on 2026-11-13 (`bmad-prd` update): the group accepted al
 Changed by Osman Khalid on 2026-11-13: NFR-3 now states that the examiner runs the app with Docker and that the repo includes a Docker Compose setup (from the lecture 2026-11-12).
 
 Changed by Osman Khalid on 2026-11-15: new NFR-12 (Should): light and dark mode, chosen by the User, after the group's design discussion 2026-11-14 (CoolMellon's suggestion, Karianne's dark version of the merged design).
+
+Changed by Osman Khalid on 2026-11-15: new FR-31 (Should): reset a forgotten password by email, after the group's discussion on Discord 2026-11-15 (Karianne's suggestion). Updated in §4.1, §6.2 and §9.1.

@@ -558,7 +558,7 @@ Det viktigste funnet: Dekningsanalysen er regnet ut fra øvelseslista og viser a
 
 - [x] Sprint planning
 - [x] Story 1.2 bygget og testet
-- [ ] Review av PR fra gruppen
+- [x] Review av PR fra gruppen (PR #18 flettet)
 
 ---
 
@@ -615,7 +615,7 @@ Det viktigste funnet: Dekningsanalysen er regnet ut fra øvelseslista og viser a
 ### Status
 
 - [x] Story 1.3 bygget og testet
-- [ ] Review av PR fra gruppen
+- [x] Review av PR fra gruppen (PR #19 flettet)
 
 ---
 
@@ -643,7 +643,34 @@ Det viktigste funnet: Dekningsanalysen er regnet ut fra øvelseslista og viser a
 ### Status
 
 - [x] Story 1.4 bygget og testet
-- [ ] Review av PR fra gruppen
+- [x] Review av PR fra gruppen (PR #20 flettet)
+
+---
+
+## 2026-11-15 – Glemt passord i planen (FR-31)
+
+**Verktøy:** Claude Code
+**Hvem:** Osman Khalid, etter forslag fra Karianne i Discord
+**Bakgrunn:** Gruppa ville at brukere som glemmer passordet kan få en lenke på e-post.
+
+### Hva vi ba KI om
+
+1. Legge «glemt passord» inn i PRD, epics, arkitektur og sprint-status.
+
+### Hva KI produserte
+
+- FR-31 (Should) i PRD-en, Story 1.7 i epics.md, e-post som port i arkitekturen og ny linje i sprint-status.
+
+### Hva vi selv vurderte og kontrollerte
+
+- Kravet om bare gratis tjenester gjelder fortsatt: lokalt havner e-postene i en lokal e-postfanger, så ingen nøkler eller betalte tjenester trengs.
+- Samme svar uansett om e-posten finnes, så funksjonen ikke avslører hvem som har konto.
+- Satt som Should, så den kuttes før Must-kravene hvis tiden blir knapp.
+
+### Status
+
+- [x] Lagt inn i planen
+- [ ] Story 1.7 bygget
 
 ---
 
