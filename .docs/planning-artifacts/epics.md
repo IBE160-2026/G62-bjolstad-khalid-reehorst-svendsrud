@@ -67,6 +67,7 @@ NFR8: Automated tests cover the calorie calculation (FR6), Exercise Suggestions 
 NFR9: A saved Food Log Entry or Set appears in the Daily Overview without a manual page reload.
 NFR10: WCAG 2.1 AA basics: labelled fields, tap targets large enough on a phone, sufficient contrast.
 NFR11: The Daily Overview has at most two primary actions (log food, start a workout) and favours few, clear actions.
+NFR12 (Should): Light and dark mode; light is the default, the User switches with a top-bar button, and the choice is remembered in the browser. Both modes meet NFR10 contrast.
 
 ### Additional Requirements
 
@@ -100,7 +101,7 @@ From the architecture spine (`ARCHITECTURE-SPINE.md`, final 2026-11-13). No thir
 
 Merged from A1 (`ux-designs/ux-prompt-force-2026-11-10/`) and round 3 (`ux/runde-3/`). Where they disagree, the requirement follows the final PRD.
 
-UX-DR1: Design tokens: implement one token set (colours, typography, radii, spacing, shadows) as Tailwind theme and shadcn/ui CSS variables, from the token set the group confirms after merging A1 and round 3. Components use tokens only, never raw hex values. All text/background pairs meet WCAG AA (body ≥ 4.5:1), checked and documented.
+UX-DR1: Design tokens: implement one token set (colours, typography, radii, spacing, shadows) as Tailwind theme and shadcn/ui CSS variables, from the token set the group confirms after merging A1 and round 3. Components use tokens only, never raw hex values. All text/background pairs meet WCAG AA (body ≥ 4.5:1), checked and documented. The token set has a light and a dark variant (NFR-12): light is the default, a top-bar button switches mode, and the choice is remembered in the browser.
 UX-DR2: App shell: persistent sidebar on ≥ 1024 px (I dag, Mat, Trening, Historikk, Profil) that collapses to icons at 768–1023 px, and a bottom tab bar under 768 px (I dag, Mat, Trening, Profil). Active item clearly marked. One outline icon set (house, bowl, dumbbell, calendar, person), no emoji.
 UX-DR3: Week strip: seven day cells (Monday–Sunday) with weekday and date; the selected day outlined; up to two magnets per past/current day (food logged, workout logged); future days disabled; ‹ › steps a week; a calendar icon opens a date picker; each cell has an accessible name such as "tirsdag 10. november, mat logget, trening logget".
 UX-DR4: Day note: one per screen, showing kcal remaining as the single large number, one plain sentence ("igjen av dagens mål på 1 640"), and optional supporting lines for floor used, ages 16–17, and "over" (shown in normal ink with supportive text, never red).
@@ -221,7 +222,7 @@ As a user,
 I want a calm app frame with clear navigation,
 So that I always know where I am and where Mat and Trening are.
 
-**Covers:** NFR1, NFR2, NFR10, UX-DR1, UX-DR2, UX-DR16, UX-DR18
+**Covers:** NFR1, NFR2, NFR10, NFR12, UX-DR1, UX-DR2, UX-DR16, UX-DR18
 
 **Acceptance Criteria:**
 
@@ -234,6 +235,7 @@ So that I always know where I am and where Mat and Trening are.
 **When** the frontend is styled
 **Then** colours, typography, radii and spacing come only from one token set exposed as Tailwind theme values and shadcn/ui CSS variables (A1 tokens until the group confirms the merged set; swapping the set changes no component code)
 **And** every text/background pair in the token set is documented with its contrast ratio, and body text is at least 4.5:1
+**And** the token set has a light and a dark variant; light is the default, a button in the top bar switches mode without a reload, and the choice is remembered after the browser is reopened (NFR-12)
 
 **Given** a keyboard user
 **When** they tab through the shell

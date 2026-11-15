@@ -303,6 +303,7 @@ A User has a Pro Flag (default off) that unlocks FR-29. There is no payment; the
 - **NFR-9 Responsiveness:** a saved Food Log Entry or Set appears in the Daily Overview without a manual page reload.
 - **NFR-10 Accessibility:** form fields have labels, buttons are large enough to tap on a phone, and text has sufficient contrast (WCAG 2.1 AA basics, not a full audit).
 - **NFR-11 Simple front page:** the front page (Daily Overview) has at most two primary actions (log food, start a workout) and favours few, clear actions over many buttons, so new and returning Users immediately see what is logged for today and where to go next (Food or Training). Detailed visual design is worked out in the UX phase (`DESIGN.md` / `EXPERIENCE.md`), not in this PRD.
+- **NFR-12 Light and dark mode (Should):** light mode is the default. The User can switch to dark mode with a button in the top bar, and the choice is remembered on that browser. Both modes meet the contrast rules in NFR-10. *Testable:* switching mode changes every screen without a page reload, and the choice is still active after the browser is closed and opened again.
 
 ## 6. Constraints and Guardrails
 
@@ -366,7 +367,7 @@ A web app that runs in the browser, mainly on a PC or laptop, since the submissi
 - Fixed exercise list, Equipment Profiles, Exercise Suggestions, videos (FR-17 – FR-21)
 - Workout logging with last-time values (FR-22 – FR-25)
 - Daily Overview and history (FR-26 – FR-28)
-- Chrome on PC as primary device and usable at 360 px, Norwegian UI, runnable from the README with Seed Data (NFR-1 – NFR-11)
+- Chrome on PC as primary device and usable at 360 px, Norwegian UI, runnable from the README with Seed Data (NFR-1 – NFR-12)
 
 ### 9.2 Phase 2 (only when v1 is stable)
 
@@ -426,3 +427,5 @@ Changed by Karianne Bjølstad on 2026-11-10: added details from the original con
 Changed by Osman Khalid on 2026-11-13 (`bmad-prd` update): the group accepted all assumptions on 2026-11-12, and the lecturer's feedback was applied. FR-14 and FR-24 moved from Should to Must, and every FR heading states its priority (lecturer 4.1). Testable consequences added to FR-1, FR-7, FR-11, FR-13, FR-14, FR-15, FR-17, FR-22, FR-24, FR-25 and FR-27 (4.2). Chrome on PC is the primary test device, usable at 360 px; SM-1 and SM-7 reworded (4.3). User tests use fictional profiles until the Sikt question is answered (4.4). FR-29 got rules for failure, timeout, cost and third-party notice (4.5). Small fixes: §9.1 NFR range, UJ-3 «Home» profile, «examiner/sensor» in the glossary, NFR-11 limit. Sex stays required (Q6), an Exercise has one primary and 0–2 secondary Muscle Groups (Q4), and recipes and training programmes stay in Vision. Status set to final.
 
 Changed by Osman Khalid on 2026-11-13: NFR-3 now states that the examiner runs the app with Docker and that the repo includes a Docker Compose setup (from the lecture 2026-11-12).
+
+Changed by Osman Khalid on 2026-11-15: new NFR-12 (Should): light and dark mode, chosen by the User, after the group's design discussion 2026-11-14 (CoolMellon's suggestion, Karianne's dark version of the merged design).

@@ -1,6 +1,6 @@
 ---
 name: Prompt Force
-description: Calm, app-like training and food journal for beginners. Merged design (2026-11-13) — the paper-journal look from UX round 3 with the category colours and structure of concept A1. Light mode only in v1.
+description: Calm, app-like training and food journal for beginners. Merged design (2026-11-13) — the paper-journal look from UX round 3 with the category colours and structure of concept A1. Light mode by default, dark mode as a user choice (PRD NFR-12).
 status: final
 updated: 2026-11-13
 revision: 2 (Karianne's feedback 13.11: notebook lines, calmer colours, Inter only)
