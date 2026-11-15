@@ -476,6 +476,37 @@ Det viktigste funnet: Dekningsanalysen er regnet ut fra øvelseslista og viser a
 
 ---
 
+## 2026-11-15 – Sprint planning og story 1.2 (app-skall)
+
+**Verktøy:** Claude Code (BMAD `bmad-sprint-planning` og `bmad-build`)
+**Hvem:** Osman Khalid
+**Bakgrunn:** Vi trengte en oversikt over alle stories, og app-skallet (meny, farger, lys/mørk modus) som alle senere skjermer bygger på.
+
+### Hva vi ba KI om
+
+1. Lage `sprint-status.yaml` fra epics.md.
+2. Bygge story 1.2 med midlertidige designverdier, siden det endelige designet venter i PR #17.
+
+### Hva KI produserte
+
+- `sprint-status.yaml` med 7 epics og 32 stories.
+- Spec, meny for PC/nettbrett/mobil, tokenfil med lys og mørk variant, kontrasttabell, stilguide (VOICE.md) og 19 tester.
+
+### Hva vi selv vurderte og kontrollerte
+
+- Osman så planen som visuell mockup og godkjente den før koding.
+- Tre KI-kontrollører gikk gjennom koden; 5 funn ble rettet, 3 utsatt og 7 avvist med begrunnelse (se spec-fila).
+- Oransje tekst på oransje bakgrunn var under kontrastkravet (4,35:1); fargen ble gjort litt mørkere.
+- Tester, lint og build passerer. Gruppen må se over PR-en.
+
+### Status
+
+- [x] Sprint planning
+- [x] Story 1.2 bygget og testet
+- [ ] Review av PR fra gruppen
+
+---
+
 ## Mal for nye oppføringer
 
 ```markdown
