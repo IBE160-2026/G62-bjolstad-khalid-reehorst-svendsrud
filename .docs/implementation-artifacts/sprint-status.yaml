@@ -1,0 +1,89 @@
+# STATUS DEFINITIONS:
+# ==================
+# Epic Status:
+#   - backlog: Epic not yet started
+#   - in-progress: Epic actively being worked on
+#   - done: All stories in epic completed
+
+# Story Status:
+#   - backlog: Story only exists in epic file
+#   - ready-for-dev: Story file created, ready for development
+#   - in-progress: Developer actively working on implementation
+#   - review: Implementation complete, ready for review
+#   - done: Story completed
+
+# Retrospective Status:
+#   - optional: Can be completed but not required
+#   - done: Retrospective has been completed
+
+# Action Item Status:
+#   - open: Committed during a retrospective, not yet addressed
+#   - in-progress: Actively being worked on
+#   - done: Completed
+
+# WORKFLOW NOTES:
+# ===============
+# - Epic transitions to 'in-progress' automatically when its first story starts (via build's sprint sync)
+# - Stories can be worked in parallel if team capacity allows
+# - Developer typically creates the next story after the previous one is 'done' to incorporate learnings
+# - Dev moves story to 'review', then runs code-review (fresh context, different LLM recommended)
+# - Retrospective appends its action items to action_items; the status view surfaces open ones
+generated: 11-15-2026 12:32
+last_updated: 11-15-2026 13:00
+project: Prompt Force
+project_key: NOKEY
+tracking_system: file-system
+story_location: .docs/implementation-artifacts
+development_status:
+  epic-1: in-progress
+  1-1-run-the-app-with-one-command: done
+  1-2-app-shell-with-navigation-and-design-tokens: review
+  1-3-create-an-account: backlog
+  1-4-log-in-and-log-out: backlog
+  1-5-give-consent-before-health-data: backlog
+  1-6-delete-my-account: backlog
+  epic-1-retrospective: optional
+
+  epic-2: backlog
+  2-1-get-my-calorie-target: backlog
+  2-2-edit-my-profile: backlog
+  2-3-first-run-introduction: backlog
+  epic-2-retrospective: optional
+
+  epic-3: backlog
+  3-1-search-for-a-basic-food-and-log-it: backlog
+  3-2-register-my-own-food: backlog
+  3-3-type-a-barcode: backlog
+  3-4-log-a-recent-food-with-one-tap: backlog
+  3-5-choose-servings-instead-of-grams: backlog
+  3-6-edit-or-delete-a-food-entry: backlog
+  3-7-find-norwegian-brand-products-in-search: backlog
+  3-8-scan-a-barcode-with-the-camera-should: backlog
+  epic-3-retrospective: optional
+
+  epic-4: backlog
+  4-1-see-an-exercise-and-how-to-do-it: backlog
+  4-2-save-my-equipment: backlog
+  4-3-get-exercises-that-fit-my-equipment: backlog
+  4-4-search-exercises-by-name: backlog
+  4-5-choose-exercises-by-muscle-group-and-level-should: backlog
+  epic-4-retrospective: optional
+
+  epic-5: backlog
+  5-1-start-a-workout-and-add-exercises: backlog
+  5-2-log-my-sets: backlog
+  5-3-see-what-i-did-last-time: backlog
+  5-4-finish-edit-or-delete-a-workout: backlog
+  epic-5-retrospective: optional
+
+  epic-6: backlog
+  6-1-see-my-day-at-a-glance: backlog
+  6-2-clear-prompts-when-nothing-is-logged: backlog
+  6-3-move-between-days-with-the-week-strip-should: backlog
+  6-4-the-examiner-can-test-the-whole-core-loop: backlog
+  epic-6-retrospective: optional
+
+  epic-7: backlog
+  7-1-pro-flag: backlog
+  7-2-estimate-calories-from-a-photo: backlog
+  epic-7-retrospective: optional

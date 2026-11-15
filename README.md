@@ -6,7 +6,7 @@ Repoet inneholder gruppens applikasjon og dokumentasjon av utvikling, testing og
 
 ## Applikasjon
 
-Appen publiseres på Vercel: <https://g62promptforce.vercel.app>
+Appen publiseres på Vercel: [https://g62promptforce.vercel.app](https://g62promptforce.vercel.app)
 
 Siden viser 404 til den første versjonen av appen er pushet til `main`. Vercel-prosjektet ligger på kontoen til Muhammad O Khalid.
 

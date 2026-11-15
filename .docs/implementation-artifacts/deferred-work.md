@@ -15,3 +15,12 @@
 - source_spec: `.docs/implementation-artifacts/spec-1-1-run-app-one-command.md`
   summary: Check whether unhandled errors are logged twice with the exception message (unverified, medium if true).
   evidence: Starlette's ServerErrorMiddleware re-raises after the handler, so Uvicorn may log a second traceback; settle by triggering a 500 in the running stack and reading the backend logs.
+- source_spec: `.docs/implementation-artifacts/spec-1-2-app-shell-navigation-tokens.md`
+  summary: Give mobile users a way to reach Historikk (not in the bottom tab bar).
+  evidence: Below 768 px the sidebar is hidden and the tab bar has only I dag, Mat, Trening and Profil; plan the entry with the week strip calendar in story 6.3.
+- source_spec: `.docs/implementation-artifacts/spec-1-2-app-shell-navigation-tokens.md`
+  summary: Replace the temporary "Backend: ok" health line on I dag with the Daily Overview.
+  evidence: The line uses developer wording ("backend") that VOICE.md forbids; it stays only for story 1.1 verification until story 6.1.
+- source_spec: `.docs/implementation-artifacts/spec-1-2-app-shell-navigation-tokens.md`
+  summary: Add an AppShell render test that the skip link targets the main landmark.
+  evidence: Renaming `#innhold` or the `main` id would silently break the skip link; no test renders AppShell.

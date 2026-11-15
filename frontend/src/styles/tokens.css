@@ -1,0 +1,181 @@
+/*
+ * Design tokens: the single swap point for colours, type, radii, spacing and shadows.
+ *
+ * Values come from DESIGN.md revision 3 on `ux/felles-design` (PR #17), which takes
+ * Karianne's final design (Manrope, plum-dark mode, one mauve mark colour for both Mat and
+ * Trening; group decision 2026-11-15). Changing a value here must never require a component change.
+ *
+ * Names follow shadcn/ui so its components can use them later. Note the shadcn meaning:
+ *   --primary  = DESIGN `accent` (plum, the only action colour)
+ *   --accent   = DESIGN `accent-tint` (hover/active tint behind plum)
+ *   --border   = DESIGN `rule`, --ring = DESIGN `focus-ring`
+ * Dark values are DESIGN.md `colors-dark`; every pair is checked in CONTRAST.md.
+ * In dark mode --primary is a button fill only; plum text uses --accent-foreground.
+ */
+
+:root {
+  /* Surfaces and text */
+  --background: #f7f2e9; /* paper */
+  --foreground: #3a322b; /* ink */
+  --card: #fffdf7; /* surface */
+  --card-foreground: #3a322b;
+  --popover: #fffdf7;
+  --popover-foreground: #3a322b;
+  --secondary: #fffdf7;
+  --secondary-foreground: #3a322b;
+  --muted: #f7f2e9;
+  --muted-foreground: #6b6056; /* ink-secondary */
+  --border: #e4d9c6; /* rule */
+  --input: #e4d9c6;
+  --ring: #3a322b; /* focus-ring */
+
+  /* Action colour (plum) */
+  --primary: #7a3b69;
+  --primary-foreground: #fff9f0; /* on-accent */
+  --accent: #f1e7ee; /* accent-tint */
+  --accent-foreground: #7a3b69;
+
+  /* Mark colour (mauve): icon discs, magnets and "+ Legg til" for both Mat and Trening */
+  --mark: #9c5e87;
+  --mark-text: #7d3f5e;
+  --mark-tint: #f2e7ee;
+
+  /* Day note and cards */
+  --note: #f2c14e;
+  --note-paper: #fff8e2;
+  --note-line: #eadfbf;
+  --tape: #e9dfc9;
+
+  /* Validation and destructive actions only */
+  --destructive: #b42318; /* error */
+  --destructive-foreground: #fffdf7;
+  --error-tint: #fbe9e6;
+
+  /* Shadows */
+  --elevation-card: 0 2px 6px rgba(58, 50, 43, 0.06);
+  --elevation-sheet: 0 12px 32px rgba(58, 50, 43, 0.18);
+  --scrim: rgba(58, 50, 43, 0.35);
+
+  /* Shape */
+  --rounded-sm: 10px;
+  --rounded-md: 14px;
+  --rounded-lg: 18px;
+  --radius: var(--rounded-md); /* shadcn base radius */
+
+  /* Layout */
+  --sidebar-width: 210px;
+  --rail-width: 80px;
+  --top-bar-height: 64px;
+  --tab-bar-height: 72px;
+  --content-max: 1040px;
+  --margin-mobile: 16px;
+  --page-rule-gap: 38px;
+
+  /* Type */
+  --font-family: var(--font-manrope), system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --background: #221a1f; /* paper */
+  --foreground: #f3e9ee; /* ink */
+  --card: #2b2229; /* surface */
+  --card-foreground: #f3e9ee;
+  --popover: #2b2229;
+  --popover-foreground: #f3e9ee;
+  --secondary: #2b2229;
+  --secondary-foreground: #f3e9ee;
+  --muted: #221a1f;
+  --muted-foreground: #b9a3ae; /* ink-secondary */
+  --border: #453640; /* rule */
+  --input: #453640;
+  --ring: #f3e9ee;
+
+  --primary: #a86cc0; /* button fill only; nudged from #A569BD for 4.5:1 with on-accent */
+  --primary-foreground: #201620;
+  --accent: #352c3a; /* accent-tint */
+  --accent-foreground: #d8b2e3; /* accent-text: plum text on tints and surfaces */
+
+  --mark: #b383c3;
+  --mark-text: #d8b2e3;
+  --mark-tint: #372d3c;
+
+  --note: #f2c14e;
+  --note-paper: #2e2420;
+  --note-line: #4a3a30;
+  --tape: #3a2e28;
+
+  --destructive: #f28b7f;
+  --destructive-foreground: #221a1f;
+  --error-tint: #3f201c;
+
+  --elevation-card: 0 2px 6px rgba(0, 0, 0, 0.35);
+  --elevation-sheet: 0 12px 32px rgba(0, 0, 0, 0.55);
+  --scrim: rgba(0, 0, 0, 0.55);
+
+  color-scheme: dark;
+}
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-mark: var(--mark);
+  --color-mark-text: var(--mark-text);
+  --color-mark-tint: var(--mark-tint);
+  --color-note: var(--note);
+  --color-note-paper: var(--note-paper);
+  --color-note-line: var(--note-line);
+  --color-tape: var(--tape);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-error-tint: var(--error-tint);
+
+  --font-sans: var(--font-family);
+
+  --text-display: 48px;
+  --text-display--line-height: 1.05;
+  --text-title: 30px;
+  --text-title--line-height: 1.2;
+  --text-heading: 19px;
+  --text-heading--line-height: 1.3;
+  --text-body: 16px;
+  --text-body--line-height: 1.6;
+  --text-small: 14px;
+  --text-small--line-height: 1.5;
+  --text-label: 13px;
+  --text-label--line-height: 1.3;
+  --text-button: 15px;
+  --text-button--line-height: 1;
+
+  --radius-sm: var(--rounded-sm);
+  --radius-md: var(--rounded-md);
+  --radius-lg: var(--rounded-lg);
+
+  --shadow-card: var(--elevation-card);
+  --shadow-sheet: var(--elevation-sheet);
+
+  --spacing-sidebar: var(--sidebar-width);
+  --spacing-rail: var(--rail-width);
+  --spacing-top-bar: var(--top-bar-height);
+  --spacing-tab-bar: var(--tab-bar-height);
+  --spacing-margin-mobile: var(--margin-mobile);
+  --container-content: var(--content-max);
+}
