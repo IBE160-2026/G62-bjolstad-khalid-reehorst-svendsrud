@@ -2,8 +2,8 @@
  * Design tokens: the single swap point for colours, type, radii, spacing and shadows.
  *
  * Values come from DESIGN.md revision 3 on `ux/felles-design` (PR #17), which takes
- * Karianne's final design (Manrope, plum-dark mode). Green/orange category colours are kept
- * until the group decides. Changing a value here must never require a component change.
+ * Karianne's final design (Manrope, plum-dark mode, one mauve mark colour for both Mat and
+ * Trening; group decision 2026-11-15). Changing a value here must never require a component change.
  *
  * Names follow shadcn/ui so its components can use them later. Note the shadcn meaning:
  *   --primary  = DESIGN `accent` (plum, the only action colour)
@@ -35,13 +35,10 @@
   --accent: #f1e7ee; /* accent-tint */
   --accent-foreground: #7a3b69;
 
-  /* Category colours: small marks only */
-  --food: #2f7d55;
-  --food-text: #2a7350;
-  --food-tint: #e5efe6;
-  --training: #d9542b;
-  --training-text: #b4451e; /* darkened from DESIGN.md #B9471F for 4.5:1 on training-tint */
-  --training-tint: #f8e6dc;
+  /* Mark colour (mauve): icon discs, magnets and "+ Legg til" for both Mat and Trening */
+  --mark: #9c5e87;
+  --mark-text: #7d3f5e;
+  --mark-tint: #f2e7ee;
 
   /* Day note and cards */
   --note: #f2c14e;
@@ -100,12 +97,9 @@
   --accent: #352c3a; /* accent-tint */
   --accent-foreground: #d8b2e3; /* accent-text: plum text on tints and surfaces */
 
-  --food: #5fb98a;
-  --food-text: #7cc9a0;
-  --food-tint: #1f3329;
-  --training: #ee7d55;
-  --training-text: #f29470;
-  --training-tint: #3d2920;
+  --mark: #b383c3;
+  --mark-text: #d8b2e3;
+  --mark-tint: #372d3c;
 
   --note: #f2c14e;
   --note-paper: #2e2420;
@@ -143,12 +137,9 @@
   --color-primary-foreground: var(--primary-foreground);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
-  --color-food: var(--food);
-  --color-food-text: var(--food-text);
-  --color-food-tint: var(--food-tint);
-  --color-training: var(--training);
-  --color-training-text: var(--training-text);
-  --color-training-tint: var(--training-tint);
+  --color-mark: var(--mark);
+  --color-mark-text: var(--mark-text);
+  --color-mark-tint: var(--mark-tint);
   --color-note: var(--note);
   --color-note-paper: var(--note-paper);
   --color-note-line: var(--note-line);
