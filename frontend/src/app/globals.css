@@ -1,7 +1,33 @@
 @import "tailwindcss";
+@import "../styles/tokens.css";
 
-/* Design tokens arrive in story 1.2. */
+@layer base {
+  html {
+    background-color: var(--background);
+  }
 
-body {
-  font-family: Arial, Helvetica, sans-serif;
+  body {
+    /* Notebook paper: a 1 px rule line every --page-rule-gap. */
+    background-color: var(--background);
+    background-image: repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent calc(var(--page-rule-gap) - 1px),
+      var(--border) calc(var(--page-rule-gap) - 1px),
+      var(--border) var(--page-rule-gap)
+    );
+    color: var(--foreground);
+    font-family: var(--font-family);
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+
+  main:focus {
+    outline: none;
+  }
 }

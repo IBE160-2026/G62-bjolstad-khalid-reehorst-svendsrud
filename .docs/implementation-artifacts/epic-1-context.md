@@ -4,7 +4,7 @@
 
 ## Goal
 
-Lay the foundation every other epic builds on: the whole app (database, FastAPI backend, Next.js frontend) starts with one Docker Compose command on a clean machine, has a calm app shell with navigation and design tokens, and lets a visitor create an account, log in and out safely, give explicit consent before any health data is stored, and delete the account. Because weight, food and training logs count as health data under GDPR, consent, strict per-user data isolation and reliable deletion are core requirements, not polish. The examiner grades the project by running it locally from the README, so a reproducible one-command setup is equally critical.
+Lay the foundation every later epic builds on: the whole app (Postgres, FastAPI backend, Next.js frontend) starts with one Docker Compose command on a clean machine, the frontend has its app shell (navigation, design tokens, light/dark mode), and a visitor can register, give explicit consent before any health data, log in and out safely, and delete their account. Security (hashed passwords, server-side sessions, lockout, per-user data isolation) and consent are set up here once, so no later module reinvents them.
 
 ## Stories
 
@@ -17,53 +17,39 @@ Lay the foundation every other epic builds on: the whole app (database, FastAPI 
 
 ## Requirements & Constraints
 
-- Register with email and password (min. 8 characters); log in; log out. Passwords stored only as Argon2id hashes.
-- Wrong email and wrong password give the identical message "E-post eller passord er feil." (no account enumeration). Registering an existing email must not reveal more than necessary and must not create a duplicate.
-- After 5 failed logins for an account within 15 minutes, further attempts are rejected for 15 minutes (even with the right password) with "For mange forsøk. Prøv igjen om litt."; the counter lives in PostgreSQL and a test proves lockout and expiry.
-- Session cookie is HttpOnly, Secure, SameSite=Lax; never localStorage.
-- Consent: before any Profile/health data, the user sees what is stored (body data, food logs, workout logs) and why, ticks an unticked checkbox and presses "Godta og fortsett" (disabled until ticked). Consent time is stored (UTC). No Profile without consent.
-- Users can only read or change their own data; requests for others' data return nothing. Must be proven by an automated access-control test.
-- Account deletion: soft-delete immediately, user can no longer log in, all user data excluded from queries; hard-delete by script within 30 days.
-- Runnable from the README with `.env.example`, no team keys or paid services, one `docker compose up`, target under 20 minutes on a clean machine. Secrets never committed; `.env` is git-ignored.
-- UI text in Norwegian bokmål; works in Chrome (primary), Safari, Firefox, Edge; usable at 360 px without horizontal scroll; WCAG 2.1 AA basics (labelled fields, ≥ 44 px tap targets, sufficient contrast).
-- Automated tests never call real external services.
+- **Run it:** one `docker compose up` after copying `.env.example` to `.env`; no team keys or paid services; under 20 minutes on a clean machine. README "Kom i gang" lists prerequisites with versions and exact start/test commands. Secrets only in git-ignored `.env`, never `NEXT_PUBLIC_`-prefixed, never committed.
+- **Accounts:** email + password (min 8 chars), Argon2id hashing. Wrong email and wrong password give the identical message "E-post eller passord er feil.". 5 failed logins within 15 minutes lock the account for 15 minutes ("For mange forsøk. Prøv igjen om litt."), even with the right password; counter stored in Postgres. Duplicate-email registration must not leak more than necessary and must not create a second account.
+- **Consent:** before any Profile data, a screen lists what is stored (body data, food logs, workout logs) and why, with an unticked checkbox and "Godta og fortsett" (disabled until ticked). Store `consent_at` (UTC). No health data without consent.
+- **Isolation:** a user can only read/change their own data; requests for another user's data return nothing. Must be proven by a backend test.
+- **Deletion:** "Slett konto" with an irreversible-action confirmation dialog → soft-delete at once, sessions removed, cannot log in; soft-deleted users and their data excluded from all queries; hard-delete after 30 days via a CLI command that reports how many accounts were purged.
+- **Browser/UI:** Chrome on PC is primary; also current Safari, Firefox, Edge; no horizontal scrolling at 360 px. All UI text Norwegian bokmål. WCAG 2.1 AA basics: labelled fields, ≥ 44×44 px tap targets, body text contrast ≥ 4.5:1.
+- **Light and dark mode (Should):** light is the default; a top-bar button switches mode without a page reload and the choice is remembered in the browser after it is closed and reopened; both modes meet the contrast rules.
+- **Tests required in this epic:** login lockout and its expiry; cross-user access control.
 
 ## Technical Decisions
 
-- **Monorepo:** `backend/` (FastAPI, Python 3.14) and `frontend/` (Next.js 16.4.6, React 19.3.1, Node 24), scaffolded with official generators (no third-party starter). Root `docker-compose.yml` with `db` (postgres:18, volume), `backend` (internal port 8000 only), `frontend` (port 3000, the only public port).
-- **Single origin:** browser talks only to Next.js, which rewrites `/api/*` to the backend in the Docker network. No CORS.
-- **Frontend is UI-only:** no DB access, no business rules; all truth comes from the API.
-- **Backend layering:** feature modules under `backend/app/modules/<module>/` with `router.py → service.py → repository.py` (+ `models.py`, `schemas.py`); a layer only calls the one to its right; no module imports another's repository or models. Cross-cutting code (settings, DB session, auth dependency, errors) in `backend/app/core/`. This epic owns the `identity` module (account, session, consent).
-- **Sessions, not JWT:** random opaque token, stored hashed in a `sessions` table. Logout and account deletion delete the user's sessions.
-- **CSRF:** every POST/PUT/PATCH/DELETE must carry an `Origin` matching the app URL, else 403 with the error envelope.
-- **Consent guard:** a `require_consent` dependency owned by `identity` guards every health-data endpoint; no other module checks consent itself. Later epics rely on it.
-- **Ownership:** every user-owned table has `user_id`; no endpoint accepts a user id from the client; repositories always filter by the current user. Endpoints are authenticated by default; public ones (register, login, health) are explicitly marked.
-- **Data model (identity):** `users` with `consent_at`, `deleted_at` (and later `is_pro`); `sessions`. UUIDv4 ids, UTC ISO-8601 timestamps, plural snake_case table names.
-- **Soft delete:** `users.deleted_at`; all user queries exclude soft-deleted users; `python -m app.cli purge` hard-deletes users and all user-owned rows 30+ days after deletion and reports the count.
-- **Default equipment profiles** ("Hjemme", "Treningssenter") are created by the `exercises` service, called once by `identity` right after registration (hook point for Epic 4).
-- **Persistence:** PostgreSQL only; synchronous SQLAlchemy 2 + psycopg 3, one session per request committed once; plain `def` endpoints. Schema changes only via Alembic; on startup `alembic upgrade head`, then `seed_if_empty` only when `APP_ENV=local`.
-- **Config:** pydantic-settings; every variable in `.env.example` with a safe local default; with `APP_ENV=production` the backend refuses to start on an empty/default `SESSION_SECRET` and never seeds demo users; no secret prefixed `NEXT_PUBLIC_`.
-- **Errors:** every error (including 404 on unknown routes) is `{"error": {"code": "<snake_case>", "message": "<norsk>"}}`; the frontend shows `message` and branches only on `code`.
-- **API contract:** Pydantic schemas → OpenAPI → frontend types via `openapi-typescript`, called with `openapi-fetch`; one documented regeneration command; generated files committed. Paths `/api/<module>/...`; `GET /api/health` returns `{"status": "ok"}`.
-- **Frontend data:** TanStack Query 5. Styling: Tailwind 4.3.5 + shadcn/ui (CLI 4.23.0).
-- **Source tree to create:** `backend/app/{core,modules,ports,seed}/`, `backend/app/cli.py`, `backend/migrations/`, `backend/tests/` (mirrors modules); `frontend/src/{app,modules,lib/api}/`, `frontend/e2e/`.
-- **Tests:** backend pytest against the Compose Postgres (separate test DB), external services mocked; frontend Vitest; Playwright e2e.
-- **Conventions:** code/identifiers in English, UI text in Norwegian; never log passwords, session tokens or request bodies; one branch + PR per story, commits reference the issue.
-- Pinned versions: argon2-cffi 25.1.0, FastAPI 0.162.5, Uvicorn 0.54.0, SQLAlchemy 2.1.8, Alembic 1.20.1, psycopg 3.3.9, Pydantic 2.14.3, pydantic-settings 2.16.2, pytest 9.2.0, openapi-typescript 7.13.0, openapi-fetch 0.17.0, Vitest 5.1.0, Playwright 1.65.0.
+- **Monorepo:** `backend/` (FastAPI, Python 3.14) and `frontend/` (Next.js 16.4, React 19, Node 24), root `docker-compose.yml` with `db` (postgres:18), `backend` (internal only), `frontend` (port 3000). Scaffolded with official generators, no third-party starter. Pinned: Tailwind 4.3.5, shadcn CLI 4.23.0, TanStack Query 5.107.1, FastAPI 0.162.5, SQLAlchemy 2.1.8 (sync) + psycopg 3.3.9, Alembic 1.20.1.
+- **Layout:** backend `app/core/` (config, db session, auth dependency, errors), `app/modules/<module>/` (router → service → repository; a layer only calls the one below; no module imports another's repository/models), `app/ports/`, `app/seed/`, `migrations/`, `tests/` (mirrors modules); frontend `src/app/`, `src/modules/<module>/`, `src/lib/api/`, `e2e/`. Same module names on both sides; this epic owns `identity`.
+- **Frontend is UI-only:** no DB, no business rules. The browser talks only to Next.js, which rewrites `/api/*` to the backend in the Docker network. Types generated from the backend OpenAPI with `openapi-typescript` via one documented command, called with `openapi-fetch`; generated files committed.
+- **Startup:** backend runs `alembic upgrade head` (schema only via Alembic), then seeds if empty when `APP_ENV=local`. `GET /api/health` → `{"status": "ok"}`. Settings via pydantic-settings; every variable in `.env.example` with a safe local default; with `APP_ENV=production`, an empty/default `SESSION_SECRET` aborts startup with a clear log message, and demo users are never seeded.
+- **Errors:** one envelope `{"error": {"code", "message"}}` with Norwegian messages for every backend error, including 404 on unknown routes.
+- **Sessions (not JWT):** random opaque token stored hashed in a `sessions` table; cookie `HttpOnly`, `Secure`, `SameSite=Lax`. Logout and account deletion delete the sessions. Every POST/PUT/PATCH/DELETE must have an `Origin` matching the app URL, else 403 with the envelope.
+- **Consent guard:** a single `require_consent` dependency in `identity` protects every health-data endpoint; no other module checks consent itself.
+- **Data ownership:** every user-owned table has `user_id`; no endpoint accepts a user id; repositories always filter by the current user. Endpoints are authenticated by default.
+- **Conventions:** UUIDv4 ids; UTC ISO-8601 timestamps; tables plural `snake_case`; API paths `/api/<module>/...`; code in English, UI text Norwegian; never log passwords, tokens or request bodies. Soft delete via `users.deleted_at`; purge with `python -m app.cli purge`. Right after registration, `identity` calls the `exercises` service once to create default Equipment Profiles (the service itself arrives in Epic 4). One branch and PR per story.
+- **Design tokens (not final):** colours, typography, radii, spacing and shadows live in one token set exposed as Tailwind theme values and shadcn/ui CSS variables, with a light and a dark variant. Components use tokens only, never raw hex. The group (Karianne) is still finalizing colours and font in PR #17 (`ux/felles-design`), so Story 1.2 must keep all token values in one place so that swapping them changes no component code. Current starting point from that branch: warm paper background with notebook lines, surface cards, ink text, plum `accent` as the only action colour, food green / training orange as small marks only, error red only for validation/destructive actions, Inter as the single typeface. Dark-mode values are not yet specified in the design doc. Document each text/background pair with its contrast ratio.
 
 ## UX & Interaction Patterns
 
-- **Flow:** logged-out visitor → Logg inn / Opprett konto → (after first registration) Samtykke → first-run intro (Epic 2) → I dag. Logout and "Slett konto" live on the Profil page.
-- **Shell:** ≥ 1024 px persistent sidebar (I dag, Mat, Trening, Historikk, Profil, 230 px wide); 768–1023 px collapses to icons (72 px); < 768 px bottom tab bar (I dag, Mat, Trening, Profil). Active item ink + bold on the nav-active tint. One outline icon set (house, bowl, dumbbell, calendar, person), 24 px, 2 px stroke; no emoji.
-- **Design tokens:** one token set exposed as Tailwind theme values and shadcn/ui CSS variables; components never use raw hex. Use the A1 tokens (ink `#1E2A2F`, muted `#5B6B70`, board `#F7F8F6`, card `#FFFFFF`, line `#DCE2E0`, food `#2F7D55`, training `#D9542B` never as text / training-text `#B9471F`, error `#B42318`, Atkinson Hyperlegible) until the group confirms the merged A1 + round-3 set; swapping the set must not change component code. Document each text/background contrast ratio; body text ≥ 4.5:1. No dark mode or gradients in v1. Red is reserved for validation errors and destructive confirmations.
-- **Forms:** 48 px inputs with a visible label above (never placeholder-only); errors inline under the field, starting with the fix, 2 px error border; focus moves to the first invalid field; Enter submits.
-- **Accessibility:** visible 2 px focus ring with offset; tab order follows reading order; page title "<side> · Prompt Force"; dialogs take focus and return it on close; Esc closes; toasts via `aria-live="polite"`; 200% zoom without horizontal scroll.
-- **Delete account:** confirmation dialog stating it cannot be undone (one modal level only).
-- **Voice:** Norwegian, warm, short, du-form, verbs on buttons; no BMR/TDEE jargon, streaks, confetti or shaming. Write a short voice guide in the frontend for later stories to follow.
+- **Shell:** ≥ 1024 px persistent sidebar (I dag, Mat, Trening, Historikk, Profil); 768–1023 px sidebar collapses to icons; < 768 px bottom tab bar (I dag, Mat, Trening, Profil). Active item marked (plum on accent tint, pill). One outline icon set (house, bowl, dumbbell, calendar, person), no emoji. Top bar holds the help "?" button and the light/dark toggle.
+- **Keyboard/screen reader:** visible 2 px focus ring with offset; tab order follows reading order; document title "<side> · Prompt Force"; every input has a visible label (never placeholder-only).
+- **Forms:** inline errors under the field, starting with what to fix; focus moves to the first invalid field. Buttons are verbs; one primary (plum) button per view; buttons ≥ 52 px high.
+- **Voice:** warm, short, "du"-form, verbs on buttons, no BMR/TDEE jargon, no streaks, confetti or shaming. Story 1.2 writes a short voice guide in the frontend that all later stories follow.
+- **Flow:** register → consent → (Epic 2: intro → profile setup) → I dag. A logged-in user without consent is sent to the consent screen.
 
 ## Cross-Story Dependencies
 
-- 1.1 is the base for everything (compose, settings, error envelope, Alembic, OpenAPI generation); 1.2 builds the shell all pages render in.
-- 1.3 creates `users`/`sessions`, Argon2id hashing and the Origin check; 1.4 adds login/lockout/logout and the auth dependency plus the cross-user access test; 1.5 adds `consent_at` and `require_consent`; 1.6 adds soft delete, session removal and the purge CLI.
-- Later epics depend on: the auth dependency and ownership filtering (all user data), `require_consent` (Epics 2–6), the post-registration call to the `exercises` service for default equipment profiles (Epic 4), the first-run intro after consent (Epic 2), the shell and tokens (all UI), and seed-on-startup for demo users (NFR-4).
-- Purge must remove all user-owned rows added by later epics (profile, equipment profiles, food log entries, user-created food items, workouts).
+- 1.1 is the base for everything (compose, layout, error envelope, settings, API type generation).
+- 1.2 shell and tokens are used by every later UI story; 1.3–1.6 screens render inside it.
+- 1.3 creates users, sessions and the Origin check; 1.4 adds login/logout, lockout and the isolation test; 1.5 adds `consent_at` and `require_consent`, which Epics 2–6 depend on for all health-data endpoints; 1.6 depends on sessions and must exclude soft-deleted users everywhere.
+- Default Equipment Profiles on registration depend on the Epic 4 `exercises` service.
