@@ -28,12 +28,14 @@
 - [ ] 2026-11-11 [repo-gjennomgang-og-readme](986-2026-11-11-17-34-35-repo-gjennomgang-og-readme.md) — legge til installasjon, kjøring, testbrukere og tester i README når koden finnes
 - [x] 2026-11-12 [faglarer-tilbakemelding](985-2026-11-12-16-46-40-faglarer-tilbakemelding.md) — spørre faglærer om technology.md er en anbefaling eller bare inspirasjon (løst 2026-11-12 — faglærer i forelesningen: frivillig, teller ikke på karakteren)
 - [x] 2026-11-12 [faglarer-tilbakemelding](985-2026-11-12-16-46-40-faglarer-tilbakemelding.md) — oppdatere PRD-en med bmad-prd etter møtet, inkludert faglærers punkter (løst 2026-11-13 — se [prd-final](984-2026-11-13-11-51-31-prd-final.md))
-- [ ] 2026-11-13 [prd-final](984-2026-11-13-11-51-31-prd-final.md) — lage felles UX-design fra A1 og runde 3 (issue #9)
+- [x] 2026-11-13 [prd-final](984-2026-11-13-11-51-31-prd-final.md) — lage felles UX-design fra A1 og runde 3 (issue #9) (løst 2026-11-13 — se [felles-ux-design](980-2026-11-13-14-02-59-felles-ux-design.md))
 - [x] 2026-11-13 [arkitektur](983-2026-11-13-12-04-14-arkitektur.md) — lage epics og stories (bmad-create-epics-and-stories) (løst 2026-11-13 — se [epics-og-stories](982-2026-11-13-12-17-52-epics-og-stories.md))
 - [x] 2026-11-13 [epics-og-stories](982-2026-11-13-12-17-52-epics-og-stories.md) — starte implementasjonen med story 1.1 (løst 2026-11-13 — se [story-1-1-kjor-appen](981-2026-11-13-12-36-36-story-1-1-kjor-appen.md))
 - [x] 2026-11-13 [story-1-1-kjor-appen](981-2026-11-13-12-36-36-story-1-1-kjor-appen.md) — avklare httpx-versjon: Starlette vil ha httpx2 i TestClient, arkitekturen låser httpx 0.28.1 (løst 2026-11-13 — byttet til httpx2 2.16.0)
 - [ ] 2026-11-13 [story-1-1-kjor-appen](981-2026-11-13-12-36-36-story-1-1-kjor-appen.md) — vurdere hot reload (bind mounts) i docker-compose for utvikling
 - [ ] 2026-11-13 [merge-pr-16](979-2026-11-13-17-46-12-merge-pr-16.md) — flette PR #17 (felles UX-design) når den er godkjent, deretter starte story 1.2
+- [ ] 2026-11-13 [ux-revisjon-2](978-2026-11-13-18-39-19-ux-revisjon-2.md) — Karianne må godkjenne revisjon 2 av designet i PR #17
+- [x] 2026-11-15 [mork-modus-nfr-12](977-2026-11-15-12-28-21-mork-modus-nfr-12.md) — Karianne oppdaterer DESIGN.md i PR #17 med endelig design og mørke fargeverdier, og deler canvas-linken (løst 2026-11-15 — Osman la inn designet hennes, se [design-rev-3](975-2026-11-15-15-15-00-design-rev-3.md))
 - [x] 2026-11-15 [story-1-2-app-skall](976-2026-11-15-13-01-00-story-1-2-app-skall.md) — pushe og lage PR for story 1.2 (løst 2026-11-15 — PR #18)
 - [x] 2026-11-15 [story-1-2-app-skall](976-2026-11-15-13-01-00-story-1-2-app-skall.md) — bytte plassholderverdiene i tokens.css når det endelige designet i PR #17 er klart (løst 2026-11-15 — se [design-rev-3](975-2026-11-15-15-15-00-design-rev-3.md))
 - [x] 2026-11-15 [design-rev-3](975-2026-11-15-15-15-00-design-rev-3.md) — gruppa må bestemme om Mat og Trening beholder grønt og oransje (Karianne sitt design har én lilla farge) (løst 2026-11-15 — Osman valgte én lilla farge)

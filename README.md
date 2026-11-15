@@ -26,7 +26,7 @@ Planleggingen (BMAD) er ferdig, og koden bygges én story om gangen. Grunnmuren 
 | Product brief | Godkjent av faglærer |
 | Research | Ferdig |
 | PRD | Ferdig (final 13.11), med faglærers tilbakemelding innarbeidet |
-| UX-design | To forslag; gruppen har valgt å slå dem sammen ([issue #9](https://github.com/IBE160-2026/G62-bjolstad-khalid-reehorst-svendsrud/issues/9)) |
+| UX-design | Felles design 13.11: utseendet fra runde 3 med fargekodene og strukturen fra A1 ([DESIGN.md](.docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/DESIGN.md)) |
 | Arkitektur | Ferdig 13.11: Next.js + FastAPI + PostgreSQL i Docker Compose ([arkitektur](.docs/planning-artifacts/architecture/architecture-prompt-force-2026-11-13/ARCHITECTURE-SPINE.md)) |
 | Epics og stories | Ferdig 13.11: 7 epics og 32 stories ([epics.md](.docs/planning-artifacts/epics.md)) |
 | Kode og tester | Pågår: story 1.1 (kjør appen med én kommando). Én branch og pull request per story |
@@ -95,8 +95,8 @@ Endringer i koden krever at containerne bygges på nytt: `docker compose up --bu
 
 **UX-design**
 - [Produktbeskrivelse for design](PRODUCT.md)
-- Forslag A1: [konseptrunder og beslutninger](.docs/planning-artifacts/ux/konsepter/decisions.md), [valgt konsept](.docs/planning-artifacts/ux/valgt-konsept/), [DESIGN.md og EXPERIENCE.md](.docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/)
-- Forslag runde 3: [DESIGN.md, EXPERIENCE.md og mockups](.docs/planning-artifacts/ux/runde-3/)
+- **Felles design (gjeldende):** [DESIGN.md og EXPERIENCE.md](.docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/)
+- Prosessen: [konseptrunder og beslutninger](.docs/planning-artifacts/ux/konsepter/decisions.md), [valgt konsept A1](.docs/planning-artifacts/ux/valgt-konsept/), [runde 3 med mockups](.docs/planning-artifacts/ux/runde-3/)
 
 **Prosess og KI-bruk**
 - [KI-logg](.docs/ki-logg.md): hva vi ba KI om, hva den laget, og hva vi selv kontrollerte og endret

@@ -1,12 +1,13 @@
 ---
 name: Prompt Force
 status: final
-updated: 2026-11-10
+updated: 2026-11-13
 sources:
   - ../../prds/prd-prompt-force-2026-11-02/prd.md
   - ../../briefs/brief-prompt-force-2026-09-16/brief.md
   - ../../../../PRODUCT.md
   - ../../ux/konsepter/decisions.md
+  - ../../ux/runde-3/EXPERIENCE.md
   - ./DESIGN.md
 ---
 
@@ -16,7 +17,7 @@ sources:
 
 A responsive web app in the browser: desktop first, because the examiner runs it on a PC, and usable down to 360 px. It is not a native app, a PWA or offline-capable (PRD §7). It must still feel like an app: persistent navigation, authored icons and tappable cards (`../../ux/konsepter/decisions.md`).
 
-`DESIGN.md` is the visual identity. This file owns structure and behaviour and references tokens by name, for example `{colors.food}`. No UI component library has been chosen; the stack is decided in the architecture phase `[ASSUMPTION]`. If a library is picked, this spine specifies the behaviour on top of its defaults.
+**Merged design (2026-11-13):** the group voted to merge concept A1 and UX round 3. This spine keeps A1's structure and behaviour (it follows the final PRD) and adds round 3's food method picker, muscle-group list and help button. `DESIGN.md` is the visual identity. This file owns structure and behaviour and references tokens by name, for example `{colors.food}`. No UI component library has been chosen; the stack is decided in the architecture phase `[ASSUMPTION]`. If a library is picked, this spine specifies the behaviour on top of its defaults.
 
 All UI text is Norwegian bokmål (NFR-2). Requirement IDs refer to the PRD. Terms such as Daily Overview, Meal, Food Log Entry, Equipment Profile, Exercise Suggestion, Workout and Set are used exactly as defined in PRD §3. Their Norwegian UI labels are listed under Voice and Tone.
 
@@ -66,15 +67,16 @@ Behavioural rules only. Visual specs are in `DESIGN.md` → Components.
 
 | Component | Use | Behaviour |
 |---|---|---|
-| Week strip | I dag, Mat, Trening | Click or tap a day to switch the whole surface to that date. Future days are disabled. Arrows (‹ ›) step a week; a calendar icon opens the date picker (FR-27). Magnets update as soon as something is logged or deleted (NFR-9). |
+| Week strip | I dag, Mat, Trening | Click or tap a day to switch the whole surface to that date. Future days are disabled. Arrows (‹ ›) step a week; a calendar icon opens the date picker (FR-27). The cards update as soon as something is logged or deleted (NFR-9). |
 | Day note | I dag | Shows kcal remaining for the chosen date. Not clickable. It says when the safety floor was used (FR-6) and shows a "grovt anslag" note for ages 16 to 17. |
 | Section card | I dag | The whole header row is a link to Mat or Trening for the same date. Rows are links to the entry. The "+ Legg til" action on an empty Meal opens Legg til mat with that Meal preselected. |
-| Legg til mat sheet | Mat, I dag | Opens with the search field focused and **Nylig brukt** listed under it. Tapping a recent item logs it with last time's amount (FR-14; three taps or fewer from I dag, SM-6). Tabs: Søk · Strekkode · Registrer selv. The Strekkode tab shows a number field first; "Skann med kamera" appears only when the browser supports it (FR-8, FR-9). Search filters the local database as you type and never calls Open Food Facts (FR-11). |
+| Legg til mat sheet | Mat, I dag | Opens with the **method picker** from round 3: four equal options, Søk · Skriv strekkode · Nylig brukt · Manuelt. Søk is selected and focused by default. Nylig brukt lists recent items; tapping one logs it with last time's amount (FR-14; three taps or fewer from I dag, SM-6). Skriv strekkode shows a number field first; "Skann med kamera" appears only when the browser supports it (FR-8, FR-9). Search filters the local database as you type and never calls Open Food Facts (FR-11). |
 | Amount picker | Matvare | Grams by default, or servings when the item has a serving size. kcal updates live before saving (FR-13). "Lagre" closes the sheet and returns to where it opened. |
 | Equipment switch | Trening | A segmented control of the user's Equipment Profiles ("Hjemme" · "Treningssenter" · …). Switching refreshes the suggestions at once (FR-19). |
-| Suggestion list | Trening | Grouped by level (Nybegynner first). Filter chips for Muscle Group and Level, plus a search field (FR-20). Each row: name, muscle group, equipment icons and a "+" that adds it to today's workout. |
+| Suggestion list | Trening | Grouped by level (Nybegynner first). Next to it, round 3's **muscle-group list** (Skuldre, Bryst, Mage/kjerne, Armer, Ben, Rygg) filters on primary or secondary muscle group, plus Level chips and a name search field (FR-20). Each row: name, muscle group, equipment icons and a "+" that adds it to today's workout. |
 | Set row | Økt | Reps and kg fields (or seconds for time exercises), a check to mark it done and a delete action. A new exercise starts with three empty sets suggesting 10 reps (FR-23). "Sist: …" sits under the exercise name (FR-24). |
 | Delete | Entries, Sets, Workouts | Deleting a Food Log Entry or Set happens at once, with an "Angre" toast for 5 seconds. Deleting a whole Workout or the account asks for confirmation (FR-4). |
+| Help button | Every screen, top bar | The "?" from round 3 opens a short sheet explaining the current screen in two to four sentences; Esc or the close button returns focus to the button. |
 | Toast | Global | Bottom centre on desktop and above the tab bar on mobile. One at a time; disappears after 5 s; never covers the primary button. |
 
 ## State Patterns
@@ -110,7 +112,7 @@ Behavioural rules; contrast lives in `DESIGN.md`. Target: WCAG 2.1 AA basics (NF
 
 - Every input has a visible label; placeholder text is never the only label.
 - Tap targets are at least 44 × 44 px; the week-strip cells meet this on mobile.
-- Magnets are never the only signal: each day cell has an accessible name, for example "tirsdag 10. november, mat logget, trening logget".
+- Each day cell has an accessible name, for example "tirsdag 10. november".
 - Focus is always visible (2 px `{colors.focus-ring}` outline with offset). Opening a sheet moves focus into it; closing returns focus to the button that opened it.
 - Page changes update the document title ("I dag, 10. november · Prompt Force"); toasts are announced through `aria-live="polite"`.
 - The embedded video has a text alternative (the technique description), so it is never required.
@@ -130,7 +132,8 @@ Camera scanning is offered only where the browser supports it and the page runs 
 
 - **From Hevy:** set-by-set logging with last time's numbers in view (FR-24).
 - **From Lifesum:** an approachable food log grouped by Meal, with recently used items one tap away.
-- **From the fridge planner board (concept A1):** the week at a glance with magnets for what is done.
+- **From the fridge planner board (concept A1):** the week at a glance (the magnets were dropped on 2026-11-15).
+- **From UX round 3 (Karianne):** the paper-journal look, the four-way food method picker, the muscle-group list and the help button. Round 3's calorie ring was not kept: the PRD asks for one number with a sentence (FR-7), which the day note already does.
 - **Rejected: MyFitnessPal-style density.** Sara found it "too much"; the front page stays at one number, two cards and two buttons (NFR-11).
 - **Rejected: macro rings and charts in v1.** Only kcal is shown (PRD §8.1).
 - **Rejected: streaks, badges and red warnings.** The app guides; it does not judge.
@@ -154,7 +157,7 @@ Failure: she types 680 kg by mistake → "Vekt må være mellom 30 og 300 kg." u
 1. On her laptop, I dag, she clicks "+ Legg til" next to Frokost. The sheet opens with Frokost preselected.
 2. She opens the Strekkode tab and types the number from the cup.
 3. The product appears with kcal per 100 g. She sets 150 g; the kcal updates live.
-4. **Climax:** she clicks "Lagre". The sheet closes, the Frokost row shows the yoghurt, the day note drops to the new remaining number, and a green magnet appears under today in the week strip.
+4. **Climax:** she clicks "Lagre". The sheet closes, the Frokost row shows the yoghurt, the day note drops to the new remaining number.
 
 Failure: the barcode is unknown → "Vi fant ikke denne varen. Vil du registrere den selv?" → Registrer matvare opens with the barcode filled in.
 
@@ -164,7 +167,7 @@ Failure: the barcode is unknown → "Vi fant ikke denne varen. Vil du registrere
 2. The suggestions show only exercises that fit, Nybegynner first. She opens "Goblet squat", reads the description and watches the video.
 3. "Legg til i økt" adds it with three sets suggesting 10 reps. Under the name: "Sist: 8 kg × 10 (3. nov)".
 4. She logs 3 × 10 at 10 kg, ticking each set.
-5. **Climax:** she clicks "Fullfør økt" and returns to I dag. The Trening card lists the exercise with 3 × 10 · 10 kg, and an orange magnet sits next to the green one under today.
+5. **Climax:** she clicks "Fullfør økt" and returns to I dag. The Trening card lists the exercise with 3 × 10 · 10 kg.
 
 Failure: travelling with bodyweight only, she filters on Skuldre → "Ingen øvelser passer med Kroppsvekt og Skuldre. Prøv en annen muskelgruppe eller legg til utstyr."
 
@@ -172,12 +175,12 @@ Failure: travelling with bodyweight only, she filters on Skuldre → "Ingen øve
 
 1. In the evening she opens I dag on her phone.
 2. The note says "220 kcal igjen av dagens mål på 1 640"; the Mat card lists her three Meals and the Trening card her workout.
-3. **Climax:** she taps Mandag in the week strip; the whole page shows yesterday, with both magnets and yesterday's numbers, without leaving the screen.
+3. **Climax:** she taps Mandag in the week strip; the whole page shows yesterday, with yesterday's meals, workout and numbers, without leaving the screen.
 
 ### Flow 5 — The examiner runs the app (UJ-5)
 
 1. The examiner starts the app from the README and logs in with the seeded test user.
-2. **Climax:** I dag opens on a day full of fictional data, with magnets on several earlier days, so every surface can be tested at once without typing anything.
+2. **Climax:** I dag opens on a day full of fictional data, with data on several earlier days, so every surface can be tested at once without typing anything.
 
 ## Open Items
 
