@@ -558,7 +558,7 @@ Det viktigste funnet: Dekningsanalysen er regnet ut fra øvelseslista og viser a
 
 - [x] Sprint planning
 - [x] Story 1.2 bygget og testet
-- [x] Review av PR fra gruppen (PR #20 flettet)
+- [x] Review av PR fra gruppen (PR #18 flettet)
 
 ---
 
@@ -615,7 +615,7 @@ Det viktigste funnet: Dekningsanalysen er regnet ut fra øvelseslista og viser a
 ### Status
 
 - [x] Story 1.3 bygget og testet
-- [x] Review av PR fra gruppen (PR #20 flettet)
+- [x] Review av PR fra gruppen (PR #19 flettet)
 
 ---
 
