@@ -47,3 +47,5 @@
 - [ ] 2026-11-15 [glemt-passord-plan](972-2026-11-15-21-00-00-glemt-passord-plan.md) — bygge Story 1.7 (glemt passord) etter 1.5 og 1.6
 - [x] 2026-11-15 [story-1-5-samtykke](971-2026-11-15-22-10-00-story-1-5-samtykke.md) — pushe og lage PR for story 1.5 (løst 2026-11-15 — PR #22)
 - [ ] 2026-11-15 [story-1-5-samtykke](971-2026-11-15-22-10-00-story-1-5-samtykke.md) — gruppa leser samtykketeksten på /samtykke
+- [ ] 2026-11-15 [deaktiver-konto-plan](969-2026-11-15-21-45-00-deaktiver-konto-plan.md) — pushe og lage PR for planendringen (FR-32, Story 1.8)
+- [ ] 2026-11-15 [deaktiver-konto-plan](969-2026-11-15-21-45-00-deaktiver-konto-plan.md) — bygge Story 1.8 (deaktiver konto)

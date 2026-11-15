@@ -258,6 +258,7 @@ erDiagram
 | --- | --- | --- |
 | FR-1 – FR-4 Account, consent, own data, deletion | `identity` | AD-3, AD-4, AD-14 |
 | FR-31 Reset a forgotten password | `identity` + `ports/email` | AD-3, AD-7 |
+| FR-32 Deactivate the account | `identity` | AD-3, AD-14 |
 | FR-5 – FR-7 Profile and calorie target | `profile` | AD-5, AD-12 |
 | FR-8 – FR-10 Barcode scan, type, not found | `food` + `ports/off` | AD-7 |
 | FR-11 – FR-16 Search, manual, amount, recent, edit, sources | `food` | AD-4, AD-5, AD-6 |
