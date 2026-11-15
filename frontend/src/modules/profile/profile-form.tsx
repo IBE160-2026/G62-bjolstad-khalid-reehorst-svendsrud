@@ -5,7 +5,7 @@ import { useRef, useState, type FormEvent } from "react";
 import { ApiError } from "@/modules/identity/api";
 import { INPUT_CLASS, PRIMARY_BUTTON_CLASS } from "@/modules/identity/styles";
 
-import { useSaveProfile } from "./api";
+import { useSaveProfile, type Profile } from "./api";
 import {
   firstInvalidProfileField,
   isProfileField,
@@ -62,6 +62,7 @@ function NumberField({
   label,
   unit,
   inputMode,
+  defaultValue,
   error,
   onChange,
 }: {
@@ -69,6 +70,7 @@ function NumberField({
   label: string;
   unit: string;
   inputMode: "decimal" | "numeric";
+  defaultValue?: string;
   error?: string;
   onChange: () => void;
 }) {
@@ -84,6 +86,7 @@ function NumberField({
         type="text"
         inputMode={inputMode}
         autoComplete="off"
+        defaultValue={defaultValue}
         onChange={onChange}
         aria-invalid={error ? true : undefined}
         aria-describedby={error ? errorId(field) : undefined}
@@ -99,6 +102,7 @@ function ChoiceGroup({
   legend,
   hint,
   choices,
+  defaultValue,
   error,
   onChange,
 }: {
@@ -106,6 +110,7 @@ function ChoiceGroup({
   legend: string;
   hint?: string;
   choices: readonly Choice[];
+  defaultValue?: string;
   error?: string;
   onChange: () => void;
 }) {
@@ -140,6 +145,7 @@ function ChoiceGroup({
                 type="radio"
                 name={field}
                 value={choice.value}
+                defaultChecked={defaultValue === choice.value}
                 onChange={onChange}
                 aria-describedby={describedBy || undefined}
                 className="size-5 shrink-0 cursor-pointer accent-primary"
@@ -172,8 +178,29 @@ function readValues(form: HTMLFormElement): ProfileValues {
   };
 }
 
-/** Body data, activity level and goal; the backend computes the target from them. */
-export function ProfileForm() {
+/** Saved weight as the user would type it: "82,5", never "82.5". */
+function formatWeight(weight: number): string {
+  return String(weight).replace(".", ",");
+}
+
+/**
+ * Body data, activity level and goal; the backend computes the target from them.
+ * With `initial` the fields start with the saved profile (story 2.2, Profil page).
+ */
+export function ProfileForm({
+  initial,
+  submitLabel = "Regn ut dagens mål",
+  pendingLabel = "Regner ut …",
+  onSaved,
+  onEdit,
+}: {
+  initial?: Profile;
+  submitLabel?: string;
+  pendingLabel?: string;
+  onSaved?: () => void;
+  /** Called when a field changes or a save starts, e.g. to hide an old "Lagret". */
+  onEdit?: () => void;
+}) {
   const save = useSaveProfile();
   const formRef = useRef<HTMLFormElement>(null);
   const [errors, setErrors] = useState<ProfileErrors>({});
@@ -192,6 +219,7 @@ export function ProfileForm() {
   }
 
   function clearError(field: ProfileField) {
+    onEdit?.();
     setErrors((current) => {
       if (!current[field]) return current;
       const next = { ...current };
@@ -203,6 +231,7 @@ export function ProfileForm() {
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (save.isPending) return;
+    onEdit?.();
     setFormError(null);
     const result = validateProfile(readValues(event.currentTarget));
     if (!result.ok) {
@@ -212,6 +241,7 @@ export function ProfileForm() {
     setErrors({});
 
     save.mutate(result.body, {
+      onSuccess: () => onSaved?.(),
       onError: (error) => {
         const serverErrors: ProfileErrors = {};
         if (error instanceof ApiError) {
@@ -237,6 +267,7 @@ export function ProfileForm() {
         legend="Kjønn"
         hint="Formelen regner litt ulikt for kvinner og menn."
         choices={SEX_CHOICES}
+        defaultValue={initial?.sex}
         error={errors.sex}
         onChange={() => clearError("sex")}
       />
@@ -245,6 +276,7 @@ export function ProfileForm() {
         label="Vekt"
         unit="kg"
         inputMode="decimal"
+        defaultValue={initial ? formatWeight(initial.weight_kg) : undefined}
         error={errors.weight_kg}
         onChange={() => clearError("weight_kg")}
       />
@@ -253,6 +285,7 @@ export function ProfileForm() {
         label="Høyde"
         unit="cm"
         inputMode="numeric"
+        defaultValue={initial ? String(initial.height_cm) : undefined}
         error={errors.height_cm}
         onChange={() => clearError("height_cm")}
       />
@@ -261,6 +294,7 @@ export function ProfileForm() {
         label="Alder"
         unit="år"
         inputMode="numeric"
+        defaultValue={initial ? String(initial.age) : undefined}
         error={errors.age}
         onChange={() => clearError("age")}
       />
@@ -268,6 +302,7 @@ export function ProfileForm() {
         field="activity_level"
         legend="Aktivitetsnivå"
         choices={ACTIVITY_CHOICES}
+        defaultValue={initial?.activity_level}
         error={errors.activity_level}
         onChange={() => clearError("activity_level")}
       />
@@ -275,6 +310,7 @@ export function ProfileForm() {
         field="goal"
         legend="Mål"
         choices={GOAL_CHOICES}
+        defaultValue={initial?.goal}
         error={errors.goal}
         onChange={() => clearError("goal")}
       />
@@ -286,7 +322,7 @@ export function ProfileForm() {
       )}
 
       <button type="submit" disabled={save.isPending} className={PRIMARY_BUTTON_CLASS}>
-        {save.isPending ? "Regner ut …" : "Regn ut dagens mål"}
+        {save.isPending ? pendingLabel : submitLabel}
       </button>
     </form>
   );

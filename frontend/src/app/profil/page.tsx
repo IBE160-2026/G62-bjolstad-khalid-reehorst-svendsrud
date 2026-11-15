@@ -2,15 +2,21 @@ import type { Metadata } from "next";
 
 import { DeleteAccount } from "@/modules/identity/delete-account";
 import { LogoutButton } from "@/modules/identity/logout-button";
+import { ProfileEditor } from "@/modules/profile/profile-editor";
 
 export const metadata: Metadata = { title: "Profil" };
 
 export default function ProfilePage() {
   return (
-    <div className="flex flex-col gap-6">
-      <p className="text-body text-foreground">Her legger du snart inn profilen og målet ditt.</p>
-      <LogoutButton />
-      <DeleteAccount />
+    <div className="flex flex-col gap-10">
+      <ProfileEditor />
+      <section aria-labelledby="account-heading" className="flex flex-col gap-4">
+        <h2 id="account-heading" className="text-heading font-medium text-foreground">
+          Konto
+        </h2>
+        <LogoutButton />
+        <DeleteAccount />
+      </section>
     </div>
   );
 }

@@ -783,6 +783,32 @@ Det viktigste funnet: Dekningsanalysen er regnet ut fra øvelseslista og viser a
 
 ---
 
+## 2026-11-15 – Story 2.2 (endre profilen)
+
+**Verktøy:** Claude Code (BMAD `bmad-build`, hurtigrute)
+**Hvem:** Osman Khalid
+**Bakgrunn:** Når vekten eller målet endrer seg, må kaloriemålet følge med.
+
+### Hva vi ba KI om
+
+1. La brukeren endre profilen på Profil-siden og se det nye målet med en gang.
+
+### Hva KI produserte
+
+- Kort spec, profilredigering på Profil-siden og nye tester. Ingen endring i backend.
+
+### Hva vi selv vurderte og kontrollerte
+
+- Liten endring, så hurtigruten med én kontrollør ble brukt.
+- Kontrolløren fant 10 punkter: 5 rettet (blant annet at en feil ved henting i bakgrunnen skjulte skjemaet), 5 avvist med begrunnelse.
+
+### Status
+
+- [x] Story 2.2 bygget og testet
+- [ ] Review av PR fra gruppen
+
+---
+
 ## Mal for nye oppføringer
 
 ```markdown
