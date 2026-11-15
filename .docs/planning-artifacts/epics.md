@@ -53,6 +53,7 @@ FR27 (Should): The user can move to earlier dates (previous day or date picker);
 FR28 (Must): A new user, or a date without logs, sees short prompts ("Logg ditt første måltid", "Start en økt") instead of empty tables. A first-time user sees a short, dismissible introduction to the three steps that never reappears once dismissed.
 FR29 (Phase 2): A Pro user can photograph one food item and get an estimated name and kcal, always labelled as an estimate and editable. Mock Mode returns "Egg, 1 stk, 78 kcal (estimat)"; failures, missing kcal or >15 s fall back to manual registration; max 20 calls per day; the user is told before sending that the photo goes to an external service.
 FR31 (Should): A user who forgot their password can request a reset link by email and set a new password. Same answer whether or not the email has an account; the link is single-use, expires after 60 minutes and only its hash is stored; a new password logs the user out everywhere and clears the lockout; at most 3 reset emails per account per hour; locally, emails go to a mail catcher, never really sent.
+FR32 (Should): A user can deactivate their account instead of deleting it: confirmation, logged out everywhere, no data deleted; logging in with the right password reactivates it and says so; deactivated accounts are never purged.
 FR30 (Phase 2): Users have a Pro Flag (default off) set in Seed Data or by a developer; non-Pro users opening FR29 see it is a Pro feature and nothing is sent.
 
 ### NonFunctional Requirements
@@ -154,12 +155,13 @@ FR28: Epic 2 (first-run introduction), Epic 6 (empty states on the overview); Ep
 FR29: Epic 7 - Photo-based calorie estimate (phase 2)
 FR30: Epic 7 - Pro Flag (phase 2)
 FR31: Epic 1 - Reset a forgotten password by email
+FR32: Epic 1 - Deactivate the account
 
 ## Epic List
 
 ### Epic 1: Account and safe login
 A visitor can create an account, give consent, log in and out, and delete the account; the app runs with one Docker Compose command and has its shell (navigation, design tokens). Every later epic builds on this.
-**FRs covered:** FR1, FR2, FR3, FR4 (account), FR31
+**FRs covered:** FR1, FR2, FR3, FR4 (account), FR31, FR32
 
 ### Epic 2: Profile and calorie target
 A logged-in user enters body data and gets one calorie target explained in plain Norwegian, after a short first-run introduction.
@@ -381,6 +383,33 @@ So that I can get back into my account without asking anyone.
 **Given** the app runs with Docker Compose
 **When** a reset email is sent
 **Then** it lands in a local mail catcher (web inbox on its own port) and is never really sent; automated tests use the mock adapter; real sending only happens when SMTP settings are configured
+
+### Story 1.8: Deactivate my account (Should)
+
+As a user who wants a break,
+I want to deactivate my account without deleting it,
+So that I can come back later and find my data where I left it.
+
+**Covers:** FR32, FR1, AD-3, AD-14
+
+**Acceptance Criteria:**
+
+**Given** a logged-in user on the Profil page
+**When** they choose "Deaktiver konto" and confirm in a dialog saying "Du logges ut, og ingen data slettes. Logg inn igjen når du vil fortsette."
+**Then** `users.deactivated_at` is set, all their sessions are deleted, and they are sent to `/logg-inn`
+**And** no data is deleted
+
+**Given** a deactivated account
+**When** the user logs in with the right password
+**Then** `deactivated_at` is cleared, a new session is created, and the app shows "Velkommen tilbake! Kontoen din er aktiv igjen."
+
+**Given** a deactivated account
+**When** someone logs in with a wrong password
+**Then** they get the usual "E-post eller passord er feil." and the lockout rules (FR1) apply as for any account
+
+**Given** deactivated accounts
+**When** `python -m app.cli purge` runs
+**Then** they are never purged; only soft-deleted accounts are (story 1.6)
 
 ## Epic 2: Profile and calorie target
 
