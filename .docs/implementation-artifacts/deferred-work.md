@@ -30,3 +30,10 @@
 - source_spec: `.docs/implementation-artifacts/spec-1-3-create-an-account.md`
   summary: Check that Safari keeps the `Secure` session cookie on `http://localhost` (unverified, medium if true).
   evidence: Verified in Chrome only; if Safari drops it, registration succeeds but the user is not logged in. Settle by registering in current Safari; fix by tying `secure` to the `APP_URL` scheme.
+- source_spec: `.docs/implementation-artifacts/spec-1-6-delete-my-account.md`
+  summary: Add page-level render tests for `/logg-inn` (deleted-account status line) and Profil (delete button), or cover them in the first Playwright smoke test.
+  evidence: Removing either component from its page passes every Vitest suite and the build; only the manual check covers it.
+- source_spec: `.docs/implementation-artifacts/spec-1-6-delete-my-account.md`
+  summary: Test Alembic downgrades with an upgrade → downgrade → upgrade round trip.
+  evidence: No migration's downgrade is ever run; 0005's downgrade now deletes soft-deleted users and must stay correct.
+

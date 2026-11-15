@@ -1,4 +1,4 @@
-"""Account rules: password hashing, sessions, registration, login, lockout and consent."""
+"""Account rules: password hashing, sessions, registration, login, lockout, consent, deletion."""
 
 import hashlib
 import hmac
@@ -20,6 +20,9 @@ SESSION_LIFETIME = timedelta(days=30)
 EMAIL_UNAVAILABLE_MESSAGE = "Denne e-posten kan ikke brukes. Prøv å logge inn i stedet."
 INVALID_CREDENTIALS_MESSAGE = "E-post eller passord er feil."
 TOO_MANY_ATTEMPTS_MESSAGE = "For mange forsøk. Prøv igjen om litt."
+
+# Soft-deleted accounts are kept this long before `purge` removes them for good (AD-14).
+PURGE_AFTER = timedelta(days=30)
 
 # Lockout: this many failures within the window lock the account for the duration.
 LOCKOUT_THRESHOLD = 5
@@ -189,13 +192,34 @@ def logout(db: DbSessionType, session_id: uuid.UUID) -> None:
     repository.delete_session(db, session_id)
 
 
-def give_consent(db: DbSessionType, user_id: uuid.UUID, now: datetime) -> User:
-    """Record consent at `now`; giving it again keeps the first time."""
+def _locked_user(db: DbSessionType, user_id: uuid.UUID) -> User:
     user = repository.get_user_for_update(db, user_id)
     if user is None:
         # The session's user disappeared mid-request; treat it like a missing session.
         raise AppError(401, "unauthorized", "Du må logge inn.")
+    return user
+
+
+def give_consent(db: DbSessionType, user_id: uuid.UUID, now: datetime) -> User:
+    """Record consent at `now`; giving it again keeps the first time."""
+    user = _locked_user(db, user_id)
     if user.consent_at is None:
         user.consent_at = now
         db.flush()
     return user
+
+
+def delete_account(db: DbSessionType, user_id: uuid.UUID, now: datetime) -> None:
+    """Soft-delete the account at `now` and end every session it has (AD-14).
+
+    From here on the user is invisible to login, sessions and every other lookup.
+    """
+    user = _locked_user(db, user_id)
+    user.deleted_at = now
+    repository.delete_all_sessions(db, user.id)
+    db.flush()
+
+
+def purge_deleted(db: DbSessionType, now: datetime) -> int:
+    """Hard-delete accounts soft-deleted at least `PURGE_AFTER` ago; returns how many."""
+    return repository.purge_deleted_users(db, now - PURGE_AFTER)
