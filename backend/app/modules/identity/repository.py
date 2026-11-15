@@ -50,6 +50,21 @@ def get_user(db: DbSessionType, user_id: uuid.UUID) -> User | None:
     return db.get(User, user_id)
 
 
+def get_user_for_update(db: DbSessionType, user_id: uuid.UUID) -> User | None:
+    """Lock the user row so two consent requests cannot both write a time.
+
+    `populate_existing` reloads a user already in the session (from `resolve_session`),
+    so a request that waited on the lock sees the other request's committed values.
+    """
+    statement = (
+        select(User)
+        .where(User.id == user_id)
+        .with_for_update()
+        .execution_options(populate_existing=True)
+    )
+    return db.scalars(statement).one_or_none()
+
+
 def delete_session(db: DbSessionType, session_id: uuid.UUID) -> None:
     db.execute(delete(Session).where(Session.id == session_id))
 

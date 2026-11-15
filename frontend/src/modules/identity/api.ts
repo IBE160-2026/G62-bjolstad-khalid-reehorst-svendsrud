@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { api } from "@/lib/api/client";
 import type { components } from "@/lib/api/schema";
 
-import { LOGIN_PATH } from "./routes";
+import { HOME_PATH, LOGIN_PATH } from "./routes";
 import type { RegisterValues } from "./validation";
 
 type ErrorBody = components["schemas"]["ErrorBody"];
@@ -108,6 +108,19 @@ export function useLogout() {
     onSuccess: () => {
       queryClient.clear();
       router.replace(LOGIN_PATH);
+    },
+  });
+}
+
+/** Record consent to storing health data, then continue into the app (story 1.5). */
+export function useGiveConsent() {
+  const queryClient = useQueryClient();
+  const router = useRouter();
+  return useMutation({
+    mutationFn: () => call(() => api.POST("/api/identity/consent")),
+    onSuccess: (user) => {
+      queryClient.setQueryData(ME_QUERY_KEY, user);
+      router.replace(HOME_PATH);
     },
   });
 }

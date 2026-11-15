@@ -3,7 +3,7 @@
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 
-import { isAuthPath } from "@/modules/identity/routes";
+import { isAuthPath, isGatePath } from "@/modules/identity/routes";
 import { SessionGuard } from "@/modules/identity/session-guard";
 
 import { APP_NAME, pageTitle } from "./nav-items";
@@ -19,6 +19,15 @@ const SKIP_LINK_CLASS =
 export function AppShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   if (isAuthPath(pathname)) return <AuthLayout title={pageTitle(pathname)}>{children}</AuthLayout>;
+  if (isGatePath(pathname)) {
+    // Logged-in steps before the app (consent): no navigation, but the session is checked.
+    return (
+      <>
+        <SessionGuard />
+        <AuthLayout title={pageTitle(pathname)}>{children}</AuthLayout>
+      </>
+    );
+  }
 
   return (
     <div className="flex min-h-dvh">
@@ -42,7 +51,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   );
 }
 
-/** Logged-out pages: brand, theme toggle and the form; no navigation. */
+/** Account pages: brand, theme toggle and the form; no navigation. */
 function AuthLayout({ title, children }: { title: string; children: ReactNode }) {
   return (
     <div className="flex min-h-dvh flex-col">

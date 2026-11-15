@@ -1,4 +1,4 @@
-"""Account rules: password hashing, sessions, registration, login and lockout (FR1, AD-3)."""
+"""Account rules: password hashing, sessions, registration, login, lockout and consent."""
 
 import hashlib
 import hmac
@@ -91,6 +91,7 @@ class SessionUser:
     id: uuid.UUID
     email: str
     session_id: uuid.UUID
+    consent_at: datetime | None
 
 
 @dataclass(frozen=True)
@@ -178,9 +179,23 @@ def resolve_session(db: DbSessionType, token: str, now: datetime) -> SessionUser
     user = repository.get_user(db, session.user_id)
     if user is None:
         return None
-    return SessionUser(id=user.id, email=user.email, session_id=session.id)
+    return SessionUser(
+        id=user.id, email=user.email, session_id=session.id, consent_at=user.consent_at
+    )
 
 
 def logout(db: DbSessionType, session_id: uuid.UUID) -> None:
     """Delete only the presented session; other devices stay logged in."""
     repository.delete_session(db, session_id)
+
+
+def give_consent(db: DbSessionType, user_id: uuid.UUID, now: datetime) -> User:
+    """Record consent at `now`; giving it again keeps the first time."""
+    user = repository.get_user_for_update(db, user_id)
+    if user is None:
+        # The session's user disappeared mid-request; treat it like a missing session.
+        raise AppError(401, "unauthorized", "Du må logge inn.")
+    if user.consent_at is None:
+        user.consent_at = now
+        db.flush()
+    return user
