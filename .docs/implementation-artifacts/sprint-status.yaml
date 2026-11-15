@@ -43,6 +43,7 @@ development_status:
   1-5-give-consent-before-health-data: done
   1-6-delete-my-account: review
   1-7-reset-a-forgotten-password: backlog
+  1-8-deactivate-my-account: backlog
   epic-1-retrospective: optional
 
   epic-2: backlog

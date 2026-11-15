@@ -100,7 +100,7 @@ V1 is the core loop: **profile → calorie target → log food → log training 
 
 ### 4.1 Account and Privacy
 
-**Description:** A User registers with email and password and logs in to reach their own data. Before any health data is stored, the User gives explicit consent on a short, plain-language screen. The User can delete individual logs and their whole account, and can set a new password by email if they forget it. Realizes UJ-1, UJ-5.
+**Description:** A User registers with email and password and logs in to reach their own data. Before any health data is stored, the User gives explicit consent on a short, plain-language screen. The User can delete individual logs and their whole account, can set a new password by email if they forget it, and can deactivate the account to take a break. Realizes UJ-1, UJ-5.
 
 #### FR-1: Register and log in · Must
 A visitor can create an account with email and password, log in and log out.
@@ -130,6 +130,13 @@ A User who has forgotten their password can ask for a reset link by email and ch
 - Setting a new password logs the User out everywhere and clears the login lockout (FR-1).
 - At most 3 reset emails per account per hour.
 - Locally and for the examiner, emails go to a local mail catcher in Docker Compose and are never really sent; real sending only happens when a mail server is configured.
+
+
+#### FR-32: Deactivate the account · Should
+A User can deactivate their account instead of deleting it, to take a break without losing their data.
+- Deactivating asks for confirmation, logs the User out everywhere and deletes no data.
+- A deactivated account cannot be used until the User logs in again; logging in with the right password reactivates it and says so.
+- Deactivated accounts are never purged. A deactivated User who wants their data gone logs in and deletes the account (FR-4).
 
 ### 4.2 Profile and Calorie Target
 
@@ -366,10 +373,10 @@ A web app that runs in the browser, mainly on a PC or laptop, since the submissi
 
 ### 9.1 In scope (v1, must be finished and stable)
 
-**Priority.** Each FR heading states its priority. All are **Must** except the **Should** items, which are cut first if time runs out: FR-8 (camera scanning), FR-20 (filters by Muscle Group and Level; name search stays Must), FR-27 (move between dates) and FR-31 (reset a forgotten password). FR-14 (recent foods) and FR-24 (show last time) are **Must**, because they carry the product's thesis (fast logging, «what did I lift last time»), UJ-3 and SM-6. Changed 2026-11-13 after the lecturer's feedback. FR-9 and FR-11 are the main food-logging path.
+**Priority.** Each FR heading states its priority. All are **Must** except the **Should** items, which are cut first if time runs out: FR-8 (camera scanning), FR-20 (filters by Muscle Group and Level; name search stays Must), FR-27 (move between dates), FR-31 (reset a forgotten password) and FR-32 (deactivate the account). FR-14 (recent foods) and FR-24 (show last time) are **Must**, because they carry the product's thesis (fast logging, «what did I lift last time»), UJ-3 and SM-6. Changed 2026-11-13 after the lecturer's feedback. FR-9 and FR-11 are the main food-logging path.
 
 
-- Account, consent, deletion and password reset (FR-1 – FR-4, FR-31)
+- Account, consent, deletion, password reset and deactivation (FR-1 – FR-4, FR-31, FR-32)
 - Profile and Calorie Target with Goal (FR-5 – FR-7)
 - Food logging: scan, type barcode, search, manual, Meals, recent foods (FR-8 – FR-16)
 - Fixed exercise list, Equipment Profiles, Exercise Suggestions, videos (FR-17 – FR-21)
@@ -439,3 +446,5 @@ Changed by Osman Khalid on 2026-11-13: NFR-3 now states that the examiner runs t
 Changed by Osman Khalid on 2026-11-15: new NFR-12 (Should): light and dark mode, chosen by the User, after the group's design discussion 2026-11-14 (CoolMellon's suggestion, Karianne's dark version of the merged design).
 
 Changed by Osman Khalid on 2026-11-15: new FR-31 (Should): reset a forgotten password by email, after the group's discussion on Discord 2026-11-15 (Karianne's suggestion). Updated in §4.1, §6.2 and §9.1.
+
+Changed by Osman Khalid on 2026-11-15: new FR-32 (Should): deactivate the account, after the group's discussion on Discord 2026-11-15 (Karianne's suggestion). Updated in §4.1 and §9.1.

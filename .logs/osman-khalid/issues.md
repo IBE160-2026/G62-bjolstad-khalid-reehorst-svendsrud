@@ -49,3 +49,5 @@
 - [ ] 2026-11-15 [story-1-5-samtykke](971-2026-11-15-22-10-00-story-1-5-samtykke.md) — gruppa leser samtykketeksten på /samtykke
 - [x] 2026-11-15 [story-1-6-slett-konto](970-2026-11-15-23-20-00-story-1-6-slett-konto.md) — pushe og lage PR for story 1.6 (løst 2026-11-15 — PR #23)
 - [ ] 2026-11-15 [story-1-6-slett-konto](970-2026-11-15-23-20-00-story-1-6-slett-konto.md) — bestemme hvordan `python -m app.cli purge` kjøres jevnlig
+- [x] 2026-11-15 [deaktiver-konto-plan](969-2026-11-15-21-45-00-deaktiver-konto-plan.md) — pushe og lage PR for planendringen (FR-32, Story 1.8) (løst 2026-11-15 — PR #24)
+- [ ] 2026-11-15 [deaktiver-konto-plan](969-2026-11-15-21-45-00-deaktiver-konto-plan.md) — bygge Story 1.8 (deaktiver konto)

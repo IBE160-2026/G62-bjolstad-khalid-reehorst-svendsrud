@@ -728,6 +728,33 @@ Det viktigste funnet: Dekningsanalysen er regnet ut fra øvelseslista og viser a
 
 ---
 
+## 2026-11-15 – Deaktiver konto i planen (FR-32)
+
+**Verktøy:** Claude Code
+**Hvem:** Osman Khalid, etter forslag fra Karianne i Discord
+**Bakgrunn:** Gruppa ville at brukere kan ta en pause uten å slette dataene sine, slik mange andre apper har.
+
+### Hva vi ba KI om
+
+1. Legge «deaktiver konto» inn i PRD, epics, arkitektur og sprint-status.
+
+### Hva KI produserte
+
+- FR-32 (Should) i PRD-en, Story 1.8 i epics.md, linje i arkitekturtabellen og sprint-status.
+
+### Hva vi selv vurderte og kontrollerte
+
+- Deaktivering sletter ingenting, og innlogging aktiverer kontoen igjen – enkelt å forstå for nybegynnere.
+- Deaktiverte kontoer slettes aldri automatisk; vil man bli kvitt dataene, sletter man kontoen (FR-4).
+- Satt som Should, så den kuttes før Must-kravene hvis tiden blir knapp.
+
+### Status
+
+- [x] Lagt inn i planen
+- [ ] Story 1.8 bygget
+
+---
+
 ## Mal for nye oppføringer
 
 ```markdown
