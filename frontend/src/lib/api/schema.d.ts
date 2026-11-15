@@ -125,6 +125,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/identity/intro/dismiss": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Dismiss Intro
+         * @description Records that the first-run introduction was closed. Requires login, not consent.
+         */
+        post: operations["dismiss_intro"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/profile": {
         parameters: {
             query?: never;
@@ -143,6 +163,50 @@ export interface paths {
          */
         put: operations["save_profile"];
         post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/food/items": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Search Food Items
+         * @description Shared items plus the user's own whose name contains `q`; max 20; `[]` under 2 chars.
+         */
+        get: operations["search_food_items"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/food/entries": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Food Day
+         * @description The user's entries for one date (YYYY-MM-DD) by Meal, with Meal and day totals.
+         */
+        get: operations["get_food_day"];
+        put?: never;
+        /**
+         * Add Food Entry
+         * @description Log grams of a food item in a Meal; kcal per 100 g is copied as a snapshot.
+         */
+        post: operations["add_food_entry"];
         delete?: never;
         options?: never;
         head?: never;
@@ -181,6 +245,90 @@ export interface components {
             /** Message */
             message: string;
         };
+        /** FoodDayResponse */
+        FoodDayResponse: {
+            /**
+             * Date
+             * Format: date
+             */
+            date: string;
+            /** Meals */
+            meals: components["schemas"]["MealSummary"][];
+            /** Total Kcal */
+            total_kcal: number;
+        };
+        /** FoodEntryRequest */
+        FoodEntryRequest: {
+            /**
+             * Food Item Id
+             * Format: uuid
+             */
+            food_item_id: string;
+            /**
+             * Date
+             * Format: date
+             */
+            date: string;
+            meal: components["schemas"]["Meal"];
+            /** Grams */
+            grams: number;
+        };
+        /** FoodEntryResponse */
+        FoodEntryResponse: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Food Item Id
+             * Format: uuid
+             */
+            food_item_id: string;
+            /** Name */
+            name: string;
+            /**
+             * Date
+             * Format: date
+             */
+            date: string;
+            meal: components["schemas"]["Meal"];
+            /** Grams */
+            grams: number;
+            /** Kcal Per 100G Snapshot */
+            kcal_per_100g_snapshot: number;
+            /** Kcal */
+            kcal: number;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+        };
+        /** FoodItemResponse */
+        FoodItemResponse: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Name */
+            name: string;
+            source: components["schemas"]["FoodSource"];
+            /** Kcal Per 100G */
+            kcal_per_100g: number;
+            /** Protein G */
+            protein_g: number | null;
+            /** Carbs G */
+            carbs_g: number | null;
+            /** Fat G */
+            fat_g: number | null;
+        };
+        /**
+         * FoodSource
+         * @enum {string}
+         */
+        FoodSource: "matvaretabellen" | "off" | "user";
         /**
          * Goal
          * @enum {string}
@@ -200,6 +348,19 @@ export interface components {
             email: string;
             /** Password */
             password: string;
+        };
+        /**
+         * Meal
+         * @enum {string}
+         */
+        Meal: "breakfast" | "lunch" | "dinner" | "snack";
+        /** MealSummary */
+        MealSummary: {
+            meal: components["schemas"]["Meal"];
+            /** Entries */
+            entries: components["schemas"]["FoodEntryResponse"][];
+            /** Total Kcal */
+            total_kcal: number;
         };
         /** ProfileRequest */
         ProfileRequest: {
@@ -257,6 +418,8 @@ export interface components {
             email: string;
             /** Consent At */
             consent_at: string | null;
+            /** Intro Dismissed At */
+            intro_dismissed_at: string | null;
         };
     };
     responses: never;
@@ -537,6 +700,44 @@ export interface operations {
             };
         };
     };
+    dismiss_intro: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UserResponse"];
+                };
+            };
+            /** @description Validation error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Default Response */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
     get_profile: {
         parameters: {
             query?: never;
@@ -595,6 +796,128 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ProfileResponse"];
+                };
+            };
+            /** @description Validation error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Default Response */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    search_food_items: {
+        parameters: {
+            query?: {
+                q?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FoodItemResponse"][];
+                };
+            };
+            /** @description Validation error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Default Response */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    get_food_day: {
+        parameters: {
+            query: {
+                date: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FoodDayResponse"];
+                };
+            };
+            /** @description Validation error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Default Response */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    add_food_entry: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["FoodEntryRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FoodEntryResponse"];
                 };
             };
             /** @description Validation error */

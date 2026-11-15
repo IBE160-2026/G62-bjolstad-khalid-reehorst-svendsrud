@@ -1,0 +1,62 @@
+"use client";
+
+import {
+  keepPreviousData,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
+
+import { api } from "@/lib/api/client";
+import type { components } from "@/lib/api/schema";
+import { call } from "@/modules/identity/api";
+
+export type FoodItem = components["schemas"]["FoodItemResponse"];
+export type FoodDay = components["schemas"]["FoodDayResponse"];
+export type FoodEntry = components["schemas"]["FoodEntryResponse"];
+export type FoodEntryRequest = components["schemas"]["FoodEntryRequest"];
+
+export const SEARCH_MIN_LENGTH = 2;
+
+export function foodDayKey(date: string) {
+  return ["food-day", date] as const;
+}
+
+/** One date's entries by Meal with Meal and day totals, all computed by the backend. */
+export function useFoodDay(date: string | null) {
+  return useQuery({
+    queryKey: foodDayKey(date ?? ""),
+    queryFn: () =>
+      call(() =>
+        api.GET("/api/food/entries", {
+          params: { query: { date: date ?? "" } },
+        }),
+      ),
+    enabled: date !== null,
+  });
+}
+
+/** Shared and own food items matching `query`; nothing is asked for under 2 characters. */
+export function useFoodSearch(query: string) {
+  const q = query.trim();
+  return useQuery({
+    queryKey: ["food-search", q.toLowerCase()],
+    queryFn: () =>
+      call(() => api.GET("/api/food/items", { params: { query: { q } } })),
+    enabled: q.length >= SEARCH_MIN_LENGTH,
+    staleTime: 60_000,
+    // Keep showing the last results while the next query loads (no skeleton flicker).
+    placeholderData: keepPreviousData,
+  });
+}
+
+/** Log an entry; the date's totals are refetched so Mat updates without a reload (AD-15). */
+export function useAddFoodEntry() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (body: FoodEntryRequest) =>
+      call(() => api.POST("/api/food/entries", { body })),
+    onSuccess: (entry) =>
+      queryClient.invalidateQueries({ queryKey: foodDayKey(entry.date) }),
+  });
+}

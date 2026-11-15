@@ -74,3 +74,5 @@ class UserResponse(BaseModel):
     email: str
     # Null until the user has given consent to storing health data (story 1.5).
     consent_at: datetime | None
+    # Null until the user has closed the first-run introduction (story 2.3).
+    intro_dismissed_at: datetime | None

@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 
+import { IntroDialog } from "@/modules/identity/intro-dialog";
 import { isAuthPath, isGatePath } from "@/modules/identity/routes";
 import { SessionGuard } from "@/modules/identity/session-guard";
 
@@ -19,16 +20,32 @@ const SKIP_LINK_CLASS =
 export function AppShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   if (isAuthPath(pathname)) return <AuthLayout title={pageTitle(pathname)}>{children}</AuthLayout>;
-  if (isGatePath(pathname)) {
-    // Logged-in steps before the app (consent, profile setup): no navigation, but the session is checked.
-    return (
-      <>
-        <SessionGuard />
-        <AuthLayout title={pageTitle(pathname)}>{children}</AuthLayout>
-      </>
-    );
-  }
+  // The first-run intro is a dialog over logged-in pages, not a route of its own. It sits at
+  // one position after either layout, so moving between them does not remount (reopen) it.
+  return (
+    <>
+      {isGatePath(pathname) ? (
+        <GateLayout pathname={pathname}>{children}</GateLayout>
+      ) : (
+        <FullShell>{children}</FullShell>
+      )}
+      <IntroDialog />
+    </>
+  );
+}
 
+/** Logged-in steps before the app (consent, profile setup): no navigation, session checked. */
+function GateLayout({ pathname, children }: { pathname: string; children: ReactNode }) {
+  return (
+    <>
+      <SessionGuard />
+      <AuthLayout title={pageTitle(pathname)}>{children}</AuthLayout>
+    </>
+  );
+}
+
+/** The app itself: sidebar, top bar, main content and tab bar. */
+function FullShell({ children }: { children: ReactNode }) {
   return (
     <div className="flex min-h-dvh">
       <SessionGuard />
