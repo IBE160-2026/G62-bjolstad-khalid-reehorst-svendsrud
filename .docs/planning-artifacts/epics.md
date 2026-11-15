@@ -103,7 +103,7 @@ Merged from A1 (`ux-designs/ux-prompt-force-2026-11-10/`) and round 3 (`ux/runde
 
 UX-DR1: Design tokens: implement one token set (colours, typography, radii, spacing, shadows) as Tailwind theme and shadcn/ui CSS variables, from the token set the group confirms after merging A1 and round 3. Components use tokens only, never raw hex values. All text/background pairs meet WCAG AA (body ≥ 4.5:1), checked and documented. The token set has a light and a dark variant (NFR-12): light is the default, a top-bar button switches mode, and the choice is remembered in the browser.
 UX-DR2: App shell: persistent sidebar on ≥ 1024 px (I dag, Mat, Trening, Historikk, Profil) that collapses to icons at 768–1023 px, and a bottom tab bar under 768 px (I dag, Mat, Trening, Profil). Active item clearly marked. One outline icon set (house, bowl, dumbbell, calendar, person), no emoji.
-UX-DR3: Week strip: seven day cells (Monday–Sunday) with weekday and date; the selected day outlined; up to two magnets per past/current day (food logged, workout logged); future days disabled; ‹ › steps a week; a calendar icon opens a date picker; each cell has an accessible name such as "tirsdag 10. november, mat logget, trening logget".
+UX-DR3: Week strip: seven day cells (Monday–Sunday) with weekday and date; the selected day outlined; no magnets (removed 2026-11-15); future days disabled; ‹ › steps a week; a calendar icon opens a date picker; each cell has an accessible name such as "tirsdag 10. november".
 UX-DR4: Day note: one per screen, showing kcal remaining as the single large number, one plain sentence ("igjen av dagens mål på 1 640"), and optional supporting lines for floor used, ages 16–17, and "over" (shown in normal ink with supportive text, never red).
 UX-DR5: Section cards for Mat and Trening on the Daily Overview: header with category icon disc, title, summary and chevron that links to the section for the same date; rows per Meal with totals (and "+ Legg til" on empty meals) and per exercise with sets and "Sist: …"; the whole header row is clickable.
 UX-DR6: Food logging method picker (from round 3): four equal choices Søk · Skriv strekkode · Nylig brukt · Manuelt, opened as a sheet with the chosen Meal preselected when started from a Meal row; "Skann med kamera" appears inside Skriv strekkode only when the browser supports it.
@@ -882,7 +882,7 @@ So that I can see and fix earlier days.
 
 **Given** the week strip on I dag, Mat and Trening
 **When** it renders
-**Then** it shows Monday–Sunday with weekday and date, the selected day outlined, and up to two magnets under each past or current day (food logged, workout logged); future days are disabled; ‹ › step a week (UX-DR3)
+**Then** it shows Monday–Sunday with weekday and date, the selected day outlined, and no magnets; future days are disabled; ‹ › step a week (UX-DR3)
 **And** each day cell has an accessible name such as "tirsdag 10. november, mat logget, trening logget", and ← → move a day when the strip has focus
 
 **Given** the user picks yesterday (or any earlier date from the date picker on Historikk)

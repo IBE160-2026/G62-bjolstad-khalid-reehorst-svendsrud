@@ -45,3 +45,4 @@ Her skriver vi ned hva vi velger etter hver runde, slik at prosessen kan følges
 - **Åpent:** designet hennes viser Mat og Trening i én lilla farge. Grønn og oransje beholdes til gruppa har bestemt seg, fordi de gjør kortene lette å skille (avstemning 12.11).
 - Designet: https://claude.ai/artifact/MHV9YS6r1wm3h8wF4qAjhz (8 skjermer: I dag, Mat, Trening og Oppskrifter for PC og mobil).
 - **Avgjort samme dag:** én lilla markeringsfarge (`#9C5E87`, tekst `#7D3F5E`) for både Mat og Trening, som i Karianne sitt design. Erstatter grønt/oransje fra avstemningen 12.11. Mat og Trening skilles med ikon og navn; ukestripen har fortsatt to magneter (venstre = mat, høyre = trening).
+- **Magnetene i ukestripen er fjernet**, som i Karianne sitt design. Hva som er logget en dag, ser man på Mat- og Trening-kortene når dagen er valgt. Oppdatert i DESIGN.md, EXPERIENCE.md og UX-DR3/Story 6.3 i epics.md.

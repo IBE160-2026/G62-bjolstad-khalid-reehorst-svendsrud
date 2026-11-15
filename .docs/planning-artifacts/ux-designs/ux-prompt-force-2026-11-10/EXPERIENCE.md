@@ -67,7 +67,7 @@ Behavioural rules only. Visual specs are in `DESIGN.md` → Components.
 
 | Component | Use | Behaviour |
 |---|---|---|
-| Week strip | I dag, Mat, Trening | Click or tap a day to switch the whole surface to that date. Future days are disabled. Arrows (‹ ›) step a week; a calendar icon opens the date picker (FR-27). Magnets update as soon as something is logged or deleted (NFR-9). |
+| Week strip | I dag, Mat, Trening | Click or tap a day to switch the whole surface to that date. Future days are disabled. Arrows (‹ ›) step a week; a calendar icon opens the date picker (FR-27). The cards update as soon as something is logged or deleted (NFR-9). |
 | Day note | I dag | Shows kcal remaining for the chosen date. Not clickable. It says when the safety floor was used (FR-6) and shows a "grovt anslag" note for ages 16 to 17. |
 | Section card | I dag | The whole header row is a link to Mat or Trening for the same date. Rows are links to the entry. The "+ Legg til" action on an empty Meal opens Legg til mat with that Meal preselected. |
 | Legg til mat sheet | Mat, I dag | Opens with the **method picker** from round 3: four equal options, Søk · Skriv strekkode · Nylig brukt · Manuelt. Søk is selected and focused by default. Nylig brukt lists recent items; tapping one logs it with last time's amount (FR-14; three taps or fewer from I dag, SM-6). Skriv strekkode shows a number field first; "Skann med kamera" appears only when the browser supports it (FR-8, FR-9). Search filters the local database as you type and never calls Open Food Facts (FR-11). |
@@ -112,7 +112,7 @@ Behavioural rules; contrast lives in `DESIGN.md`. Target: WCAG 2.1 AA basics (NF
 
 - Every input has a visible label; placeholder text is never the only label.
 - Tap targets are at least 44 × 44 px; the week-strip cells meet this on mobile.
-- Magnets are never the only signal: each day cell has an accessible name, for example "tirsdag 10. november, mat logget, trening logget".
+- Each day cell has an accessible name, for example "tirsdag 10. november".
 - Focus is always visible (2 px `{colors.focus-ring}` outline with offset). Opening a sheet moves focus into it; closing returns focus to the button that opened it.
 - Page changes update the document title ("I dag, 10. november · Prompt Force"); toasts are announced through `aria-live="polite"`.
 - The embedded video has a text alternative (the technique description), so it is never required.
@@ -132,7 +132,7 @@ Camera scanning is offered only where the browser supports it and the page runs 
 
 - **From Hevy:** set-by-set logging with last time's numbers in view (FR-24).
 - **From Lifesum:** an approachable food log grouped by Meal, with recently used items one tap away.
-- **From the fridge planner board (concept A1):** the week at a glance with magnets for what is done.
+- **From the fridge planner board (concept A1):** the week at a glance (the magnets were dropped on 2026-11-15).
 - **From UX round 3 (Karianne):** the paper-journal look, the four-way food method picker, the muscle-group list and the help button. Round 3's calorie ring was not kept: the PRD asks for one number with a sentence (FR-7), which the day note already does.
 - **Rejected: MyFitnessPal-style density.** Sara found it "too much"; the front page stays at one number, two cards and two buttons (NFR-11).
 - **Rejected: macro rings and charts in v1.** Only kcal is shown (PRD §8.1).
@@ -157,7 +157,7 @@ Failure: she types 680 kg by mistake → "Vekt må være mellom 30 og 300 kg." u
 1. On her laptop, I dag, she clicks "+ Legg til" next to Frokost. The sheet opens with Frokost preselected.
 2. She opens the Strekkode tab and types the number from the cup.
 3. The product appears with kcal per 100 g. She sets 150 g; the kcal updates live.
-4. **Climax:** she clicks "Lagre". The sheet closes, the Frokost row shows the yoghurt, the day note drops to the new remaining number, and the food magnet appears under today in the week strip.
+4. **Climax:** she clicks "Lagre". The sheet closes, the Frokost row shows the yoghurt, the day note drops to the new remaining number.
 
 Failure: the barcode is unknown → "Vi fant ikke denne varen. Vil du registrere den selv?" → Registrer matvare opens with the barcode filled in.
 
@@ -167,7 +167,7 @@ Failure: the barcode is unknown → "Vi fant ikke denne varen. Vil du registrere
 2. The suggestions show only exercises that fit, Nybegynner first. She opens "Goblet squat", reads the description and watches the video.
 3. "Legg til i økt" adds it with three sets suggesting 10 reps. Under the name: "Sist: 8 kg × 10 (3. nov)".
 4. She logs 3 × 10 at 10 kg, ticking each set.
-5. **Climax:** she clicks "Fullfør økt" and returns to I dag. The Trening card lists the exercise with 3 × 10 · 10 kg, and the training magnet sits next to the food magnet under today.
+5. **Climax:** she clicks "Fullfør økt" and returns to I dag. The Trening card lists the exercise with 3 × 10 · 10 kg.
 
 Failure: travelling with bodyweight only, she filters on Skuldre → "Ingen øvelser passer med Kroppsvekt og Skuldre. Prøv en annen muskelgruppe eller legg til utstyr."
 
@@ -175,12 +175,12 @@ Failure: travelling with bodyweight only, she filters on Skuldre → "Ingen øve
 
 1. In the evening she opens I dag on her phone.
 2. The note says "220 kcal igjen av dagens mål på 1 640"; the Mat card lists her three Meals and the Trening card her workout.
-3. **Climax:** she taps Mandag in the week strip; the whole page shows yesterday, with both magnets and yesterday's numbers, without leaving the screen.
+3. **Climax:** she taps Mandag in the week strip; the whole page shows yesterday, with yesterday's meals, workout and numbers, without leaving the screen.
 
 ### Flow 5 — The examiner runs the app (UJ-5)
 
 1. The examiner starts the app from the README and logs in with the seeded test user.
-2. **Climax:** I dag opens on a day full of fictional data, with magnets on several earlier days, so every surface can be tested at once without typing anything.
+2. **Climax:** I dag opens on a day full of fictional data, with data on several earlier days, so every surface can be tested at once without typing anything.
 
 ## Open Items
 

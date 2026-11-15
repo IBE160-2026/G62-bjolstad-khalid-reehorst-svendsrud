@@ -126,10 +126,6 @@ components:
     background: '{colors.surface}'
     border: '2px solid {colors.ink}'
     radius: '{rounded.md}'
-  magnet:
-    background: '{colors.mark}'
-    size: 9px
-    radius: '{rounded.full}'
   page-background:
     background: '{colors.paper}'
     lines: 'repeating 1px {colors.rule} line every 38px'
@@ -188,7 +184,7 @@ This is the **merged design** the group voted for on 2026-11-12. It takes the lo
 
 It is a web app that behaves like an app: persistent navigation, authored icons and tappable cards. No gradients, no glass, no hero images. Reference layouts: `imports/valgt-konsept-a1-dagsoversikt.svg` (structure) and `../../ux/runde-3/mockups/` (look of food logging and the muscle-group list). This file wins on conflict with either.
 
-**Revision 3 (2026-11-15, Karianne's final design in Claude Design):** the font is Manrope, with light weights for the big number and page titles and 400 for body text so it stays easy to read. Dark mode uses her plum-dark palette (`colors-dark`); two values were adjusted to pass 4.5:1 (accent `#A569BD` → `#A86CC0` for button text, and plum text on tints uses `accent-text` `#D8B2E3`). Sidebar 210 px, cards 18 px radius, buttons 50 px. Mat and Trening share one mauve mark colour, as in her design (group decision 2026-11-15, replacing the green/orange vote of 2026-11-12); the two are told apart by icon and label.
+**Revision 3 (2026-11-15, Karianne's final design in Claude Design):** the font is Manrope, with light weights for the big number and page titles and 400 for body text so it stays easy to read. Dark mode uses her plum-dark palette (`colors-dark`); two values were adjusted to pass 4.5:1 (accent `#A569BD` → `#A86CC0` for button text, and plum text on tints uses `accent-text` `#D8B2E3`). Sidebar 210 px, cards 18 px radius, buttons 50 px. Mat and Trening share one mauve mark colour, and the week strip has no magnets, as in her design (group decision 2026-11-15, replacing the green/orange vote of 2026-11-12); the two are told apart by icon and label.
 
 ## Colors
 
@@ -197,11 +193,11 @@ Warm neutrals for the page, one action colour (plum), one mark colour (mauve) an
 - **Paper (`#F7F2E9`)** is the page background, ruled with a 1 px `{colors.rule}` line every 38 px like a notebook. **Surface (`#FFFDF7`)** is cards, the sidebar, the tab bar and inputs. **Rule (`#E4D9C6`)** is hairlines and borders, never text.
 - **Ink (`#3A322B`)** is all main text and the focus ring (11.3:1 on paper). **Ink-secondary (`#6B6056`)** is supporting text such as dates and "Sist: …" (5.5:1).
 - **Plum (`#7A3B69`)** is the action colour: primary buttons, the active navigation item, the selected method in the food sheet and links (7.1:1 on paper; on-accent text 7.6:1). It never marks a category; that is the mauve mark colour.
-- **Mark mauve**: `#9C5E87` for icon discs (on a `#F2E7EE` mark-tint disc) and magnets for both Mat and Trening (4.0:1 on the tint, enough for non-text); `#7D3F5E` for mark text such as "+ Legg til" and "Fullført" (6.3:1 or more). Mark tint is selected rows in the food and training flows. Mat and Trening are told apart by icon (bowl, dumbbell) and label, never by colour alone.
+- **Mark mauve**: `#9C5E87` for icon discs (on a `#F2E7EE` mark-tint disc) for both Mat and Trening (4.0:1 on the tint, enough for non-text); `#7D3F5E` for mark text such as "+ Legg til" and "Fullført" (6.3:1 or more). Mark tint is selected rows in the food and training flows. Mat and Trening are told apart by icon (bowl, dumbbell) and label, never by colour alone.
 - **Note yellow (`#F2C14E`)** is only the pin on the day note; **note paper (`#FFF8E2`)** is the note itself, ruled every 26 px in `{colors.note-line}` with a faint plum margin line. **Tape (`#E6DCC4`)** is the small tape strip on section cards.
 - **Error (`#B42318`)** is for validation errors and destructive confirmations only. Being over the calorie target is not an error and is never red.
 
-**Balance rule:** at most one filled colour per screen (the plum primary button). The mark colour appears only as small marks (magnets, icons, "+ Legg til"); values and numbers stay in ink.
+**Balance rule:** at most one filled colour per screen (the plum primary button). The mark colour appears only as small marks (icons, "+ Legg til"); values and numbers stay in ink.
 
 **Dark mode** (`colors-dark`, PRD NFR-12): a plum-tinted dark paper with the same notebook lines in `rule`, lighter plum for actions and a lighter mauve for marks. Plum text on tints (the active navigation item, links) uses `accent-text`. Every text pair meets 4.5:1; contrast is listed in `frontend/src/styles/CONTRAST.md`. Light is always the default.
 
@@ -237,12 +233,12 @@ Almost flat, like paper on a desk. The day note is tilted −0.6° like a sheet 
 
 ## Shapes
 
-Rounded and friendly: `{rounded.sm}` (10 px) for inputs, `{rounded.md}` (14 px) for the active day and the day note, `{rounded.lg}` (18 px) for cards and sheets, `{rounded.full}` for buttons, method options, the active navigation item, magnets and icon discs.
+Rounded and friendly: `{rounded.sm}` (10 px) for inputs, `{rounded.md}` (14 px) for the active day and the day note, `{rounded.lg}` (18 px) for cards and sheets, `{rounded.full}` for buttons, method options, the active navigation item and icon discs.
 
 ## Components
 
 - **Sidebar / tab bar:** outline icons (24 px, 2 px stroke, round caps: house, bowl, dumbbell, calendar, person) plus a label. The active item is plum on `{colors.accent-tint}` in a pill; inactive items are ink-secondary. No emoji.
-- **Week strip:** seven cells, Monday–Sunday, weekday (`label`) over date (`body`). The selected day has a surface fill and a 2 px ink outline. Past and current days carry up to two mauve magnets: the left when food is logged, the right when a workout is logged; the cell's accessible name says which. Future days are ink-secondary with no magnets.
+- **Week strip:** seven cells, Monday–Sunday, weekday (`label`) over date (`body`). The selected day has a surface fill and a 2 px ink outline. There are no magnets or dots: what was logged on a day is seen on the Mat and Trening cards after selecting it. Future days are ink-secondary and disabled.
 - **Day note:** a lined notepad sheet (note paper, `{colors.note-line}` lines, faint margin line) with the yellow pin centred on the top edge. Date (`small`), the number in `display`, one sentence in `body` ("igjen av dagens mål på 1 640"), and at most one supporting line. One per screen.
 - **Section card (Mat / Trening):** surface card with a small tape strip on the top-left edge; header with a 36 px icon disc in mark tint with the icon in the mark colour, title in `heading`, summary in `small`, chevron. Rows separated by rule lines; names in `body-strong`, values right-aligned in ink with tabular numerals. Completed status uses the category text colour.
 - **Food method picker:** four pill options of equal size — Søk · Skriv strekkode · Nylig brukt · Manuelt — each with an outline icon; the selected one is plum with on-accent text and a check.
