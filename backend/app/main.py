@@ -9,6 +9,7 @@ from app.core.origin import make_origin_check
 from app.core.settings import get_settings
 from app.modules.health.router import router as health_router
 from app.modules.identity.router import router as identity_router
+from app.modules.profile.router import router as profile_router
 
 # 422 is listed so OpenAPI documents the error envelope, not FastAPI's HTTPValidationError.
 ERROR_RESPONSES: dict[int | str, dict] = {
@@ -33,6 +34,7 @@ def create_app() -> FastAPI:
     app.middleware("http")(make_origin_check(settings.app_url))
     app.include_router(health_router, responses=ERROR_RESPONSES)
     app.include_router(identity_router, responses=ERROR_RESPONSES)
+    app.include_router(profile_router, responses=ERROR_RESPONSES)
     return app
 
 

@@ -51,3 +51,5 @@
 - [ ] 2026-11-15 [story-1-6-slett-konto](970-2026-11-15-23-20-00-story-1-6-slett-konto.md) — bestemme hvordan `python -m app.cli purge` kjøres jevnlig
 - [x] 2026-11-15 [deaktiver-konto-plan](969-2026-11-15-21-45-00-deaktiver-konto-plan.md) — pushe og lage PR for planendringen (FR-32, Story 1.8) (løst 2026-11-15 — PR #24)
 - [ ] 2026-11-15 [deaktiver-konto-plan](969-2026-11-15-21-45-00-deaktiver-konto-plan.md) — bygge Story 1.8 (deaktiver konto)
+- [x] 2026-11-15 [story-2-1-kaloriemal](968-2026-11-15-23-00-00-story-2-1-kaloriemal.md) — pushe og lage PR for story 2.1 (løst 2026-11-15 — PR #25)
+- [ ] 2026-11-15 [story-2-1-kaloriemal](968-2026-11-15-23-00-00-story-2-1-kaloriemal.md) — finne kilde for minstegrensen 1 200/1 500 kcal

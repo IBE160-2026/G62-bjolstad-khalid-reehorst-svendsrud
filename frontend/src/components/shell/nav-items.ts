@@ -30,6 +30,7 @@ const OTHER_TITLES: Readonly<Record<string, string>> = {
   "/logg-inn": "Logg inn",
   "/opprett-konto": "Opprett konto",
   "/samtykke": "Samtykke",
+  "/profiloppsett": "Profiloppsett",
 };
 
 /** Title shown in the top bar for the current route. */

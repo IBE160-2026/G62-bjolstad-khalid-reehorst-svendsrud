@@ -301,10 +301,113 @@
           }
         }
       }
+    },
+    "/api/profile": {
+      "get": {
+        "tags": [
+          "profile"
+        ],
+        "summary": "Get Profile",
+        "description": "The user's profile and stored daily target; 404 `profile_not_found` before setup.",
+        "operationId": "get_profile",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProfileResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "profile"
+        ],
+        "summary": "Save Profile",
+        "description": "Create or replace the profile; the target is recomputed and stored on every save.",
+        "operationId": "save_profile",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProfileRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProfileResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
     "schemas": {
+      "ActivityLevel": {
+        "type": "string",
+        "enum": [
+          "sedentary",
+          "light",
+          "moderate",
+          "very_active",
+          "extremely_active"
+        ],
+        "title": "ActivityLevel"
+      },
       "ErrorBody": {
         "properties": {
           "code": {
@@ -368,6 +471,15 @@
         "title": "FieldError",
         "description": "One invalid input field, shown inline under that field in the UI."
       },
+      "Goal": {
+        "type": "string",
+        "enum": [
+          "lose",
+          "maintain",
+          "gain"
+        ],
+        "title": "Goal"
+      },
       "HealthResponse": {
         "properties": {
           "status": {
@@ -400,6 +512,92 @@
         ],
         "title": "LoginRequest"
       },
+      "ProfileRequest": {
+        "properties": {
+          "sex": {
+            "$ref": "#/components/schemas/Sex"
+          },
+          "weight_kg": {
+            "type": "number",
+            "title": "Weight Kg"
+          },
+          "height_cm": {
+            "type": "integer",
+            "title": "Height Cm"
+          },
+          "age": {
+            "type": "integer",
+            "title": "Age"
+          },
+          "activity_level": {
+            "$ref": "#/components/schemas/ActivityLevel"
+          },
+          "goal": {
+            "$ref": "#/components/schemas/Goal"
+          }
+        },
+        "type": "object",
+        "required": [
+          "sex",
+          "weight_kg",
+          "height_cm",
+          "age",
+          "activity_level",
+          "goal"
+        ],
+        "title": "ProfileRequest"
+      },
+      "ProfileResponse": {
+        "properties": {
+          "sex": {
+            "$ref": "#/components/schemas/Sex"
+          },
+          "weight_kg": {
+            "type": "number",
+            "title": "Weight Kg"
+          },
+          "height_cm": {
+            "type": "integer",
+            "title": "Height Cm"
+          },
+          "age": {
+            "type": "integer",
+            "title": "Age"
+          },
+          "activity_level": {
+            "$ref": "#/components/schemas/ActivityLevel"
+          },
+          "goal": {
+            "$ref": "#/components/schemas/Goal"
+          },
+          "target_kcal": {
+            "type": "integer",
+            "title": "Target Kcal"
+          },
+          "floor_applied": {
+            "type": "boolean",
+            "title": "Floor Applied"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Updated At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "sex",
+          "weight_kg",
+          "height_cm",
+          "age",
+          "activity_level",
+          "goal",
+          "target_kcal",
+          "floor_applied",
+          "updated_at"
+        ],
+        "title": "ProfileResponse"
+      },
       "RegisterRequest": {
         "properties": {
           "email": {
@@ -417,6 +615,14 @@
           "password"
         ],
         "title": "RegisterRequest"
+      },
+      "Sex": {
+        "type": "string",
+        "enum": [
+          "female",
+          "male"
+        ],
+        "title": "Sex"
       },
       "UserResponse": {
         "properties": {

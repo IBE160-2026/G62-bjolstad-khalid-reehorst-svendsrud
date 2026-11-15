@@ -35,6 +35,7 @@ describe("nav items", () => {
   it("titles the account pages without adding them to the navigation", () => {
     expect(pageTitle("/opprett-konto")).toBe("Opprett konto");
     expect(pageTitle("/samtykke")).toBe("Samtykke");
+    expect(pageTitle("/profiloppsett")).toBe("Profiloppsett");
     expect(pageTitle("/logg-inn")).toBe("Logg inn");
     expect(NAV_ITEMS.map((item) => item.href)).not.toContain("/opprett-konto");
   });

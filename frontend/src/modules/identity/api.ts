@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { api } from "@/lib/api/client";
 import type { components } from "@/lib/api/schema";
 
-import { ACCOUNT_DELETED_PATH, HOME_PATH, LOGIN_PATH } from "./routes";
+import { ACCOUNT_DELETED_PATH, LOGIN_PATH, PROFILE_SETUP_PATH } from "./routes";
 import type { RegisterValues } from "./validation";
 
 type ErrorBody = components["schemas"]["ErrorBody"];
@@ -41,7 +41,7 @@ function toApiError(error: unknown): ApiError {
 }
 
 /** Run an openapi-fetch call and turn every failure into an `ApiError`. */
-async function call<T>(request: () => Promise<{ data?: T; error?: unknown }>): Promise<T> {
+export async function call<T>(request: () => Promise<{ data?: T; error?: unknown }>): Promise<T> {
   let result;
   try {
     result = await request();
@@ -112,7 +112,10 @@ export function useLogout() {
   });
 }
 
-/** Record consent to storing health data, then continue into the app (story 1.5). */
+/**
+ * Record consent to storing health data, then continue to profile setup (stories 1.5, 2.1).
+ * A user who just consented cannot have a profile yet: it requires consent.
+ */
 export function useGiveConsent() {
   const queryClient = useQueryClient();
   const router = useRouter();
@@ -120,7 +123,7 @@ export function useGiveConsent() {
     mutationFn: () => call(() => api.POST("/api/identity/consent")),
     onSuccess: (user) => {
       queryClient.setQueryData(ME_QUERY_KEY, user);
-      router.replace(HOME_PATH);
+      router.replace(PROFILE_SETUP_PATH);
     },
   });
 }
