@@ -23,7 +23,7 @@ colors:
   food-text: '#2A7350'
   food-tint: '#E5EFE6'
   training: '#D9542B'
-  training-text: '#B9471F'
+  training-text: '#B4451E'
   training-tint: '#F8E6DC'
   note: '#F2C14E'
   note-paper: '#FFF8E2'
@@ -210,7 +210,7 @@ Warm neutrals for the page, one action colour, two category colours and one note
 - **Ink (`#3A322B`)** is all main text and the focus ring (11.3:1 on paper). **Ink-secondary (`#6B6056`)** is supporting text such as dates and "Sist: …" (5.5:1).
 - **Plum (`#7A3B69`)** is the action colour: primary buttons, the active navigation item, the selected method in the food sheet and links (7.1:1 on paper; on-accent text 7.6:1). It never means a category.
 - **Food green**: `#2F7D55` for the food magnet and the icon on the Mat card (on a food-tint disc, never a solid green disc); `#2A7350` for any green text, such as "+ Legg til" and "fullført" on the Mat card (5.1:1). **Food tint (`#E5EFE6`)** is selected rows in the food flow.
-- **Training orange**: `#D9542B` for the training magnet and the icon on the Trening card only (on a training-tint disc) (3.6:1, enough for non-text); `#B9471F` for orange text, such as "Fullført" on the Trening card (4.7:1). **Training tint (`#F8E6DC`)** is selected rows in the training flow.
+- **Training orange**: `#D9542B` for the training magnet and the icon on the Trening card only (on a training-tint disc) (3.6:1, enough for non-text); `#B4451E` for orange text, such as "Fullført" on the Trening card (4.5:1 on training-tint). **Training tint (`#F8E6DC`)** is selected rows in the training flow.
 - **Note yellow (`#F2C14E`)** is only the pin on the day note; **note paper (`#FFF8E2`)** is the note itself, ruled every 26 px in `{colors.note-line}` with a faint plum margin line. **Tape (`#E6DCC4`)** is the small tape strip on section cards.
 - **Error (`#B42318`)** is for validation errors and destructive confirmations only. Being over the calorie target is not an error and is never red.
 
@@ -271,7 +271,7 @@ Rounded and friendly: `{rounded.sm}` (10 px) for inputs, `{rounded.md}` (14 px) 
 |---|---|
 | Keep the lined paper on the page and the day note | Remove the notebook lines or put lines inside cards |
 | Use green only for food and orange only for training | Bring back teal, or use green/orange for success or warnings |
-| Use `#2A7350` for green text and `#B9471F` for orange text | Put text in `#2F7D55` or `#D9542B` |
+| Use `#2A7350` for green text and `#B4451E` for orange text | Put text in `#2F7D55` or `#D9542B` |
 | Use plum only for actions and the active navigation item | Use plum for a category or a status |
 | Show one big number (the day note) per screen | Add a calorie ring or several big stat numbers |
 | Use Manrope for all text; build hierarchy with size and weight | Add a second typeface or a decorative serif |
