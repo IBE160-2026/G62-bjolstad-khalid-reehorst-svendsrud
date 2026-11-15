@@ -35,3 +35,4 @@
 - [ ] 2026-11-13 [story-1-1-kjor-appen](981-2026-11-13-12-36-36-story-1-1-kjor-appen.md) — vurdere hot reload (bind mounts) i docker-compose for utvikling
 - [ ] 2026-11-13 [merge-pr-16](979-2026-11-13-17-46-12-merge-pr-16.md) — flette PR #17 (felles UX-design) når den er godkjent, deretter starte story 1.2
 - [ ] 2026-11-13 [ux-revisjon-2](978-2026-11-13-18-39-19-ux-revisjon-2.md) — Karianne må godkjenne revisjon 2 av designet i PR #17
+- [ ] 2026-11-15 [mork-modus-nfr-12](977-2026-11-15-12-28-21-mork-modus-nfr-12.md) — Karianne oppdaterer DESIGN.md i PR #17 med endelig design og mørke fargeverdier, og deler canvas-linken
