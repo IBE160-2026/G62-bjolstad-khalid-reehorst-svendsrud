@@ -21,13 +21,22 @@ const GOAL_SENTENCES: Record<Profile["goal"], string> = {
 
 const ADULT_AGE = 18;
 
-/** The stored target as one number and a few plain sentences; never formula words. */
-export function TargetResult({ profile }: { profile: Profile }) {
+/**
+ * The stored target as one number and a few plain sentences; never formula words.
+ * Profiloppsett focuses it and offers "Videre"; the Profil page shows it in place.
+ */
+export function TargetResult({
+  profile,
+  standalone = true,
+}: {
+  profile: Profile;
+  standalone?: boolean;
+}) {
   const headingRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
-    headingRef.current?.focus();
-  }, []);
+    if (standalone) headingRef.current?.focus();
+  }, [standalone]);
 
   return (
     <section aria-labelledby="target-heading" className="flex flex-col gap-6">
@@ -54,12 +63,14 @@ export function TargetResult({ profile }: { profile: Profile }) {
         {profile.age < ADULT_AGE && <p>Dette er et grovt anslag. Formelen er laget for voksne.</p>}
       </div>
 
-      <Link
-        href={HOME_PATH}
-        className={`${PRIMARY_BUTTON_CLASS} inline-flex items-center justify-center`}
-      >
-        Videre
-      </Link>
+      {standalone && (
+        <Link
+          href={HOME_PATH}
+          className={`${PRIMARY_BUTTON_CLASS} inline-flex items-center justify-center`}
+        >
+          Videre
+        </Link>
+      )}
     </section>
   );
 }
