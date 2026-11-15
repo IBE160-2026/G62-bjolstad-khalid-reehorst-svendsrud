@@ -1,9 +1,13 @@
-"""Identity tables: users and their server-side sessions (AD-3)."""
+"""Identity tables: users and their server-side sessions (AD-3).
+
+Rule for every user-owned table (here and in later modules): its `user_id` foreign key
+uses `ondelete="CASCADE"`, so `python -m app.cli purge` removes the user's rows with them.
+"""
 
 import uuid
 from datetime import UTC, datetime
 
-from sqlalchemy import DateTime, ForeignKey, Integer, String, Uuid
+from sqlalchemy import DateTime, ForeignKey, Index, Integer, String, Uuid, text
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.core.db import Base
@@ -15,10 +19,19 @@ def utc_now() -> datetime:
 
 class User(Base):
     __tablename__ = "users"
+    # One active account per email; a soft-deleted account frees its email (AD-14).
+    __table_args__ = (
+        Index(
+            "ix_users_email",
+            "email",
+            unique=True,
+            postgresql_where=text("deleted_at IS NULL"),
+        ),
+    )
 
     id: Mapped[uuid.UUID] = mapped_column(Uuid, primary_key=True, default=uuid.uuid4)
-    # Stored trimmed and lower-cased; the unique index makes one account per email.
-    email: Mapped[str] = mapped_column(String(254), unique=True, index=True)
+    # Stored trimmed and lower-cased; the partial unique index above keeps it unique.
+    email: Mapped[str] = mapped_column(String(254))
     password_hash: Mapped[str] = mapped_column(String(255))
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utc_now)
     # Login lockout (AD-3): failures counted per account inside a window from the first one.
@@ -27,6 +40,9 @@ class User(Base):
     locked_until: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     # When the user agreed to health data being stored (GDPR art. 9); null = not yet.
     consent_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    # Soft delete (AD-14): set when the user deletes the account; every user query skips
+    # these rows, and `purge` hard-deletes them 30 days later.
+    deleted_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
 
 
 class Session(Base):

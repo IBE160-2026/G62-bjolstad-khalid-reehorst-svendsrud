@@ -40,7 +40,23 @@ def seed() -> int:
     return 0
 
 
-COMMANDS = {"check-config": check_config, "seed": seed}
+def purge() -> int:
+    """Hard-delete accounts soft-deleted more than 30 days ago (AD-14)."""
+    from app.core.clock import utc_now
+    from app.core.db import get_session_factory
+    from app.modules.identity import service
+
+    with get_session_factory()() as db:
+        purged = service.purge_deleted(db, utc_now())
+        db.commit()
+    # Only the count is reported; never emails or other account details.
+    message = f"Purged {purged} accounts."
+    logger.info(message)
+    print(message)
+    return 0
+
+
+COMMANDS = {"check-config": check_config, "purge": purge, "seed": seed}
 
 
 def main(argv: list[str] | None = None) -> int:

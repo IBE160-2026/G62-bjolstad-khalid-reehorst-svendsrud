@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { api } from "@/lib/api/client";
 import type { components } from "@/lib/api/schema";
 
-import { HOME_PATH, LOGIN_PATH } from "./routes";
+import { ACCOUNT_DELETED_PATH, HOME_PATH, LOGIN_PATH } from "./routes";
 import type { RegisterValues } from "./validation";
 
 type ErrorBody = components["schemas"]["ErrorBody"];
@@ -121,6 +121,32 @@ export function useGiveConsent() {
     onSuccess: (user) => {
       queryClient.setQueryData(ME_QUERY_KEY, user);
       router.replace(HOME_PATH);
+    },
+  });
+}
+
+/** Delete the account (soft delete, every session ended), then show the login page (story 1.6). */
+export function useDeleteAccount() {
+  const queryClient = useQueryClient();
+  const router = useRouter();
+  return useMutation({
+    mutationFn: async () => {
+      let result;
+      try {
+        result = await api.DELETE("/api/identity/me");
+      } catch {
+        throw new ApiError("network_error", NETWORK_ERROR_MESSAGE);
+      }
+      if (result.error === undefined) return;
+      const error = toApiError(result.error);
+      // Already deleted (another tab) or the session is gone: nothing left to delete here.
+      if (error.code !== "unauthorized") throw error;
+    },
+    onSuccess: () => {
+      // Navigate first, so a still-mounted SessionGuard refetching /me cannot win the
+      // race to a plain /logg-inn without the status line.
+      router.replace(ACCOUNT_DELETED_PATH);
+      queryClient.clear();
     },
   });
 }

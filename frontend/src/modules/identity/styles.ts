@@ -10,3 +10,7 @@ export const SECONDARY_BUTTON_CLASS =
   "h-[50px] rounded-full border-[1.5px] border-border bg-card px-6 text-button font-medium text-foreground transition-colors hover:bg-muted disabled:opacity-70";
 
 export const LINK_CLASS = "font-medium text-accent-foreground underline underline-offset-4";
+
+/** Fill for the one destructive action (account deletion); `error` red only here and in validation. */
+export const DESTRUCTIVE_BUTTON_CLASS =
+  "h-[50px] rounded-full bg-destructive px-6 text-button font-medium text-destructive-foreground transition-opacity disabled:opacity-70";

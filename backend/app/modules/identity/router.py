@@ -82,3 +82,17 @@ def me(current_user: CurrentUser) -> UserResponse:
 def give_consent(current_user: CurrentUser, db: DbSession, now: Now) -> UserResponse:
     """Records consent to storing health data. Requires login, not consent."""
     return _user_response(service.give_consent(db, current_user.id, now))
+
+
+@router.delete(
+    "/me",
+    status_code=status.HTTP_204_NO_CONTENT,
+    response_class=Response,
+    operation_id="delete_account",
+)
+def delete_account(current_user: CurrentUser, db: DbSession, now: Now) -> Response:
+    """Deletes the account (soft delete) and logs out every device. Requires login, not consent."""
+    service.delete_account(db, current_user.id, now)
+    response = Response(status_code=status.HTTP_204_NO_CONTENT)
+    clear_session_cookie(response)
+    return response

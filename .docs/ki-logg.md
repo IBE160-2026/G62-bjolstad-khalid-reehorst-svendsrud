@@ -701,6 +701,33 @@ Det viktigste funnet: Dekningsanalysen er regnet ut fra øvelseslista og viser a
 
 ---
 
+## 2026-11-15 – Story 1.6 (slett konto)
+
+**Verktøy:** Claude Code (BMAD `bmad-build`)
+**Hvem:** Osman Khalid
+**Bakgrunn:** Brukerne må kunne slette kontoen sin, så helsedata ikke blir liggende (FR-4, GDPR).
+
+### Hva vi ba KI om
+
+1. Bygge sletting med bekreftelse, myk sletting med en gang og hard sletting etter 30 dager.
+
+### Hva KI produserte
+
+- Spec, slette-endepunkt, filtrering av slettede kontoer i alle oppslag, `purge`-kommando, bekreftelsesboks på Profil og nye tester.
+
+### Hva vi selv vurderte og kontrollerte
+
+- Osman godkjente spec-en før koding.
+- Tre KI-kontrollører fant 18 punkter: 5 rettet (blant annet at tilbakerulling av databasen ville gjort slettede kontoer aktive igjen), 2 utsatt, 11 avvist med begrunnelse.
+- `purge` må kjøres for hånd (slik arkitekturen sier); hvordan det skal skje jevnlig er et åpent punkt.
+
+### Status
+
+- [x] Story 1.6 bygget og testet
+- [ ] Review av PR fra gruppen
+
+---
+
 ## 2026-11-15 – Deaktiver konto i planen (FR-32)
 
 **Verktøy:** Claude Code
