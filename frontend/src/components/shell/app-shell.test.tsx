@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { render, screen, waitFor } from "@testing-library/react";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeAll, describe, expect, it, vi } from "vitest";
 
 const navigation = vi.hoisted(() => ({ pathname: "/" }));
 const getMock = vi.hoisted(() => vi.fn());
@@ -26,6 +26,35 @@ function renderShell(pathname: string) {
     </QueryClientProvider>,
   );
   return client;
+}
+
+// jsdom has no modal dialog; enough for the first-run intro to open.
+beforeAll(() => {
+  HTMLDialogElement.prototype.showModal = function showModal(this: HTMLDialogElement) {
+    this.open = true;
+  };
+});
+
+/** A consented user who has not closed the intro and has no profile yet. */
+function mockNewConsentedUser() {
+  getMock.mockImplementation((path: string) =>
+    Promise.resolve(
+      path === "/api/identity/me"
+        ? {
+            data: {
+              id: "1",
+              email: "ola@eksempel.no",
+              consent_at: "2026-11-15T10:00:00Z",
+              intro_dismissed_at: null,
+            },
+            error: undefined,
+          }
+        : {
+            data: undefined,
+            error: { error: { code: "profile_not_found", message: "Fant ingen profil." } },
+          },
+    ),
+  );
 }
 
 afterEach(() => {
@@ -114,5 +143,44 @@ describe("AppShell", () => {
     expect(screen.getAllByRole("link", { name: "Profil" }).length).toBeGreaterThan(0);
     await waitFor(() => expect(replaceMock).toHaveBeenCalledWith("/logg-inn"));
     expect(getMock).toHaveBeenCalledWith("/api/identity/me");
+  });
+
+  it("shows the first-run intro over /profiloppsett for a new consented user", async () => {
+    mockNewConsentedUser();
+
+    renderShell("/profiloppsett");
+
+    await waitFor(() =>
+      expect(screen.getByRole("dialog", { name: "Slik kommer du i gang" })).toBeInTheDocument(),
+    );
+    expect(replaceMock).not.toHaveBeenCalled();
+  });
+
+  it("opens the first-run intro once when the guard moves a new user from / to setup", async () => {
+    mockNewConsentedUser();
+    const showModal = vi.spyOn(HTMLDialogElement.prototype, "showModal");
+    navigation.pathname = "/";
+    const client = new QueryClient();
+    const tree = () => (
+      <QueryClientProvider client={client}>
+        <AppShell>
+          <p>Innhold</p>
+        </AppShell>
+      </QueryClientProvider>
+    );
+    const { rerender } = render(tree());
+
+    const dialog = await screen.findByRole("dialog", { name: "Slik kommer du i gang" });
+    // The profile guard still sends a user without a profile to setup.
+    await waitFor(() => expect(replaceMock).toHaveBeenCalledWith("/profiloppsett"));
+    navigation.pathname = "/profiloppsett";
+    rerender(tree());
+
+    expect(
+      await screen.findByRole("heading", { level: 1, name: "Profiloppsett" }),
+    ).toBeInTheDocument();
+    expect(screen.getByRole("dialog", { name: "Slik kommer du i gang" })).toBe(dialog);
+    expect(showModal).toHaveBeenCalledTimes(1);
+    showModal.mockRestore();
   });
 });

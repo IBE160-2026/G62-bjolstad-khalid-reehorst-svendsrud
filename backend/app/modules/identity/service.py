@@ -95,6 +95,7 @@ class SessionUser:
     email: str
     session_id: uuid.UUID
     consent_at: datetime | None
+    intro_dismissed_at: datetime | None
 
 
 @dataclass(frozen=True)
@@ -183,7 +184,11 @@ def resolve_session(db: DbSessionType, token: str, now: datetime) -> SessionUser
     if user is None:
         return None
     return SessionUser(
-        id=user.id, email=user.email, session_id=session.id, consent_at=user.consent_at
+        id=user.id,
+        email=user.email,
+        session_id=session.id,
+        consent_at=user.consent_at,
+        intro_dismissed_at=user.intro_dismissed_at,
     )
 
 
@@ -205,6 +210,15 @@ def give_consent(db: DbSessionType, user_id: uuid.UUID, now: datetime) -> User:
     user = _locked_user(db, user_id)
     if user.consent_at is None:
         user.consent_at = now
+        db.flush()
+    return user
+
+
+def dismiss_intro(db: DbSessionType, user_id: uuid.UUID, now: datetime) -> User:
+    """Record that the first-run introduction was closed; closing it again keeps the first time."""
+    user = _locked_user(db, user_id)
+    if user.intro_dismissed_at is None:
+        user.intro_dismissed_at = now
         db.flush()
     return user
 

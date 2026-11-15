@@ -20,7 +20,12 @@ router = APIRouter(prefix="/api/identity", tags=["identity"])
 
 
 def _user_response(user: User) -> UserResponse:
-    return UserResponse(id=user.id, email=user.email, consent_at=user.consent_at)
+    return UserResponse(
+        id=user.id,
+        email=user.email,
+        consent_at=user.consent_at,
+        intro_dismissed_at=user.intro_dismissed_at,
+    )
 
 
 @router.post(
@@ -74,7 +79,10 @@ def logout(current_user: CurrentUser, db: DbSession) -> Response:
 @router.get("/me", response_model=UserResponse, operation_id="me")
 def me(current_user: CurrentUser) -> UserResponse:
     return UserResponse(
-        id=current_user.id, email=current_user.email, consent_at=current_user.consent_at
+        id=current_user.id,
+        email=current_user.email,
+        consent_at=current_user.consent_at,
+        intro_dismissed_at=current_user.intro_dismissed_at,
     )
 
 
@@ -82,6 +90,12 @@ def me(current_user: CurrentUser) -> UserResponse:
 def give_consent(current_user: CurrentUser, db: DbSession, now: Now) -> UserResponse:
     """Records consent to storing health data. Requires login, not consent."""
     return _user_response(service.give_consent(db, current_user.id, now))
+
+
+@router.post("/intro/dismiss", response_model=UserResponse, operation_id="dismiss_intro")
+def dismiss_intro(current_user: CurrentUser, db: DbSession, now: Now) -> UserResponse:
+    """Records that the first-run introduction was closed. Requires login, not consent."""
+    return _user_response(service.dismiss_intro(db, current_user.id, now))
 
 
 @router.delete(

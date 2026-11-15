@@ -15,4 +15,4 @@ def test_migrations_ran_on_separate_test_database(db_session: Session) -> None:
     version = db_session.execute(text("SELECT version_num FROM alembic_version")).scalar_one()
 
     assert database.endswith("_test")
-    assert version == "0006"  # head: profiles (story 2.1)
+    assert version == "0007"  # head: intro_dismissed_at (story 2.3)

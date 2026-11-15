@@ -43,6 +43,8 @@ class User(Base):
     # Soft delete (AD-14): set when the user deletes the account; every user query skips
     # these rows, and `purge` hard-deletes them 30 days later.
     deleted_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    # When the user closed the first-run introduction (story 2.3); null = show it.
+    intro_dismissed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
 
 
 class Session(Base):

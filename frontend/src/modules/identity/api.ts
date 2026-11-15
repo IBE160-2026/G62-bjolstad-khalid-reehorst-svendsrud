@@ -128,6 +128,30 @@ export function useGiveConsent() {
   });
 }
 
+type UserResponse = components["schemas"]["UserResponse"];
+
+/**
+ * Close the first-run introduction for good (story 2.3). The `["me"]` cache is updated at
+ * once, so the dialog does not wait for the server; a failed request is not rolled back.
+ */
+export function useDismissIntro() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: () => call(() => api.POST("/api/identity/intro/dismiss")),
+    onMutate: async () => {
+      await queryClient.cancelQueries({ queryKey: ME_QUERY_KEY });
+      queryClient.setQueryData<UserResponse>(ME_QUERY_KEY, (user) =>
+        user
+          ? { ...user, intro_dismissed_at: user.intro_dismissed_at ?? new Date().toISOString() }
+          : user,
+      );
+    },
+    onSuccess: (user) => {
+      queryClient.setQueryData(ME_QUERY_KEY, user);
+    },
+  });
+}
+
 /** Delete the account (soft delete, every session ended), then show the login page (story 1.6). */
 export function useDeleteAccount() {
   const queryClient = useQueryClient();
