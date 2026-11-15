@@ -783,6 +783,33 @@ Det viktigste funnet: Dekningsanalysen er regnet ut fra øvelseslista og viser a
 
 ---
 
+## 2026-11-16 – Story 2.3 (kom i gang-intro)
+
+**Verktøy:** Claude Code (BMAD `bmad-build`)
+**Hvem:** Osman Khalid
+**Bakgrunn:** Nye brukere skal forstå hva appen gjør før de møter skjemaet.
+
+### Hva vi ba KI om
+
+1. Lage en kort intro som vises én gang etter samtykke og aldri igjen.
+
+### Hva KI produserte
+
+- Spec, dialogen «Slik kommer du i gang», lagring av at den er lukket på brukeren og nye tester.
+
+### Hva vi selv vurderte og kontrollerte
+
+- Osman godkjente spec-en før koding.
+- Tre KI-kontrollører fant 15 punkter: 4 grupper rettet (blant annet at Esc i Chrome kunne lukke dialogen uten å lagre valget), 7 avvist med begrunnelse.
+- Brukere som allerede hadde profil, får ikke introen (migreringen fyller inn feltet for dem).
+
+### Status
+
+- [x] Story 2.3 bygget og testet
+- [ ] Review av PR fra gruppen
+
+---
+
 ## Mal for nye oppføringer
 
 ```markdown

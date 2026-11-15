@@ -302,6 +302,48 @@
         }
       }
     },
+    "/api/identity/intro/dismiss": {
+      "post": {
+        "tags": [
+          "identity"
+        ],
+        "summary": "Dismiss Intro",
+        "description": "Records that the first-run introduction was closed. Requires login, not consent.",
+        "operationId": "dismiss_intro",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/profile": {
       "get": {
         "tags": [
@@ -646,13 +688,26 @@
               }
             ],
             "title": "Consent At"
+          },
+          "intro_dismissed_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Intro Dismissed At"
           }
         },
         "type": "object",
         "required": [
           "id",
           "email",
-          "consent_at"
+          "consent_at",
+          "intro_dismissed_at"
         ],
         "title": "UserResponse"
       }
