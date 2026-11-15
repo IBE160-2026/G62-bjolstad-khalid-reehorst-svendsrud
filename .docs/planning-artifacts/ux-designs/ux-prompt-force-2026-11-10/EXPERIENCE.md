@@ -157,7 +157,7 @@ Failure: she types 680 kg by mistake → "Vekt må være mellom 30 og 300 kg." u
 1. On her laptop, I dag, she clicks "+ Legg til" next to Frokost. The sheet opens with Frokost preselected.
 2. She opens the Strekkode tab and types the number from the cup.
 3. The product appears with kcal per 100 g. She sets 150 g; the kcal updates live.
-4. **Climax:** she clicks "Lagre". The sheet closes, the Frokost row shows the yoghurt, the day note drops to the new remaining number, and a green magnet appears under today in the week strip.
+4. **Climax:** she clicks "Lagre". The sheet closes, the Frokost row shows the yoghurt, the day note drops to the new remaining number, and the food magnet appears under today in the week strip.
 
 Failure: the barcode is unknown → "Vi fant ikke denne varen. Vil du registrere den selv?" → Registrer matvare opens with the barcode filled in.
 
@@ -167,7 +167,7 @@ Failure: the barcode is unknown → "Vi fant ikke denne varen. Vil du registrere
 2. The suggestions show only exercises that fit, Nybegynner first. She opens "Goblet squat", reads the description and watches the video.
 3. "Legg til i økt" adds it with three sets suggesting 10 reps. Under the name: "Sist: 8 kg × 10 (3. nov)".
 4. She logs 3 × 10 at 10 kg, ticking each set.
-5. **Climax:** she clicks "Fullfør økt" and returns to I dag. The Trening card lists the exercise with 3 × 10 · 10 kg, and an orange magnet sits next to the green one under today.
+5. **Climax:** she clicks "Fullfør økt" and returns to I dag. The Trening card lists the exercise with 3 × 10 · 10 kg, and the training magnet sits next to the food magnet under today.
 
 Failure: travelling with bodyweight only, she filters on Skuldre → "Ingen øvelser passer med Kroppsvekt og Skuldre. Prøv en annen muskelgruppe eller legg til utstyr."
 

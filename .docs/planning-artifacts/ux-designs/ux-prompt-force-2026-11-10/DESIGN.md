@@ -1,9 +1,9 @@
 ---
 name: Prompt Force
-description: Calm, app-like training and food journal for beginners. Merged design (2026-11-13) — the paper-journal look from UX round 3 with the category colours and structure of concept A1. Light mode by default, dark mode as a user choice (PRD NFR-12).
+description: Calm, app-like training and food journal for beginners. Merged design (2026-11-13) — the paper-journal look from UX round 3 with the structure of concept A1. Light mode by default, dark mode as a user choice (PRD NFR-12).
 status: final
 updated: 2026-11-15
-revision: 3 (Karianne's final design 15.11: Manrope, dark-mode palette; green/orange kept pending group answer)
+revision: 3 (Karianne's final design 15.11: Manrope, dark-mode palette; one mauve mark colour for Mat and Trening)
 sources:
   - ../../prds/prd-prompt-force-2026-11-02/prd.md
   - ../../briefs/brief-prompt-force-2026-09-16/brief.md
@@ -19,12 +19,9 @@ colors:
   accent: '#7A3B69'
   accent-tint: '#F1E7EE'
   on-accent: '#FFF9F0'
-  food: '#2F7D55'
-  food-text: '#2A7350'
-  food-tint: '#E5EFE6'
-  training: '#D9542B'
-  training-text: '#B4451E'
-  training-tint: '#F8E6DC'
+  mark: '#9C5E87'
+  mark-text: '#7D3F5E'
+  mark-tint: '#F2E7EE'
   note: '#F2C14E'
   note-paper: '#FFF8E2'
   tape: '#E9DFC9'
@@ -42,12 +39,9 @@ colors-dark:
   accent-text: '#D8B2E3'
   accent-tint: '#352C3A'
   on-accent: '#201620'
-  food: '#5FB98A'
-  food-text: '#7CC9A0'
-  food-tint: '#1F3329'
-  training: '#EE7D55'
-  training-text: '#F29470'
-  training-tint: '#3D2920'
+  mark: '#B383C3'
+  mark-text: '#D8B2E3'
+  mark-tint: '#372D3C'
   note: '#F2C14E'
   note-paper: '#2E2420'
   note-line: '#4A3A30'
@@ -132,12 +126,8 @@ components:
     background: '{colors.surface}'
     border: '2px solid {colors.ink}'
     radius: '{rounded.md}'
-  magnet-food:
-    background: '{colors.food}'
-    size: 9px
-    radius: '{rounded.full}'
-  magnet-training:
-    background: '{colors.training}'
+  magnet:
+    background: '{colors.mark}'
     size: 9px
     radius: '{rounded.full}'
   page-background:
@@ -171,10 +161,8 @@ components:
     radius: '{rounded.full}'
     selected-background: '{colors.accent}'
     selected-foreground: '{colors.on-accent}'
-  status-complete-food:
-    foreground: '{colors.food-text}'
-  status-complete-training:
-    foreground: '{colors.training-text}'
+  status-complete:
+    foreground: '{colors.mark-text}'
   input:
     background: '{colors.surface}'
     border: '1.5px solid {colors.rule}'
@@ -200,25 +188,24 @@ This is the **merged design** the group voted for on 2026-11-12. It takes the lo
 
 It is a web app that behaves like an app: persistent navigation, authored icons and tappable cards. No gradients, no glass, no hero images. Reference layouts: `imports/valgt-konsept-a1-dagsoversikt.svg` (structure) and `../../ux/runde-3/mockups/` (look of food logging and the muscle-group list). This file wins on conflict with either.
 
-**Revision 3 (2026-11-15, Karianne's final design in Claude Design):** the font is Manrope, with light weights for the big number and page titles and 400 for body text so it stays easy to read. Dark mode uses her plum-dark palette (`colors-dark`); two values were adjusted to pass 4.5:1 (accent `#A569BD` → `#A86CC0` for button text, and plum text on tints uses `accent-text` `#D8B2E3`). Sidebar 210 px, cards 18 px radius, buttons 50 px. Her design shows Mat and Trening in one mauve colour; green and orange are kept here until the group decides, because they keep the two cards apart at a glance (group vote 2026-11-12).
+**Revision 3 (2026-11-15, Karianne's final design in Claude Design):** the font is Manrope, with light weights for the big number and page titles and 400 for body text so it stays easy to read. Dark mode uses her plum-dark palette (`colors-dark`); two values were adjusted to pass 4.5:1 (accent `#A569BD` → `#A86CC0` for button text, and plum text on tints uses `accent-text` `#D8B2E3`). Sidebar 210 px, cards 18 px radius, buttons 50 px. Mat and Trening share one mauve mark colour, as in her design (group decision 2026-11-15, replacing the green/orange vote of 2026-11-12); the two are told apart by icon and label.
 
 ## Colors
 
-Warm neutrals for the page, one action colour, two category colours and one note colour. Every colour has one job.
+Warm neutrals for the page, one action colour (plum), one mark colour (mauve) and one note colour. Every colour has one job.
 
 - **Paper (`#F7F2E9`)** is the page background, ruled with a 1 px `{colors.rule}` line every 38 px like a notebook. **Surface (`#FFFDF7`)** is cards, the sidebar, the tab bar and inputs. **Rule (`#E4D9C6`)** is hairlines and borders, never text.
 - **Ink (`#3A322B`)** is all main text and the focus ring (11.3:1 on paper). **Ink-secondary (`#6B6056`)** is supporting text such as dates and "Sist: …" (5.5:1).
-- **Plum (`#7A3B69`)** is the action colour: primary buttons, the active navigation item, the selected method in the food sheet and links (7.1:1 on paper; on-accent text 7.6:1). It never means a category.
-- **Food green**: `#2F7D55` for the food magnet and the icon on the Mat card (on a food-tint disc, never a solid green disc); `#2A7350` for any green text, such as "+ Legg til" and "fullført" on the Mat card (5.1:1). **Food tint (`#E5EFE6`)** is selected rows in the food flow.
-- **Training orange**: `#D9542B` for the training magnet and the icon on the Trening card only (on a training-tint disc) (3.6:1, enough for non-text); `#B4451E` for orange text, such as "Fullført" on the Trening card (4.5:1 on training-tint). **Training tint (`#F8E6DC`)** is selected rows in the training flow.
+- **Plum (`#7A3B69`)** is the action colour: primary buttons, the active navigation item, the selected method in the food sheet and links (7.1:1 on paper; on-accent text 7.6:1). It never marks a category; that is the mauve mark colour.
+- **Mark mauve**: `#9C5E87` for icon discs (on a `#F2E7EE` mark-tint disc) and magnets for both Mat and Trening (4.0:1 on the tint, enough for non-text); `#7D3F5E` for mark text such as "+ Legg til" and "Fullført" (6.3:1 or more). Mark tint is selected rows in the food and training flows. Mat and Trening are told apart by icon (bowl, dumbbell) and label, never by colour alone.
 - **Note yellow (`#F2C14E`)** is only the pin on the day note; **note paper (`#FFF8E2`)** is the note itself, ruled every 26 px in `{colors.note-line}` with a faint plum margin line. **Tape (`#E6DCC4`)** is the small tape strip on section cards.
 - **Error (`#B42318`)** is for validation errors and destructive confirmations only. Being over the calorie target is not an error and is never red.
 
-**Balance rule:** at most one filled colour per screen (the plum primary button). Category colours appear only as small marks (magnets, icons, "+ Legg til"); values and numbers stay in ink.
+**Balance rule:** at most one filled colour per screen (the plum primary button). The mark colour appears only as small marks (magnets, icons, "+ Legg til"); values and numbers stay in ink.
 
-**Dark mode** (`colors-dark`, PRD NFR-12): a plum-tinted dark paper with the same notebook lines in `rule`, lighter plum for actions and lighter green and orange for marks. Plum text on tints (the active navigation item, links) uses `accent-text`. Every text pair meets 4.5:1; contrast is listed in `frontend/src/styles/CONTRAST.md`. Light is always the default.
+**Dark mode** (`colors-dark`, PRD NFR-12): a plum-tinted dark paper with the same notebook lines in `rule`, lighter plum for actions and a lighter mauve for marks. Plum text on tints (the active navigation item, links) uses `accent-text`. Every text pair meets 4.5:1; contrast is listed in `frontend/src/styles/CONTRAST.md`. Light is always the default.
 
-Avoid: new category colours, coloured page backgrounds, green or orange as large fills behind text, plum on anything that is not an action.
+Avoid: separate colours per category, coloured page backgrounds, mauve as a large fill behind text, plum on anything that is not an action.
 
 ## Typography
 
@@ -255,9 +242,9 @@ Rounded and friendly: `{rounded.sm}` (10 px) for inputs, `{rounded.md}` (14 px) 
 ## Components
 
 - **Sidebar / tab bar:** outline icons (24 px, 2 px stroke, round caps: house, bowl, dumbbell, calendar, person) plus a label. The active item is plum on `{colors.accent-tint}` in a pill; inactive items are ink-secondary. No emoji.
-- **Week strip:** seven cells, Monday–Sunday, weekday (`label`) over date (`body`). The selected day has a surface fill and a 2 px ink outline. Past and current days carry up to two magnets: green when food is logged, orange when a workout is logged. Future days are ink-secondary with no magnets.
+- **Week strip:** seven cells, Monday–Sunday, weekday (`label`) over date (`body`). The selected day has a surface fill and a 2 px ink outline. Past and current days carry up to two mauve magnets: the left when food is logged, the right when a workout is logged; the cell's accessible name says which. Future days are ink-secondary with no magnets.
 - **Day note:** a lined notepad sheet (note paper, `{colors.note-line}` lines, faint margin line) with the yellow pin centred on the top edge. Date (`small`), the number in `display`, one sentence in `body` ("igjen av dagens mål på 1 640"), and at most one supporting line. One per screen.
-- **Section card (Mat / Trening):** surface card with a small tape strip on the top-left edge; header with a 36 px icon disc in the category tint with the icon in the category colour, title in `heading`, summary in `small`, chevron. Rows separated by rule lines; names in `body-strong`, values right-aligned in ink with tabular numerals. Completed status uses the category text colour.
+- **Section card (Mat / Trening):** surface card with a small tape strip on the top-left edge; header with a 36 px icon disc in mark tint with the icon in the mark colour, title in `heading`, summary in `small`, chevron. Rows separated by rule lines; names in `body-strong`, values right-aligned in ink with tabular numerals. Completed status uses the category text colour.
 - **Food method picker:** four pill options of equal size — Søk · Skriv strekkode · Nylig brukt · Manuelt — each with an outline icon; the selected one is plum with on-accent text and a check.
 - **Muscle-group list:** a plain vertical list of pill rows (Skuldre, Bryst, Mage/kjerne, Armer, Ben, Rygg) on Trening, with the same selected style as the method picker; beside it the exercise search field and Level chips.
 - **Buttons:** primary is a plum pill with on-accent text; secondary is a surface pill with a rule border and ink text. 50 px high, minimum tap target 44 × 44 px, at most one primary button per view.
@@ -270,8 +257,8 @@ Rounded and friendly: `{rounded.sm}` (10 px) for inputs, `{rounded.md}` (14 px) 
 | Do | Don't |
 |---|---|
 | Keep the lined paper on the page and the day note | Remove the notebook lines or put lines inside cards |
-| Use green only for food and orange only for training | Bring back teal, or use green/orange for success or warnings |
-| Use `#2A7350` for green text and `#B4451E` for orange text | Put text in `#2F7D55` or `#D9542B` |
+| Use the mauve mark colour for both Mat and Trening, told apart by icon and label | Add a separate colour per category, or use the mark colour for success or warnings |
+| Use `#7D3F5E` for mark text | Put text in `#9C5E87` |
 | Use plum only for actions and the active navigation item | Use plum for a category or a status |
 | Show one big number (the day note) per screen | Add a calorie ring or several big stat numbers |
 | Use Manrope for all text; build hierarchy with size and weight | Add a second typeface or a decorative serif |

@@ -44,3 +44,4 @@ Her skriver vi ned hva vi velger etter hver runde, slik at prosessen kan følges
 - **Mål:** sidemeny 210 px, kort med 18 px hjørner, knapper 50 px.
 - **Åpent:** designet hennes viser Mat og Trening i én lilla farge. Grønn og oransje beholdes til gruppa har bestemt seg, fordi de gjør kortene lette å skille (avstemning 12.11).
 - Designet: https://claude.ai/artifact/MHV9YS6r1wm3h8wF4qAjhz (8 skjermer: I dag, Mat, Trening og Oppskrifter for PC og mobil).
+- **Avgjort samme dag:** én lilla markeringsfarge (`#9C5E87`, tekst `#7D3F5E`) for både Mat og Trening, som i Karianne sitt design. Erstatter grønt/oransje fra avstemningen 12.11. Mat og Trening skilles med ikon og navn; ukestripen har fortsatt to magneter (venstre = mat, høyre = trening).
