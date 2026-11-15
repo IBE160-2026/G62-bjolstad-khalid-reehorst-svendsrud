@@ -1,5 +1,5 @@
 /**
- * Client-side checks for the registration form. They mirror the backend rules in
+ * Client-side checks for the registration and login forms. They mirror the backend rules in
  * `backend/app/modules/identity/schemas.py`; the backend stays the source of truth.
  */
 
@@ -19,6 +19,7 @@ export const MESSAGES = {
   emailInvalid: "Skriv inn en gyldig e-postadresse.",
   passwordTooShort: "Velg et passord på minst 8 tegn.",
   passwordTooLong: "Velg et passord på høyst 128 tegn.",
+  passwordMissing: "Skriv inn passordet ditt.",
 } as const;
 
 /** One @, a non-empty local part, a domain with a dot, at most 254 characters. */
@@ -31,17 +32,32 @@ export function isValidEmail(email: string): boolean {
   return local.length > 0 && labels.length > 1 && labels.every((label) => label.length > 0);
 }
 
+function emailError(value: string): string | undefined {
+  const email = value.trim().toLowerCase();
+  if (!email) return MESSAGES.emailMissing;
+  if (!isValidEmail(email)) return MESSAGES.emailInvalid;
+  return undefined;
+}
+
 export function validateRegister(values: RegisterValues): FieldErrors {
   const errors: FieldErrors = {};
-  const email = values.email.trim().toLowerCase();
-  if (!email) errors.email = MESSAGES.emailMissing;
-  else if (!isValidEmail(email)) errors.email = MESSAGES.emailInvalid;
+  const email = emailError(values.email);
+  if (email) errors.email = email;
 
   // Count characters like the backend (Python len), not UTF-16 code units.
   const passwordLength = Array.from(values.password).length;
   if (passwordLength < PASSWORD_MIN_LENGTH) errors.password = MESSAGES.passwordTooShort;
   else if (passwordLength > PASSWORD_MAX_LENGTH) errors.password = MESSAGES.passwordTooLong;
 
+  return errors;
+}
+
+/** Login only checks that both fields are filled in; the password rules are not hinted at. */
+export function validateLogin(values: RegisterValues): FieldErrors {
+  const errors: FieldErrors = {};
+  const email = emailError(values.email);
+  if (email) errors.email = email;
+  if (!values.password) errors.password = MESSAGES.passwordMissing;
   return errors;
 }
 

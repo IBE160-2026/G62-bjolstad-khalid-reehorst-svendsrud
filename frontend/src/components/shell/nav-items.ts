@@ -27,6 +27,7 @@ export function isActive(pathname: string, href: string): boolean {
 
 /** Titles for routes that are not in the navigation (account pages). */
 const OTHER_TITLES: Readonly<Record<string, string>> = {
+  "/logg-inn": "Logg inn",
   "/opprett-konto": "Opprett konto",
   "/samtykke": "Samtykke",
 };

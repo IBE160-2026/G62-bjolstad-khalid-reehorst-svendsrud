@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useRef, useState, type FormEvent } from "react";
 
 import { ApiError, useRegister } from "./api";
+import { INPUT_CLASS, PRIMARY_BUTTON_CLASS } from "./styles";
 import {
   REGISTER_FIELDS,
   firstInvalidField,
@@ -13,9 +14,6 @@ import {
 } from "./validation";
 
 export const CONSENT_PATH = "/samtykke";
-
-const INPUT_CLASS =
-  "h-12 w-full rounded-sm border-[1.5px] border-input bg-card px-4 text-body text-foreground aria-[invalid=true]:border-2 aria-[invalid=true]:border-destructive";
 
 function isRegisterField(field: string): field is RegisterField {
   return (REGISTER_FIELDS as readonly string[]).includes(field);
@@ -143,7 +141,7 @@ export function RegisterForm() {
       <button
         type="submit"
         disabled={register.isPending}
-        className="h-[50px] rounded-full bg-primary px-6 text-button font-medium text-primary-foreground transition-opacity disabled:opacity-70"
+        className={PRIMARY_BUTTON_CLASS}
       >
         {register.isPending ? "Oppretter konto …" : "Opprett konto"}
       </button>

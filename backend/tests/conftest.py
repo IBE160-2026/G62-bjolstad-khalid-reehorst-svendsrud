@@ -1,6 +1,8 @@
 """Shared fixtures. Tests run against TEST_DATABASE_URL, never DATABASE_URL."""
 
-from collections.abc import Iterator
+from collections.abc import Callable, Iterator
+from dataclasses import dataclass
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
 import pytest
@@ -12,11 +14,16 @@ from sqlalchemy import Engine, create_engine, make_url, text
 from sqlalchemy.exc import OperationalError
 from sqlalchemy.orm import Session, sessionmaker
 
+from app.core.clock import utc_now
 from app.core.db import get_session_factory
 from app.core.settings import get_settings
 from app.main import create_app
 
 BACKEND_DIR = Path(__file__).resolve().parent.parent
+# https, so the client's cookie jar sends the `Secure` session cookie back.
+BASE_URL = "https://testserver"
+REGISTER_URL = "/api/identity/register"
+PASSWORD = "hemmelig1"
 
 
 def _reset_schema(engine: Engine) -> None:
@@ -95,6 +102,7 @@ def client(app: FastAPI) -> Iterator[TestClient]:
     # Do not re-raise server errors so the 500 envelope can be asserted.
     with TestClient(
         app,
+        base_url=BASE_URL,
         headers={"Origin": get_settings().app_url},
         raise_server_exceptions=False,
     ) as test_client:
@@ -106,3 +114,54 @@ def bare_client(app: FastAPI) -> Iterator[TestClient]:
     """A client that sends no Origin header unless a test adds one."""
     with TestClient(app, raise_server_exceptions=False) as test_client:
         yield test_client
+
+
+@pytest.fixture
+def make_client(app: FastAPI) -> Iterator[Callable[[], TestClient]]:
+    """New browser-like clients, each with its own cookie jar."""
+    clients: list[TestClient] = []
+
+    def factory() -> TestClient:
+        test_client = TestClient(
+            app,
+            base_url=BASE_URL,
+            headers={"Origin": get_settings().app_url},
+            raise_server_exceptions=False,
+        )
+        test_client.__enter__()
+        clients.append(test_client)
+        return test_client
+
+    yield factory
+    for test_client in clients:
+        test_client.__exit__(None, None, None)
+
+
+@pytest.fixture
+def logged_in_client(make_client: Callable[[], TestClient]) -> Callable[..., TestClient]:
+    """Register an account and return a client that holds its session cookie."""
+
+    def factory(email: str = "ola@eksempel.no", password: str = PASSWORD) -> TestClient:
+        test_client = make_client()
+        response = test_client.post(REGISTER_URL, json={"email": email, "password": password})
+        assert response.status_code == 201, response.text
+        assert test_client.cookies.get("pf_session")
+        return test_client
+
+    return factory
+
+
+@dataclass
+class Clock:
+    now: datetime
+
+    def advance(self, delta: timedelta) -> None:
+        self.now += delta
+
+
+@pytest.fixture
+def clock(app: FastAPI) -> Clock:
+    """Controls the time the app sees through the `Now` dependency."""
+    test_clock = Clock(now=datetime.now(UTC))
+    app.dependency_overrides[utc_now] = lambda: test_clock.now
+    return test_clock

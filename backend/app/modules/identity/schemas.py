@@ -16,6 +16,7 @@ EMAIL_MISSING_MESSAGE = "Skriv inn e-postadressen din."
 EMAIL_INVALID_MESSAGE = "Skriv inn en gyldig e-postadresse."
 PASSWORD_TOO_SHORT_MESSAGE = "Velg et passord på minst 8 tegn."
 PASSWORD_TOO_LONG_MESSAGE = "Velg et passord på høyst 128 tegn."
+PASSWORD_MISSING_MESSAGE = "Skriv inn passordet ditt."
 
 
 def _field_error(message: str) -> PydanticCustomError:
@@ -51,6 +52,20 @@ def _check_password(value: str) -> str:
 class RegisterRequest(BaseModel):
     email: Annotated[str, AfterValidator(_check_email)]
     password: Annotated[str, AfterValidator(_check_password)]
+
+
+def _check_login_password(value: str) -> str:
+    # No minimum here: the login answer must not hint at the password rules.
+    if not value:
+        raise _field_error(PASSWORD_MISSING_MESSAGE)
+    if len(value) > PASSWORD_MAX_LENGTH:
+        raise _field_error(PASSWORD_TOO_LONG_MESSAGE)
+    return value
+
+
+class LoginRequest(BaseModel):
+    email: Annotated[str, AfterValidator(_check_email)]
+    password: Annotated[str, AfterValidator(_check_login_password)]
 
 
 class UserResponse(BaseModel):
