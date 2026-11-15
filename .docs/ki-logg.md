@@ -532,7 +532,7 @@ Det viktigste funnet: Dekningsanalysen er regnet ut fra øvelseslista og viser a
 ### Status
 
 - [x] DESIGN.md og appen oppdatert
-- [ ] Gruppa bestemmer grønt/oransje eller én lilla farge
+- [x] Én lilla farge for Mat og Trening (Osman valgte Karianne sitt forslag)
 
 ---
 
