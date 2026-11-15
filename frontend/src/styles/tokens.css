@@ -1,0 +1,190 @@
+/*
+ * Design tokens: the single swap point for colours, type, radii, spacing and shadows.
+ *
+ * Values are placeholders from the merged design on `ux/felles-design`
+ * (.docs/planning-artifacts/ux-designs/ux-prompt-force-2026-11-10/DESIGN.md) until the
+ * group finalises PR #17. Changing a value here must never require a component change.
+ *
+ * Names follow shadcn/ui so its components can use them later. Note the shadcn meaning:
+ *   --primary  = DESIGN `accent` (plum, the only action colour)
+ *   --accent   = DESIGN `accent-tint` (hover/active tint behind plum)
+ *   --border   = DESIGN `rule`, --ring = DESIGN `focus-ring`
+ * Dark values are not in DESIGN.md; they are derived (warm dark surfaces, lighter plum)
+ * and checked in CONTRAST.md.
+ */
+
+:root {
+  /* Surfaces and text */
+  --background: #f7f2e9; /* paper */
+  --foreground: #3a322b; /* ink */
+  --card: #fffdf7; /* surface */
+  --card-foreground: #3a322b;
+  --popover: #fffdf7;
+  --popover-foreground: #3a322b;
+  --secondary: #fffdf7;
+  --secondary-foreground: #3a322b;
+  --muted: #f7f2e9;
+  --muted-foreground: #6b6056; /* ink-secondary */
+  --border: #e4d9c6; /* rule */
+  --input: #e4d9c6;
+  --ring: #3a322b; /* focus-ring */
+
+  /* Action colour (plum) */
+  --primary: #7a3b69;
+  --primary-foreground: #fff9f0; /* on-accent */
+  --accent: #f1e7ee; /* accent-tint */
+  --accent-foreground: #7a3b69;
+
+  /* Category colours: small marks only */
+  --food: #2f7d55;
+  --food-text: #2a7350;
+  --food-tint: #e5efe6;
+  --training: #d9542b;
+  --training-text: #b4451e; /* darkened from DESIGN.md #B9471F for 4.5:1 on training-tint */
+  --training-tint: #f8e6dc;
+
+  /* Day note and cards */
+  --note: #f2c14e;
+  --note-paper: #fff8e2;
+  --note-line: #eadfbf;
+  --tape: #e9dfc9;
+
+  /* Validation and destructive actions only */
+  --destructive: #b42318; /* error */
+  --destructive-foreground: #fffdf7;
+  --error-tint: #fbe9e6;
+
+  /* Shadows */
+  --elevation-card: 0 2px 6px rgba(58, 50, 43, 0.06);
+  --elevation-sheet: 0 12px 32px rgba(58, 50, 43, 0.18);
+  --scrim: rgba(58, 50, 43, 0.35);
+
+  /* Shape */
+  --rounded-sm: 10px;
+  --rounded-md: 14px;
+  --rounded-lg: 20px;
+  --radius: var(--rounded-md); /* shadcn base radius */
+
+  /* Layout */
+  --sidebar-width: 232px;
+  --rail-width: 80px;
+  --top-bar-height: 64px;
+  --tab-bar-height: 72px;
+  --content-max: 1040px;
+  --margin-mobile: 16px;
+  --page-rule-gap: 38px;
+
+  /* Type */
+  --font-family: var(--font-inter), system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --background: #1e1a17;
+  --foreground: #f2eae0;
+  --card: #29231f;
+  --card-foreground: #f2eae0;
+  --popover: #29231f;
+  --popover-foreground: #f2eae0;
+  --secondary: #29231f;
+  --secondary-foreground: #f2eae0;
+  --muted: #1e1a17;
+  --muted-foreground: #bdb0a2;
+  --border: #4a4038;
+  --input: #4a4038;
+  --ring: #f2eae0;
+
+  --primary: #d9a3c8;
+  --primary-foreground: #2a1525;
+  --accent: #3d2737;
+  --accent-foreground: #e6b9d8;
+
+  --food: #5fb98a;
+  --food-text: #7cc9a0;
+  --food-tint: #1f3329;
+  --training: #ee7d55;
+  --training-text: #f29470;
+  --training-tint: #3d2920;
+
+  --note: #f2c14e;
+  --note-paper: #2e2920;
+  --note-line: #453e2c;
+  --tape: #4a4234;
+
+  --destructive: #f28b7f;
+  --destructive-foreground: #1e1a17;
+  --error-tint: #3f201c;
+
+  --elevation-card: 0 2px 6px rgba(0, 0, 0, 0.35);
+  --elevation-sheet: 0 12px 32px rgba(0, 0, 0, 0.55);
+  --scrim: rgba(0, 0, 0, 0.55);
+
+  color-scheme: dark;
+}
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-food: var(--food);
+  --color-food-text: var(--food-text);
+  --color-food-tint: var(--food-tint);
+  --color-training: var(--training);
+  --color-training-text: var(--training-text);
+  --color-training-tint: var(--training-tint);
+  --color-note: var(--note);
+  --color-note-paper: var(--note-paper);
+  --color-note-line: var(--note-line);
+  --color-tape: var(--tape);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-error-tint: var(--error-tint);
+
+  --font-sans: var(--font-family);
+
+  --text-display: 48px;
+  --text-display--line-height: 1.05;
+  --text-title: 30px;
+  --text-title--line-height: 1.2;
+  --text-heading: 19px;
+  --text-heading--line-height: 1.3;
+  --text-body: 16px;
+  --text-body--line-height: 1.6;
+  --text-small: 14px;
+  --text-small--line-height: 1.5;
+  --text-label: 13px;
+  --text-label--line-height: 1.3;
+  --text-button: 15px;
+  --text-button--line-height: 1;
+
+  --radius-sm: var(--rounded-sm);
+  --radius-md: var(--rounded-md);
+  --radius-lg: var(--rounded-lg);
+
+  --shadow-card: var(--elevation-card);
+  --shadow-sheet: var(--elevation-sheet);
+
+  --spacing-sidebar: var(--sidebar-width);
+  --spacing-rail: var(--rail-width);
+  --spacing-top-bar: var(--top-bar-height);
+  --spacing-tab-bar: var(--tab-bar-height);
+  --spacing-margin-mobile: var(--margin-mobile);
+  --container-content: var(--content-max);
+}
