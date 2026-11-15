@@ -42,6 +42,7 @@ development_status:
   1-4-log-in-and-log-out: backlog
   1-5-give-consent-before-health-data: backlog
   1-6-delete-my-account: backlog
+  1-7-reset-a-forgotten-password: backlog
   epic-1-retrospective: optional
 
   epic-2: backlog

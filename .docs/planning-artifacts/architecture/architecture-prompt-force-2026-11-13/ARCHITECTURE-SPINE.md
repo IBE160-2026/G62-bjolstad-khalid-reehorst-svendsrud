@@ -88,9 +88,9 @@ A layer may only call the layer to its right. `overview` may call other modules'
 
 ### AD-7 — External services sit behind ports with live and mock adapters
 
-- **Binds:** FR-8 – FR-10, FR-29, NFR-3, NFR-5, NFR-6
+- **Binds:** FR-8 – FR-10, FR-29, FR-31, NFR-3, NFR-5, NFR-6
 - **Prevents:** code calling Open Food Facts (or, in phase 2, an image model) directly, which breaks tests and running without keys or network.
-- **Rule:** each external service is an interface in `backend/app/ports/` with a `live` and a `mock` adapter, chosen by environment (`OFF_MODE=live|mock`, `IMAGE_MODE=mock|live`, image defaults to mock). Automated tests always use mock. The Open Food Facts adapter: validates EAN-8/EAN-13 (length and check digit) before calling; looks up the local `food_items` cache first; sends the app's own User-Agent; keeps under 15 lookups per minute; caches every product found; treats HTTP 404 as «not found», never as an error.
+- **Rule:** each external service is an interface in `backend/app/ports/` with a `live` and a `mock` adapter, chosen by environment (`OFF_MODE=live|mock`, `IMAGE_MODE=mock|live`, `EMAIL_MODE=smtp|mock`; image defaults to mock). Email (FR-31) uses SMTP; in Docker Compose it points at a local mail catcher, so nothing is really sent without configured SMTP settings. Automated tests always use mock. The Open Food Facts adapter: validates EAN-8/EAN-13 (length and check digit) before calling; looks up the local `food_items` cache first; sends the app's own User-Agent; keeps under 15 lookups per minute; caches every product found; treats HTTP 404 as «not found», never as an error.
 
 ### AD-8 — PostgreSQL is the only store; Alembic owns the schema
 
@@ -240,7 +240,7 @@ erDiagram
     app/
       core/                 # settings, db session, auth dependency, errors
       modules/<module>/     # router.py, service.py, repository.py, models.py, schemas.py
-      ports/                # off.py, image.py — interfaces + live/mock adapters
+      ports/                # off.py, image.py, email.py — interfaces + live/mock adapters
       seed/                 # exercises, equipment, Matvaretabellen subset, demo users
       cli.py                # purge, seed
     migrations/             # Alembic
@@ -257,6 +257,7 @@ erDiagram
 | Capability / Area | Lives in | Governed by |
 | --- | --- | --- |
 | FR-1 – FR-4 Account, consent, own data, deletion | `identity` | AD-3, AD-4, AD-14 |
+| FR-31 Reset a forgotten password | `identity` + `ports/email` | AD-3, AD-7 |
 | FR-5 – FR-7 Profile and calorie target | `profile` | AD-5, AD-12 |
 | FR-8 – FR-10 Barcode scan, type, not found | `food` + `ports/off` | AD-7 |
 | FR-11 – FR-16 Search, manual, amount, recent, edit, sources | `food` | AD-4, AD-5, AD-6 |
