@@ -13,6 +13,7 @@ import app.core.db
 import app.main  # noqa: F401  (imports every module's models into Base.metadata)
 from app import cli
 from app.core.db import Base
+from app.modules.food.models import FoodItem, FoodLogEntry
 from app.modules.identity import service
 from app.modules.identity.models import Session as UserSession
 from app.modules.identity.models import User
@@ -149,3 +150,35 @@ def test_every_foreign_key_to_users_cascades() -> None:
     assert user_fks, "expected at least sessions.user_id"
     for fk in user_fks:
         assert fk.ondelete == "CASCADE", f"{fk.parent.table.name}.{fk.parent.name}"
+
+
+def test_purge_removes_food_entries_and_own_items_of_a_purged_user(
+    factory: sessionmaker[Session],
+) -> None:
+    """Checks the migrated FKs: entries and own food items go with the user."""
+    with factory() as db:
+        user = _add_user(db, "gammel@eksempel.no", NOW - timedelta(days=31))
+        shared = FoodItem(source="matvaretabellen", name="Havremel", kcal_per_100g=369)
+        own = FoodItem(source="user", owner_id=user.id, name="Mitt brød", kcal_per_100g=250)
+        db.add_all([shared, own])
+        db.flush()
+        db.add(
+            FoodLogEntry(
+                user_id=user.id,
+                food_item_id=shared.id,
+                date=NOW.date(),
+                meal="lunch",
+                grams=100,
+                kcal_per_100g_snapshot=369,
+                created_at=NOW,
+            )
+        )
+        db.commit()
+
+    with factory() as db:
+        assert service.purge_deleted(db, NOW) == 1
+        db.commit()
+
+    with factory() as db:
+        assert list(db.scalars(select(FoodLogEntry))) == []
+        assert [item.name for item in db.scalars(select(FoodItem))] == ["Havremel"]

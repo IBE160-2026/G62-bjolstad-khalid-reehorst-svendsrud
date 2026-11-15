@@ -7,7 +7,6 @@ import pytest
 from pydantic import ValidationError
 
 from app.core.settings import DEFAULT_SESSION_SECRET, Settings
-from app.seed.seed import seed_if_empty
 
 BACKEND_DIR = Path(__file__).resolve().parent.parent
 
@@ -72,6 +71,4 @@ def test_startup_check_passes_locally() -> None:
     assert result.returncode == 0
 
 
-def test_seed_runs_only_locally() -> None:
-    assert seed_if_empty(Settings(app_env="local")) is True
-    assert seed_if_empty(Settings(app_env="production", session_secret="strong-secret-x")) is False
+# The seed (local only, once) is tested against the test database in tests/food/test_seed.py.

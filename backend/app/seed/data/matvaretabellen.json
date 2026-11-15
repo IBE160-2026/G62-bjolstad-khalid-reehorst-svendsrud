@@ -1,0 +1,1450 @@
+[
+ {
+  "food_id": "01.236",
+  "name": "Helmelk, uspesifisert",
+  "kcal_per_100g": 64.0,
+  "protein_g": 3.4,
+  "carbs_g": 4.5,
+  "fat_g": 3.6
+ },
+ {
+  "food_id": "01.292",
+  "name": "Lettmelk, uspesifisert",
+  "kcal_per_100g": 39.0,
+  "protein_g": 3.6,
+  "carbs_g": 4.5,
+  "fat_g": 0.8
+ },
+ {
+  "food_id": "01.231",
+  "name": "Lettmelk, 0,5 % fett, vitamin D, uspesifisert",
+  "kcal_per_100g": 37.0,
+  "protein_g": 3.6,
+  "carbs_g": 4.5,
+  "fat_g": 0.5
+ },
+ {
+  "food_id": "01.291",
+  "name": "Melk, uspesifisert",
+  "kcal_per_100g": 43.0,
+  "protein_g": 3.5,
+  "carbs_g": 4.5,
+  "fat_g": 1.2
+ },
+ {
+  "food_id": "01.109",
+  "name": "Kaffemelk, 3,5 % fett",
+  "kcal_per_100g": 61.0,
+  "protein_g": 3.0,
+  "carbs_g": 4.4,
+  "fat_g": 3.5
+ },
+ {
+  "food_id": "01.196",
+  "name": "Kakao, med lettmelk, tilberedt",
+  "kcal_per_100g": 80.0,
+  "protein_g": 4.2,
+  "carbs_g": 11.7,
+  "fat_g": 1.6
+ },
+ {
+  "food_id": "01.011",
+  "name": "Yoghurt, naturell",
+  "kcal_per_100g": 69.0,
+  "protein_g": 4.0,
+  "carbs_g": 5.6,
+  "fat_g": 3.4
+ },
+ {
+  "food_id": "01.305",
+  "name": "Yoghurt, vanilje",
+  "kcal_per_100g": 71.0,
+  "protein_g": 4.5,
+  "carbs_g": 7.5,
+  "fat_g": 2.6
+ },
+ {
+  "food_id": "01.335",
+  "name": "Yoghurt, naturell, 10 % fett, gresk/tyrkisk",
+  "kcal_per_100g": 107.0,
+  "protein_g": 5.0,
+  "carbs_g": 3.8,
+  "fat_g": 8.0
+ },
+ {
+  "food_id": "01.334",
+  "name": "Yoghurt, naturell, 2 % fett, gresk/tyrkisk",
+  "kcal_per_100g": 69.0,
+  "protein_g": 9.2,
+  "carbs_g": 3.4,
+  "fat_g": 2.1
+ },
+ {
+  "food_id": "01.233",
+  "name": "Skyr, med smak, kunstig søtet",
+  "kcal_per_100g": 58.0,
+  "protein_g": 10.0,
+  "carbs_g": 4.0,
+  "fat_g": 0.2
+ },
+ {
+  "food_id": "01.028",
+  "name": "Cottage cheese",
+  "kcal_per_100g": 97.0,
+  "protein_g": 13.0,
+  "carbs_g": 1.5,
+  "fat_g": 4.3
+ },
+ {
+  "food_id": "01.150",
+  "name": "Kremost, naturell",
+  "kcal_per_100g": 278.0,
+  "protein_g": 6.0,
+  "carbs_g": 2.7,
+  "fat_g": 27.0
+ },
+ {
+  "food_id": "01.087",
+  "name": "Lettrømme, 18 % fett",
+  "kcal_per_100g": 189.0,
+  "protein_g": 3.0,
+  "carbs_g": 3.7,
+  "fat_g": 18.0
+ },
+ {
+  "food_id": "01.086",
+  "name": "Seterrømme, 35 % fett",
+  "kcal_per_100g": 335.0,
+  "protein_g": 2.0,
+  "carbs_g": 2.9,
+  "fat_g": 35.0
+ },
+ {
+  "food_id": "01.089",
+  "name": "Crème fraîche, 35 % fett",
+  "kcal_per_100g": 335.0,
+  "protein_g": 2.0,
+  "carbs_g": 2.9,
+  "fat_g": 35.0
+ },
+ {
+  "food_id": "01.175",
+  "name": "Matfløte, 18 % fett",
+  "kcal_per_100g": 189.0,
+  "protein_g": 3.0,
+  "carbs_g": 3.7,
+  "fat_g": 18.0
+ },
+ {
+  "food_id": "01.015",
+  "name": "Kremfløte, 37 % fett",
+  "kcal_per_100g": 353.0,
+  "protein_g": 2.0,
+  "carbs_g": 2.9,
+  "fat_g": 37.0
+ },
+ {
+  "food_id": "01.108",
+  "name": "Kaffefløte, 10 % fett",
+  "kcal_per_100g": 118.0,
+  "protein_g": 3.0,
+  "carbs_g": 4.1,
+  "fat_g": 10.0
+ },
+ {
+  "food_id": "01.185",
+  "name": "Gulost, uspesifisert",
+  "kcal_per_100g": 348.0,
+  "protein_g": 26.9,
+  "carbs_g": 0.0,
+  "fat_g": 26.7
+ },
+ {
+  "food_id": "01.186",
+  "name": "Brunost, uspesifisert",
+  "kcal_per_100g": 410.0,
+  "protein_g": 11.3,
+  "carbs_g": 30.3,
+  "fat_g": 27.0
+ },
+ {
+  "food_id": "01.059",
+  "name": "Prim",
+  "kcal_per_100g": 268.0,
+  "protein_g": 7.0,
+  "carbs_g": 42.0,
+  "fat_g": 8.0
+ },
+ {
+  "food_id": "01.066",
+  "name": "Mozzarella, norsk",
+  "kcal_per_100g": 317.0,
+  "protein_g": 27.0,
+  "carbs_g": 0.6,
+  "fat_g": 23.0
+ },
+ {
+  "food_id": "01.188",
+  "name": "Feta, ost med geitmelk",
+  "kcal_per_100g": 260.0,
+  "protein_g": 18.1,
+  "carbs_g": 0.2,
+  "fat_g": 20.8
+ },
+ {
+  "food_id": "01.027",
+  "name": "Cheddar, gulost",
+  "kcal_per_100g": 389.0,
+  "protein_g": 25.0,
+  "carbs_g": 0.3,
+  "fat_g": 32.0
+ },
+ {
+  "food_id": "01.302",
+  "name": "Goudaost",
+  "kcal_per_100g": 377.0,
+  "protein_g": 25.3,
+  "carbs_g": 0.0,
+  "fat_g": 30.6
+ },
+ {
+  "food_id": "01.043",
+  "name": "Nøkkelost",
+  "kcal_per_100g": 351.0,
+  "protein_g": 27.0,
+  "carbs_g": 0.0,
+  "fat_g": 27.0
+ },
+ {
+  "food_id": "01.136",
+  "name": "Brie, hvitmuggost",
+  "kcal_per_100g": 361.0,
+  "protein_g": 15.6,
+  "carbs_g": 0.1,
+  "fat_g": 33.1
+ },
+ {
+  "food_id": "01.200",
+  "name": "Parmesan, Parmigiano Reggiano, ost",
+  "kcal_per_100g": 414.0,
+  "protein_g": 31.1,
+  "carbs_g": 0.0,
+  "fat_g": 32.2
+ },
+ {
+  "food_id": "01.219",
+  "name": "Pizzaost, revet",
+  "kcal_per_100g": 301.0,
+  "protein_g": 30.0,
+  "carbs_g": 0.3,
+  "fat_g": 20.0
+ },
+ {
+  "food_id": "01.204",
+  "name": "Magerost, smørbar, 10 % fett",
+  "kcal_per_100g": 162.0,
+  "protein_g": 18.0,
+  "carbs_g": 0.0,
+  "fat_g": 10.0
+ },
+ {
+  "food_id": "02.001",
+  "name": "Egg, rå",
+  "kcal_per_100g": 149.0,
+  "protein_g": 13.0,
+  "carbs_g": 0.3,
+  "fat_g": 10.7
+ },
+ {
+  "food_id": "02.026",
+  "name": "Egg, kokt",
+  "kcal_per_100g": 148.0,
+  "protein_g": 12.9,
+  "carbs_g": 0.3,
+  "fat_g": 10.5
+ },
+ {
+  "food_id": "02.025",
+  "name": "Egg, stekt i fett",
+  "kcal_per_100g": 207.0,
+  "protein_g": 13.9,
+  "carbs_g": 0.3,
+  "fat_g": 16.7
+ },
+ {
+  "food_id": "02.008",
+  "name": "Eggerøre, stekt i fett",
+  "kcal_per_100g": 229.0,
+  "protein_g": 11.2,
+  "carbs_g": 0.6,
+  "fat_g": 20.2
+ },
+ {
+  "food_id": "02.002",
+  "name": "Eggehvite, rå",
+  "kcal_per_100g": 42.0,
+  "protein_g": 10.2,
+  "carbs_g": 0.4,
+  "fat_g": 0.0
+ },
+ {
+  "food_id": "05.004",
+  "name": "Havremel",
+  "kcal_per_100g": 369.0,
+  "protein_g": 14.1,
+  "carbs_g": 57.2,
+  "fat_g": 6.7
+ },
+ {
+  "food_id": "05.003",
+  "name": "Havregryn",
+  "kcal_per_100g": 369.0,
+  "protein_g": 14.1,
+  "carbs_g": 57.2,
+  "fat_g": 6.7
+ },
+ {
+  "food_id": "05.122",
+  "name": "Havrekli",
+  "kcal_per_100g": 361.0,
+  "protein_g": 12.3,
+  "carbs_g": 54.6,
+  "fat_g": 7.5
+ },
+ {
+  "food_id": "10.149",
+  "name": "Havregrøt, med melk",
+  "kcal_per_100g": 75.0,
+  "protein_g": 4.8,
+  "carbs_g": 10.3,
+  "fat_g": 1.4
+ },
+ {
+  "food_id": "05.127",
+  "name": "Havregrøt, med vann",
+  "kcal_per_100g": 39.0,
+  "protein_g": 1.5,
+  "carbs_g": 6.1,
+  "fat_g": 0.7
+ },
+ {
+  "food_id": "05.245",
+  "name": "Risgrøt, med helmelk",
+  "kcal_per_100g": 89.0,
+  "protein_g": 3.2,
+  "carbs_g": 13.1,
+  "fat_g": 2.7
+ },
+ {
+  "food_id": "05.010",
+  "name": "Hvetemel, siktet",
+  "kcal_per_100g": 343.0,
+  "protein_g": 12.1,
+  "carbs_g": 68.1,
+  "fat_g": 1.4
+ },
+ {
+  "food_id": "05.006",
+  "name": "Hvetemel, sammalt, fint/grovt",
+  "kcal_per_100g": 330.0,
+  "protein_g": 13.4,
+  "carbs_g": 57.9,
+  "fat_g": 2.1
+ },
+ {
+  "food_id": "05.223",
+  "name": "Rismel",
+  "kcal_per_100g": 369.0,
+  "protein_g": 6.2,
+  "carbs_g": 83.9,
+  "fat_g": 0.5
+ },
+ {
+  "food_id": "05.342",
+  "name": "Brød, grovt (50-75 %), kjøpt",
+  "kcal_per_100g": 239.0,
+  "protein_g": 9.3,
+  "carbs_g": 40.6,
+  "fat_g": 3.1
+ },
+ {
+  "food_id": "05.343",
+  "name": "Brød, ekstra grovt (75-100 %), kjøpt",
+  "kcal_per_100g": 242.0,
+  "protein_g": 12.0,
+  "carbs_g": 33.7,
+  "fat_g": 4.8
+ },
+ {
+  "food_id": "05.341",
+  "name": "Brød, halvgrovt (25-50 %), kjøpt",
+  "kcal_per_100g": 230.0,
+  "protein_g": 8.8,
+  "carbs_g": 41.1,
+  "fat_g": 2.3
+ },
+ {
+  "food_id": "05.271",
+  "name": "Rundstykke, grovt, kjøpt",
+  "kcal_per_100g": 257.0,
+  "protein_g": 8.2,
+  "carbs_g": 42.1,
+  "fat_g": 5.1
+ },
+ {
+  "food_id": "05.064",
+  "name": "Rundstykke, fint, kjøpt",
+  "kcal_per_100g": 277.0,
+  "protein_g": 9.2,
+  "carbs_g": 50.8,
+  "fat_g": 3.3
+ },
+ {
+  "food_id": "05.148",
+  "name": "Knekkebrød, rug, grovt",
+  "kcal_per_100g": 308.0,
+  "protein_g": 9.0,
+  "carbs_g": 55.4,
+  "fat_g": 1.5
+ },
+ {
+  "food_id": "05.142",
+  "name": "Knekkebrød, havre",
+  "kcal_per_100g": 349.0,
+  "protein_g": 11.9,
+  "carbs_g": 61.1,
+  "fat_g": 4.2
+ },
+ {
+  "food_id": "05.068",
+  "name": "Flatbrød, kjøpt",
+  "kcal_per_100g": 322.0,
+  "protein_g": 10.3,
+  "carbs_g": 57.7,
+  "fat_g": 2.3
+ },
+ {
+  "food_id": "05.084",
+  "name": "Potetlompe, potetlefse, kjøpt",
+  "kcal_per_100g": 164.0,
+  "protein_g": 4.8,
+  "carbs_g": 33.9,
+  "fat_g": 0.4
+ },
+ {
+  "food_id": "05.381",
+  "name": "Tortilla, wraps/burrito, hvetemel",
+  "kcal_per_100g": 260.0,
+  "protein_g": 8.5,
+  "carbs_g": 44.8,
+  "fat_g": 4.8
+ },
+ {
+  "food_id": "05.016",
+  "name": "Pasta, naturell, tørr",
+  "kcal_per_100g": 347.0,
+  "protein_g": 11.9,
+  "carbs_g": 69.8,
+  "fat_g": 1.3
+ },
+ {
+  "food_id": "05.130",
+  "name": "Pasta, naturell, kokt",
+  "kcal_per_100g": 133.0,
+  "protein_g": 4.2,
+  "carbs_g": 23.6,
+  "fat_g": 2.1
+ },
+ {
+  "food_id": "05.332",
+  "name": "Pasta, fullkorn, tørr",
+  "kcal_per_100g": 362.0,
+  "protein_g": 12.6,
+  "carbs_g": 68.3,
+  "fat_g": 2.5
+ },
+ {
+  "food_id": "05.335",
+  "name": "Pasta, fullkorn, kokt med salt",
+  "kcal_per_100g": 139.0,
+  "protein_g": 4.5,
+  "carbs_g": 23.1,
+  "fat_g": 2.5
+ },
+ {
+  "food_id": "05.212",
+  "name": "Ris, polert, langkornet, tørr",
+  "kcal_per_100g": 343.0,
+  "protein_g": 7.8,
+  "carbs_g": 75.9,
+  "fat_g": 0.7
+ },
+ {
+  "food_id": "05.289",
+  "name": "Ris, polert, langkornet, kokt",
+  "kcal_per_100g": 111.0,
+  "protein_g": 2.5,
+  "carbs_g": 24.5,
+  "fat_g": 0.2
+ },
+ {
+  "food_id": "05.337",
+  "name": "Ris, basmati, kokt",
+  "kcal_per_100g": 115.0,
+  "protein_g": 3.0,
+  "carbs_g": 25.0,
+  "fat_g": 0.3
+ },
+ {
+  "food_id": "05.338",
+  "name": "Ris, jasmin, kokt",
+  "kcal_per_100g": 115.0,
+  "protein_g": 2.4,
+  "carbs_g": 25.7,
+  "fat_g": 0.2
+ },
+ {
+  "food_id": "05.255",
+  "name": "Ris, upolert, naturris, langkornet, kokt",
+  "kcal_per_100g": 117.0,
+  "protein_g": 3.0,
+  "carbs_g": 23.5,
+  "fat_g": 0.9
+ },
+ {
+  "food_id": "05.522",
+  "name": "Eggnudler, kokt",
+  "kcal_per_100g": 120.0,
+  "protein_g": 4.2,
+  "carbs_g": 22.9,
+  "fat_g": 0.8
+ },
+ {
+  "food_id": "05.193",
+  "name": "Riskaker, lettsaltet",
+  "kcal_per_100g": 340.0,
+  "protein_g": 8.0,
+  "carbs_g": 67.9,
+  "fat_g": 3.0
+ },
+ {
+  "food_id": "05.483",
+  "name": "Granola, hjemmelaget",
+  "kcal_per_100g": 466.0,
+  "protein_g": 12.7,
+  "carbs_g": 40.7,
+  "fat_g": 26.0
+ },
+ {
+  "food_id": "06.004",
+  "name": "Potet, lagringspotet, rå",
+  "kcal_per_100g": 80.0,
+  "protein_g": 1.9,
+  "carbs_g": 17.1,
+  "fat_g": 0.1
+ },
+ {
+  "food_id": "06.096",
+  "name": "Potet, lagringspotet, kokt",
+  "kcal_per_100g": 94.0,
+  "protein_g": 2.3,
+  "carbs_g": 19.9,
+  "fat_g": 0.1
+ },
+ {
+  "food_id": "06.274",
+  "name": "Potet, bakt",
+  "kcal_per_100g": 106.0,
+  "protein_g": 2.5,
+  "carbs_g": 22.5,
+  "fat_g": 0.1
+ },
+ {
+  "food_id": "06.223",
+  "name": "Potetmos, potetstappe, hjemmelaget",
+  "kcal_per_100g": 144.0,
+  "protein_g": 2.4,
+  "carbs_g": 15.7,
+  "fat_g": 7.6
+ },
+ {
+  "food_id": "06.136",
+  "name": "Søtpotet, rå",
+  "kcal_per_100g": 80.0,
+  "protein_g": 1.6,
+  "carbs_g": 16.8,
+  "fat_g": 0.1
+ },
+ {
+  "food_id": "06.738",
+  "name": "Pommes frites, gatekjøkken",
+  "kcal_per_100g": 316.0,
+  "protein_g": 4.3,
+  "carbs_g": 36.5,
+  "fat_g": 16.2
+ },
+ {
+  "food_id": "06.010",
+  "name": "Agurk, norsk, rå",
+  "kcal_per_100g": 9.0,
+  "protein_g": 0.8,
+  "carbs_g": 1.3,
+  "fat_g": 0.0
+ },
+ {
+  "food_id": "06.754",
+  "name": "Tomat, uspesifisert, rå",
+  "kcal_per_100g": 12.0,
+  "protein_g": 0.4,
+  "carbs_g": 2.1,
+  "fat_g": 0.0
+ },
+ {
+  "food_id": "06.752",
+  "name": "Cherrytomat, importert, rå",
+  "kcal_per_100g": 17.0,
+  "protein_g": 0.6,
+  "carbs_g": 2.5,
+  "fat_g": 0.2
+ },
+ {
+  "food_id": "06.036",
+  "name": "Gulrot, norsk, rå",
+  "kcal_per_100g": 25.0,
+  "protein_g": 0.0,
+  "carbs_g": 5.3,
+  "fat_g": 0.0
+ },
+ {
+  "food_id": "06.748",
+  "name": "Brokkoli, uspesifisert, rå",
+  "kcal_per_100g": 26.0,
+  "protein_g": 2.9,
+  "carbs_g": 2.2,
+  "fat_g": 0.0
+ },
+ {
+  "food_id": "06.853",
+  "name": "Blomkål, uspesifisert, rå",
+  "kcal_per_100g": 20.0,
+  "protein_g": 1.7,
+  "carbs_g": 2.4,
+  "fat_g": 0.0
+ },
+ {
+  "food_id": "06.042",
+  "name": "Løk, gul, norsk, rå",
+  "kcal_per_100g": 30.0,
+  "protein_g": 1.0,
+  "carbs_g": 4.4,
+  "fat_g": 0.0
+ },
+ {
+  "food_id": "06.038",
+  "name": "Hvitløk, rå",
+  "kcal_per_100g": 106.0,
+  "protein_g": 7.9,
+  "carbs_g": 16.3,
+  "fat_g": 0.6
+ },
+ {
+  "food_id": "06.048",
+  "name": "Paprika, rød, rå",
+  "kcal_per_100g": 26.0,
+  "protein_g": 0.8,
+  "carbs_g": 4.2,
+  "fat_g": 0.2
+ },
+ {
+  "food_id": "06.047",
+  "name": "Paprika, grønn, rå",
+  "kcal_per_100g": 21.0,
+  "protein_g": 0.8,
+  "carbs_g": 2.8,
+  "fat_g": 0.3
+ },
+ {
+  "food_id": "06.059",
+  "name": "Isbergsalat, issalat, rå",
+  "kcal_per_100g": 12.0,
+  "protein_g": 1.0,
+  "carbs_g": 1.8,
+  "fat_g": 0.0
+ },
+ {
+  "food_id": "06.064",
+  "name": "Spinat, rå",
+  "kcal_per_100g": 17.0,
+  "protein_g": 2.8,
+  "carbs_g": 0.1,
+  "fat_g": 0.0
+ },
+ {
+  "food_id": "06.037",
+  "name": "Hodekål, norsk, rå",
+  "kcal_per_100g": 27.0,
+  "protein_g": 1.2,
+  "carbs_g": 4.5,
+  "fat_g": 0.0
+ },
+ {
+  "food_id": "06.041",
+  "name": "Kålrot, kålrabi, norsk, rå",
+  "kcal_per_100g": 28.0,
+  "protein_g": 0.8,
+  "carbs_g": 4.9,
+  "fat_g": 0.0
+ },
+ {
+  "food_id": "06.085",
+  "name": "Squash, zucchini, rå",
+  "kcal_per_100g": 17.0,
+  "protein_g": 1.3,
+  "carbs_g": 2.2,
+  "fat_g": 0.1
+ },
+ {
+  "food_id": "06.062",
+  "name": "Sjampinjong, champignon, rå",
+  "kcal_per_100g": 17.0,
+  "protein_g": 2.3,
+  "carbs_g": 0.1,
+  "fat_g": 0.1
+ },
+ {
+  "food_id": "06.524",
+  "name": "Avokado, rå",
+  "kcal_per_100g": 191.0,
+  "protein_g": 1.8,
+  "carbs_g": 0.4,
+  "fat_g": 19.6
+ },
+ {
+  "food_id": "06.044",
+  "name": "Mais, norsk, rå",
+  "kcal_per_100g": 85.0,
+  "protein_g": 3.2,
+  "carbs_g": 12.6,
+  "fat_g": 1.7
+ },
+ {
+  "food_id": "06.284",
+  "name": "Purreløk, rå",
+  "kcal_per_100g": 29.0,
+  "protein_g": 1.5,
+  "carbs_g": 3.8,
+  "fat_g": 0.0
+ },
+ {
+  "food_id": "06.057",
+  "name": "Rødbete, norsk, rå",
+  "kcal_per_100g": 49.0,
+  "protein_g": 1.6,
+  "carbs_g": 8.9,
+  "fat_g": 0.2
+ },
+ {
+  "food_id": "06.028",
+  "name": "Erter, grønne, hermetisk, avrent",
+  "kcal_per_100g": 64.0,
+  "protein_g": 4.3,
+  "carbs_g": 7.0,
+  "fat_g": 1.0
+ },
+ {
+  "food_id": "06.128",
+  "name": "Kikerter, hermetisk",
+  "kcal_per_100g": 94.0,
+  "protein_g": 6.2,
+  "carbs_g": 8.2,
+  "fat_g": 2.3
+ },
+ {
+  "food_id": "06.133",
+  "name": "Kidneybønner, røde, hermetisk",
+  "kcal_per_100g": 73.0,
+  "protein_g": 6.1,
+  "carbs_g": 6.7,
+  "fat_g": 0.7
+ },
+ {
+  "food_id": "06.184",
+  "name": "Linser, røde, tørre",
+  "kcal_per_100g": 274.0,
+  "protein_g": 22.5,
+  "carbs_g": 31.9,
+  "fat_g": 2.2
+ },
+ {
+  "food_id": "06.024",
+  "name": "Tomatbønner, hvite bønner, i tomatsaus, hermetisk",
+  "kcal_per_100g": 63.0,
+  "protein_g": 3.7,
+  "carbs_g": 6.0,
+  "fat_g": 1.4
+ },
+ {
+  "food_id": "06.525",
+  "name": "Banan, rå",
+  "kcal_per_100g": 88.0,
+  "protein_g": 1.1,
+  "carbs_g": 19.7,
+  "fat_g": 0.2
+ },
+ {
+  "food_id": "06.758",
+  "name": "Eple, uspesifisert, rå",
+  "kcal_per_100g": 46.0,
+  "protein_g": 0.0,
+  "carbs_g": 10.1,
+  "fat_g": 0.0
+ },
+ {
+  "food_id": "06.520",
+  "name": "Appelsin, rå",
+  "kcal_per_100g": 41.0,
+  "protein_g": 0.9,
+  "carbs_g": 8.2,
+  "fat_g": 0.1
+ },
+ {
+  "food_id": "06.760",
+  "name": "Pære, uspesifisert, rå",
+  "kcal_per_100g": 44.0,
+  "protein_g": 0.4,
+  "carbs_g": 8.8,
+  "fat_g": 0.1
+ },
+ {
+  "food_id": "06.526",
+  "name": "Klementin, rå",
+  "kcal_per_100g": 40.0,
+  "protein_g": 0.9,
+  "carbs_g": 8.1,
+  "fat_g": 0.2
+ },
+ {
+  "food_id": "06.528",
+  "name": "Drue, rå",
+  "kcal_per_100g": 71.0,
+  "protein_g": 0.7,
+  "carbs_g": 16.1,
+  "fat_g": 0.2
+ },
+ {
+  "food_id": "06.539",
+  "name": "Kiwi, rå",
+  "kcal_per_100g": 51.0,
+  "protein_g": 0.9,
+  "carbs_g": 8.6,
+  "fat_g": 0.7
+ },
+ {
+  "food_id": "06.542",
+  "name": "Mango, rå",
+  "kcal_per_100g": 50.0,
+  "protein_g": 0.2,
+  "carbs_g": 10.6,
+  "fat_g": 0.3
+ },
+ {
+  "food_id": "06.517",
+  "name": "Ananas, rå",
+  "kcal_per_100g": 44.0,
+  "protein_g": 0.1,
+  "carbs_g": 10.1,
+  "fat_g": 0.1
+ },
+ {
+  "food_id": "06.543",
+  "name": "Vannmelon, rå",
+  "kcal_per_100g": 36.0,
+  "protein_g": 0.8,
+  "carbs_g": 7.6,
+  "fat_g": 0.1
+ },
+ {
+  "food_id": "06.544",
+  "name": "Plomme, rå",
+  "kcal_per_100g": 44.0,
+  "protein_g": 0.5,
+  "carbs_g": 9.3,
+  "fat_g": 0.1
+ },
+ {
+  "food_id": "06.504",
+  "name": "Jordbær, rå",
+  "kcal_per_100g": 34.0,
+  "protein_g": 0.5,
+  "carbs_g": 6.6,
+  "fat_g": 0.2
+ },
+ {
+  "food_id": "06.502",
+  "name": "Blåbær, rå",
+  "kcal_per_100g": 51.0,
+  "protein_g": 1.0,
+  "carbs_g": 7.5,
+  "fat_g": 0.9
+ },
+ {
+  "food_id": "06.503",
+  "name": "Bringebær, rå",
+  "kcal_per_100g": 29.0,
+  "protein_g": 1.1,
+  "carbs_g": 3.2,
+  "fat_g": 0.4
+ },
+ {
+  "food_id": "06.515",
+  "name": "Tyttebær, rå",
+  "kcal_per_100g": 44.0,
+  "protein_g": 0.7,
+  "carbs_g": 7.0,
+  "fat_g": 0.6
+ },
+ {
+  "food_id": "06.549",
+  "name": "Rosiner",
+  "kcal_per_100g": 324.0,
+  "protein_g": 3.3,
+  "carbs_g": 75.3,
+  "fat_g": 0.0
+ },
+ {
+  "food_id": "06.808",
+  "name": "Jordbærsyltetøy",
+  "kcal_per_100g": 174.0,
+  "protein_g": 0.2,
+  "carbs_g": 42.6,
+  "fat_g": 0.1
+ },
+ {
+  "food_id": "03.205",
+  "name": "Kylling, filet, uten skinn, rå",
+  "kcal_per_100g": 111.0,
+  "protein_g": 23.0,
+  "carbs_g": 0.0,
+  "fat_g": 2.1
+ },
+ {
+  "food_id": "03.481",
+  "name": "Kylling, filet, stekt uten fett",
+  "kcal_per_100g": 134.0,
+  "protein_g": 29.1,
+  "carbs_g": 0.0,
+  "fat_g": 2.0
+ },
+ {
+  "food_id": "03.007",
+  "name": "Kylling, hel, med skinn, ovnsstekt",
+  "kcal_per_100g": 175.0,
+  "protein_g": 22.8,
+  "carbs_g": 0.0,
+  "fat_g": 9.3
+ },
+ {
+  "food_id": "03.204",
+  "name": "Kalkun, bryst, filet, uten skinn, rå",
+  "kcal_per_100g": 114.0,
+  "protein_g": 25.3,
+  "carbs_g": 0.0,
+  "fat_g": 1.4
+ },
+ {
+  "food_id": "03.127",
+  "name": "Kjøttdeig, storfe, 14 % fett, med salt og vann, rå",
+  "kcal_per_100g": 195.0,
+  "protein_g": 17.9,
+  "carbs_g": 0.0,
+  "fat_g": 13.7
+ },
+ {
+  "food_id": "03.126",
+  "name": "Karbonadedeig, storfe, 4,5 % fett, rå",
+  "kcal_per_100g": 123.0,
+  "protein_g": 20.7,
+  "carbs_g": 0.0,
+  "fat_g": 4.5
+ },
+ {
+  "food_id": "03.348",
+  "name": "Kjøttdeig, svin, 9 % fett, rå",
+  "kcal_per_100g": 162.0,
+  "protein_g": 19.9,
+  "carbs_g": 0.1,
+  "fat_g": 9.1
+ },
+ {
+  "food_id": "03.054",
+  "name": "Storfe, entrecôte, rå",
+  "kcal_per_100g": 186.0,
+  "protein_g": 20.6,
+  "carbs_g": 0.0,
+  "fat_g": 11.5
+ },
+ {
+  "food_id": "03.058",
+  "name": "Storfe, indrefilet, rå",
+  "kcal_per_100g": 134.0,
+  "protein_g": 21.8,
+  "carbs_g": 0.0,
+  "fat_g": 5.2
+ },
+ {
+  "food_id": "03.210",
+  "name": "Svin, ytrefilet, rå",
+  "kcal_per_100g": 120.0,
+  "protein_g": 23.4,
+  "carbs_g": 0.3,
+  "fat_g": 2.9
+ },
+ {
+  "food_id": "03.083",
+  "name": "Svin, nakkekoteletter, rå",
+  "kcal_per_100g": 206.0,
+  "protein_g": 18.3,
+  "carbs_g": 0.1,
+  "fat_g": 14.8
+ },
+ {
+  "food_id": "03.509",
+  "name": "Svin, bacon, flesk, stekt",
+  "kcal_per_100g": 520.0,
+  "protein_g": 30.0,
+  "carbs_g": 0.2,
+  "fat_g": 44.3
+ },
+ {
+  "food_id": "03.090",
+  "name": "Svin, ribbe, sideflesk, rå",
+  "kcal_per_100g": 332.0,
+  "protein_g": 16.7,
+  "carbs_g": 0.1,
+  "fat_g": 29.4
+ },
+ {
+  "food_id": "03.266",
+  "name": "Lam, kotelett, rå",
+  "kcal_per_100g": 184.0,
+  "protein_g": 19.5,
+  "carbs_g": 0.1,
+  "fat_g": 11.7
+ },
+ {
+  "food_id": "03.501",
+  "name": "Elg, kvernet kjøtt, rå",
+  "kcal_per_100g": 105.0,
+  "protein_g": 22.6,
+  "carbs_g": 0.0,
+  "fat_g": 1.6
+ },
+ {
+  "food_id": "03.133",
+  "name": "Kjøttkaker, kjøpt",
+  "kcal_per_100g": 177.0,
+  "protein_g": 11.9,
+  "carbs_g": 6.8,
+  "fat_g": 11.3
+ },
+ {
+  "food_id": "03.457",
+  "name": "Kjøttboller",
+  "kcal_per_100g": 202.0,
+  "protein_g": 11.3,
+  "carbs_g": 3.8,
+  "fat_g": 14.9
+ },
+ {
+  "food_id": "03.150",
+  "name": "Wienerpølse",
+  "kcal_per_100g": 211.0,
+  "protein_g": 10.9,
+  "carbs_g": 2.3,
+  "fat_g": 17.4
+ },
+ {
+  "food_id": "03.144",
+  "name": "Grillpølse",
+  "kcal_per_100g": 217.0,
+  "protein_g": 10.4,
+  "carbs_g": 1.9,
+  "fat_g": 18.5
+ },
+ {
+  "food_id": "03.106",
+  "name": "Kokt skinke",
+  "kcal_per_100g": 95.0,
+  "protein_g": 16.7,
+  "carbs_g": 0.7,
+  "fat_g": 2.8
+ },
+ {
+  "food_id": "03.163",
+  "name": "Salami",
+  "kcal_per_100g": 429.0,
+  "protein_g": 17.6,
+  "carbs_g": 0.9,
+  "fat_g": 39.5
+ },
+ {
+  "food_id": "03.164",
+  "name": "Servelat",
+  "kcal_per_100g": 198.0,
+  "protein_g": 9.9,
+  "carbs_g": 7.1,
+  "fat_g": 14.5
+ },
+ {
+  "food_id": "03.470",
+  "name": "Leverpostei, uspesifisert",
+  "kcal_per_100g": 233.0,
+  "protein_g": 9.9,
+  "carbs_g": 5.9,
+  "fat_g": 18.7
+ },
+ {
+  "food_id": "03.323",
+  "name": "Kalkunfilet, naturell/røkt",
+  "kcal_per_100g": 88.0,
+  "protein_g": 20.9,
+  "carbs_g": 0.0,
+  "fat_g": 0.5
+ },
+ {
+  "food_id": "04.220",
+  "name": "Laks, oppdrett, rå",
+  "kcal_per_100g": 223.0,
+  "protein_g": 19.9,
+  "carbs_g": 0.0,
+  "fat_g": 15.9
+ },
+ {
+  "food_id": "04.342",
+  "name": "Laks, filet, ovnsstekt",
+  "kcal_per_100g": 207.0,
+  "protein_g": 20.6,
+  "carbs_g": 0.0,
+  "fat_g": 13.8
+ },
+ {
+  "food_id": "04.018",
+  "name": "Laks, røkt",
+  "kcal_per_100g": 225.0,
+  "protein_g": 23.2,
+  "carbs_g": 0.0,
+  "fat_g": 14.7
+ },
+ {
+  "food_id": "04.327",
+  "name": "Torsk, uspesifisert, rå",
+  "kcal_per_100g": 79.0,
+  "protein_g": 17.7,
+  "carbs_g": 0.0,
+  "fat_g": 0.9
+ },
+ {
+  "food_id": "04.347",
+  "name": "Torsk, filet, kokt",
+  "kcal_per_100g": 100.0,
+  "protein_g": 21.8,
+  "carbs_g": 0.0,
+  "fat_g": 1.5
+ },
+ {
+  "food_id": "04.029",
+  "name": "Sei, rå",
+  "kcal_per_100g": 85.0,
+  "protein_g": 18.3,
+  "carbs_g": 0.0,
+  "fat_g": 1.3
+ },
+ {
+  "food_id": "04.378",
+  "name": "Makrell i tomat, hermetisk",
+  "kcal_per_100g": 242.0,
+  "protein_g": 11.9,
+  "carbs_g": 3.9,
+  "fat_g": 19.4
+ },
+ {
+  "food_id": "04.108",
+  "name": "Tunfisk, i vann, avrent, hermetisk",
+  "kcal_per_100g": 105.0,
+  "protein_g": 24.1,
+  "carbs_g": 0.0,
+  "fat_g": 1.0
+ },
+ {
+  "food_id": "04.057",
+  "name": "Reker, kokt",
+  "kcal_per_100g": 83.0,
+  "protein_g": 16.6,
+  "carbs_g": 0.0,
+  "fat_g": 1.8
+ },
+ {
+  "food_id": "04.061",
+  "name": "Fiskekaker, kjøpt",
+  "kcal_per_100g": 110.0,
+  "protein_g": 11.8,
+  "carbs_g": 6.0,
+  "fat_g": 4.2
+ },
+ {
+  "food_id": "04.210",
+  "name": "Fiskeboller, kjøpt",
+  "kcal_per_100g": 59.0,
+  "protein_g": 8.6,
+  "carbs_g": 5.4,
+  "fat_g": 0.4
+ },
+ {
+  "food_id": "04.063",
+  "name": "Fiskepudding",
+  "kcal_per_100g": 70.0,
+  "protein_g": 8.7,
+  "carbs_g": 7.4,
+  "fat_g": 0.6
+ },
+ {
+  "food_id": "04.089",
+  "name": "Kaviar, av torskerogn",
+  "kcal_per_100g": 438.0,
+  "protein_g": 8.0,
+  "carbs_g": 13.7,
+  "fat_g": 39.0
+ },
+ {
+  "food_id": "04.290",
+  "name": "Sild, sursild, innlagt, avrent",
+  "kcal_per_100g": 137.0,
+  "protein_g": 7.6,
+  "carbs_g": 11.0,
+  "fat_g": 7.0
+ },
+ {
+  "food_id": "08.005",
+  "name": "Smør",
+  "kcal_per_100g": 744.0,
+  "protein_g": 1.0,
+  "carbs_g": 0.5,
+  "fat_g": 82.0
+ },
+ {
+  "food_id": "08.239",
+  "name": "Margarin, myk",
+  "kcal_per_100g": 544.0,
+  "protein_g": 0.5,
+  "carbs_g": 0.5,
+  "fat_g": 60.0
+ },
+ {
+  "food_id": "08.019",
+  "name": "Olivenolje",
+  "kcal_per_100g": 892.0,
+  "protein_g": 0.2,
+  "carbs_g": 0.0,
+  "fat_g": 99.0
+ },
+ {
+  "food_id": "08.235",
+  "name": "Rapsolje",
+  "kcal_per_100g": 892.0,
+  "protein_g": 0.2,
+  "carbs_g": 0.0,
+  "fat_g": 99.0
+ },
+ {
+  "food_id": "08.009",
+  "name": "Majones, ekte",
+  "kcal_per_100g": 705.0,
+  "protein_g": 1.0,
+  "carbs_g": 2.0,
+  "fat_g": 77.0
+ },
+ {
+  "food_id": "06.079",
+  "name": "Ketchup, tomatketchup",
+  "kcal_per_100g": 110.0,
+  "protein_g": 1.0,
+  "carbs_g": 23.6,
+  "fat_g": 0.4
+ },
+ {
+  "food_id": "06.559",
+  "name": "Peanøttsmør",
+  "kcal_per_100g": 621.0,
+  "protein_g": 22.8,
+  "carbs_g": 13.1,
+  "fat_g": 51.8
+ },
+ {
+  "food_id": "09.003",
+  "name": "Honning",
+  "kcal_per_100g": 317.0,
+  "protein_g": 0.3,
+  "carbs_g": 78.9,
+  "fat_g": 0.0
+ },
+ {
+  "food_id": "09.002",
+  "name": "Sukker, hvitt",
+  "kcal_per_100g": 400.0,
+  "protein_g": 0.0,
+  "carbs_g": 100.0,
+  "fat_g": 0.0
+ },
+ {
+  "food_id": "06.679",
+  "name": "Hummus",
+  "kcal_per_100g": 170.0,
+  "protein_g": 5.6,
+  "carbs_g": 6.7,
+  "fat_g": 11.9
+ },
+ {
+  "food_id": "06.704",
+  "name": "Tofu",
+  "kcal_per_100g": 133.0,
+  "protein_g": 13.4,
+  "carbs_g": 0.6,
+  "fat_g": 8.5
+ },
+ {
+  "food_id": "06.107",
+  "name": "Mandler",
+  "kcal_per_100g": 601.0,
+  "protein_g": 21.2,
+  "carbs_g": 6.6,
+  "fat_g": 52.1
+ },
+ {
+  "food_id": "06.560",
+  "name": "Valnøtter",
+  "kcal_per_100g": 680.0,
+  "protein_g": 14.1,
+  "carbs_g": 2.8,
+  "fat_g": 66.5
+ },
+ {
+  "food_id": "06.582",
+  "name": "Cashewnøtter",
+  "kcal_per_100g": 592.0,
+  "protein_g": 18.2,
+  "carbs_g": 29.4,
+  "fat_g": 43.9
+ },
+ {
+  "food_id": "06.557",
+  "name": "Peanøtter",
+  "kcal_per_100g": 594.0,
+  "protein_g": 25.8,
+  "carbs_g": 7.6,
+  "fat_g": 49.2
+ },
+ {
+  "food_id": "05.126",
+  "name": "Solsikkefrø",
+  "kcal_per_100g": 621.0,
+  "protein_g": 24.2,
+  "carbs_g": 3.6,
+  "fat_g": 54.4
+ },
+ {
+  "food_id": "09.017",
+  "name": "Sjokolade, melkesjokolade",
+  "kcal_per_100g": 541.0,
+  "protein_g": 8.1,
+  "carbs_g": 53.1,
+  "fat_g": 32.3
+ },
+ {
+  "food_id": "09.133",
+  "name": "Sjokolade, mørk, 70 % kakao",
+  "kcal_per_100g": 578.0,
+  "protein_g": 8.4,
+  "carbs_g": 31.9,
+  "fat_g": 43.9
+ },
+ {
+  "food_id": "06.007",
+  "name": "Potetchips",
+  "kcal_per_100g": 502.0,
+  "protein_g": 6.1,
+  "carbs_g": 50.5,
+  "fat_g": 29.3
+ },
+ {
+  "food_id": "06.568",
+  "name": "Appelsinjuice, fra konsentrat",
+  "kcal_per_100g": 43.0,
+  "protein_g": 0.6,
+  "carbs_g": 9.6,
+  "fat_g": 0.2
+ },
+ {
+  "food_id": "06.571",
+  "name": "Eplejuice, most",
+  "kcal_per_100g": 42.0,
+  "protein_g": 0.0,
+  "carbs_g": 10.2,
+  "fat_g": 0.1
+ },
+ {
+  "food_id": "13.009",
+  "name": "Kaffe, traktet",
+  "kcal_per_100g": 1.0,
+  "protein_g": 0.1,
+  "carbs_g": 0.0,
+  "fat_g": 0.0
+ },
+ {
+  "food_id": "13.010",
+  "name": "Te, svart, tilberedt",
+  "kcal_per_100g": 0.0,
+  "protein_g": 0.1,
+  "carbs_g": 0.0,
+  "fat_g": 0.0
+ },
+ {
+  "food_id": "13.045",
+  "name": "Brus, cola, med sukker",
+  "kcal_per_100g": 42.0,
+  "protein_g": 0.0,
+  "carbs_g": 10.6,
+  "fat_g": 0.0
+ },
+ {
+  "food_id": "13.047",
+  "name": "Brus, cola, kunstig søtet, lett",
+  "kcal_per_100g": 0.0,
+  "protein_g": 0.0,
+  "carbs_g": 0.0,
+  "fat_g": 0.0
+ },
+ {
+  "food_id": "13.033",
+  "name": "Vann, drikkevann",
+  "kcal_per_100g": 0.0,
+  "protein_g": 0.0,
+  "carbs_g": 0.0,
+  "fat_g": 0.0
+ },
+ {
+  "food_id": "13.125",
+  "name": "Havrebasert drikke",
+  "kcal_per_100g": 56.0,
+  "protein_g": 1.1,
+  "carbs_g": 10.5,
+  "fat_g": 1.0
+ },
+ {
+  "food_id": "13.026",
+  "name": "Øl, alkoholfritt",
+  "kcal_per_100g": 24.0,
+  "protein_g": 0.4,
+  "carbs_g": 5.0,
+  "fat_g": 0.0
+ }
+]

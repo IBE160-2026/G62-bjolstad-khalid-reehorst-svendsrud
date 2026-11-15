@@ -435,6 +435,169 @@
           }
         }
       }
+    },
+    "/api/food/items": {
+      "get": {
+        "tags": [
+          "food"
+        ],
+        "summary": "Search Food Items",
+        "description": "Shared items plus the user's own whose name contains `q`; max 20; `[]` under 2 chars.",
+        "operationId": "search_food_items",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "maxLength": 100,
+              "default": "",
+              "title": "Q"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FoodItemResponse"
+                  },
+                  "title": "Response Search Food Items"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Default Response"
+          }
+        }
+      }
+    },
+    "/api/food/entries": {
+      "get": {
+        "tags": [
+          "food"
+        ],
+        "summary": "Get Food Day",
+        "description": "The user's entries for one date (YYYY-MM-DD) by Meal, with Meal and day totals.",
+        "operationId": "get_food_day",
+        "parameters": [
+          {
+            "name": "date",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date",
+              "title": "Date"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FoodDayResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Default Response"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "food"
+        ],
+        "summary": "Add Food Entry",
+        "description": "Log grams of a food item in a Meal; kcal per 100 g is copied as a snapshot.",
+        "operationId": "add_food_entry",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FoodEntryRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FoodEntryResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Default Response"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -513,6 +676,191 @@
         "title": "FieldError",
         "description": "One invalid input field, shown inline under that field in the UI."
       },
+      "FoodDayResponse": {
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date",
+            "title": "Date"
+          },
+          "meals": {
+            "items": {
+              "$ref": "#/components/schemas/MealSummary"
+            },
+            "type": "array",
+            "title": "Meals"
+          },
+          "total_kcal": {
+            "type": "number",
+            "title": "Total Kcal"
+          }
+        },
+        "type": "object",
+        "required": [
+          "date",
+          "meals",
+          "total_kcal"
+        ],
+        "title": "FoodDayResponse"
+      },
+      "FoodEntryRequest": {
+        "properties": {
+          "food_item_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Food Item Id"
+          },
+          "date": {
+            "type": "string",
+            "format": "date",
+            "title": "Date"
+          },
+          "meal": {
+            "$ref": "#/components/schemas/Meal"
+          },
+          "grams": {
+            "type": "number",
+            "title": "Grams"
+          }
+        },
+        "type": "object",
+        "required": [
+          "food_item_id",
+          "date",
+          "meal",
+          "grams"
+        ],
+        "title": "FoodEntryRequest"
+      },
+      "FoodEntryResponse": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "food_item_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Food Item Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "date": {
+            "type": "string",
+            "format": "date",
+            "title": "Date"
+          },
+          "meal": {
+            "$ref": "#/components/schemas/Meal"
+          },
+          "grams": {
+            "type": "number",
+            "title": "Grams"
+          },
+          "kcal_per_100g_snapshot": {
+            "type": "number",
+            "title": "Kcal Per 100G Snapshot"
+          },
+          "kcal": {
+            "type": "number",
+            "title": "Kcal"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "food_item_id",
+          "name",
+          "date",
+          "meal",
+          "grams",
+          "kcal_per_100g_snapshot",
+          "kcal",
+          "created_at"
+        ],
+        "title": "FoodEntryResponse"
+      },
+      "FoodItemResponse": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "source": {
+            "$ref": "#/components/schemas/FoodSource"
+          },
+          "kcal_per_100g": {
+            "type": "number",
+            "title": "Kcal Per 100G"
+          },
+          "protein_g": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Protein G"
+          },
+          "carbs_g": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Carbs G"
+          },
+          "fat_g": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fat G"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "source",
+          "kcal_per_100g",
+          "protein_g",
+          "carbs_g",
+          "fat_g"
+        ],
+        "title": "FoodItemResponse"
+      },
+      "FoodSource": {
+        "type": "string",
+        "enum": [
+          "matvaretabellen",
+          "off",
+          "user"
+        ],
+        "title": "FoodSource"
+      },
       "Goal": {
         "type": "string",
         "enum": [
@@ -553,6 +901,41 @@
           "password"
         ],
         "title": "LoginRequest"
+      },
+      "Meal": {
+        "type": "string",
+        "enum": [
+          "breakfast",
+          "lunch",
+          "dinner",
+          "snack"
+        ],
+        "title": "Meal"
+      },
+      "MealSummary": {
+        "properties": {
+          "meal": {
+            "$ref": "#/components/schemas/Meal"
+          },
+          "entries": {
+            "items": {
+              "$ref": "#/components/schemas/FoodEntryResponse"
+            },
+            "type": "array",
+            "title": "Entries"
+          },
+          "total_kcal": {
+            "type": "number",
+            "title": "Total Kcal"
+          }
+        },
+        "type": "object",
+        "required": [
+          "meal",
+          "entries",
+          "total_kcal"
+        ],
+        "title": "MealSummary"
       },
       "ProfileRequest": {
         "properties": {

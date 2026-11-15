@@ -55,3 +55,5 @@
 - [ ] 2026-11-15 [story-2-1-kaloriemal](968-2026-11-15-23-00-00-story-2-1-kaloriemal.md) — finne kilde for minstegrensen 1 200/1 500 kcal
 - [x] 2026-11-15 [story-2-2-endre-profil](967-2026-11-15-23-50-00-story-2-2-endre-profil.md) — pushe og lage PR for story 2.2 (løst 2026-11-15 — PR #26)
 - [x] 2026-11-16 [story-2-3-intro](966-2026-11-16-00-40-00-story-2-3-intro.md) — pushe og lage PR for story 2.3 (løst 2026-11-16 — PR #27)
+- [ ] 2026-11-16 [story-3-1-sok-og-logg-mat](965-2026-11-16-01-40-00-story-3-1-sok-og-logg-mat.md) — pushe og lage PR for story 3.1 (etter at PR #27 er flettet)
+- [ ] 2026-11-16 [story-3-1-sok-og-logg-mat](965-2026-11-16-01-40-00-story-3-1-sok-og-logg-mat.md) — rette lokal dev-database (CASCADE på food_item_id) ved å kjøre migrering 0008 på nytt

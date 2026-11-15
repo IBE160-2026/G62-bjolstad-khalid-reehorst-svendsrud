@@ -835,6 +835,33 @@ Det viktigste funnet: Dekningsanalysen er regnet ut fra øvelseslista og viser a
 
 ---
 
+## 2026-11-16 – Story 3.1 (søk etter mat og logg den)
+
+**Verktøy:** Claude Code (BMAD `bmad-build`)
+**Hvem:** Osman Khalid
+**Bakgrunn:** Første del av matloggingen: finne vanlig mat og logge hvor mye man spiste.
+
+### Hva vi ba KI om
+
+1. Lage startdata fra Matvaretabellen og bygge søk, logging og Mat-siden.
+
+### Hva KI produserte
+
+- Utvalg av 181 matvarer fra Matvaretabellen 2026 (med skript som lager fila), `food`-modul, Mat-siden med måltider og summer, og nye tester.
+
+### Hva vi selv vurderte og kontrollerte
+
+- Osman godkjente nedlastingen fra Matvaretabellens åpne API og spec-en før koding.
+- Kildeteksten «Matvaretabellen 2026. Mattilsynet. www.matvaretabellen.no» vises der dataene brukes (lisenskrav).
+- Tre KI-kontrollører fant 30 punkter: 8 grupper rettet (blant annet at sletting av en matvare kunne fjerne logghistorikk, og at datoen ikke skiftet ved midnatt), 12 avvist med begrunnelse.
+
+### Status
+
+- [x] Story 3.1 bygget og testet
+- [ ] Review av PR fra gruppen
+
+---
+
 ## Mal for nye oppføringer
 
 ```markdown
