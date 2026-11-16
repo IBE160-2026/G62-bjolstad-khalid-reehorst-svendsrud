@@ -545,6 +545,52 @@
         }
       }
     },
+    "/api/food/recent": {
+      "get": {
+        "tags": [
+          "food"
+        ],
+        "summary": "Get Recent Foods",
+        "description": "The user's 10 most recently logged distinct items, newest first (by entry `date`,\nthen `created_at`), each with the last grams and Meal.",
+        "operationId": "get_recent_foods",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/RecentFoodResponse"
+                  },
+                  "type": "array",
+                  "title": "Response Get Recent Foods"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/food/barcode/{code}": {
       "get": {
         "tags": [
@@ -1243,6 +1289,104 @@
           "updated_at"
         ],
         "title": "ProfileResponse"
+      },
+      "RecentFoodResponse": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "source": {
+            "$ref": "#/components/schemas/FoodSource"
+          },
+          "kcal_per_100g": {
+            "type": "number",
+            "title": "Kcal Per 100G"
+          },
+          "protein_g": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Protein G"
+          },
+          "carbs_g": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Carbs G"
+          },
+          "fat_g": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fat G"
+          },
+          "serving_size_g": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Serving Size G"
+          },
+          "barcode": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Barcode"
+          },
+          "last_grams": {
+            "type": "number",
+            "title": "Last Grams"
+          },
+          "last_meal": {
+            "$ref": "#/components/schemas/Meal"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "source",
+          "kcal_per_100g",
+          "protein_g",
+          "carbs_g",
+          "fat_g",
+          "serving_size_g",
+          "barcode",
+          "last_grams",
+          "last_meal"
+        ],
+        "title": "RecentFoodResponse",
+        "description": "A food item the user logged before, with the amount and Meal of its latest entry."
       },
       "RegisterRequest": {
         "properties": {

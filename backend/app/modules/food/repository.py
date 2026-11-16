@@ -14,6 +14,7 @@ from sqlalchemy.orm import Session as DbSessionType
 from app.modules.food.models import FoodItem, FoodLogEntry
 
 SEARCH_LIMIT = 20
+RECENT_LIMIT = 10
 
 
 def _visible_to(user_id: uuid.UUID):
@@ -102,3 +103,35 @@ def list_entries(
         .order_by(FoodLogEntry.created_at, FoodLogEntry.id)
     )
     return [(entry, name) for entry, name in db.execute(statement)]
+
+
+def list_recent_items(
+    db: DbSessionType, user_id: uuid.UUID, limit: int = RECENT_LIMIT
+) -> list[tuple[FoodItem, FoodLogEntry]]:
+    """The user's distinct logged items, each with its latest entry (by `date`, then
+    `created_at`), newest first; only items the user can still see."""
+    newest_first = (
+        FoodLogEntry.date.desc(),
+        FoodLogEntry.created_at.desc(),
+        FoodLogEntry.id.desc(),
+    )
+    ranked = (
+        select(
+            FoodLogEntry.id.label("entry_id"),
+            func.row_number()
+            .over(partition_by=FoodLogEntry.food_item_id, order_by=newest_first)
+            .label("rank"),
+        )
+        .where(FoodLogEntry.user_id == user_id)
+        .subquery()
+    )
+    statement = (
+        select(FoodItem, FoodLogEntry)
+        .select_from(FoodLogEntry)
+        .join(ranked, ranked.c.entry_id == FoodLogEntry.id)
+        .join(FoodItem, FoodItem.id == FoodLogEntry.food_item_id)
+        .where(ranked.c.rank == 1, FoodLogEntry.user_id == user_id, _visible_to(user_id))
+        .order_by(*newest_first)
+        .limit(limit)
+    )
+    return [(item, entry) for item, entry in db.execute(statement)]

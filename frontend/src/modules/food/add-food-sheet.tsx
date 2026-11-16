@@ -13,12 +13,19 @@ import {
 import { INPUT_CLASS, LINK_CLASS } from "@/modules/identity/styles";
 import { formatKcal } from "@/modules/profile/target-result";
 
-import { SEARCH_MIN_LENGTH, useFoodSearch, type FoodItem } from "./api";
+import {
+  SEARCH_MIN_LENGTH,
+  useFoodSearch,
+  useRecentFoods,
+  type FoodItem,
+  type RecentFood,
+} from "./api";
 import { AmountPicker } from "./amount-picker";
 import { BarcodePanel } from "./barcode-panel";
 import { MatvaretabellenAttribution, OffAttribution } from "./attribution";
 import type { Meal } from "./meals";
 import { OwnFoodForm } from "./own-food-form";
+import { RecentPanel } from "./recent-panel";
 
 const TITLE_ID = "add-food-title";
 const SEARCH_ID = "food-search";
@@ -27,10 +34,15 @@ const PANEL_ID = "add-food-panel";
 
 type Method = "search" | "barcode" | "recent" | "manual";
 
+const BACK_LABELS: Partial<Record<Method, string>> = {
+  barcode: "Tilbake til strekkode",
+  recent: "Tilbake til nylig brukt",
+};
+
 const METHODS: readonly { id: Method; label: string; enabled: boolean }[] = [
   { id: "search", label: "Søk", enabled: true },
   { id: "barcode", label: "Skriv strekkode", enabled: true },
-  { id: "recent", label: "Nylig brukt", enabled: false },
+  { id: "recent", label: "Nylig brukt", enabled: true },
   { id: "manual", label: "Manuelt", enabled: true },
 ];
 
@@ -261,23 +273,41 @@ function SearchPanel({
  * in, Esc closes and the opener gets focus back. Søk, Skriv strekkode (3.3) and Manuelt are
  * active; Manuelt and "Registrer selv" create the user's own item and go straight to the
  * amount picker (3.2), with the barcode prefilled when coming from Skriv strekkode.
+ *
+ * Nylig brukt (3.4): the sheet opens there when the user has logged anything before,
+ * otherwise on Søk. A recent item opens the amount picker with its last grams, and the
+ * Meal row the sheet was opened from (`mealFromRow`) or else the item's last Meal.
  */
 export function AddFoodSheet({
   open,
   meal,
+  mealFromRow = false,
   date,
   onClose,
 }: {
   open: boolean;
   meal: Meal;
+  /** True when opened with "+ Legg til" on a Meal row (not "Logg mat"). */
+  mealFromRow?: boolean;
   date: string;
   onClose: () => void;
 }) {
   const dialogRef = useRef<HTMLDialogElement>(null);
-  const [picked, setPicked] = useState<FoodItem | null>(null);
+  // The chosen item, with the grams and Meal to prefill when it comes from Nylig brukt.
+  const [picked, setPicked] = useState<{
+    item: FoodItem;
+    grams?: number;
+    meal?: Meal;
+  } | null>(null);
   // Kept here so "Tilbake til søket" returns to the same results.
   const [query, setQuery] = useState("");
-  const [method, setMethod] = useState<Method>("search");
+  // null until the user picks a tab; then the initial tab follows the recent list.
+  const [chosenMethod, setMethod] = useState<Method | null>(null);
+  // Loaded with the page, so the sheet knows its first tab when it opens.
+  const recent = useRecentFoods();
+  const method: Method =
+    chosenMethod ??
+    (recent.data && recent.data.length > 0 ? "recent" : "search");
   // The name to prefill when Manuelt is opened from "Ingen treff".
   const [ownName, setOwnName] = useState("");
   // The barcode to prefill when Manuelt is opened from "Skriv strekkode".
@@ -290,7 +320,10 @@ export function AddFoodSheet({
     if (!dialog) return;
     if (open && !dialog.open) {
       dialog.showModal();
-      document.getElementById(SEARCH_ID)?.focus();
+      (
+        document.getElementById(SEARCH_ID) ??
+        dialog.querySelector<HTMLElement>("[data-recent-focus]")
+      )?.focus();
     } else if (!open && dialog.open) {
       dialog.close();
     }
@@ -300,14 +333,22 @@ export function AddFoodSheet({
     dialogRef.current?.close();
   }
 
+  // Any click or key in the sheet settles the tab, so a late recent list never switches
+  // away from what the user is already using.
+  function settleMethod() {
+    if (chosenMethod === null) setMethod(method);
+  }
+
   return (
     <dialog
       ref={dialogRef}
       aria-labelledby={TITLE_ID}
+      onPointerDownCapture={settleMethod}
+      onKeyDownCapture={settleMethod}
       onClose={() => {
         setPicked(null);
         setQuery("");
-        setMethod("search");
+        setMethod(null);
         setOwnName("");
         setOwnBarcode("");
         setBarcodeText("");
@@ -335,13 +376,12 @@ export function AddFoodSheet({
           </div>
           {picked ? (
             <AmountPicker
-              item={picked}
+              item={picked.item}
               date={date}
-              initialMeal={meal}
+              initialMeal={picked.meal ?? meal}
+              initialGrams={picked.grams}
               onBack={() => setPicked(null)}
-              backLabel={
-                method === "barcode" ? "Tilbake til strekkode" : undefined
-              }
+              backLabel={BACK_LABELS[method]}
               onSaved={close}
             />
           ) : (
@@ -368,7 +408,7 @@ export function AddFoodSheet({
                       // "Tilbake til søket" then shows the new item in the search.
                       setQuery(item.name);
                       setMethod("search");
-                      setPicked(item);
+                      setPicked({ item });
                     }}
                   />
                 </div>
@@ -378,18 +418,35 @@ export function AddFoodSheet({
                   labelledBy={tabId("barcode")}
                   text={barcodeText}
                   setText={setBarcodeText}
-                  onFound={setPicked}
+                  onFound={(item) => setPicked({ item })}
                   onRegister={(barcode) => {
                     setOwnName("");
                     setOwnBarcode(barcode);
                     setMethod("manual");
                   }}
                 />
+              ) : method === "recent" ? (
+                <RecentPanel
+                  panelId={PANEL_ID}
+                  labelledBy={tabId("recent")}
+                  onPick={(item: RecentFood) =>
+                    setPicked({
+                      item,
+                      grams: item.last_grams,
+                      meal: mealFromRow ? meal : item.last_meal,
+                    })
+                  }
+                  onSearch={() => setMethod("search")}
+                />
               ) : (
                 <SearchPanel
                   query={query}
-                  setQuery={setQuery}
-                  onPick={setPicked}
+                  setQuery={(next) => {
+                    // Typing settles the tab, so a late recent list never switches away.
+                    setMethod("search");
+                    setQuery(next);
+                  }}
+                  onPick={(item) => setPicked({ item })}
                   onRegister={() => {
                     setOwnName(query.trim());
                     setMethod("manual");

@@ -39,4 +39,7 @@
 - source_spec: `.docs/implementation-artifacts/spec-3-3-type-a-barcode.md`
   summary: Test that a found OFF barcode lookup invalidates cached food searches.
   evidence: Removing the `onSuccess` invalidation in `useLookupBarcode` passes every test; a just-cached item can be missing from search for up to 60 s.
+- source_spec: `.docs/implementation-artifacts/spec-3-4-log-a-recent-food-with-one-tap.md`
+  summary: Story 3.6 edit/delete mutations must also invalidate `["food-recent"]`.
+  evidence: Only `useAddFoodEntry` invalidates the recent list; editing or deleting an entry changes `last_grams`, `last_meal` and membership.
 

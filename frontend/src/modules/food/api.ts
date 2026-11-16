@@ -16,8 +16,19 @@ export type FoodDay = components["schemas"]["FoodDayResponse"];
 export type FoodEntry = components["schemas"]["FoodEntryResponse"];
 export type FoodEntryRequest = components["schemas"]["FoodEntryRequest"];
 export type FoodItemCreate = components["schemas"]["FoodItemCreate"];
+export type RecentFood = components["schemas"]["RecentFoodResponse"];
 
 export const SEARCH_MIN_LENGTH = 2;
+
+export const RECENT_FOODS_KEY = ["food-recent"] as const;
+
+/** The user's 10 most recently logged distinct items with the last grams and Meal (3.4). */
+export function useRecentFoods() {
+  return useQuery({
+    queryKey: RECENT_FOODS_KEY,
+    queryFn: () => call(() => api.GET("/api/food/recent")),
+  });
+}
 
 export function foodDayKey(date: string) {
   return ["food-day", date] as const;
@@ -51,14 +62,21 @@ export function useFoodSearch(query: string) {
   });
 }
 
-/** Log an entry; the date's totals are refetched so Mat updates without a reload (AD-15). */
+/**
+ * Log an entry; the date's totals are refetched so Mat updates without a reload (AD-15),
+ * and so is the recent list ("Nylig brukt").
+ */
 export function useAddFoodEntry() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (body: FoodEntryRequest) =>
       call(() => api.POST("/api/food/entries", { body })),
-    onSuccess: (entry) =>
-      queryClient.invalidateQueries({ queryKey: foodDayKey(entry.date) }),
+    onSuccess: (entry) => {
+      void queryClient.invalidateQueries({ queryKey: RECENT_FOODS_KEY });
+      return queryClient.invalidateQueries({
+        queryKey: foodDayKey(entry.date),
+      });
+    },
   });
 }
 

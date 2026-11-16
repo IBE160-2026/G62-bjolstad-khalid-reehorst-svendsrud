@@ -121,6 +121,13 @@ class FoodItemResponse(BaseModel):
     barcode: str | None
 
 
+class RecentFoodResponse(FoodItemResponse):
+    """A food item the user logged before, with the amount and Meal of its latest entry."""
+
+    last_grams: float
+    last_meal: Meal
+
+
 class FoodItemCreate(BaseModel):
     """A user's own food item. `source` and `owner_id` are set by the server; extra keys
     such as those are ignored (AD-4)."""

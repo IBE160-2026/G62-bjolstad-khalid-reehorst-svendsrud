@@ -83,6 +83,10 @@ function day(entries: Entry[] = []) {
 
 let currentDay = day();
 let searchResults: unknown[] = [];
+// What GET /api/food/recent answers (story 3.4); a new user has none.
+let recentFoods: unknown[] = [];
+// Overrides the recent answer, e.g. a deferred promise or an error.
+let recentAnswer: (() => Promise<unknown>) | null = null;
 // What GET /api/food/barcode/{code} answers (story 3.3).
 let barcodeAnswer: { data?: unknown; error?: unknown } = {};
 
@@ -93,7 +97,9 @@ function mockApi() {
         ? { data: currentDay, error: undefined }
         : path === "/api/food/barcode/{code}"
           ? barcodeAnswer
-          : { data: searchResults, error: undefined },
+          : path === "/api/food/recent"
+            ? (recentAnswer?.() ?? { data: recentFoods, error: undefined })
+            : { data: searchResults, error: undefined },
     ),
   );
 }
@@ -140,6 +146,8 @@ beforeEach(() => {
   vi.setSystemTime(new Date("2026-11-16T11:00:00Z")); // 12:00 in Oslo
   currentDay = day();
   searchResults = [HAVREMEL];
+  recentFoods = [];
+  recentAnswer = null;
   barcodeAnswer = {};
 });
 
@@ -185,7 +193,7 @@ describe("FoodDay", () => {
     ).toBeInTheDocument();
   });
 
-  it("opens the sheet with Søk active, Skriv strekkode and Manuelt enabled, Nylig brukt disabled and the search focused", async () => {
+  it("opens the sheet with Søk active for a new user, every method enabled and the search focused", async () => {
     const dialog = await openLunch();
 
     expect(within(dialog).getByRole("tab", { name: "Søk" })).toHaveAttribute(
@@ -196,11 +204,10 @@ describe("FoodDay", () => {
     expect(
       within(dialog).getByRole("tab", { name: "Skriv strekkode" }),
     ).toBeEnabled();
-    for (const name of ["Nylig brukt"]) {
-      const tab = within(dialog).getByRole("tab", { name: new RegExp(name) });
-      expect(tab).toBeDisabled();
-      expect(tab).toHaveTextContent("Kommer snart");
-    }
+    expect(
+      within(dialog).getByRole("tab", { name: "Nylig brukt" }),
+    ).toBeEnabled();
+    expect(within(dialog).queryByText("Kommer snart")).not.toBeInTheDocument();
     expect(within(dialog).getByLabelText("Søk etter matvare")).toHaveFocus();
     expect(
       within(dialog).getByText(/Matvaretabellen 2026/),
@@ -1131,6 +1138,284 @@ describe("FoodDay", () => {
         within(dialog).getByRole("tab", { name: "Skriv strekkode" }),
       ).toHaveAttribute("aria-selected", "true");
       expect(within(dialog).getByLabelText("Strekkode")).toHaveValue(MILK_CODE);
+    });
+  });
+
+  describe("recent foods (story 3.4)", () => {
+    const RECENT_OATS = { ...HAVREMEL, last_grams: 150, last_meal: "lunch" };
+    const RECENT_MILK = {
+      ...MILK,
+      last_grams: 1000,
+      last_meal: "breakfast",
+    };
+
+    function recentCalls() {
+      return getMock.mock.calls.filter(([path]) => path === "/api/food/recent");
+    }
+
+    async function openFrom(buttonName: string) {
+      renderDay();
+      // The page loads the recent list, so the sheet knows its first tab.
+      await waitFor(() => expect(recentCalls()).not.toHaveLength(0));
+      fireEvent.click(await screen.findByRole("button", { name: buttonName }));
+      const dialog = screen.getByRole("dialog", { name: "Legg til mat" });
+      await waitFor(() =>
+        expect(
+          within(dialog).getByRole("tab", { name: "Nylig brukt" }),
+        ).toHaveAttribute("aria-selected", "true"),
+      );
+      return dialog;
+    }
+
+    it("shows a new user the empty message and a way to Søk", async () => {
+      const dialog = await openLunch();
+      fireEvent.click(within(dialog).getByRole("tab", { name: "Nylig brukt" }));
+
+      expect(
+        await within(dialog).findByText("Du har ikke logget noe ennå."),
+      ).toBeInTheDocument();
+      fireEvent.click(
+        within(dialog).getByRole("button", { name: "Søk etter mat" }),
+      );
+
+      expect(within(dialog).getByRole("tab", { name: "Søk" })).toHaveAttribute(
+        "aria-selected",
+        "true",
+      );
+      expect(within(dialog).getByLabelText("Søk etter matvare")).toHaveFocus();
+    });
+
+    it("opens on Nylig brukt with each item's last grams and Meal, newest first", async () => {
+      recentFoods = [RECENT_OATS, RECENT_MILK];
+      const dialog = await openFrom("Legg til i Lunsj");
+
+      const rows = within(
+        within(dialog).getByRole("list", { name: "Nylig brukt" }),
+      ).getAllByRole("button");
+      expect(rows.map((row) => row.textContent)).toEqual([
+        "Havremel150 g · Lunsj",
+        "Helmelk1 000 g · Frokost",
+      ]);
+      expect(rows[0]).toHaveFocus();
+      expect(
+        within(dialog).queryByLabelText("Søk etter matvare"),
+      ).not.toBeInTheDocument();
+    });
+
+    it("logs a recent food in three taps: + Legg til, the item, Lagre", async () => {
+      recentFoods = [RECENT_OATS];
+      const dialog = await openFrom("Legg til i Lunsj");
+
+      fireEvent.click(within(dialog).getByRole("button", { name: /Havremel/ }));
+      // A tap only opens the amount picker; nothing is saved yet.
+      expect(postMock).not.toHaveBeenCalled();
+      expect(within(dialog).getByLabelText("Mengde (g)")).toHaveValue("150");
+      expect(within(dialog).getByLabelText("Måltid")).toHaveValue("lunch");
+
+      const before = recentCalls().length;
+      postMock.mockImplementation(() => {
+        currentDay = day([
+          { name: "Havremel", meal: "lunch", grams: 150, kcal: 553.5 },
+        ]);
+        return Promise.resolve({
+          data: { ...currentDay.meals[1].entries[0] },
+          error: undefined,
+        });
+      });
+      fireEvent.click(within(dialog).getByRole("button", { name: "Lagre" }));
+
+      await waitFor(() => expect(dialog).not.toHaveAttribute("open"));
+      expect(postMock).toHaveBeenCalledWith("/api/food/entries", {
+        body: {
+          food_item_id: HAVREMEL.id,
+          date: TODAY,
+          meal: "lunch",
+          grams: 150,
+        },
+      });
+      // Saving refreshes the recent list.
+      await waitFor(() => expect(recentCalls().length).toBeGreaterThan(before));
+    });
+
+    it("uses the Meal row the sheet was opened from", async () => {
+      recentFoods = [RECENT_OATS];
+      const dialog = await openFrom("Legg til i Middag");
+
+      fireEvent.click(within(dialog).getByRole("button", { name: /Havremel/ }));
+
+      expect(within(dialog).getByLabelText("Mengde (g)")).toHaveValue("150");
+      expect(within(dialog).getByLabelText("Måltid")).toHaveValue("dinner");
+    });
+
+    it("uses the item's last Meal from Logg mat", async () => {
+      // 18:00 in Oslo: Logg mat alone would choose Middag.
+      vi.setSystemTime(new Date("2026-11-16T17:00:00Z"));
+      recentFoods = [RECENT_OATS];
+      const dialog = await openFrom("Logg mat");
+
+      fireEvent.click(within(dialog).getByRole("button", { name: /Havremel/ }));
+
+      expect(within(dialog).getByLabelText("Mengde (g)")).toHaveValue("150");
+      expect(within(dialog).getByLabelText("Måltid")).toHaveValue("lunch");
+    });
+
+    it.each([
+      [
+        "typing",
+        (input: HTMLElement) =>
+          fireEvent.change(input, { target: { value: "mel" } }),
+        "mel",
+      ],
+      ["a click", (input: HTMLElement) => fireEvent.pointerDown(input), ""],
+    ])(
+      "stays on Søk after %s when the recent list arrives late",
+      async (_, interact, value) => {
+        let resolve: (value: unknown) => void = () => {};
+        recentAnswer = () => new Promise((done) => (resolve = done));
+        const dialog = await openLunch();
+        const input = within(dialog).getByLabelText("Søk etter matvare");
+
+        interact(input);
+        await act(async () => {
+          resolve({ data: [RECENT_OATS], error: undefined });
+        });
+        // Let the list land: the Nylig brukt panel would mount if the tab switched.
+        await act(() => new Promise((done) => setTimeout(done, 50)));
+
+        expect(within(dialog).getByRole("tab", { name: "Søk" })).toHaveAttribute(
+          "aria-selected",
+          "true",
+        );
+        expect(within(dialog).getByLabelText("Søk etter matvare")).toBe(input);
+        expect(input).toHaveValue(value);
+        expect(
+          within(dialog).queryByRole("list", { name: "Nylig brukt" }),
+        ).not.toBeInTheDocument();
+      },
+    );
+
+    it("moves to Nylig brukt and its first row when the list arrives before any interaction", async () => {
+      let resolve: (value: unknown) => void = () => {};
+      recentAnswer = () => new Promise((done) => (resolve = done));
+      const dialog = await openLunch();
+
+      await act(async () => {
+        resolve({ data: [RECENT_OATS], error: undefined });
+      });
+
+      await waitFor(() =>
+        expect(
+          within(dialog).getByRole("tab", { name: "Nylig brukt" }),
+        ).toHaveAttribute("aria-selected", "true"),
+      );
+      expect(
+        within(dialog).getByRole("button", { name: /Havremel/ }),
+      ).toHaveFocus();
+    });
+
+    it("applies the first-tab rule again after the sheet is closed and reopened", async () => {
+      recentFoods = [RECENT_OATS];
+      const dialog = await openFrom("Legg til i Lunsj");
+      fireEvent.click(within(dialog).getByRole("tab", { name: "Søk" }));
+      fireEvent.click(within(dialog).getByRole("button", { name: "Lukk" }));
+      expect(dialog).not.toHaveAttribute("open");
+
+      fireEvent.click(screen.getByRole("button", { name: "Legg til i Lunsj" }));
+
+      expect(
+        within(dialog).getByRole("tab", { name: "Nylig brukt" }),
+      ).toHaveAttribute("aria-selected", "true");
+      expect(
+        within(dialog).getByRole("button", { name: /Havremel/ }),
+      ).toHaveFocus();
+    });
+
+    it("prefills 1 000 g as a valid amount and saves 1000", async () => {
+      recentFoods = [RECENT_MILK];
+      const dialog = await openFrom("Legg til i Frokost");
+      fireEvent.click(within(dialog).getByRole("button", { name: /Helmelk/ }));
+
+      const grams = within(dialog).getByLabelText("Mengde (g)");
+      expect(grams).toHaveValue("1 000");
+      expect(grams).not.toHaveAttribute("aria-invalid");
+      expect(within(dialog).getByTestId("kcal-preview")).toHaveTextContent(
+        "630 kcal",
+      );
+      postMock.mockResolvedValue({
+        data: {
+          id: "e1",
+          food_item_id: MILK.id,
+          name: "Helmelk",
+          date: TODAY,
+          meal: "breakfast",
+          grams: 1000,
+          kcal_per_100g_snapshot: 63,
+          kcal: 630,
+          created_at: "2026-11-16T11:00:00Z",
+        },
+        error: undefined,
+      });
+      fireEvent.click(within(dialog).getByRole("button", { name: "Lagre" }));
+
+      await waitFor(() => expect(dialog).not.toHaveAttribute("open"));
+      expect(postMock).toHaveBeenCalledWith("/api/food/entries", {
+        body: {
+          food_item_id: MILK.id,
+          date: TODAY,
+          meal: "breakfast",
+          grams: 1000,
+        },
+      });
+    });
+
+    it("shows an error with Prøv igjen and Søk etter mat when the list cannot load", async () => {
+      recentAnswer = () =>
+        Promise.resolve({
+          data: undefined,
+          error: {
+            error: {
+              code: "server_error",
+              message: "Vi fikk ikke kontakt med serveren. Prøv igjen.",
+            },
+          },
+        });
+      const dialog = await openLunch();
+      fireEvent.click(within(dialog).getByRole("tab", { name: "Nylig brukt" }));
+
+      expect(await within(dialog).findByRole("alert")).toHaveTextContent(
+        "Vi fikk ikke kontakt med serveren.",
+      );
+      const before = recentCalls().length;
+      fireEvent.click(within(dialog).getByRole("button", { name: "Prøv igjen" }));
+      await waitFor(() => expect(recentCalls().length).toBeGreaterThan(before));
+
+      fireEvent.click(
+        within(dialog).getByRole("button", { name: "Søk etter mat" }),
+      );
+      expect(within(dialog).getByRole("tab", { name: "Søk" })).toHaveAttribute(
+        "aria-selected",
+        "true",
+      );
+    });
+
+    it("lets the prefilled amount be changed and goes back to Nylig brukt", async () => {
+      recentFoods = [RECENT_OATS];
+      const dialog = await openFrom("Legg til i Lunsj");
+      fireEvent.click(within(dialog).getByRole("button", { name: /Havremel/ }));
+
+      fireEvent.change(within(dialog).getByLabelText("Mengde (g)"), {
+        target: { value: "200" },
+      });
+      expect(within(dialog).getByTestId("kcal-preview")).toHaveTextContent(
+        "738 kcal",
+      );
+      fireEvent.click(
+        within(dialog).getByRole("button", { name: "Tilbake til nylig brukt" }),
+      );
+
+      expect(
+        within(dialog).getByRole("tab", { name: "Nylig brukt" }),
+      ).toHaveAttribute("aria-selected", "true");
     });
   });
 });
