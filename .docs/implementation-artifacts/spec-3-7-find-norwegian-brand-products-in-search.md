@@ -66,7 +66,7 @@ context:
 
 ## Spec Change Log
 
-- 2026-11-16: the OFF search API answered 503 on several runs (page 1, 2 and 11). Osman approved retries (3 tries per page, 30 s apart) and then 10 pages (1 000 products) instead of 20; `PAGES` can be raised later. Import still pending: the data file is created when OFF answers.
+- 2026-11-16: the OFF search API answered 503 on several runs (page 1, 2 and 11). Osman approved retries (3 tries per page, 30 s apart) and then 10 pages (1 000 products) instead of 20; `PAGES` can be raised later. Import still pending: the data file is created when OFF answers. Last try 16.11 evening failed at page 8 (503).
 
 ## Review Triage Log
 
