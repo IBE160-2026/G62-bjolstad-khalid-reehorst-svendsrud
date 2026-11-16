@@ -54,6 +54,7 @@ FR28 (Must): A new user, or a date without logs, sees short prompts ("Logg ditt 
 FR29 (Phase 2): A Pro user can photograph one food item and get an estimated name and kcal, always labelled as an estimate and editable. Mock Mode returns "Egg, 1 stk, 78 kcal (estimat)"; failures, missing kcal or >15 s fall back to manual registration; max 20 calls per day; the user is told before sending that the photo goes to an external service.
 FR31 (Should): A user who forgot their password can request a reset link by email and set a new password. Same answer whether or not the email has an account; the link is single-use, expires after 60 minutes and only its hash is stored; a new password logs the user out everywhere and clears the lockout; at most 3 reset emails per account per hour; locally, emails go to a mail catcher, never really sent.
 FR32 (Should): A user can deactivate their account instead of deleting it: confirmation, logged out everywhere, no data deleted; logging in with the right password reactivates it and says so; deactivated accounts are never purged.
+FR33 (Should): The exercise detail shows a simple, non-clickable body figure (front and back) with the primary Muscle Group in dark red and secondary ones lighter; the muscles are also written as text.
 FR30 (Phase 2): Users have a Pro Flag (default off) set in Seed Data or by a developer; non-Pro users opening FR29 see it is a Pro feature and nothing is sent.
 
 ### NonFunctional Requirements
@@ -156,6 +157,7 @@ FR29: Epic 7 - Photo-based calorie estimate (phase 2)
 FR30: Epic 7 - Pro Flag (phase 2)
 FR31: Epic 1 - Reset a forgotten password by email
 FR32: Epic 1 - Deactivate the account
+FR33: Epic 4 - Muscles on a body figure
 
 ## Epic List
 
@@ -173,7 +175,7 @@ A user logs food by searching, typing a barcode, re-logging a recent food or reg
 
 ### Epic 4: Exercises and equipment
 A user saves Equipment Profiles and gets exercise suggestions that fit their equipment, with name search, filters and an exercise detail with video.
-**FRs covered:** FR17 – FR21
+**FRs covered:** FR17 – FR21, FR33
 
 ### Epic 5: Workout logging
 A user starts a workout, logs set by set while seeing what they did last time, and finishes, edits or deletes it.
@@ -784,6 +786,29 @@ So that I find suitable exercises without browsing everything.
 **When** the list would be empty
 **Then** the message names the filters that excluded everything and what to change ("Ingen øvelser passer med Kroppsvekt og Skuldre. Prøv en annen muskelgruppe eller legg til utstyr.")
 **And** backend tests cover the filter rule with primary and secondary groups
+
+### Story 4.6: See which muscles an exercise works (Should)
+
+As a beginner,
+I want to see on a body figure which muscles an exercise trains,
+So that I understand the exercise at once without watching the whole video.
+
+**Covers:** FR33, FR21, NFR10
+
+**Acceptance Criteria:**
+
+**Given** an exercise detail page
+**When** it renders
+**Then** a simple body figure (front and back) sits next to or under the video, with the primary Muscle Group in dark red and the secondary Muscle Groups in a lighter red, and the figure is not clickable
+**And** the muscles are also written as text, e.g. "Hovedmuskel: bryst · Hjelper til: skuldre, triceps", with a legend for the two colours
+
+**Given** push-ups (primary chest, secondary shoulders and arms)
+**When** the figure renders
+**Then** the chest is dark red and the shoulders and triceps are light red on the front view
+
+**Given** both light and dark mode
+**When** the figure renders
+**Then** the colours come from design tokens and meet the 3:1 contrast rule for non-text marks
 
 ## Epic 5: Workout logging
 
