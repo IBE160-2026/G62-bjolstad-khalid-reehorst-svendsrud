@@ -52,6 +52,9 @@ class FoodLogEntry(Base):
     # Copied from the item when logged, so history never changes (AD-6).
     kcal_per_100g_snapshot: Mapped[Decimal] = mapped_column(Numeric(7, 2))
     created_at: Mapped[dt.datetime] = mapped_column(DateTime(timezone=True))
+    # Set on delete (story 3.6) so "Angre" can restore the same entry; soft-deleted
+    # entries are hidden from every read and removed for good by `purge` after 1 day.
+    deleted_at: Mapped[dt.datetime | None] = mapped_column(DateTime(timezone=True))
 
 
 # Search matches on lower(name) (story 3.1).

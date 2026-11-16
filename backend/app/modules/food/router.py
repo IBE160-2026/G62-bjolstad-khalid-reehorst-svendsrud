@@ -1,9 +1,10 @@
 """HTTP endpoints for food search and the user's food log under /api/food. All require consent."""
 
+import uuid
 from datetime import date
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, Query, status
+from fastapi import APIRouter, Depends, Query, Response, status
 
 from app.core.clock import Now
 from app.core.db import DbSession
@@ -13,6 +14,7 @@ from app.modules.food.schemas import (
     FoodDayResponse,
     FoodEntryRequest,
     FoodEntryResponse,
+    FoodEntryUpdate,
     FoodItemCreate,
     FoodItemResponse,
     RecentFoodResponse,
@@ -99,3 +101,46 @@ def add_food_entry(
 ) -> FoodEntryResponse:
     """Log grams of a food item in a Meal; kcal per 100 g is copied as a snapshot."""
     return service.add_entry(db, current_user.id, body, now)
+
+
+ENTRY_NOT_FOUND = {404: {"model": ErrorResponse, "description": "food_entry_not_found"}}
+
+
+@router.patch(
+    "/entries/{entry_id}",
+    response_model=FoodEntryResponse,
+    operation_id="update_food_entry",
+    responses=ENTRY_NOT_FOUND,
+)
+def update_food_entry(
+    entry_id: uuid.UUID, body: FoodEntryUpdate, current_user: ConsentedUser, db: DbSession
+) -> FoodEntryResponse:
+    """Change grams and/or Meal of the user's entry; the date and kcal snapshot never change."""
+    return service.update_entry(db, current_user.id, entry_id, body)
+
+
+@router.delete(
+    "/entries/{entry_id}",
+    status_code=status.HTTP_204_NO_CONTENT,
+    operation_id="delete_food_entry",
+    responses=ENTRY_NOT_FOUND,
+)
+def delete_food_entry(
+    entry_id: uuid.UUID, current_user: ConsentedUser, db: DbSession, now: Now
+) -> Response:
+    """Delete the user's entry at once; it can be restored for 10 minutes."""
+    service.delete_entry(db, current_user.id, entry_id, now)
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
+
+
+@router.post(
+    "/entries/{entry_id}/restore",
+    response_model=FoodEntryResponse,
+    operation_id="restore_food_entry",
+    responses=ENTRY_NOT_FOUND,
+)
+def restore_food_entry(
+    entry_id: uuid.UUID, current_user: ConsentedUser, db: DbSession, now: Now
+) -> FoodEntryResponse:
+    """Undo a delete made within the last 10 minutes ("Angre"); otherwise 404."""
+    return service.restore_entry(db, current_user.id, entry_id, now)

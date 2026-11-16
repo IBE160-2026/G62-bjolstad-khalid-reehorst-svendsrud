@@ -11,6 +11,10 @@ export const SECONDARY_BUTTON_CLASS =
 
 export const LINK_CLASS = "font-medium text-accent-foreground underline underline-offset-4";
 
+/** Secondary button with destructive text, e.g. "Slett" on a food entry (undo, no confirm). */
+export const SECONDARY_DESTRUCTIVE_BUTTON_CLASS =
+  "h-[50px] rounded-full border-[1.5px] border-border bg-card px-6 text-button font-medium text-destructive transition-colors hover:bg-muted disabled:opacity-70";
+
 /** Fill for the one destructive action (account deletion); `error` red only here and in validation. */
 export const DESTRUCTIVE_BUTTON_CLASS =
   "h-[50px] rounded-full bg-destructive px-6 text-button font-medium text-destructive-foreground transition-opacity disabled:opacity-70";

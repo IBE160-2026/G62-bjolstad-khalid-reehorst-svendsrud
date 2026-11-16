@@ -41,16 +41,20 @@ def seed() -> int:
 
 
 def purge() -> int:
-    """Hard-delete accounts soft-deleted more than 30 days ago (AD-14)."""
+    """Hard-delete accounts soft-deleted more than 30 days ago (AD-14) and food entries
+    soft-deleted more than 1 day ago (story 3.6)."""
     from app.core.clock import utc_now
     from app.core.db import get_session_factory
+    from app.modules.food import service as food_service
     from app.modules.identity import service
 
+    now = utc_now()
     with get_session_factory()() as db:
-        purged = service.purge_deleted(db, utc_now())
+        purged = service.purge_deleted(db, now)
+        entries = food_service.purge_deleted_entries(db, now)
         db.commit()
-    # Only the count is reported; never emails or other account details.
-    message = f"Purged {purged} accounts."
+    # Only the counts are reported; never emails or other account details.
+    message = f"Purged {purged} accounts and {entries} deleted entries."
     logger.info(message)
     print(message)
     return 0

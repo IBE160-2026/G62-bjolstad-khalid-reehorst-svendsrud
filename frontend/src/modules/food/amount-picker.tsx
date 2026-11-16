@@ -7,10 +7,17 @@ import {
   INPUT_CLASS,
   PRIMARY_BUTTON_CLASS,
   SECONDARY_BUTTON_CLASS,
+  SECONDARY_DESTRUCTIVE_BUTTON_CLASS,
 } from "@/modules/identity/styles";
 import { formatKcal } from "@/modules/profile/target-result";
 
-import { useAddFoodEntry, type FoodItem } from "./api";
+import {
+  useAddFoodEntry,
+  useDeleteFoodEntry,
+  useUpdateFoodEntry,
+  type FoodEntry,
+  type FoodItem,
+} from "./api";
 import { OffAttribution } from "./attribution";
 import {
   MEALS,
@@ -23,7 +30,7 @@ import {
 
 type Unit = "grams" | "servings";
 
-const GRAMS_ID = "amount-grams";
+export const GRAMS_ID = "amount-grams";
 const UNIT_NAME = "amount-unit";
 const GRAMS_ERROR_ID = "amount-grams-error";
 const MEAL_ID = "amount-meal";
@@ -33,7 +40,26 @@ const MEAL_ID = "amount-meal";
  * the chosen item, with a live kcal preview; servings are saved as grams. "Lagre" logs the entry;
  * the saved kcal and totals come from the API. Grams start at 100, or at the last amount
  * when the item comes from "Nylig brukt" (story 3.4).
+ *
+ * Edit mode (story 3.6, `entry` set): grams and Meal start from the entry, "Lagre
+ * endringene" changes only those, and "Slett" deletes the entry at once (undo is offered
+ * by the Mat page). `item` is then built from the entry, so the preview uses its snapshot.
  */
+export function entryAsItem(entry: FoodEntry): FoodItem {
+  return {
+    id: entry.food_item_id,
+    name: entry.name,
+    source: entry.source,
+    // The entry's own snapshot, never the item's current value (AD-6).
+    kcal_per_100g: entry.kcal_per_100g_snapshot,
+    protein_g: null,
+    carbs_g: null,
+    fat_g: null,
+    serving_size_g: entry.serving_size_g,
+    barcode: null,
+  };
+}
+
 export function AmountPicker({
   item,
   date,
@@ -42,16 +68,26 @@ export function AmountPicker({
   onBack,
   backLabel = "Tilbake til søket",
   onSaved,
+  entry,
+  onDeleted,
 }: {
   item: FoodItem;
   date: string;
   initialMeal: Meal;
   initialGrams?: number;
-  onBack: () => void;
+  /** Left out in edit mode: there is nothing to go back to. */
+  onBack?: () => void;
   backLabel?: string;
   onSaved: () => void;
+  /** The entry being edited (story 3.6). */
+  entry?: FoodEntry;
+  onDeleted?: (entry: FoodEntry) => void;
 }) {
   const addEntry = useAddFoodEntry();
+  const updateEntry = useUpdateFoodEntry();
+  const deleteEntry = useDeleteFoodEntry();
+  const save = entry ? updateEntry : addEntry;
+  const busy = save.isPending || deleteEntry.isPending;
   const servingSize = item.serving_size_g ?? null;
   const [unit, setUnit] = useState<Unit>("grams");
   const [gramsText, setGramsText] = useState(() => formatGrams(initialGrams));
@@ -94,31 +130,46 @@ export function AmountPicker({
       gramsRef.current?.focus();
       return;
     }
-    addEntry.mutate(
-      { food_item_id: item.id, date, meal, grams: parsed.grams },
-      {
-        onSuccess: onSaved,
-        onError: (error) => {
-          const field =
-            error instanceof ApiError &&
-            error.fields.find((f) => f.field === "grams");
-          if (field) {
-            setGramsError(field.message);
-            gramsRef.current?.focus();
-          }
-        },
+    const callbacks = {
+      onSuccess: onSaved,
+      onError: (error: Error) => {
+        const field =
+          error instanceof ApiError &&
+          error.fields.find((f) => f.field === "grams");
+        if (field) {
+          setGramsError(field.message);
+          gramsRef.current?.focus();
+        }
       },
-    );
+    };
+    deleteEntry.reset();
+    if (entry) {
+      updateEntry.mutate(
+        { id: entry.id, body: { grams: parsed.grams, meal } },
+        callbacks,
+      );
+    } else {
+      addEntry.mutate(
+        { food_item_id: item.id, date, meal, grams: parsed.grams },
+        callbacks,
+      );
+    }
+  }
+
+  function handleDelete() {
+    if (!entry) return;
+    save.reset();
+    // No confirmation: the delete is immediate and the Mat page offers "Angre".
+    deleteEntry.mutate(entry, { onSuccess: () => onDeleted?.(entry) });
   }
 
   // A grams error shows under the field; anything else (date, meal, item, network) shows
   // here, so a failed save is never silent.
-  const errorFields =
-    addEntry.error instanceof ApiError ? addEntry.error.fields : [];
+  const errorFields = save.error instanceof ApiError ? save.error.fields : [];
   const serverError =
-    addEntry.error && !errorFields.some((field) => field.field === "grams")
-      ? (errorFields[0]?.message ?? addEntry.error.message)
-      : undefined;
+    save.error && !errorFields.some((field) => field.field === "grams")
+      ? (errorFields[0]?.message ?? save.error.message)
+      : deleteEntry.error?.message;
 
   return (
     <form noValidate onSubmit={handleSubmit} className="flex flex-col gap-5">
@@ -249,19 +300,28 @@ export function AmountPicker({
       )}
 
       <div className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
-        <button
-          type="button"
-          onClick={onBack}
-          className={SECONDARY_BUTTON_CLASS}
-        >
-          {backLabel}
-        </button>
-        <button
-          type="submit"
-          disabled={addEntry.isPending}
-          className={PRIMARY_BUTTON_CLASS}
-        >
-          {addEntry.isPending ? "Lagrer …" : "Lagre"}
+        {entry ? (
+          <button
+            type="button"
+            onClick={handleDelete}
+            disabled={busy}
+            className={`${SECONDARY_DESTRUCTIVE_BUTTON_CLASS} sm:mr-auto`}
+          >
+            {deleteEntry.isPending ? "Sletter …" : "Slett"}
+          </button>
+        ) : (
+          onBack && (
+            <button
+              type="button"
+              onClick={onBack}
+              className={SECONDARY_BUTTON_CLASS}
+            >
+              {backLabel}
+            </button>
+          )
+        )}
+        <button type="submit" disabled={busy} className={PRIMARY_BUTTON_CLASS}>
+          {save.isPending ? "Lagrer …" : entry ? "Lagre endringene" : "Lagre"}
         </button>
       </div>
     </form>
