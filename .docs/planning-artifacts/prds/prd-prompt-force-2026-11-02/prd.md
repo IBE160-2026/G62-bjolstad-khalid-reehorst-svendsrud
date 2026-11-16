@@ -246,6 +246,11 @@ The User can filter Exercise Suggestions by Muscle Group and Level, and can sear
 The User can open an Exercise and see the technique description and an embedded video (youtube-nocookie).
 - If the video cannot load, the description and data are still shown.
 
+#### FR-33: Muscles on a body figure · Should
+The Exercise detail shows a simple body figure (front and back) next to the video, with the Exercise's primary Muscle Group in dark red and its secondary Muscle Groups in a lighter red, so the User sees at once what the Exercise trains.
+- The figure only shows; it is not clickable (a clickable muscle picker stays in Vision).
+- The muscles are also written as text ("Hovedmuskel: bryst · Hjelper til: skuldre, triceps"), so the information never depends on colour alone.
+
 **Notes:** Coverage gaps found in the research: Users with only bodyweight, only a kettlebell or only a pull-up bar get no Shoulder or Arm exercises. Five new Exercises (#35–39, e.g. pike push-up and diamond push-up) are proposed in `ovelsesliste-gjennomgang-2026-11-11.md` and await group approval (issue #8).
 
 ### 4.5 Workout Logging
@@ -373,13 +378,13 @@ A web app that runs in the browser, mainly on a PC or laptop, since the submissi
 
 ### 9.1 In scope (v1, must be finished and stable)
 
-**Priority.** Each FR heading states its priority. All are **Must** except the **Should** items, which are cut first if time runs out: FR-8 (camera scanning), FR-20 (filters by Muscle Group and Level; name search stays Must), FR-27 (move between dates), FR-31 (reset a forgotten password) and FR-32 (deactivate the account). FR-14 (recent foods) and FR-24 (show last time) are **Must**, because they carry the product's thesis (fast logging, «what did I lift last time»), UJ-3 and SM-6. Changed 2026-11-13 after the lecturer's feedback. FR-9 and FR-11 are the main food-logging path.
+**Priority.** Each FR heading states its priority. All are **Must** except the **Should** items, which are cut first if time runs out: FR-8 (camera scanning), FR-20 (filters by Muscle Group and Level; name search stays Must), FR-27 (move between dates), FR-31 (reset a forgotten password), FR-32 (deactivate the account) and FR-33 (muscles on a body figure). FR-14 (recent foods) and FR-24 (show last time) are **Must**, because they carry the product's thesis (fast logging, «what did I lift last time»), UJ-3 and SM-6. Changed 2026-11-13 after the lecturer's feedback. FR-9 and FR-11 are the main food-logging path.
 
 
 - Account, consent, deletion, password reset and deactivation (FR-1 – FR-4, FR-31, FR-32)
 - Profile and Calorie Target with Goal (FR-5 – FR-7)
 - Food logging: scan, type barcode, search, manual, Meals, recent foods (FR-8 – FR-16)
-- Fixed exercise list, Equipment Profiles, Exercise Suggestions, videos (FR-17 – FR-21)
+- Fixed exercise list, Equipment Profiles, Exercise Suggestions, videos and a muscle figure (FR-17 – FR-21, FR-33)
 - Workout logging with last-time values (FR-22 – FR-25)
 - Daily Overview and history (FR-26 – FR-28)
 - Chrome on PC as primary device and usable at 360 px, Norwegian UI, runnable from the README with Seed Data (NFR-1 – NFR-12)
@@ -448,3 +453,5 @@ Changed by Osman Khalid on 2026-11-15: new NFR-12 (Should): light and dark mode,
 Changed by Osman Khalid on 2026-11-15: new FR-31 (Should): reset a forgotten password by email, after the group's discussion on Discord 2026-11-15 (Karianne's suggestion). Updated in §4.1, §6.2 and §9.1.
 
 Changed by Osman Khalid on 2026-11-15: new FR-32 (Should): deactivate the account, after the group's discussion on Discord 2026-11-15 (Karianne's suggestion). Updated in §4.1 and §9.1.
+
+Changed by Osman Khalid on 2026-11-16: new FR-33 (Should): a simple, non-clickable body figure on the Exercise detail showing the primary Muscle Group in dark red and secondary ones lighter, after ungefernando's suggestion on Discord 2026-11-16; Karianne tried an anatomical model earlier, so this version only shows activated muscles. Updated in §4.4 and §9.1.

@@ -262,7 +262,7 @@ erDiagram
 | FR-5 – FR-7 Profile and calorie target | `profile` | AD-5, AD-12 |
 | FR-8 – FR-10 Barcode scan, type, not found | `food` + `ports/off` | AD-7 |
 | FR-11 – FR-16 Search, manual, amount, recent, edit, sources | `food` | AD-4, AD-5, AD-6 |
-| FR-17 – FR-21 Exercise list, equipment profiles, suggestions, video | `exercises` | AD-5, AD-9 |
+| FR-17 – FR-21, FR-33 Exercise list, equipment profiles, suggestions, video, muscle figure | `exercises` | AD-5, AD-9 |
 | FR-22 – FR-25 Workouts, sets, last time | `workouts` | AD-5, AD-12 |
 | FR-26 – FR-28 Daily overview, dates, empty states | `overview` (+ frontend) | AD-5, AD-12, AD-15 |
 | FR-29 – FR-30 Photo estimate, Pro flag (phase 2) | `food` + `ports/image` | AD-7 |
