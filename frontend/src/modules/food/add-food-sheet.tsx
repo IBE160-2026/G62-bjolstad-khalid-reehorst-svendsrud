@@ -10,17 +10,21 @@ import {
   type ReactNode,
 } from "react";
 
+import { useIsMutating } from "@tanstack/react-query";
+
 import { INPUT_CLASS, LINK_CLASS } from "@/modules/identity/styles";
 import { formatKcal } from "@/modules/profile/target-result";
 
 import {
+  ENTRY_CHANGE_KEY,
   SEARCH_MIN_LENGTH,
   useFoodSearch,
   useRecentFoods,
+  type FoodEntry,
   type FoodItem,
   type RecentFood,
 } from "./api";
-import { AmountPicker } from "./amount-picker";
+import { AmountPicker, GRAMS_ID, entryAsItem } from "./amount-picker";
 import { BarcodePanel } from "./barcode-panel";
 import { MatvaretabellenAttribution, OffAttribution } from "./attribution";
 import type { Meal } from "./meals";
@@ -277,6 +281,9 @@ function SearchPanel({
  * Nylig brukt (3.4): the sheet opens there when the user has logged anything before,
  * otherwise on Søk. A recent item opens the amount picker with its last grams, and the
  * Meal row the sheet was opened from (`mealFromRow`) or else the item's last Meal.
+ *
+ * Endre (3.6): with `entry` set the sheet opens straight on the amount picker in edit
+ * mode, titled "Endre", with the entry's grams and Meal and a "Slett" button.
  */
 export function AddFoodSheet({
   open,
@@ -284,6 +291,8 @@ export function AddFoodSheet({
   mealFromRow = false,
   date,
   onClose,
+  entry = null,
+  onDeleted,
 }: {
   open: boolean;
   meal: Meal;
@@ -291,8 +300,15 @@ export function AddFoodSheet({
   mealFromRow?: boolean;
   date: string;
   onClose: () => void;
+  /** The entry to change or delete (edit mode, story 3.6). */
+  entry?: FoodEntry | null;
+  /** Called after "Slett"; the sheet then closes. */
+  onDeleted?: (entry: FoodEntry) => void;
 }) {
   const dialogRef = useRef<HTMLDialogElement>(null);
+  // While "Lagre endringene" or "Slett" is in flight the sheet cannot be closed: closing
+  // would unmount the picker before its success callback (and the undo toast) runs.
+  const changing = useIsMutating({ mutationKey: ENTRY_CHANGE_KEY }) > 0;
   // The chosen item, with the grams and Meal to prefill when it comes from Nylig brukt.
   const [picked, setPicked] = useState<{
     item: FoodItem;
@@ -320,10 +336,13 @@ export function AddFoodSheet({
     if (!dialog) return;
     if (open && !dialog.open) {
       dialog.showModal();
+      const amount = document.getElementById(GRAMS_ID);
       (
         document.getElementById(SEARCH_ID) ??
-        dialog.querySelector<HTMLElement>("[data-recent-focus]")
+        dialog.querySelector<HTMLElement>("[data-recent-focus]") ??
+        amount
       )?.focus();
+      if (amount instanceof HTMLInputElement) amount.select();
     } else if (!open && dialog.open) {
       dialog.close();
     }
@@ -343,6 +362,9 @@ export function AddFoodSheet({
     <dialog
       ref={dialogRef}
       aria-labelledby={TITLE_ID}
+      onCancel={(event) => {
+        if (changing) event.preventDefault();
+      }}
       onPointerDownCapture={settleMethod}
       onKeyDownCapture={settleMethod}
       onClose={() => {
@@ -363,18 +385,34 @@ export function AddFoodSheet({
               id={TITLE_ID}
               className="text-heading font-semibold text-foreground"
             >
-              Legg til mat
+              {entry ? "Endre" : "Legg til mat"}
             </h2>
             <button
               type="button"
               onClick={close}
+              disabled={changing}
               aria-label="Lukk"
-              className="flex size-11 items-center justify-center rounded-full text-foreground hover:bg-muted"
+              className="flex size-11 items-center justify-center rounded-full text-foreground hover:bg-muted disabled:opacity-70"
             >
               <X aria-hidden="true" className="size-5" />
             </button>
           </div>
-          {picked ? (
+          {entry ? (
+            <AmountPicker
+              // A new entry gets fresh fields, even if the sheet stays mounted.
+              key={entry.id}
+              item={entryAsItem(entry)}
+              date={entry.date}
+              initialMeal={entry.meal}
+              initialGrams={entry.grams}
+              entry={entry}
+              onSaved={close}
+              onDeleted={(deleted) => {
+                onDeleted?.(deleted);
+                close();
+              }}
+            />
+          ) : picked ? (
             <AmountPicker
               item={picked.item}
               date={date}

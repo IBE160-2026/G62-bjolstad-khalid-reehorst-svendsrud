@@ -259,6 +259,50 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/food/entries/{entry_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Delete Food Entry
+         * @description Delete the user's entry at once; it can be restored for 10 minutes.
+         */
+        delete: operations["delete_food_entry"];
+        options?: never;
+        head?: never;
+        /**
+         * Update Food Entry
+         * @description Change grams and/or Meal of the user's entry; the date and kcal snapshot never change.
+         */
+        patch: operations["update_food_entry"];
+        trace?: never;
+    };
+    "/api/food/entries/{entry_id}/restore": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Restore Food Entry
+         * @description Undo a delete made within the last 10 minutes ("Angre"); otherwise 404.
+         */
+        post: operations["restore_food_entry"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -333,6 +377,9 @@ export interface components {
             food_item_id: string;
             /** Name */
             name: string;
+            source: components["schemas"]["FoodSource"];
+            /** Serving Size G */
+            serving_size_g: number | null;
             /**
              * Date
              * Format: date
@@ -350,6 +397,16 @@ export interface components {
              * Format: date-time
              */
             created_at: string;
+        };
+        /**
+         * FoodEntryUpdate
+         * @description Change grams and/or Meal of an entry (story 3.6). Left out or null means unchanged;
+         *     the item, date and kcal snapshot can never be changed (AD-6).
+         */
+        FoodEntryUpdate: {
+            /** Grams */
+            grams?: number | null;
+            meal?: components["schemas"]["Meal"] | null;
         };
         /**
          * FoodItemCreate
@@ -1156,6 +1213,155 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["FoodEntryResponse"];
+                };
+            };
+            /** @description Validation error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Default Response */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    delete_food_entry: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                entry_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description food_entry_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Validation error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Default Response */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    update_food_entry: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                entry_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["FoodEntryUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FoodEntryResponse"];
+                };
+            };
+            /** @description food_entry_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Validation error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Default Response */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    restore_food_entry: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                entry_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FoodEntryResponse"];
+                };
+            };
+            /** @description food_entry_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
             /** @description Validation error */

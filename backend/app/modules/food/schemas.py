@@ -165,10 +165,21 @@ class FoodEntryRequest(BaseModel):
     grams: Grams
 
 
+class FoodEntryUpdate(BaseModel):
+    """Change grams and/or Meal of an entry (story 3.6). Left out or null means unchanged;
+    the item, date and kcal snapshot can never be changed (AD-6)."""
+
+    grams: Grams | None = None
+    meal: Meal | None = None
+
+
 class FoodEntryResponse(BaseModel):
     id: uuid.UUID
     food_item_id: uuid.UUID
     name: str
+    # The item's source and serving size, so editing can show attribution and servings.
+    source: FoodSource
+    serving_size_g: float | None
     date: dt.date
     meal: Meal
     grams: float

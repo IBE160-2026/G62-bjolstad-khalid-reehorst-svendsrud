@@ -1,13 +1,14 @@
 """Database access for food items and entries. Only the food service calls this.
 
 Every entry query filters by the current user's id, and item queries return shared items
-plus the current user's own items only (AD-4).
+plus the current user's own items only (AD-4). Soft-deleted entries (`deleted_at` set,
+story 3.6) are hidden from every read; only restore and purge see them.
 """
 
 import uuid
-from datetime import date
+from datetime import date, datetime
 
-from sqlalchemy import case, func, or_, select
+from sqlalchemy import case, delete, func, or_, select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session as DbSessionType
 
@@ -94,15 +95,19 @@ def add_entry(db: DbSessionType, entry: FoodLogEntry) -> FoodLogEntry:
 
 def list_entries(
     db: DbSessionType, user_id: uuid.UUID, day: date
-) -> list[tuple[FoodLogEntry, str]]:
-    """The user's entries for one date with each item's name, oldest first."""
+) -> list[tuple[FoodLogEntry, FoodItem]]:
+    """The user's live entries for one date with each item, oldest first."""
     statement = (
-        select(FoodLogEntry, FoodItem.name)
+        select(FoodLogEntry, FoodItem)
         .join(FoodItem, FoodItem.id == FoodLogEntry.food_item_id)
-        .where(FoodLogEntry.user_id == user_id, FoodLogEntry.date == day)
+        .where(
+            FoodLogEntry.user_id == user_id,
+            FoodLogEntry.date == day,
+            FoodLogEntry.deleted_at.is_(None),
+        )
         .order_by(FoodLogEntry.created_at, FoodLogEntry.id)
     )
-    return [(entry, name) for entry, name in db.execute(statement)]
+    return [(entry, item) for entry, item in db.execute(statement)]
 
 
 def list_recent_items(
@@ -122,7 +127,7 @@ def list_recent_items(
             .over(partition_by=FoodLogEntry.food_item_id, order_by=newest_first)
             .label("rank"),
         )
-        .where(FoodLogEntry.user_id == user_id)
+        .where(FoodLogEntry.user_id == user_id, FoodLogEntry.deleted_at.is_(None))
         .subquery()
     )
     statement = (
@@ -135,3 +140,50 @@ def list_recent_items(
         .limit(limit)
     )
     return [(item, entry) for item, entry in db.execute(statement)]
+
+
+def get_entry(
+    db: DbSessionType, user_id: uuid.UUID, entry_id: uuid.UUID
+) -> tuple[FoodLogEntry, FoodItem] | None:
+    """One of the user's live (not soft-deleted) entries with its item, locked for update."""
+    statement = (
+        select(FoodLogEntry, FoodItem)
+        .join(FoodItem, FoodItem.id == FoodLogEntry.food_item_id)
+        .where(
+            FoodLogEntry.id == entry_id,
+            FoodLogEntry.user_id == user_id,
+            FoodLogEntry.deleted_at.is_(None),
+        )
+        .with_for_update(of=FoodLogEntry)
+    )
+    row = db.execute(statement).one_or_none()
+    return None if row is None else (row[0], row[1])
+
+
+def get_deleted_entry(
+    db: DbSessionType, user_id: uuid.UUID, entry_id: uuid.UUID, deleted_after: datetime
+) -> tuple[FoodLogEntry, FoodItem] | None:
+    """One of the user's entries soft-deleted after the cutoff, with its item."""
+    statement = (
+        select(FoodLogEntry, FoodItem)
+        .join(FoodItem, FoodItem.id == FoodLogEntry.food_item_id)
+        .where(
+            FoodLogEntry.id == entry_id,
+            FoodLogEntry.user_id == user_id,
+            FoodLogEntry.deleted_at.is_not(None),
+            FoodLogEntry.deleted_at > deleted_after,
+        )
+        .with_for_update(of=FoodLogEntry)
+    )
+    row = db.execute(statement).one_or_none()
+    return None if row is None else (row[0], row[1])
+
+
+def purge_deleted_entries(db: DbSessionType, deleted_before: datetime) -> int:
+    """Hard-delete entries soft-deleted at or before the cutoff; returns how many."""
+    result = db.execute(
+        delete(FoodLogEntry).where(
+            FoodLogEntry.deleted_at.is_not(None), FoodLogEntry.deleted_at <= deleted_before
+        )
+    )
+    return result.rowcount or 0

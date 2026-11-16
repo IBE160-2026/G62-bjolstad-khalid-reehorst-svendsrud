@@ -969,6 +969,33 @@ Det viktigste funnet: Dekningsanalysen er regnet ut fra øvelseslista og viser a
 
 ---
 
+## 2026-11-16 – Story 3.6 (endre eller slette matoppføring)
+
+**Verktøy:** Claude Code (BMAD `bmad-build`)
+**Hvem:** Osman Khalid
+**Bakgrunn:** Feil logget mat må kunne rettes eller fjernes, så dagens tall blir riktige.
+
+### Hva vi ba KI om
+
+1. Bygge endring og sletting med «Angre», uten at kaloritallet fra da maten ble logget endres.
+
+### Hva KI produserte
+
+- Spec, endepunkter for endre/slette/gjenopprette, myk sletting, «Angre»-melding og nye tester.
+
+### Hva vi selv vurderte og kontrollerte
+
+- Osman godkjente spec-en før koding.
+- Myk sletting ble valgt så «Angre» henter tilbake nøyaktig samme oppføring; `purge` rydder etter ett døgn.
+- Tre KI-kontrollører fant 13 punkter: 6 rettet (blant annet at «Angre»-meldingen nå pauses når man holder musen over eller har fokus på den, for tilgjengelighet), 7 avvist med begrunnelse.
+
+### Status
+
+- [x] Story 3.6 bygget og testet
+- [ ] Review av PR fra gruppen
+
+---
+
 ## Mal for nye oppføringer
 
 ```markdown

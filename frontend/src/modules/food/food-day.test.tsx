@@ -19,7 +19,11 @@ import {
 
 const getMock = vi.hoisted(() => vi.fn());
 const postMock = vi.hoisted(() => vi.fn());
-vi.mock("@/lib/api/client", () => ({ api: { GET: getMock, POST: postMock } }));
+const patchMock = vi.hoisted(() => vi.fn());
+const deleteMock = vi.hoisted(() => vi.fn());
+vi.mock("@/lib/api/client", () => ({
+  api: { GET: getMock, POST: postMock, PATCH: patchMock, DELETE: deleteMock },
+}));
 
 import { FoodDay } from "./food-day";
 
@@ -54,7 +58,15 @@ const MILK = {
   kcal_per_100g: 63,
 };
 
-type Entry = { name: string; meal: string; grams: number; kcal: number };
+type Entry = {
+  name: string;
+  meal: string;
+  grams: number;
+  kcal: number;
+  id?: string;
+  kcal_per_100g_snapshot?: number;
+  serving_size_g?: number | null;
+};
 
 function day(entries: Entry[] = []) {
   const meals = ["breakfast", "lunch", "dinner", "snack"].map((meal) => {
@@ -65,6 +77,8 @@ function day(entries: Entry[] = []) {
         food_item_id: HAVREMEL.id,
         date: TODAY,
         kcal_per_100g_snapshot: 0,
+        source: "matvaretabellen",
+        serving_size_g: null,
         created_at: "2026-11-16T11:00:00Z",
         ...entry,
       }));
@@ -155,6 +169,8 @@ afterEach(() => {
   vi.useRealTimers();
   getMock.mockReset();
   postMock.mockReset();
+  patchMock.mockReset();
+  deleteMock.mockReset();
 });
 
 describe("FoodDay", () => {
@@ -1500,3 +1516,461 @@ describe("servings (story 3.5)", () => {
   });
 });
 
+describe("edit or delete an entry (story 3.6)", () => {
+  const ENTRY_ID = "entry-1";
+  const MILK_ENTRY: Entry = {
+    id: ENTRY_ID,
+    name: "Helmelk",
+    meal: "lunch",
+    grams: 150,
+    kcal: 94.5,
+    kcal_per_100g_snapshot: 63,
+  };
+  const OATS_ENTRY: Entry = {
+    id: "entry-2",
+    name: "Havremel",
+    meal: "breakfast",
+    grams: 100,
+    kcal: 369,
+    kcal_per_100g_snapshot: 369,
+  };
+  // The server's entries; PATCH, DELETE and restore change them like the backend.
+  let entries: Entry[] = [];
+  let deleted: Entry[] = [];
+
+  function entryBody(entry: Entry) {
+    return day([entry]).meals.flatMap((meal) => meal.entries)[0];
+  }
+
+  function serve() {
+    currentDay = day(entries);
+    patchMock.mockImplementation(
+      (
+        _path: string,
+        {
+          params,
+          body,
+        }: {
+          params: { path: { entry_id: string } };
+          body: { grams: number; meal: string };
+        },
+      ) => {
+        entries = entries.map((entry) =>
+          entry.id === params.path.entry_id
+            ? {
+                ...entry,
+                ...body,
+                kcal: (body.grams * (entry.kcal_per_100g_snapshot ?? 0)) / 100,
+              }
+            : entry,
+        );
+        currentDay = day(entries);
+        const changed = entries.find((e) => e.id === params.path.entry_id)!;
+        return Promise.resolve({ data: entryBody(changed), error: undefined });
+      },
+    );
+    deleteMock.mockImplementation(
+      (
+        _path: string,
+        { params }: { params: { path: { entry_id: string } } },
+      ) => {
+        deleted.push(...entries.filter((e) => e.id === params.path.entry_id));
+        entries = entries.filter((e) => e.id !== params.path.entry_id);
+        currentDay = day(entries);
+        return Promise.resolve({ data: undefined, error: undefined });
+      },
+    );
+    postMock.mockImplementation(
+      (
+        path: string,
+        { params }: { params: { path: { entry_id: string } } },
+      ) => {
+        if (path !== "/api/food/entries/{entry_id}/restore")
+          return Promise.resolve({ data: undefined, error: { error: {} } });
+        const back = deleted.find((e) => e.id === params.path.entry_id)!;
+        deleted = deleted.filter((e) => e !== back);
+        entries = [...entries, back];
+        currentDay = day(entries);
+        return Promise.resolve({ data: entryBody(back), error: undefined });
+      },
+    );
+  }
+
+  async function openEntry(name: string) {
+    renderDay();
+    fireEvent.click(
+      await screen.findByRole("button", {
+        name: new RegExp(`^Endre ${name},`),
+      }),
+    );
+    return screen.getByRole("dialog", { name: "Endre" });
+  }
+
+  beforeEach(() => {
+    entries = [MILK_ENTRY, OATS_ENTRY];
+    deleted = [];
+    serve();
+  });
+
+  it("opens Endre with the entry's grams and Meal prefilled", async () => {
+    const dialog = await openEntry("Helmelk");
+
+    const field = within(dialog).getByLabelText("Mengde (g)");
+    expect(field).toHaveValue("150");
+    await waitFor(() => expect(field).toHaveFocus());
+    expect(within(dialog).getByLabelText("Måltid")).toHaveValue("lunch");
+    expect(within(dialog).getByTestId("kcal-preview")).toHaveTextContent(
+      "95 kcal",
+    );
+    expect(
+      within(dialog).getByRole("button", { name: "Lagre endringene" }),
+    ).toBeInTheDocument();
+    expect(
+      within(dialog).getByRole("button", { name: "Slett" }),
+    ).toBeInTheDocument();
+    // No search and no method picker in edit mode.
+    expect(within(dialog).queryByRole("tablist")).toBeNull();
+  });
+
+  it("saves new grams; Meal and day totals rise by 31.5 kcal without reload", async () => {
+    const dialog = await openEntry("Helmelk");
+    expect(screen.getByTestId("meal-lunch-total")).toHaveTextContent("95 kcal");
+    expect(screen.getByTestId("day-total")).toHaveTextContent("464 kcal");
+    const recentCalls = () =>
+      getMock.mock.calls.filter(([path]) => path === "/api/food/recent").length;
+    const recentBefore = recentCalls();
+
+    fireEvent.change(within(dialog).getByLabelText("Mengde (g)"), {
+      target: { value: "200" },
+    });
+    // The preview uses the entry's snapshot (63 kcal per 100 g).
+    expect(within(dialog).getByTestId("kcal-preview")).toHaveTextContent(
+      "126 kcal",
+    );
+    fireEvent.click(
+      within(dialog).getByRole("button", { name: "Lagre endringene" }),
+    );
+
+    await waitFor(() =>
+      expect(screen.getByTestId("meal-lunch-total")).toHaveTextContent(
+        "126 kcal",
+      ),
+    );
+    expect(screen.getByTestId("day-total")).toHaveTextContent("495 kcal");
+    expect(patchMock).toHaveBeenCalledWith("/api/food/entries/{entry_id}", {
+      params: { path: { entry_id: ENTRY_ID } },
+      body: { grams: 200, meal: "lunch" },
+    });
+    expect(screen.queryByRole("dialog")).toBeNull();
+    expect(recentCalls()).toBeGreaterThan(recentBefore);
+    await waitFor(() =>
+      expect(
+        screen.getByRole("button", { name: /^Endre Helmelk/ }),
+      ).toHaveFocus(),
+    );
+  });
+
+  it("moves the entry to another Meal", async () => {
+    const dialog = await openEntry("Helmelk");
+    fireEvent.change(within(dialog).getByLabelText("Måltid"), {
+      target: { value: "dinner" },
+    });
+    fireEvent.click(
+      within(dialog).getByRole("button", { name: "Lagre endringene" }),
+    );
+
+    await waitFor(() =>
+      expect(screen.getByTestId("meal-dinner-total")).toHaveTextContent(
+        "95 kcal",
+      ),
+    );
+    expect(screen.getByTestId("meal-lunch-total")).toHaveTextContent("0 kcal");
+    expect(patchMock).toHaveBeenCalledWith(
+      "/api/food/entries/{entry_id}",
+      expect.objectContaining({ body: { grams: 150, meal: "dinner" } }),
+    );
+  });
+
+  it("shows a grams error from the API and stays open", async () => {
+    patchMock.mockResolvedValue({
+      data: undefined,
+      error: {
+        error: {
+          code: "validation_error",
+          message: "Sjekk feltene.",
+          fields: [
+            {
+              field: "grams",
+              message: "Skriv inn en mengde på høyst 5 000 g.",
+            },
+          ],
+        },
+      },
+    });
+    const dialog = await openEntry("Helmelk");
+    fireEvent.click(
+      within(dialog).getByRole("button", { name: "Lagre endringene" }),
+    );
+
+    expect(
+      await within(dialog).findByText("Skriv inn en mengde på høyst 5 000 g."),
+    ).toBeInTheDocument();
+    expect(screen.getByRole("dialog", { name: "Endre" })).toBeInTheDocument();
+  });
+
+  it("edits in servings and sends grams", async () => {
+    entries = [{ ...MILK_ENTRY, serving_size_g: 250 }];
+    serve();
+    const dialog = await openEntry("Helmelk");
+    fireEvent.click(within(dialog).getByRole("radio", { name: "Porsjoner" }));
+    const field = within(dialog).getByLabelText(
+      "Antall porsjoner (1 porsjon = 250 g)",
+    );
+    expect(field).toHaveValue("0,6");
+    fireEvent.change(field, { target: { value: "2" } });
+    fireEvent.click(
+      within(dialog).getByRole("button", { name: "Lagre endringene" }),
+    );
+
+    await waitFor(() =>
+      expect(patchMock).toHaveBeenCalledWith(
+        "/api/food/entries/{entry_id}",
+        expect.objectContaining({ body: { grams: 500, meal: "lunch" } }),
+      ),
+    );
+  });
+
+  it("deletes at once with no confirmation, shows the undo toast, and Angre brings it back", async () => {
+    const dialog = await openEntry("Helmelk");
+    fireEvent.click(within(dialog).getByRole("button", { name: "Slett" }));
+
+    const status = await screen.findByRole("status");
+    await waitFor(() =>
+      expect(status).toHaveTextContent("Helmelk er slettet."),
+    );
+    expect(status).toHaveAttribute("aria-live", "polite");
+    expect(screen.queryByRole("dialog")).toBeNull();
+    expect(deleteMock).toHaveBeenCalledWith("/api/food/entries/{entry_id}", {
+      params: { path: { entry_id: ENTRY_ID } },
+    });
+    expect(screen.queryByRole("button", { name: /^Endre Helmelk/ })).toBeNull();
+    expect(screen.getByTestId("meal-lunch-total")).toHaveTextContent("0 kcal");
+    expect(screen.getByTestId("day-total")).toHaveTextContent("369 kcal");
+    // Focus stays on the page: "+ Legg til" in the Meal the entry was in.
+    await waitFor(() =>
+      expect(
+        screen.getByRole("button", { name: "Legg til i Lunsj" }),
+      ).toHaveFocus(),
+    );
+
+    fireEvent.click(within(status).getByRole("button", { name: "Angre" }));
+
+    expect(
+      await screen.findByRole("button", { name: /^Endre Helmelk/ }),
+    ).toBeInTheDocument();
+    expect(postMock).toHaveBeenCalledWith(
+      "/api/food/entries/{entry_id}/restore",
+      {
+        params: { path: { entry_id: ENTRY_ID } },
+      },
+    );
+    expect(screen.getByTestId("meal-lunch-total")).toHaveTextContent("95 kcal");
+    expect(screen.queryByTestId("undo-toast")).toBeNull();
+  });
+
+  it("hides the toast after 5 seconds; a second delete replaces it", async () => {
+    vi.useFakeTimers({ shouldAdvanceTime: true });
+    vi.setSystemTime(new Date("2026-11-16T11:00:00Z"));
+    let dialog = await openEntry("Helmelk");
+    fireEvent.click(within(dialog).getByRole("button", { name: "Slett" }));
+    expect(await screen.findByTestId("undo-toast")).toHaveTextContent(
+      "Helmelk er slettet.",
+    );
+
+    act(() => vi.advanceTimersByTime(3000));
+    fireEvent.click(screen.getByRole("button", { name: /^Endre Havremel/ }));
+    dialog = screen.getByRole("dialog", { name: "Endre" });
+    fireEvent.click(within(dialog).getByRole("button", { name: "Slett" }));
+    await waitFor(() =>
+      expect(screen.getByTestId("undo-toast")).toHaveTextContent(
+        "Havremel er slettet.",
+      ),
+    );
+    expect(screen.getAllByTestId("undo-toast")).toHaveLength(1);
+
+    // The second toast gets its own 5 s.
+    act(() => vi.advanceTimersByTime(4900));
+    expect(screen.getByTestId("undo-toast")).toBeInTheDocument();
+    act(() => vi.advanceTimersByTime(200));
+    expect(screen.queryByTestId("undo-toast")).toBeNull();
+    // The live region itself stays, ready for the next message.
+    expect(screen.getByRole("status")).toHaveAttribute("aria-live", "polite");
+  });
+
+  it("shows an alert when Angre fails", async () => {
+    const dialog = await openEntry("Helmelk");
+    fireEvent.click(within(dialog).getByRole("button", { name: "Slett" }));
+    const status = await screen.findByRole("status");
+    postMock.mockResolvedValue({
+      data: undefined,
+      error: {
+        error: {
+          code: "food_entry_not_found",
+          message: "Fant ikke denne registreringen.",
+        },
+      },
+    });
+
+    fireEvent.click(
+      await within(status).findByRole("button", { name: "Angre" }),
+    );
+
+    expect(await screen.findByRole("alert")).toHaveTextContent(
+      "Vi fikk ikke hentet tilbake Helmelk. Legg den til på nytt med Logg mat.",
+    );
+    expect(screen.queryByTestId("undo-toast")).toBeNull();
+  });
+
+  function deferred<T>() {
+    let resolve!: (value: T) => void;
+    const promise = new Promise<T>((r) => {
+      resolve = r;
+    });
+    return { promise, resolve };
+  }
+
+  it("cannot be closed while the delete is in flight, so the toast still shows", async () => {
+    const pending = deferred<{ data: undefined; error: undefined }>();
+    deleteMock.mockImplementation(
+      (_path: string, { params }: { params: { path: { entry_id: string } } }) => {
+        entries = entries.filter((e) => e.id !== params.path.entry_id);
+        currentDay = day(entries);
+        return pending.promise;
+      },
+    );
+    const dialog = await openEntry("Helmelk");
+    fireEvent.click(within(dialog).getByRole("button", { name: "Slett" }));
+
+    const closeButton = within(dialog).getByRole("button", { name: "Lukk" });
+    await waitFor(() => expect(closeButton).toBeDisabled());
+    // Esc fires "cancel" on the dialog; it is refused while the delete runs.
+    const escape = new Event("cancel", { cancelable: true });
+    act(() => {
+      dialog.dispatchEvent(escape);
+    });
+    expect(escape.defaultPrevented).toBe(true);
+    expect(screen.getByRole("dialog", { name: "Endre" })).toBeInTheDocument();
+
+    await act(async () => {
+      pending.resolve({ data: undefined, error: undefined });
+    });
+
+    expect(await screen.findByTestId("undo-toast")).toHaveTextContent(
+      "Helmelk er slettet.",
+    );
+    expect(screen.queryByRole("dialog")).toBeNull();
+  });
+
+  it("keeps the sheet open with the API's message when delete is refused", async () => {
+    deleteMock.mockResolvedValue({
+      data: undefined,
+      error: {
+        error: {
+          code: "food_entry_not_found",
+          message: "Fant ikke denne registreringen. Last inn siden på nytt.",
+        },
+      },
+    });
+    const dialog = await openEntry("Helmelk");
+    fireEvent.click(within(dialog).getByRole("button", { name: "Slett" }));
+
+    expect(await within(dialog).findByRole("alert")).toHaveTextContent(
+      "Fant ikke denne registreringen. Last inn siden på nytt.",
+    );
+    expect(screen.getByRole("dialog", { name: "Endre" })).toBeInTheDocument();
+    expect(screen.queryByTestId("undo-toast")).toBeNull();
+  });
+
+  it("pauses the 5 s while the toast is hovered or focused", async () => {
+    vi.useFakeTimers({ shouldAdvanceTime: true });
+    vi.setSystemTime(new Date("2026-11-16T11:00:00Z"));
+    const dialog = await openEntry("Helmelk");
+    fireEvent.click(within(dialog).getByRole("button", { name: "Slett" }));
+    const toast = await screen.findByTestId("undo-toast");
+
+    fireEvent.pointerOver(toast);
+    act(() => vi.advanceTimersByTime(6000));
+    expect(screen.getByTestId("undo-toast")).toBeInTheDocument();
+    fireEvent.pointerOut(toast, { relatedTarget: document.body });
+
+    const undo = within(toast).getByRole("button", { name: "Angre" });
+    act(() => undo.focus());
+    act(() => vi.advanceTimersByTime(6000));
+    expect(screen.getByTestId("undo-toast")).toBeInTheDocument();
+    act(() => undo.blur());
+
+    act(() => vi.advanceTimersByTime(4800));
+    expect(screen.getByTestId("undo-toast")).toBeInTheDocument();
+    act(() => vi.advanceTimersByTime(300));
+    expect(screen.queryByTestId("undo-toast")).toBeNull();
+  });
+
+  it("pauses the 5 s while a sheet is open", async () => {
+    vi.useFakeTimers({ shouldAdvanceTime: true });
+    vi.setSystemTime(new Date("2026-11-16T11:00:00Z"));
+    let dialog = await openEntry("Helmelk");
+    fireEvent.click(within(dialog).getByRole("button", { name: "Slett" }));
+    await screen.findByTestId("undo-toast");
+
+    fireEvent.click(screen.getByRole("button", { name: /^Endre Havremel/ }));
+    dialog = screen.getByRole("dialog", { name: "Endre" });
+    act(() => vi.advanceTimersByTime(8000));
+    expect(screen.getByTestId("undo-toast")).toBeInTheDocument();
+
+    fireEvent.click(within(dialog).getByRole("button", { name: "Lukk" }));
+    act(() => vi.advanceTimersByTime(5100));
+    expect(screen.queryByTestId("undo-toast")).toBeNull();
+  });
+
+  it("shows 'Henter tilbake …' while restoring, then focuses the row and announces it", async () => {
+    const dialog = await openEntry("Helmelk");
+    fireEvent.click(within(dialog).getByRole("button", { name: "Slett" }));
+    const toast = await screen.findByTestId("undo-toast");
+    const pending = deferred<unknown>();
+    const restoreImpl = postMock.getMockImplementation()!;
+    postMock.mockImplementation((...args: unknown[]) =>
+      pending.promise.then(() => restoreImpl(...args)),
+    );
+
+    const undo = within(toast).getByRole("button", { name: "Angre" });
+    act(() => undo.focus());
+    fireEvent.click(undo);
+
+    await waitFor(() => expect(toast).toHaveTextContent("Henter tilbake …"));
+    // "Angre" stays in place (and focused) while the restore runs.
+    expect(undo).toHaveAttribute("aria-disabled", "true");
+    expect(undo).toHaveFocus();
+    fireEvent.click(undo);
+    expect(postMock).toHaveBeenCalledTimes(1);
+
+    await act(async () => {
+      pending.resolve(undefined);
+    });
+
+    const row = await screen.findByRole("button", { name: /^Endre Helmelk,/ });
+    await waitFor(() => expect(row).toHaveFocus());
+    expect(screen.queryByTestId("undo-toast")).toBeNull();
+    expect(screen.getByRole("status")).toHaveTextContent("Helmelk er tilbake.");
+  });
+
+  it("shows an error in the sheet when delete fails", async () => {
+    deleteMock.mockRejectedValue(new Error("offline"));
+    const dialog = await openEntry("Helmelk");
+    fireEvent.click(within(dialog).getByRole("button", { name: "Slett" }));
+
+    expect(await within(dialog).findByRole("alert")).toHaveTextContent(
+      "Vi fikk ikke kontakt med serveren. Prøv igjen.",
+    );
+    expect(screen.queryByTestId("undo-toast")).toBeNull();
+  });
+});

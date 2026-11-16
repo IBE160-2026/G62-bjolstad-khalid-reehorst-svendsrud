@@ -9,12 +9,13 @@ import {
 
 import { api } from "@/lib/api/client";
 import type { components } from "@/lib/api/schema";
-import { call } from "@/modules/identity/api";
+import { call, callNoContent } from "@/modules/identity/api";
 
 export type FoodItem = components["schemas"]["FoodItemResponse"];
 export type FoodDay = components["schemas"]["FoodDayResponse"];
 export type FoodEntry = components["schemas"]["FoodEntryResponse"];
 export type FoodEntryRequest = components["schemas"]["FoodEntryRequest"];
+export type FoodEntryUpdate = components["schemas"]["FoodEntryUpdate"];
 export type FoodItemCreate = components["schemas"]["FoodItemCreate"];
 export type RecentFood = components["schemas"]["RecentFoodResponse"];
 
@@ -106,5 +107,68 @@ export function useLookupBarcode() {
       if (item.source === "off")
         void queryClient.invalidateQueries({ queryKey: ["food-search"] });
     },
+  });
+}
+
+/** Shared by edit and delete, so the sheet can tell when one is still in flight. */
+export const ENTRY_CHANGE_KEY = ["food-entry-change"] as const;
+
+/** Refetch the date's totals and the recent list after an entry changes (AD-15, NFR9). */
+function invalidateEntry(
+  queryClient: ReturnType<typeof useQueryClient>,
+  date: string,
+) {
+  void queryClient.invalidateQueries({ queryKey: RECENT_FOODS_KEY });
+  return queryClient.invalidateQueries({ queryKey: foodDayKey(date) });
+}
+
+/** Change grams and/or Meal of an entry (3.6); the date and kcal snapshot never change. */
+export function useUpdateFoodEntry() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationKey: ENTRY_CHANGE_KEY,
+    mutationFn: ({ id, body }: { id: string; body: FoodEntryUpdate }) =>
+      call(() =>
+        api.PATCH("/api/food/entries/{entry_id}", {
+          params: { path: { entry_id: id } },
+          body,
+        }),
+      ),
+    // Refetch in the background: the sheet closes without waiting for the day.
+    onSuccess: (entry) => {
+      void invalidateEntry(queryClient, entry.date);
+    },
+  });
+}
+
+/** Delete an entry at once (3.6); it can be restored with "Angre" for a short while. */
+export function useDeleteFoodEntry() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationKey: ENTRY_CHANGE_KEY,
+    mutationFn: (entry: Pick<FoodEntry, "id" | "date">) =>
+      callNoContent(() =>
+        api.DELETE("/api/food/entries/{entry_id}", {
+          params: { path: { entry_id: entry.id } },
+        }),
+      ),
+    // Refetch in the background: the undo toast shows without waiting for the day.
+    onSuccess: (_data, entry) => {
+      void invalidateEntry(queryClient, entry.date);
+    },
+  });
+}
+
+/** Bring back a just-deleted entry ("Angre"): same id, grams, Meal and snapshot. */
+export function useRestoreFoodEntry() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (id: string) =>
+      call(() =>
+        api.POST("/api/food/entries/{entry_id}/restore", {
+          params: { path: { entry_id: id } },
+        }),
+      ),
+    onSuccess: (entry) => invalidateEntry(queryClient, entry.date),
   });
 }

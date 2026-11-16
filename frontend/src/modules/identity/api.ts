@@ -52,6 +52,17 @@ export async function call<T>(request: () => Promise<{ data?: T; error?: unknown
   return result.data;
 }
 
+/** Like `call`, for endpoints that answer 204 with no body. */
+export async function callNoContent(request: () => Promise<{ error?: unknown }>): Promise<void> {
+  let result;
+  try {
+    result = await request();
+  } catch {
+    throw new ApiError("network_error", NETWORK_ERROR_MESSAGE);
+  }
+  if (result.error !== undefined) throw toApiError(result.error);
+}
+
 /** A new session: drop everything cached for the previous user, then store the new one. */
 function useStartSession() {
   const queryClient = useQueryClient();

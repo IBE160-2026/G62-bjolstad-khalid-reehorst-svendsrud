@@ -75,10 +75,10 @@ def test_purge_removes_only_accounts_deleted_over_30_days_ago(
     with caplog.at_level(logging.INFO, logger="app.cli"):
         assert _run_purge(monkeypatch, factory) == 0
 
-    assert capsys.readouterr().out.strip() == "Purged 1 accounts."
+    assert capsys.readouterr().out.strip() == "Purged 1 accounts and 0 deleted entries."
     assert _emails(factory) == ["aktiv@eksempel.no", "ny@eksempel.no"]
     assert _session_count(factory) == 2  # the purged user's session went with it
-    assert "Purged 1 accounts." in caplog.text
+    assert "Purged 1 accounts and 0 deleted entries." in caplog.text
     assert "@" not in caplog.text
 
 
@@ -91,7 +91,7 @@ def test_purge_with_nothing_old_enough_reports_zero(
 
     assert _run_purge(monkeypatch, factory, NOW - timedelta(days=2)) == 0
 
-    assert capsys.readouterr().out.strip() == "Purged 0 accounts."
+    assert capsys.readouterr().out.strip() == "Purged 0 accounts and 0 deleted entries."
     assert len(_emails(factory)) == 3
 
 
@@ -182,3 +182,40 @@ def test_purge_removes_food_entries_and_own_items_of_a_purged_user(
     with factory() as db:
         assert list(db.scalars(select(FoodLogEntry))) == []
         assert [item.name for item in db.scalars(select(FoodItem))] == ["Havremel"]
+
+
+def test_purge_removes_food_entries_soft_deleted_over_a_day_ago(
+    factory: sessionmaker[Session],
+    monkeypatch: pytest.MonkeyPatch,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    """Story 3.6: deleted entries are kept 1 day for "Angre", then removed for good."""
+    with factory() as db:
+        user = _add_user(db, "aktiv@eksempel.no", None)
+        item = FoodItem(source="matvaretabellen", name="Havremel", kcal_per_100g=369)
+        db.add(item)
+        db.flush()
+        for meal, deleted_at in (
+            ("breakfast", NOW - timedelta(days=2)),
+            ("lunch", NOW - timedelta(hours=1)),
+            ("dinner", None),
+        ):
+            db.add(
+                FoodLogEntry(
+                    user_id=user.id,
+                    food_item_id=item.id,
+                    date=NOW.date(),
+                    meal=meal,
+                    grams=100,
+                    kcal_per_100g_snapshot=369,
+                    created_at=NOW - timedelta(days=3),
+                    deleted_at=deleted_at,
+                )
+            )
+        db.commit()
+
+    assert _run_purge(monkeypatch, factory) == 0
+
+    assert capsys.readouterr().out.strip() == "Purged 0 accounts and 1 deleted entries."
+    with factory() as db:
+        assert sorted(db.scalars(select(FoodLogEntry.meal))) == ["dinner", "lunch"]
