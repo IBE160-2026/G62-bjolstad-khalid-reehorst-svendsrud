@@ -943,6 +943,32 @@ Det viktigste funnet: Dekningsanalysen er regnet ut fra øvelseslista og viser a
 
 ---
 
+## 2026-11-16 – Story 3.5 (porsjoner i stedet for gram)
+
+**Verktøy:** Claude Code (BMAD `bmad-build`, hurtigrute)
+**Hvem:** Osman Khalid
+**Bakgrunn:** Pakkevarer med kjent porsjonsstørrelse skal kunne logges uten å veie.
+
+### Hva vi ba KI om
+
+1. Legge til valget «Porsjoner» i gram-valget.
+
+### Hva KI produserte
+
+- Kort spec, enhetsvalg, omregning til gram og nye tester. Ingen endring i backend.
+
+### Hva vi selv vurderte og kontrollerte
+
+- Testene fant en avrundingsfeil (1,5 × 33,3 g ble 49,9 i stedet for 50,0); rettet ved å regne i hele tideler.
+- Kontrolløren fant 11 punkter: 4 rettet (blant annet at piltaster ikke kunne bytte enhet), 7 avvist med begrunnelse.
+
+### Status
+
+- [x] Story 3.5 bygget og testet
+- [ ] Review av PR fra gruppen
+
+---
+
 ## Mal for nye oppføringer
 
 ```markdown

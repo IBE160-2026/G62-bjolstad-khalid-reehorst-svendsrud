@@ -10,6 +10,9 @@ import {
   msToNextOsloMidnight,
   osloToday,
   parseGrams,
+  parseServings,
+  servingsToGrams,
+  SERVINGS_MESSAGES,
   previewKcal,
   validateOwnFood,
 } from "./meals";
@@ -242,4 +245,22 @@ describe("isValidEan", () => {
       expect(isValidEan(code)).toBe(false);
     },
   );
+});
+
+describe("parseServings (story 3.5)", () => {
+  it("converts servings to grams with one decimal", () => {
+    expect(parseServings("1", 20)).toEqual({ grams: 20, servings: 1 });
+    expect(parseServings("1,5", 33.3)).toEqual({ grams: 50, servings: 1.5 });
+    expect(parseServings(",5", 60)).toEqual({ grams: 30, servings: 0.5 });
+    expect(servingsToGrams(3, 33.3)).toBe(99.9);
+  });
+
+  it("rejects empty, zero, too many, two decimals and over 5 000 g", () => {
+    expect(parseServings("", 20)).toEqual({ error: SERVINGS_MESSAGES.missing });
+    expect(parseServings("0", 20)).toEqual({ error: SERVINGS_MESSAGES.min });
+    expect(parseServings("51", 20)).toEqual({ error: SERVINGS_MESSAGES.max });
+    expect(parseServings("1,25", 20)).toEqual({ error: SERVINGS_MESSAGES.decimals });
+    expect(parseServings("to", 20)).toEqual({ error: SERVINGS_MESSAGES.notNumber });
+    expect(parseServings("13", 400)).toEqual({ error: SERVINGS_MESSAGES.tooMuch });
+  });
 });

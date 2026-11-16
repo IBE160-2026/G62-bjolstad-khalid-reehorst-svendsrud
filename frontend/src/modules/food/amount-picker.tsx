@@ -16,16 +16,21 @@ import {
   MEALS,
   formatGrams,
   parseGrams,
+  parseServings,
   previewKcal,
   type Meal,
 } from "./meals";
 
+type Unit = "grams" | "servings";
+
 const GRAMS_ID = "amount-grams";
+const UNIT_NAME = "amount-unit";
 const GRAMS_ERROR_ID = "amount-grams-error";
 const MEAL_ID = "amount-meal";
 
 /**
- * Grams and Meal for the chosen item, with a live kcal preview. "Lagre" logs the entry;
+ * Amount (grams, or servings when the item has a serving size — story 3.5) and Meal for
+ * the chosen item, with a live kcal preview; servings are saved as grams. "Lagre" logs the entry;
  * the saved kcal and totals come from the API. Grams start at 100, or at the last amount
  * when the item comes from "Nylig brukt" (story 3.4).
  */
@@ -47,7 +52,10 @@ export function AmountPicker({
   onSaved: () => void;
 }) {
   const addEntry = useAddFoodEntry();
+  const servingSize = item.serving_size_g ?? null;
+  const [unit, setUnit] = useState<Unit>("grams");
   const [gramsText, setGramsText] = useState(() => formatGrams(initialGrams));
+  const [servingsText, setServingsText] = useState("1");
   const [meal, setMeal] = useState<Meal>(initialMeal);
   const [gramsError, setGramsError] = useState<string>();
   const gramsRef = useRef<HTMLInputElement>(null);
@@ -57,7 +65,25 @@ export function AmountPicker({
     gramsRef.current?.select();
   }, []);
 
-  const parsed = parseGrams(gramsText);
+  // Switching unit keeps the amount: 60 g with 20 g servings becomes "3", and back.
+  function switchUnit(next: Unit) {
+    if (next === unit || servingSize === null) return;
+    if ("grams" in parsed) {
+      if (next === "servings") {
+        const servings = Math.round((parsed.grams / servingSize) * 10) / 10;
+        if (servings > 0) setServingsText(formatGrams(servings));
+      } else {
+        setGramsText(formatGrams(parsed.grams));
+      }
+    }
+    setUnit(next);
+    setGramsError(undefined);
+  }
+
+  const inServings = unit === "servings" && servingSize !== null;
+  const parsed = inServings
+    ? parseServings(servingsText, servingSize)
+    : parseGrams(gramsText);
   const preview =
     "grams" in parsed ? previewKcal(parsed.grams, item.kcal_per_100g) : null;
 
@@ -106,12 +132,53 @@ export function AmountPicker({
         {item.source === "off" && <OffAttribution />}
       </div>
 
+      {servingSize !== null && (
+        <fieldset className="flex flex-col gap-2">
+          <legend className="mb-2 text-small font-medium text-foreground">
+            Mål i
+          </legend>
+          <div className="flex gap-2">
+            {(
+              [
+                ["grams", "Gram"],
+                ["servings", "Porsjoner"],
+              ] as const
+            ).map(([value, label]) => (
+              <label
+                key={value}
+                // Only a pointer click moves on to the amount field; arrow keys stay in
+                // the group so keyboard users can move between the two options.
+                onPointerUp={() =>
+                  setTimeout(() => {
+                    gramsRef.current?.focus();
+                    gramsRef.current?.select();
+                  })
+                }
+                className="flex min-h-11 flex-1 cursor-pointer items-center justify-center gap-2 rounded-full border-[1.5px] border-input bg-card px-4 text-body text-foreground has-checked:border-primary has-checked:bg-accent has-checked:text-accent-foreground has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-ring"
+              >
+                <input
+                  type="radio"
+                  name={UNIT_NAME}
+                  value={value}
+                  checked={unit === value}
+                  onChange={() => switchUnit(value)}
+                  className="sr-only"
+                />
+                {label}
+              </label>
+            ))}
+          </div>
+        </fieldset>
+      )}
+
       <div className="flex flex-col gap-2">
         <label
           htmlFor={GRAMS_ID}
           className="text-small font-medium text-foreground"
         >
-          Mengde (g)
+          {inServings
+            ? `Antall porsjoner (1 porsjon = ${formatGrams(servingSize)} g)`
+            : "Mengde (g)"}
         </label>
         <input
           id={GRAMS_ID}
@@ -119,9 +186,10 @@ export function AmountPicker({
           type="text"
           inputMode="decimal"
           autoComplete="off"
-          value={gramsText}
+          value={inServings ? servingsText : gramsText}
           onChange={(event) => {
-            setGramsText(event.target.value);
+            if (inServings) setServingsText(event.target.value);
+            else setGramsText(event.target.value);
             setGramsError(undefined);
           }}
           aria-invalid={gramsError ? true : undefined}
@@ -164,6 +232,14 @@ export function AmountPicker({
         <span data-testid="kcal-preview">
           {preview === null ? "–" : formatKcal(preview)} kcal
         </span>
+        {inServings && "grams" in parsed && (
+          <span
+            data-testid="servings-grams"
+            className="block text-small font-normal text-muted-foreground"
+          >
+            = {formatGrams(parsed.grams)} g
+          </span>
+        )}
       </p>
 
       {serverError && (

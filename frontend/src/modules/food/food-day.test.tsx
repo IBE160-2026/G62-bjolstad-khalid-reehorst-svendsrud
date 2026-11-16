@@ -1419,3 +1419,84 @@ describe("FoodDay", () => {
     });
   });
 });
+
+describe("servings (story 3.5)", () => {
+  const LEVERPOSTEI = {
+    ...HAVREMEL,
+    id: "00000000-0000-4000-8000-000000000035",
+    name: "Stabburet Leverpostei",
+    source: "off",
+    kcal_per_100g: 225,
+    serving_size_g: 20,
+  };
+
+  it("offers Gram and Porsjoner when the item has a serving size, and saves grams", async () => {
+    searchResults = [LEVERPOSTEI];
+    postMock.mockResolvedValue({ data: {}, error: undefined });
+    const dialog = await openLunch();
+    await searchAndPick(dialog, "lever", "Stabburet Leverpostei");
+
+    const radio = within(dialog).getByRole("radio", { name: "Porsjoner" });
+    fireEvent.click(radio);
+    fireEvent.pointerUp(radio.closest("label")!);
+    const field = within(dialog).getByLabelText("Antall porsjoner (1 porsjon = 20 g)");
+    // The default 100 g becomes 5 servings of 20 g.
+    expect(field).toHaveValue("5");
+    await waitFor(() => expect(field).toHaveFocus());
+
+    fireEvent.change(field, { target: { value: "1,5" } });
+    expect(within(dialog).getByTestId("servings-grams")).toHaveTextContent("= 30 g");
+    expect(within(dialog).getByTestId("kcal-preview")).toHaveTextContent("68 kcal");
+
+    fireEvent.click(within(dialog).getByRole("button", { name: "Lagre" }));
+    await waitFor(() =>
+      expect(postMock).toHaveBeenCalledWith(
+        "/api/food/entries",
+        expect.objectContaining({
+          body: expect.objectContaining({ grams: 30, meal: "lunch" }),
+        }),
+      ),
+    );
+  });
+
+  it("shows grams only when the item has no serving size", async () => {
+    const dialog = await openLunch();
+    await searchAndPick(dialog, "mel", "Havremel");
+    expect(within(dialog).queryByRole("radio", { name: "Porsjoner" })).toBeNull();
+    expect(within(dialog).getByLabelText("Mengde (g)")).toBeInTheDocument();
+  });
+
+  it("rejects too many servings and sends nothing", async () => {
+    searchResults = [{ ...LEVERPOSTEI, serving_size_g: 400 }];
+    const dialog = await openLunch();
+    await searchAndPick(dialog, "lever", "Stabburet Leverpostei");
+    fireEvent.click(within(dialog).getByRole("radio", { name: "Porsjoner" }));
+    const field = within(dialog).getByLabelText("Antall porsjoner (1 porsjon = 400 g)");
+    fireEvent.change(field, { target: { value: "13" } });
+    fireEvent.click(within(dialog).getByRole("button", { name: "Lagre" }));
+    expect(
+      await within(dialog).findByText("Det blir mer enn 5 000 g. Velg færre porsjoner."),
+    ).toBeInTheDocument();
+    expect(postMock).not.toHaveBeenCalled();
+  });
+
+  it("keeps the amount when switching unit, and arrow keys stay in the group", async () => {
+    searchResults = [LEVERPOSTEI];
+    const dialog = await openLunch();
+    await searchAndPick(dialog, "lever", "Stabburet Leverpostei");
+    fireEvent.change(within(dialog).getByLabelText("Mengde (g)"), { target: { value: "60" } });
+
+    const servingsRadio = within(dialog).getByRole("radio", { name: "Porsjoner" });
+    servingsRadio.focus();
+    fireEvent.click(servingsRadio);
+    expect(within(dialog).getByLabelText("Antall porsjoner (1 porsjon = 20 g)")).toHaveValue("3");
+    expect(servingsRadio).toHaveFocus();
+
+    fireEvent.change(within(dialog).getByLabelText("Antall porsjoner (1 porsjon = 20 g)"), {
+      target: { value: "2" },
+    });
+    fireEvent.click(within(dialog).getByRole("radio", { name: "Gram" }));
+    expect(within(dialog).getByLabelText("Mengde (g)")).toHaveValue("40");
+  });
+});
+

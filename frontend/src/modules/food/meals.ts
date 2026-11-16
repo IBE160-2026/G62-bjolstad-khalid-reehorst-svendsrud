@@ -90,6 +90,50 @@ export function parseGrams(
   return { grams };
 }
 
+// --- Servings (story 3.5) ---------------------------------------------------------------
+
+export const SERVINGS_MAX = 50;
+
+export const SERVINGS_MESSAGES = {
+  missing: "Skriv inn hvor mange porsjoner.",
+  min: "Skriv inn mer enn 0 porsjoner.",
+  max: "Skriv inn høyst 50 porsjoner.",
+  decimals: "Skriv antall porsjoner med høyst én desimal.",
+  notNumber: "Skriv antall porsjoner som et tall, for eksempel 1,5.",
+  tooMuch: "Det blir mer enn 5 000 g. Velg færre porsjoner.",
+} as const;
+
+/** Grams for a number of servings, rounded to one decimal like every stored amount. */
+export function servingsToGrams(servings: number, servingSizeG: number): number {
+  // Both have at most one decimal, so multiply whole tenths to avoid float error
+  // (1.5 × 33.3 = 49.95 must round to 50.0, not 49.9).
+  const hundredths = Math.round(servings * 10) * Math.round(servingSizeG * 10);
+  return Math.round(hundredths / 10) / 10;
+}
+
+/**
+ * Servings as typed ("1", "1,5", and also ",5" or "1,") converted to grams. One decimal,
+ * like grams; a leading or trailing comma is accepted here because servings are small
+ * numbers people type quickly.
+ */
+export function parseServings(
+  text: string,
+  servingSizeG: number,
+): { grams: number; servings: number } | { error: string } {
+  let value = text.replace(/\s/g, "").replace(",", ".");
+  if (value.startsWith(".")) value = `0${value}`;
+  if (value.endsWith(".")) value = value.slice(0, -1);
+  if (value === "") return { error: SERVINGS_MESSAGES.missing };
+  if (!/^-?\d+(\.\d+)?$/.test(value)) return { error: SERVINGS_MESSAGES.notNumber };
+  const servings = Number(value);
+  if (servings <= 0) return { error: SERVINGS_MESSAGES.min };
+  if (servings > SERVINGS_MAX) return { error: SERVINGS_MESSAGES.max };
+  if (!/^-?\d+(\.\d)?$/.test(value)) return { error: SERVINGS_MESSAGES.decimals };
+  const grams = servingsToGrams(servings, servingSizeG);
+  if (grams > GRAMS_MAX) return { error: SERVINGS_MESSAGES.tooMuch };
+  return { grams, servings };
+}
+
 /** Live preview while typing: grams × kcal per 100 g / 100, unrounded. */
 export function previewKcal(grams: number, kcalPer100g: number): number {
   return (grams * kcalPer100g) / 100;
