@@ -12,7 +12,13 @@ import { formatKcal } from "@/modules/profile/target-result";
 
 import { useAddFoodEntry, type FoodItem } from "./api";
 import { OffAttribution } from "./attribution";
-import { MEALS, parseGrams, previewKcal, type Meal } from "./meals";
+import {
+  MEALS,
+  formatGrams,
+  parseGrams,
+  previewKcal,
+  type Meal,
+} from "./meals";
 
 const GRAMS_ID = "amount-grams";
 const GRAMS_ERROR_ID = "amount-grams-error";
@@ -20,12 +26,14 @@ const MEAL_ID = "amount-meal";
 
 /**
  * Grams and Meal for the chosen item, with a live kcal preview. "Lagre" logs the entry;
- * the saved kcal and totals come from the API.
+ * the saved kcal and totals come from the API. Grams start at 100, or at the last amount
+ * when the item comes from "Nylig brukt" (story 3.4).
  */
 export function AmountPicker({
   item,
   date,
   initialMeal,
+  initialGrams = 100,
   onBack,
   backLabel = "Tilbake til søket",
   onSaved,
@@ -33,12 +41,13 @@ export function AmountPicker({
   item: FoodItem;
   date: string;
   initialMeal: Meal;
+  initialGrams?: number;
   onBack: () => void;
   backLabel?: string;
   onSaved: () => void;
 }) {
   const addEntry = useAddFoodEntry();
-  const [gramsText, setGramsText] = useState("100");
+  const [gramsText, setGramsText] = useState(() => formatGrams(initialGrams));
   const [meal, setMeal] = useState<Meal>(initialMeal);
   const [gramsError, setGramsError] = useState<string>();
   const gramsRef = useRef<HTMLInputElement>(null);

@@ -15,6 +15,7 @@ from app.modules.food.schemas import (
     FoodEntryResponse,
     FoodItemCreate,
     FoodItemResponse,
+    RecentFoodResponse,
 )
 from app.modules.identity.consent import ConsentedUser
 from app.ports.off import OffPort, get_off_port
@@ -44,6 +45,15 @@ def create_food_item(
 ) -> FoodItemResponse:
     """Register the user's own food item (`source="user"`); only its owner can see it."""
     return service.create_own_item(db, current_user.id, body, now)
+
+
+@router.get(
+    "/recent", response_model=list[RecentFoodResponse], operation_id="get_recent_foods"
+)
+def get_recent_foods(current_user: ConsentedUser, db: DbSession) -> list[RecentFoodResponse]:
+    """The user's 10 most recently logged distinct items, newest first (by entry `date`,
+    then `created_at`), each with the last grams and Meal."""
+    return service.recent_items(db, current_user.id)
 
 
 @router.get(

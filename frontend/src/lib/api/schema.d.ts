@@ -193,6 +193,27 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/food/recent": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Recent Foods
+         * @description The user's 10 most recently logged distinct items, newest first (by entry `date`,
+         *     then `created_at`), each with the last grams and Meal.
+         */
+        get: operations["get_recent_foods"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/food/barcode/{code}": {
         parameters: {
             query?: never;
@@ -444,6 +465,35 @@ export interface components {
              * Format: date-time
              */
             updated_at: string;
+        };
+        /**
+         * RecentFoodResponse
+         * @description A food item the user logged before, with the amount and Meal of its latest entry.
+         */
+        RecentFoodResponse: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Name */
+            name: string;
+            source: components["schemas"]["FoodSource"];
+            /** Kcal Per 100G */
+            kcal_per_100g: number;
+            /** Protein G */
+            protein_g: number | null;
+            /** Carbs G */
+            carbs_g: number | null;
+            /** Fat G */
+            fat_g: number | null;
+            /** Serving Size G */
+            serving_size_g: number | null;
+            /** Barcode */
+            barcode: string | null;
+            /** Last Grams */
+            last_grams: number;
+            last_meal: components["schemas"]["Meal"];
         };
         /** RegisterRequest */
         RegisterRequest: {
@@ -928,6 +978,44 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["FoodItemResponse"];
+                };
+            };
+            /** @description Validation error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Default Response */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    get_recent_foods: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RecentFoodResponse"][];
                 };
             };
             /** @description Validation error */

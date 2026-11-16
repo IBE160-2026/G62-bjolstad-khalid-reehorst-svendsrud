@@ -150,15 +150,20 @@ function useOsloToday(): string | null {
 export function FoodDay() {
   const date = useOsloToday();
   const day = useFoodDay(date);
-  const [sheet, setSheet] = useState<{ open: boolean; meal: Meal }>({
+  const [sheet, setSheet] = useState<{
+    open: boolean;
+    meal: Meal;
+    fromRow: boolean;
+  }>({
     open: false,
     meal: "breakfast",
+    fromRow: false,
   });
   const openerRef = useRef<HTMLElement | null>(null);
 
-  function openSheet(meal: Meal, opener: HTMLElement) {
+  function openSheet(meal: Meal, opener: HTMLElement, fromRow: boolean) {
     openerRef.current = opener;
-    setSheet({ open: true, meal });
+    setSheet({ open: true, meal, fromRow });
   }
 
   function closeSheet() {
@@ -185,7 +190,7 @@ export function FoodDay() {
         <button
           type="button"
           aria-haspopup="dialog"
-          onClick={(event) => openSheet(defaultMeal(), event.currentTarget)}
+          onClick={(event) => openSheet(defaultMeal(), event.currentTarget, false)}
           className={PRIMARY_BUTTON_CLASS}
         >
           Logg mat
@@ -219,7 +224,7 @@ export function FoodDay() {
               key={summary.meal}
               meal={summary.meal}
               summary={summary}
-              onAdd={openSheet}
+              onAdd={(meal, opener) => openSheet(meal, opener, true)}
             />
           ))}
         </>
@@ -231,6 +236,7 @@ export function FoodDay() {
         <AddFoodSheet
           open={sheet.open}
           meal={sheet.meal}
+          mealFromRow={sheet.fromRow}
           date={date}
           onClose={closeSheet}
         />

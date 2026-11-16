@@ -917,6 +917,32 @@ Det viktigste funnet: Dekningsanalysen er regnet ut fra øvelseslista og viser a
 
 ---
 
+## 2026-11-16 – Story 3.4 (nylig brukt)
+
+**Verktøy:** Claude Code (BMAD `bmad-build`)
+**Hvem:** Osman Khalid
+**Bakgrunn:** Folk spiser ofte det samme; logging skal ta maks 3 trykk (SM-6).
+
+### Hva vi ba KI om
+
+1. Lage «Nylig brukt» der en tidligere logget matvare kan logges igjen raskt.
+
+### Hva KI produserte
+
+- Spec, endepunkt for nylig brukte matvarer, «Nylig brukt»-fanen og nye tester.
+
+### Hva vi selv vurderte og kontrollerte
+
+- KI fant en motsetning i planen (3.1 sier Søk først, 3.4 krever 3 trykk). Osman valgte at boksen åpner på «Nylig brukt» når brukeren har historikk.
+- Tre KI-kontrollører fant 11 punkter: 5 grupper rettet (blant annet at fanen kunne bytte seg selv mens brukeren var i Søk), 1 utsatt, 4 avvist med begrunnelse.
+
+### Status
+
+- [x] Story 3.4 bygget og testet
+- [ ] Review av PR fra gruppen
+
+---
+
 ## Mal for nye oppføringer
 
 ```markdown

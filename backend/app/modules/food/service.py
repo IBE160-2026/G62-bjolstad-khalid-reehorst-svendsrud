@@ -24,6 +24,7 @@ from app.modules.food.schemas import (
     FoodSource,
     Meal,
     MealSummary,
+    RecentFoodResponse,
 )
 from app.ports.off import OffNotFound, OffPort, OffProduct
 
@@ -122,6 +123,18 @@ def lookup_barcode(
         ),
     )
     return item_response(item)
+
+
+def recent_items(db: DbSessionType, user_id: uuid.UUID) -> list[RecentFoodResponse]:
+    """The user's 10 most recently logged distinct items with the last grams and Meal."""
+    return [
+        RecentFoodResponse(
+            **item_response(item).model_dump(),
+            last_grams=float(entry.grams),
+            last_meal=Meal(entry.meal),
+        )
+        for item, entry in repository.list_recent_items(db, user_id)
+    ]
 
 
 def _entry_response(entry: FoodLogEntry, name: str) -> FoodEntryResponse:
