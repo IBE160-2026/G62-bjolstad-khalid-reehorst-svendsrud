@@ -61,3 +61,4 @@
 - [x] 2026-11-16 [story-3-3-strekkode](963-2026-11-16-13-30-00-story-3-3-strekkode.md) — pushe og lage PR for story 3.3 (løst 2026-11-16 — PR #30, flettes etter #29)
 - [x] 2026-11-16 [story-3-4-nylig-brukt](962-2026-11-16-14-40-00-story-3-4-nylig-brukt.md) — pushe og lage PR for story 3.4 (løst 2026-11-16 — PR #31, flettes etter #29 og #30)
 - [ ] 2026-11-16 [story-3-4-nylig-brukt](962-2026-11-16-14-40-00-story-3-4-nylig-brukt.md) — story 3.8: bruk Karianne sitt kamera-ikon på «Skriv strekkode»-raden (canvas https://claude.ai/artifact/MHV9YS6r1wm3h8wF4qAjhz, «Mat · Mobil»)
+- [ ] 2026-11-16 [story-3-5-porsjoner](961-2026-11-16-15-30-00-story-3-5-porsjoner.md) — pushe og lage PR for story 3.5 (etter PR #31)
