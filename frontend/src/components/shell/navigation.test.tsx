@@ -32,6 +32,11 @@ describe("nav items", () => {
     expect(pageTitle("/ukjent")).toBe("Prompt Force");
   });
 
+  it("titles the exercise detail while Trening stays active", () => {
+    expect(pageTitle("/trening/ovelser/abc")).toBe("Øvelse");
+    expect(isActive("/trening/ovelser/abc", "/trening")).toBe(true);
+  });
+
   it("titles the account pages without adding them to the navigation", () => {
     expect(pageTitle("/opprett-konto")).toBe("Opprett konto");
     expect(pageTitle("/samtykke")).toBe("Samtykke");

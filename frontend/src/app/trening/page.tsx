@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 
+import { ExerciseList } from "@/modules/exercises/exercise-list";
+
 export const metadata: Metadata = { title: "Trening" };
 
 export default function TrainingPage() {
-  return <p className="text-body text-foreground">Her logger du snart treningsøktene dine.</p>;
+  return <ExerciseList />;
 }

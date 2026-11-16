@@ -960,6 +960,115 @@
           }
         }
       }
+    },
+    "/api/exercises": {
+      "get": {
+        "tags": [
+          "exercises"
+        ],
+        "summary": "List Exercises",
+        "description": "All exercises, ordered by primary muscle group, then name.",
+        "operationId": "list_exercises",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/ExerciseListItem"
+                  },
+                  "type": "array",
+                  "title": "Response List Exercises"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/exercises/{exercise_id}": {
+      "get": {
+        "tags": [
+          "exercises"
+        ],
+        "summary": "Get Exercise",
+        "description": "One exercise with muscle groups, equipment, technique steps and video id. An id that\nis unknown or not a UUID is 404 `exercise_not_found`.",
+        "operationId": "get_exercise",
+        "parameters": [
+          {
+            "name": "exercise_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Exercise Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExerciseDetail"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Default Response"
+          },
+          "404": {
+            "description": "exercise_not_found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -1018,6 +1127,111 @@
           "error"
         ],
         "title": "ErrorResponse"
+      },
+      "ExerciseDetail": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "level": {
+            "$ref": "#/components/schemas/Level"
+          },
+          "type": {
+            "$ref": "#/components/schemas/ExerciseType"
+          },
+          "primary_muscle_group": {
+            "type": "string",
+            "title": "Primary Muscle Group"
+          },
+          "secondary_muscle_groups": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Secondary Muscle Groups"
+          },
+          "equipment": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Equipment"
+          },
+          "steps": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Steps"
+          },
+          "video_id": {
+            "type": "string",
+            "title": "Video Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "level",
+          "type",
+          "primary_muscle_group",
+          "secondary_muscle_groups",
+          "equipment",
+          "steps",
+          "video_id"
+        ],
+        "title": "ExerciseDetail"
+      },
+      "ExerciseListItem": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "level": {
+            "$ref": "#/components/schemas/Level"
+          },
+          "primary_muscle_group": {
+            "type": "string",
+            "title": "Primary Muscle Group"
+          },
+          "equipment": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Equipment"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "level",
+          "primary_muscle_group",
+          "equipment"
+        ],
+        "title": "ExerciseListItem"
+      },
+      "ExerciseType": {
+        "type": "string",
+        "enum": [
+          "reps",
+          "time"
+        ],
+        "title": "ExerciseType"
       },
       "FieldError": {
         "properties": {
@@ -1387,6 +1601,15 @@
           "status"
         ],
         "title": "HealthResponse"
+      },
+      "Level": {
+        "type": "string",
+        "enum": [
+          "beginner",
+          "intermediate",
+          "advanced"
+        ],
+        "title": "Level"
       },
       "LoginRequest": {
         "properties": {

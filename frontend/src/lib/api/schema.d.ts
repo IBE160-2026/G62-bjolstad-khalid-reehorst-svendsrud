@@ -303,6 +303,47 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/exercises": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Exercises
+         * @description All exercises, ordered by primary muscle group, then name.
+         */
+        get: operations["list_exercises"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/exercises/{exercise_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Exercise
+         * @description One exercise with muscle groups, equipment, technique steps and video id. An id that
+         *     is unknown or not a UUID is 404 `exercise_not_found`.
+         */
+        get: operations["get_exercise"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -325,6 +366,48 @@ export interface components {
         ErrorResponse: {
             error: components["schemas"]["ErrorBody"];
         };
+        /** ExerciseDetail */
+        ExerciseDetail: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Name */
+            name: string;
+            level: components["schemas"]["Level"];
+            type: components["schemas"]["ExerciseType"];
+            /** Primary Muscle Group */
+            primary_muscle_group: string;
+            /** Secondary Muscle Groups */
+            secondary_muscle_groups: string[];
+            /** Equipment */
+            equipment: string[];
+            /** Steps */
+            steps: string[];
+            /** Video Id */
+            video_id: string;
+        };
+        /** ExerciseListItem */
+        ExerciseListItem: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Name */
+            name: string;
+            level: components["schemas"]["Level"];
+            /** Primary Muscle Group */
+            primary_muscle_group: string;
+            /** Equipment */
+            equipment: string[];
+        };
+        /**
+         * ExerciseType
+         * @enum {string}
+         */
+        ExerciseType: "reps" | "time";
         /**
          * FieldError
          * @description One invalid input field, shown inline under that field in the UI.
@@ -470,6 +553,11 @@ export interface components {
              */
             status: "ok";
         };
+        /**
+         * Level
+         * @enum {string}
+         */
+        Level: "beginner" | "intermediate" | "advanced";
         /** LoginRequest */
         LoginRequest: {
             /** Email */
@@ -1356,6 +1444,93 @@ export interface operations {
                 };
             };
             /** @description food_entry_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Validation error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Default Response */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    list_exercises: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExerciseListItem"][];
+                };
+            };
+            /** @description Validation error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Default Response */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    get_exercise: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                exercise_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExerciseDetail"];
+                };
+            };
+            /** @description exercise_not_found */
             404: {
                 headers: {
                     [name: string]: unknown;
