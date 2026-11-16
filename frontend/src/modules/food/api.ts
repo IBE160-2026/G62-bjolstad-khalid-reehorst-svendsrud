@@ -72,3 +72,21 @@ export function useCreateFoodItem() {
       queryClient.invalidateQueries({ queryKey: ["food-search"] }),
   });
 }
+
+/**
+ * Look up a barcode on submit only (never while typing): own items, shared items, then
+ * Open Food Facts. A found OFF product becomes a shared item, so searches are refetched.
+ */
+export function useLookupBarcode() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (code: string) =>
+      call(() =>
+        api.GET("/api/food/barcode/{code}", { params: { path: { code } } }),
+      ),
+    onSuccess: (item) => {
+      if (item.source === "off")
+        void queryClient.invalidateQueries({ queryKey: ["food-search"] });
+    },
+  });
+}

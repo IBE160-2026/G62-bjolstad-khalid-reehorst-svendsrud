@@ -58,3 +58,4 @@
 - [x] 2026-11-16 [story-3-1-sok-og-logg-mat](965-2026-11-16-01-40-00-story-3-1-sok-og-logg-mat.md) — pushe og lage PR for story 3.1 (løst 2026-11-16 — PR #28, flettes etter #27)
 - [ ] 2026-11-16 [story-3-1-sok-og-logg-mat](965-2026-11-16-01-40-00-story-3-1-sok-og-logg-mat.md) — rette lokal dev-database (CASCADE på food_item_id) ved å kjøre migrering 0008 på nytt
 - [x] 2026-11-16 [story-3-2-egen-mat](964-2026-11-16-11-30-00-story-3-2-egen-mat.md) — pushe og lage PR for story 3.2 (løst 2026-11-16 — PR #29)
+- [x] 2026-11-16 [story-3-3-strekkode](963-2026-11-16-13-30-00-story-3-3-strekkode.md) — pushe og lage PR for story 3.3 (løst 2026-11-16 — PR #30, flettes etter #29)

@@ -889,6 +889,34 @@ Det viktigste funnet: Dekningsanalysen er regnet ut fra øvelseslista og viser a
 
 ---
 
+## 2026-11-16 – Story 3.3 (skriv inn strekkode)
+
+**Verktøy:** Claude Code (BMAD `bmad-build`)
+**Hvem:** Osman Khalid
+**Bakgrunn:** Pakkevarer logges raskest med strekkode, uten å skrive inn næringsverdier selv.
+
+### Hva vi ba KI om
+
+1. Koble appen til Open Food Facts bak en port med ekte og falsk variant (AD-7), og lage strekkode-fanen.
+
+### Hva KI produserte
+
+- Spec, OFF-port, EAN-kontroll, strekkodeoppslag, migrering, «Skriv strekkode»-fanen og nye tester.
+
+### Hva vi selv vurderte og kontrollerte
+
+- Osman godkjente spec-en før koding.
+- Testene bruker faste svar med ekte norske strekkoder fra vår egen research (13.11), og kaller aldri Open Food Facts.
+- Appen holder seg under OFF sin grense (maks 14 oppslag i minuttet) og sender egen User-Agent.
+- Tre KI-kontrollører fant 16 punkter: 5 grupper rettet (blant annet at en kode med linjeskift ga serverfeil), 1 utsatt, 10 avvist med begrunnelse.
+
+### Status
+
+- [x] Story 3.3 bygget og testet
+- [ ] Review av PR fra gruppen
+
+---
+
 ## Mal for nye oppføringer
 
 ```markdown

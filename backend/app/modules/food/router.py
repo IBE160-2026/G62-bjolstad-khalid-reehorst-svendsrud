@@ -3,10 +3,11 @@
 from datetime import date
 from typing import Annotated
 
-from fastapi import APIRouter, Query, status
+from fastapi import APIRouter, Depends, Query, status
 
 from app.core.clock import Now
 from app.core.db import DbSession
+from app.core.errors import ErrorResponse
 from app.modules.food import service
 from app.modules.food.schemas import (
     FoodDayResponse,
@@ -16,6 +17,7 @@ from app.modules.food.schemas import (
     FoodItemResponse,
 )
 from app.modules.identity.consent import ConsentedUser
+from app.ports.off import OffPort, get_off_port
 
 router = APIRouter(prefix="/api/food", tags=["food"])
 
@@ -42,6 +44,28 @@ def create_food_item(
 ) -> FoodItemResponse:
     """Register the user's own food item (`source="user"`); only its owner can see it."""
     return service.create_own_item(db, current_user.id, body, now)
+
+
+@router.get(
+    "/barcode/{code}",
+    response_model=FoodItemResponse,
+    operation_id="lookup_barcode",
+    responses={
+        404: {"model": ErrorResponse, "description": "barcode_not_found"},
+        422: {"model": ErrorResponse, "description": "invalid_barcode"},
+        503: {"model": ErrorResponse, "description": "off_unavailable"},
+    },
+)
+def lookup_barcode(
+    current_user: ConsentedUser,
+    db: DbSession,
+    now: Now,
+    off: Annotated[OffPort, Depends(get_off_port)],
+    code: str,
+) -> FoodItemResponse:
+    """Find a food by EAN-8/13: the user's own items, then shared items, then Open Food
+    Facts (a found product is cached as a shared item). Only called on submit."""
+    return service.lookup_barcode(db, current_user.id, code, off, now)
 
 
 @router.get("/entries", response_model=FoodDayResponse, operation_id="get_food_day")

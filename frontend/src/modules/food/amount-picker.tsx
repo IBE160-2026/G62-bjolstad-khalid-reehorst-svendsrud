@@ -11,6 +11,7 @@ import {
 import { formatKcal } from "@/modules/profile/target-result";
 
 import { useAddFoodEntry, type FoodItem } from "./api";
+import { OffAttribution } from "./attribution";
 import { MEALS, parseGrams, previewKcal, type Meal } from "./meals";
 
 const GRAMS_ID = "amount-grams";
@@ -26,12 +27,14 @@ export function AmountPicker({
   date,
   initialMeal,
   onBack,
+  backLabel = "Tilbake til søket",
   onSaved,
 }: {
   item: FoodItem;
   date: string;
   initialMeal: Meal;
   onBack: () => void;
+  backLabel?: string;
   onSaved: () => void;
 }) {
   const addEntry = useAddFoodEntry();
@@ -91,6 +94,7 @@ export function AmountPicker({
         <p className="text-small text-muted-foreground tabular-nums">
           {formatKcal(item.kcal_per_100g)} kcal per 100 g
         </p>
+        {item.source === "off" && <OffAttribution />}
       </div>
 
       <div className="flex flex-col gap-2">
@@ -165,7 +169,7 @@ export function AmountPicker({
           onClick={onBack}
           className={SECONDARY_BUTTON_CLASS}
         >
-          Tilbake til søket
+          {backLabel}
         </button>
         <button
           type="submit"

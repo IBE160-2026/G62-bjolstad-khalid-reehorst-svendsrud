@@ -6,6 +6,7 @@ import {
   defaultMeal,
   firstInvalidOwnFoodField,
   formatGrams,
+  isValidEan,
   msToNextOsloMidnight,
   osloToday,
   parseGrams,
@@ -106,6 +107,7 @@ describe("validateOwnFood", () => {
     carbs_g: "",
     fat_g: "",
     serving_size_g: "",
+    barcode: "",
   };
   const m = OWN_FOOD_MESSAGES;
 
@@ -129,6 +131,7 @@ describe("validateOwnFood", () => {
         carbs_g: null,
         fat_g: null,
         serving_size_g: null,
+        barcode: null,
       },
     });
   });
@@ -141,6 +144,7 @@ describe("validateOwnFood", () => {
       carbs_g: "50,2",
       fat_g: "10",
       serving_size_g: "1 000",
+      barcode: "7038 0100 0098 0",
     });
     expect(result).toEqual({
       ok: true,
@@ -151,6 +155,7 @@ describe("validateOwnFood", () => {
         carbs_g: 50.2,
         fat_g: 10,
         serving_size_g: 1000,
+        barcode: "7038010000980",
       },
     });
   });
@@ -166,6 +171,8 @@ describe("validateOwnFood", () => {
     ["fat_g", "-0,1", m.fatRange],
     ["serving_size_g", "0,5", m.servingRange],
     ["serving_size_g", "2000,1", m.servingRange],
+    ["barcode", "12345", m.barcode],
+    ["barcode", "7038010000981", m.barcode],
   ])("%s = %s gives %s", (field, value, message) => {
     const result = validateOwnFood({
       ...empty,
@@ -219,4 +226,20 @@ describe("validateOwnFood", () => {
       firstInvalidOwnFoodField({ serving_size_g: "x", kcal_per_100g: "y" }),
     ).toBe("kcal_per_100g");
   });
+});
+
+describe("isValidEan", () => {
+  it.each(["7038010000980", "7026450051051", "96385074"])(
+    "accepts %s",
+    (code) => {
+      expect(isValidEan(code)).toBe(true);
+    },
+  );
+
+  it.each(["", "12345", "7038010000981", "70380100009a0", "96385075", "703801000098"])(
+    "rejects %s",
+    (code) => {
+      expect(isValidEan(code)).toBe(false);
+    },
+  );
 });

@@ -14,3 +14,20 @@ export function MatvaretabellenAttribution() {
     </p>
   );
 }
+
+/** FR16: shown with items whose data comes from Open Food Facts (ODbL). */
+export function OffAttribution() {
+  return (
+    <p className="text-label text-muted-foreground">
+      Data fra{" "}
+      <a
+        href="https://world.openfoodfacts.org"
+        target="_blank"
+        rel="noreferrer"
+        className="underline underline-offset-2"
+      >
+        Open Food Facts
+      </a>
+    </p>
+  );
+}

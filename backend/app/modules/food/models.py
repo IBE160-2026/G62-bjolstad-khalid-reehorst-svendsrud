@@ -29,6 +29,8 @@ class FoodItem(Base):
     fat_g: Mapped[Decimal | None] = mapped_column(Numeric(6, 2))
     # Optional grams per serving (story 3.2); servings in the amount picker come in 3.5.
     serving_size_g: Mapped[Decimal | None] = mapped_column(Numeric(6, 1))
+    # EAN-8/13 (story 3.3); unique among shared items, own items may repeat it.
+    barcode: Mapped[str | None] = mapped_column(String(14))
     created_at: Mapped[dt.datetime] = mapped_column(DateTime(timezone=True), default=utc_now)
 
 
@@ -54,3 +56,10 @@ class FoodLogEntry(Base):
 
 # Search matches on lower(name) (story 3.1).
 Index("ix_food_items_lower_name", func.lower(FoodItem.name))
+# One shared (cached Open Food Facts) item per barcode (story 3.3).
+Index(
+    "uq_food_items_shared_barcode",
+    FoodItem.barcode,
+    unique=True,
+    postgresql_where=FoodItem.owner_id.is_(None),
+)

@@ -193,6 +193,27 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/food/barcode/{code}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Lookup Barcode
+         * @description Find a food by EAN-8/13: the user's own items, then shared items, then Open Food
+         *     Facts (a found product is cached as a shared item). Only called on submit.
+         */
+        get: operations["lookup_barcode"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/food/entries": {
         parameters: {
             query?: never;
@@ -327,6 +348,8 @@ export interface components {
             fat_g?: number | null;
             /** Serving Size G */
             serving_size_g?: number | null;
+            /** Barcode */
+            barcode?: string | null;
         };
         /** FoodItemResponse */
         FoodItemResponse: {
@@ -348,6 +371,8 @@ export interface components {
             fat_g: number | null;
             /** Serving Size G */
             serving_size_g: number | null;
+            /** Barcode */
+            barcode: string | null;
         };
         /**
          * FoodSource
@@ -907,6 +932,64 @@ export interface operations {
             };
             /** @description Validation error */
             422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Default Response */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    lookup_barcode: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                code: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FoodItemResponse"];
+                };
+            };
+            /** @description barcode_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description invalid_barcode */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description off_unavailable */
+            503: {
                 headers: {
                     [name: string]: unknown;
                 };

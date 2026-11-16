@@ -8,6 +8,7 @@ import uuid
 from datetime import date
 
 from sqlalchemy import case, func, or_, select
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session as DbSessionType
 
 from app.modules.food.models import FoodItem, FoodLogEntry
@@ -48,6 +49,39 @@ def get_visible_item(db: DbSessionType, user_id: uuid.UUID, item_id: uuid.UUID) 
 def add_item(db: DbSessionType, item: FoodItem) -> FoodItem:
     db.add(item)
     db.flush()
+    return item
+
+
+def get_own_item_by_barcode(
+    db: DbSessionType, user_id: uuid.UUID, barcode: str
+) -> FoodItem | None:
+    """The user's newest own item with this barcode (own items may repeat a barcode)."""
+    statement = (
+        select(FoodItem)
+        .where(FoodItem.owner_id == user_id, FoodItem.barcode == barcode)
+        .order_by(FoodItem.created_at.desc(), FoodItem.id)
+        .limit(1)
+    )
+    return db.scalars(statement).first()
+
+
+def get_shared_item_by_barcode(db: DbSessionType, barcode: str) -> FoodItem | None:
+    statement = select(FoodItem).where(FoodItem.owner_id.is_(None), FoodItem.barcode == barcode)
+    return db.scalars(statement).one_or_none()
+
+
+def add_shared_item(db: DbSessionType, item: FoodItem) -> FoodItem:
+    """Store a shared item with a barcode; if another request stored the same barcode
+    first (unique partial index), return that one instead."""
+    try:
+        with db.begin_nested():
+            db.add(item)
+            db.flush()
+    except IntegrityError:
+        existing = get_shared_item_by_barcode(db, item.barcode or "")
+        if existing is None:
+            raise
+        return existing
     return item
 
 

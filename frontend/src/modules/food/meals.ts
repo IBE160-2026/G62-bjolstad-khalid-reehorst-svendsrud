@@ -102,6 +102,24 @@ export function formatGrams(grams: number): string {
   return decimals ? `${spaced},${decimals}` : spaced;
 }
 
+// --- Barcodes (story 3.3) --------------------------------------------------------------
+
+/** Spaces removed, as the backend does. */
+export function normalizeBarcode(text: string): string {
+  return text.replace(/\s/g, "");
+}
+
+/** 8 or 13 digits with a correct GS1 check digit (EAN-8/EAN-13). Mirrors food/barcode.py. */
+export function isValidEan(code: string): boolean {
+  if (!/^(?:[0-9]{8}|[0-9]{13})$/.test(code)) return false;
+  const digits = [...code].map(Number);
+  const check = digits.pop() as number;
+  const total = digits
+    .reverse()
+    .reduce((sum, digit, index) => sum + digit * (index % 2 === 0 ? 3 : 1), 0);
+  return (10 - (total % 10)) % 10 === check;
+}
+
 // --- Own food items (story 3.2) ---------------------------------------------------------
 
 export type OwnFoodField =
@@ -110,7 +128,8 @@ export type OwnFoodField =
   | "protein_g"
   | "carbs_g"
   | "fat_g"
-  | "serving_size_g";
+  | "serving_size_g"
+  | "barcode";
 export type OwnFoodValues = Record<OwnFoodField, string>;
 export type OwnFoodErrors = Partial<Record<OwnFoodField, string>>;
 export type OwnFoodBody = components["schemas"]["FoodItemCreate"];
@@ -123,6 +142,7 @@ export const OWN_FOOD_FIELDS: readonly OwnFoodField[] = [
   "carbs_g",
   "fat_g",
   "serving_size_g",
+  "barcode",
 ];
 
 export const OWN_FOOD_MESSAGES = {
@@ -138,6 +158,7 @@ export const OWN_FOOD_MESSAGES = {
   servingRange: "Porsjonsstørrelse må være mellom 1 og 2 000 g.",
   decimals: "Skriv tallet med høyst én desimal.",
   notNumber: "Skriv et tall, for eksempel 12,5.",
+  barcode: "Sjekk at strekkoden har 8 eller 13 siffer.",
 } as const;
 
 const NAME_MAX = 200;
@@ -215,6 +236,9 @@ export function validateOwnFood(
   );
   if ("error" in serving) errors.serving_size_g = serving.error;
 
+  const barcode = normalizeBarcode(values.barcode);
+  if (barcode && !isValidEan(barcode)) errors.barcode = m.barcode;
+
   if (
     firstInvalidOwnFoodField(errors) ||
     "error" in kcal ||
@@ -234,6 +258,7 @@ export function validateOwnFood(
       carbs_g: carbs.value,
       fat_g: fat.value,
       serving_size_g: serving.value,
+      barcode: barcode || null,
     },
   };
 }

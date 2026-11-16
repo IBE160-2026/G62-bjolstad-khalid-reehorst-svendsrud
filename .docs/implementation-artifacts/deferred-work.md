@@ -36,4 +36,7 @@
 - source_spec: `.docs/implementation-artifacts/spec-1-6-delete-my-account.md`
   summary: Test Alembic downgrades with an upgrade → downgrade → upgrade round trip.
   evidence: No migration's downgrade is ever run; 0005's downgrade now deletes soft-deleted users and must stay correct.
+- source_spec: `.docs/implementation-artifacts/spec-3-3-type-a-barcode.md`
+  summary: Test that a found OFF barcode lookup invalidates cached food searches.
+  evidence: Removing the `onSuccess` invalidation in `useLookupBarcode` passes every test; a just-cached item can be missing from search for up to 60 s.
 

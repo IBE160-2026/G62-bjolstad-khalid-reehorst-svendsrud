@@ -18,6 +18,7 @@ from app.core.clock import utc_now
 from app.core.db import get_session_factory
 from app.core.settings import get_settings
 from app.main import create_app
+from app.ports.off import MockOffAdapter, get_off_port
 
 BACKEND_DIR = Path(__file__).resolve().parent.parent
 # https, so the client's cookie jar sends the `Secure` session cookie back.
@@ -88,9 +89,13 @@ def test_session_factory(test_engine: Engine) -> sessionmaker[Session]:
 
 @pytest.fixture
 def app(test_engine: Engine, test_session_factory: sessionmaker[Session]) -> Iterator[FastAPI]:
-    """The real app and the real get_db; only the session factory points at the test DB."""
+    """The real app and the real get_db; only the session factory points at the test DB
+    and Open Food Facts is the mock adapter."""
     application = create_app()
     application.dependency_overrides[get_session_factory] = lambda: test_session_factory
+    # Tests never reach Open Food Facts, whatever OFF_MODE says.
+    off = MockOffAdapter()
+    application.dependency_overrides[get_off_port] = lambda: off
     yield application
     application.dependency_overrides.clear()
     _truncate_tables(test_engine)
