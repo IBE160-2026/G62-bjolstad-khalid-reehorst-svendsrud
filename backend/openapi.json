@@ -545,6 +545,79 @@
         }
       }
     },
+    "/api/food/barcode/{code}": {
+      "get": {
+        "tags": [
+          "food"
+        ],
+        "summary": "Lookup Barcode",
+        "description": "Find a food by EAN-8/13: the user's own items, then shared items, then Open Food\nFacts (a found product is cached as a shared item). Only called on submit.",
+        "operationId": "lookup_barcode",
+        "parameters": [
+          {
+            "name": "code",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Code"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FoodItemResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "invalid_barcode",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Default Response"
+          },
+          "404": {
+            "description": "barcode_not_found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "off_unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/food/entries": {
       "get": {
         "tags": [
@@ -891,6 +964,17 @@
               }
             ],
             "title": "Serving Size G"
+          },
+          "barcode": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Barcode"
           }
         },
         "type": "object",
@@ -962,6 +1046,17 @@
               }
             ],
             "title": "Serving Size G"
+          },
+          "barcode": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Barcode"
           }
         },
         "type": "object",
@@ -973,7 +1068,8 @@
           "protein_g",
           "carbs_g",
           "fat_g",
-          "serving_size_g"
+          "serving_size_g",
+          "barcode"
         ],
         "title": "FoodItemResponse"
       },

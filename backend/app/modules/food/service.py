@@ -13,6 +13,7 @@ from sqlalchemy.orm import Session as DbSessionType
 
 from app.core.errors import AppError
 from app.modules.food import repository
+from app.modules.food.barcode import INVALID_BARCODE_MESSAGE, is_valid_ean
 from app.modules.food.models import FoodItem, FoodLogEntry
 from app.modules.food.schemas import (
     FoodDayResponse,
@@ -24,9 +25,14 @@ from app.modules.food.schemas import (
     Meal,
     MealSummary,
 )
+from app.ports.off import OffNotFound, OffPort, OffProduct
 
 SEARCH_MIN_LENGTH = 2
 FOOD_ITEM_NOT_FOUND_MESSAGE = "Fant ikke matvaren. Søk etter den på nytt."
+BARCODE_NOT_FOUND_MESSAGE = "Vi fant ikke denne varen. Vil du registrere den selv?"
+OFF_UNAVAILABLE_MESSAGE = (
+    "Vi får ikke kontakt med Open Food Facts nå. Du kan registrere varen selv."
+)
 
 
 def entry_kcal(grams: Decimal, kcal_per_100g: Decimal) -> Decimal:
@@ -53,6 +59,7 @@ def item_response(item: FoodItem) -> FoodItemResponse:
         carbs_g=_optional(item.carbs_g),
         fat_g=_optional(item.fat_g),
         serving_size_g=_optional(item.serving_size_g),
+        barcode=item.barcode,
     )
 
 
@@ -73,9 +80,47 @@ def create_own_item(
         carbs_g=_decimal(data.carbs_g),
         fat_g=_decimal(data.fat_g),
         serving_size_g=_decimal(data.serving_size_g),
+        barcode=data.barcode,
         created_at=now,
     )
     repository.add_item(db, item)
+    return item_response(item)
+
+
+def lookup_barcode(
+    db: DbSessionType, user_id: uuid.UUID, code: str, off: OffPort, now: datetime
+) -> FoodItemResponse:
+    """Own item → shared item → Open Food Facts. A found OFF product is stored as a
+    shared item (`source="off"`), so the next lookup never leaves the app (NFR6)."""
+    if not is_valid_ean(code):
+        raise AppError(422, "invalid_barcode", INVALID_BARCODE_MESSAGE)
+    item = repository.get_own_item_by_barcode(db, user_id, code)
+    if item is None:
+        item = repository.get_shared_item_by_barcode(db, code)
+    if item is not None:
+        return item_response(item)
+
+    result = off.lookup(code)
+    if isinstance(result, OffNotFound):
+        raise AppError(404, "barcode_not_found", BARCODE_NOT_FOUND_MESSAGE)
+    if not isinstance(result, OffProduct):
+        raise AppError(503, "off_unavailable", OFF_UNAVAILABLE_MESSAGE)
+    item = repository.add_shared_item(
+        db,
+        FoodItem(
+            source=FoodSource.OFF.value,
+            owner_id=None,
+            external_id=code,
+            barcode=code,
+            name=result.name,
+            kcal_per_100g=result.kcal_per_100g,
+            protein_g=result.protein_g,
+            carbs_g=result.carbs_g,
+            fat_g=result.fat_g,
+            serving_size_g=result.serving_size_g,
+            created_at=now,
+        ),
+    )
     return item_response(item)
 
 

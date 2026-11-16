@@ -39,7 +39,7 @@ function Field({
   label: string;
   value: string;
   error?: string;
-  inputMode?: "decimal";
+  inputMode?: "decimal" | "numeric";
   maxLength?: number;
   onChange: (field: OwnFoodField, value: string) => void;
 }) {
@@ -74,14 +74,17 @@ function Field({
 }
 
 /**
- * "Registrer selv" (story 3.2): name and kcal per 100 g are required; macros and serving
- * size are optional. Saving creates the user's own food item and hands it to `onCreated`.
+ * "Registrer selv" (story 3.2): name and kcal per 100 g are required; macros, serving
+ * size and barcode (3.3, prefilled from "Skriv strekkode") are optional. Saving creates
+ * the user's own food item and hands it to `onCreated`.
  */
 export function OwnFoodForm({
   initialName = "",
+  initialBarcode = "",
   onCreated,
 }: {
   initialName?: string;
+  initialBarcode?: string;
   onCreated: (item: FoodItem) => void;
 }) {
   const create = useCreateFoodItem();
@@ -92,6 +95,7 @@ export function OwnFoodForm({
     carbs_g: "",
     fat_g: "",
     serving_size_g: "",
+    barcode: initialBarcode,
   });
   const [errors, setErrors] = useState<OwnFoodErrors>({});
   const [formError, setFormError] = useState<string | null>(null);
@@ -209,6 +213,13 @@ export function OwnFoodForm({
         {...fieldProps("serving_size_g")}
         label="Porsjonsstørrelse (g, valgfritt)"
         inputMode="decimal"
+      />
+
+      <Field
+        {...fieldProps("barcode")}
+        label="Strekkode (valgfritt)"
+        inputMode="numeric"
+        maxLength={20}
       />
 
       {formError && (

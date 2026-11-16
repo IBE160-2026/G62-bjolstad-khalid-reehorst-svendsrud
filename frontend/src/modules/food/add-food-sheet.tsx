@@ -15,7 +15,8 @@ import { formatKcal } from "@/modules/profile/target-result";
 
 import { SEARCH_MIN_LENGTH, useFoodSearch, type FoodItem } from "./api";
 import { AmountPicker } from "./amount-picker";
-import { MatvaretabellenAttribution } from "./attribution";
+import { BarcodePanel } from "./barcode-panel";
+import { MatvaretabellenAttribution, OffAttribution } from "./attribution";
 import type { Meal } from "./meals";
 import { OwnFoodForm } from "./own-food-form";
 
@@ -28,7 +29,7 @@ type Method = "search" | "barcode" | "recent" | "manual";
 
 const METHODS: readonly { id: Method; label: string; enabled: boolean }[] = [
   { id: "search", label: "Søk", enabled: true },
-  { id: "barcode", label: "Skriv strekkode", enabled: false },
+  { id: "barcode", label: "Skriv strekkode", enabled: true },
   { id: "recent", label: "Nylig brukt", enabled: false },
   { id: "manual", label: "Manuelt", enabled: true },
 ];
@@ -248,14 +249,18 @@ function SearchPanel({
           ))}
         </ul>
       )}
+      {listShown && results.some((item) => item.source === "off") && (
+        <OffAttribution />
+      )}
     </div>
   );
 }
 
 /**
  * "Legg til mat" (story 3.1): a native `<dialog>` opened with `showModal()`; focus moves
- * in, Esc closes and the opener gets focus back. Søk and Manuelt are active; Manuelt and
- * "Registrer selv" create the user's own item and go straight to the amount picker (3.2).
+ * in, Esc closes and the opener gets focus back. Søk, Skriv strekkode (3.3) and Manuelt are
+ * active; Manuelt and "Registrer selv" create the user's own item and go straight to the
+ * amount picker (3.2), with the barcode prefilled when coming from Skriv strekkode.
  */
 export function AddFoodSheet({
   open,
@@ -275,6 +280,10 @@ export function AddFoodSheet({
   const [method, setMethod] = useState<Method>("search");
   // The name to prefill when Manuelt is opened from "Ingen treff".
   const [ownName, setOwnName] = useState("");
+  // The barcode to prefill when Manuelt is opened from "Skriv strekkode".
+  const [ownBarcode, setOwnBarcode] = useState("");
+  // Kept here so "Tilbake til strekkode" returns to the same code.
+  const [barcodeText, setBarcodeText] = useState("");
 
   useEffect(() => {
     const dialog = dialogRef.current;
@@ -300,6 +309,8 @@ export function AddFoodSheet({
         setQuery("");
         setMethod("search");
         setOwnName("");
+        setOwnBarcode("");
+        setBarcodeText("");
         onClose();
       }}
       className="m-auto w-[calc(100%-2rem)] max-w-lg rounded-lg bg-card p-6 text-foreground shadow-sheet backdrop:bg-[var(--scrim)] max-md:h-dvh max-md:max-h-none max-md:w-full max-md:max-w-none max-md:rounded-none"
@@ -328,6 +339,9 @@ export function AddFoodSheet({
               date={date}
               initialMeal={meal}
               onBack={() => setPicked(null)}
+              backLabel={
+                method === "barcode" ? "Tilbake til strekkode" : undefined
+              }
               onSaved={close}
             />
           ) : (
@@ -337,6 +351,7 @@ export function AddFoodSheet({
                 onSelect={(next) => {
                   if (next === method) return;
                   setOwnName("");
+                  setOwnBarcode("");
                   setMethod(next);
                 }}
               />
@@ -348,6 +363,7 @@ export function AddFoodSheet({
                 >
                   <OwnFoodForm
                     initialName={ownName}
+                    initialBarcode={ownBarcode}
                     onCreated={(item) => {
                       // "Tilbake til søket" then shows the new item in the search.
                       setQuery(item.name);
@@ -356,6 +372,19 @@ export function AddFoodSheet({
                     }}
                   />
                 </div>
+              ) : method === "barcode" ? (
+                <BarcodePanel
+                  panelId={PANEL_ID}
+                  labelledBy={tabId("barcode")}
+                  text={barcodeText}
+                  setText={setBarcodeText}
+                  onFound={setPicked}
+                  onRegister={(barcode) => {
+                    setOwnName("");
+                    setOwnBarcode(barcode);
+                    setMethod("manual");
+                  }}
+                />
               ) : (
                 <SearchPanel
                   query={query}

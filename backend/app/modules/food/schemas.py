@@ -9,6 +9,7 @@ from pydantic import AfterValidator, BaseModel, Field, ValidationInfo, field_val
 from pydantic_core import PydanticCustomError
 
 from app.core.errors import FIELD_MESSAGE_ERROR
+from app.modules.food.barcode import INVALID_BARCODE_MESSAGE, is_valid_ean
 
 GRAMS_MAX = 5000
 GRAMS_MIN_MESSAGE = "Skriv inn en mengde over 0 g."
@@ -84,6 +85,21 @@ def _name(value: str) -> str:
 
 
 FoodName = Annotated[str, AfterValidator(_name)]
+
+
+def _barcode(value: str | None) -> str | None:
+    """Spaces are ignored; empty means no barcode; otherwise a valid EAN-8/13."""
+    if value is None:
+        return None
+    value = "".join(value.split())
+    if not value:
+        return None
+    if not is_valid_ean(value):
+        raise _field_error(INVALID_BARCODE_MESSAGE)
+    return value
+
+
+Barcode = Annotated[str | None, AfterValidator(_barcode)]
 KcalPer100g = Annotated[float, AfterValidator(_number(0, KCAL_MAX, KCAL_RANGE_MESSAGE))]
 Protein = Annotated[float, AfterValidator(_number(0, MACRO_MAX, PROTEIN_RANGE_MESSAGE))]
 Carbs = Annotated[float, AfterValidator(_number(0, MACRO_MAX, CARBS_RANGE_MESSAGE))]
@@ -102,6 +118,7 @@ class FoodItemResponse(BaseModel):
     carbs_g: float | None
     fat_g: float | None
     serving_size_g: float | None
+    barcode: str | None
 
 
 class FoodItemCreate(BaseModel):
@@ -115,6 +132,8 @@ class FoodItemCreate(BaseModel):
     # validate_default so the sum check also runs when fat is left out.
     fat_g: Fat | None = Field(default=None, validate_default=True)
     serving_size_g: ServingSize | None = None
+    # Optional (story 3.3); prefilled when the form is opened from a barcode lookup.
+    barcode: Barcode = None
 
     @field_validator("fat_g", mode="after")
     @classmethod

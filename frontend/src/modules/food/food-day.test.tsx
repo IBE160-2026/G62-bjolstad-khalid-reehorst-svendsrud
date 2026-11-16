@@ -83,13 +83,17 @@ function day(entries: Entry[] = []) {
 
 let currentDay = day();
 let searchResults: unknown[] = [];
+// What GET /api/food/barcode/{code} answers (story 3.3).
+let barcodeAnswer: { data?: unknown; error?: unknown } = {};
 
 function mockApi() {
   getMock.mockImplementation((path: string) =>
     Promise.resolve(
       path === "/api/food/entries"
         ? { data: currentDay, error: undefined }
-        : { data: searchResults, error: undefined },
+        : path === "/api/food/barcode/{code}"
+          ? barcodeAnswer
+          : { data: searchResults, error: undefined },
     ),
   );
 }
@@ -136,6 +140,7 @@ beforeEach(() => {
   vi.setSystemTime(new Date("2026-11-16T11:00:00Z")); // 12:00 in Oslo
   currentDay = day();
   searchResults = [HAVREMEL];
+  barcodeAnswer = {};
 });
 
 afterEach(() => {
@@ -180,7 +185,7 @@ describe("FoodDay", () => {
     ).toBeInTheDocument();
   });
 
-  it("opens the sheet with Søk active, Manuelt enabled, the others disabled and the search focused", async () => {
+  it("opens the sheet with Søk active, Skriv strekkode and Manuelt enabled, Nylig brukt disabled and the search focused", async () => {
     const dialog = await openLunch();
 
     expect(within(dialog).getByRole("tab", { name: "Søk" })).toHaveAttribute(
@@ -188,7 +193,10 @@ describe("FoodDay", () => {
       "true",
     );
     expect(within(dialog).getByRole("tab", { name: "Manuelt" })).toBeEnabled();
-    for (const name of ["Skriv strekkode", "Nylig brukt"]) {
+    expect(
+      within(dialog).getByRole("tab", { name: "Skriv strekkode" }),
+    ).toBeEnabled();
+    for (const name of ["Nylig brukt"]) {
       const tab = within(dialog).getByRole("tab", { name: new RegExp(name) });
       expect(tab).toBeDisabled();
       expect(tab).toHaveTextContent("Kommer snart");
@@ -643,6 +651,7 @@ describe("FoodDay", () => {
           carbs_g: null,
           fat_g: 10.5,
           serving_size_g: null,
+          barcode: null,
         },
       });
       expect(within(dialog).getByLabelText("Måltid")).toHaveValue("dinner");
@@ -813,6 +822,315 @@ describe("FoodDay", () => {
       expect(
         within(dialog).getByRole("button", { name: "Lagre matvare" }),
       ).toBeEnabled();
+    });
+  });
+
+  describe("barcode (story 3.3)", () => {
+    const MILK_CODE = "7038010000980";
+    const TINE_MILK = {
+      id: "00000000-0000-4000-8000-000000000004",
+      name: "TINE Lettmelk",
+      source: "off",
+      kcal_per_100g: 42,
+      protein_g: null,
+      carbs_g: null,
+      fat_g: null,
+      serving_size_g: null,
+      barcode: MILK_CODE,
+    };
+    const NOT_FOUND_CODE = "7000000000003";
+
+    function apiError(code: string, message: string) {
+      return { data: undefined, error: { error: { code, message } } };
+    }
+
+    async function openBarcode() {
+      const dialog = await openLunch();
+      fireEvent.click(
+        within(dialog).getByRole("tab", { name: "Skriv strekkode" }),
+      );
+      return dialog;
+    }
+
+    function find(dialog: HTMLElement, code: string) {
+      fireEvent.change(within(dialog).getByLabelText("Strekkode"), {
+        target: { value: code },
+      });
+      fireEvent.click(within(dialog).getByRole("button", { name: "Finn varen" }));
+    }
+
+    function barcodeCalls() {
+      return getMock.mock.calls.filter(
+        ([path]) => path === "/api/food/barcode/{code}",
+      );
+    }
+
+    it("focuses the field and never looks up while typing", async () => {
+      const dialog = await openBarcode();
+      const input = within(dialog).getByLabelText("Strekkode");
+
+      expect(input).toHaveFocus();
+      fireEvent.change(input, { target: { value: MILK_CODE } });
+      await act(() => Promise.resolve());
+
+      expect(barcodeCalls()).toHaveLength(0);
+    });
+
+    it.each(["12345", "7038010000981", "70380100009a0"])(
+      "shows a message under the field for %s and asks nobody",
+      async (code) => {
+        const dialog = await openBarcode();
+
+        find(dialog, code);
+
+        const input = within(dialog).getByLabelText("Strekkode");
+        expect(input).toHaveAccessibleDescription(
+          "Sjekk at strekkoden har 8 eller 13 siffer.",
+        );
+        expect(input).toHaveAttribute("aria-invalid", "true");
+        expect(input).toHaveFocus();
+        expect(barcodeCalls()).toHaveLength(0);
+      },
+    );
+
+    it("shows the backend's invalid_barcode message under the field", async () => {
+      barcodeAnswer = apiError(
+        "invalid_barcode",
+        "Sjekk at strekkoden har 8 eller 13 siffer.",
+      );
+      const dialog = await openBarcode();
+
+      find(dialog, MILK_CODE);
+
+      await waitFor(() =>
+        expect(
+          within(dialog).getByLabelText("Strekkode"),
+        ).toHaveAccessibleDescription("Sjekk at strekkoden har 8 eller 13 siffer."),
+      );
+      expect(
+        within(dialog).queryByRole("button", { name: "Registrer selv" }),
+      ).not.toBeInTheDocument();
+    });
+
+    it("opens the amount picker for a found item with the OFF attribution and logs it", async () => {
+      barcodeAnswer = { data: TINE_MILK, error: undefined };
+      postMock.mockImplementation(() => {
+        currentDay = day([
+          { name: "TINE Lettmelk", meal: "lunch", grams: 200, kcal: 84 },
+        ]);
+        return Promise.resolve({
+          data: { ...currentDay.meals[1].entries[0] },
+          error: undefined,
+        });
+      });
+      const dialog = await openBarcode();
+
+      find(dialog, "7038 0100 0098 0");
+
+      expect(
+        await within(dialog).findByRole("heading", { name: "TINE Lettmelk" }),
+      ).toBeInTheDocument();
+      expect(getMock).toHaveBeenCalledWith("/api/food/barcode/{code}", {
+        params: { path: { code: MILK_CODE } },
+      });
+      expect(
+        within(dialog).getByText(/Data fra/),
+      ).toHaveTextContent("Data fra Open Food Facts");
+      expect(within(dialog).getByLabelText("Måltid")).toHaveValue("lunch");
+
+      fireEvent.change(within(dialog).getByLabelText("Mengde (g)"), {
+        target: { value: "200" },
+      });
+      expect(within(dialog).getByTestId("kcal-preview")).toHaveTextContent(
+        "84 kcal",
+      );
+      fireEvent.click(within(dialog).getByRole("button", { name: "Lagre" }));
+
+      await waitFor(() => expect(dialog).not.toHaveAttribute("open"));
+      expect(postMock).toHaveBeenCalledWith("/api/food/entries", {
+        body: {
+          food_item_id: TINE_MILK.id,
+          date: TODAY,
+          meal: "lunch",
+          grams: 200,
+        },
+      });
+      await waitFor(() =>
+        expect(screen.getByTestId("meal-lunch-total")).toHaveTextContent(
+          "84 kcal",
+        ),
+      );
+    });
+
+    it("shows no OFF attribution for an item from another source", async () => {
+      barcodeAnswer = {
+        data: { ...TINE_MILK, source: "user", name: "Min melk" },
+        error: undefined,
+      };
+      const dialog = await openBarcode();
+
+      find(dialog, MILK_CODE);
+
+      await within(dialog).findByRole("heading", { name: "Min melk" });
+      expect(within(dialog).queryByText(/Data fra/)).not.toBeInTheDocument();
+    });
+
+    it.each([
+      [
+        "barcode_not_found",
+        "Vi fant ikke denne varen. Vil du registrere den selv?",
+      ],
+      [
+        "off_unavailable",
+        "Vi får ikke kontakt med Open Food Facts nå. Du kan registrere varen selv.",
+      ],
+    ])(
+      "%s offers Registrer selv with the barcode prefilled",
+      async (code, message) => {
+        barcodeAnswer = apiError(code, message);
+        const dialog = await openBarcode();
+
+        find(dialog, NOT_FOUND_CODE);
+
+        expect(await within(dialog).findByRole("status")).toHaveTextContent(
+          message,
+        );
+        fireEvent.click(
+          within(dialog).getByRole("button", { name: "Registrer selv" }),
+        );
+
+        expect(within(dialog).getByRole("tab", { name: "Manuelt" })).toHaveAttribute(
+          "aria-selected",
+          "true",
+        );
+        expect(within(dialog).getByLabelText("Strekkode (valgfritt)")).toHaveValue(
+          NOT_FOUND_CODE,
+        );
+        expect(within(dialog).getByLabelText("Navn")).toHaveValue("");
+        expect(within(dialog).getByLabelText("Navn")).toHaveFocus();
+      },
+    );
+
+    it("saves the own item with the prefilled barcode", async () => {
+      barcodeAnswer = apiError(
+        "barcode_not_found",
+        "Vi fant ikke denne varen. Vil du registrere den selv?",
+      );
+      const dialog = await openBarcode();
+      find(dialog, NOT_FOUND_CODE);
+      fireEvent.click(
+        await within(dialog).findByRole("button", { name: "Registrer selv" }),
+      );
+      fireEvent.change(within(dialog).getByLabelText("Navn"), {
+        target: { value: "Ny vare" },
+      });
+      fireEvent.change(
+        within(dialog).getByLabelText("Kalorier per 100 g (kcal)"),
+        { target: { value: "120" } },
+      );
+      postMock.mockResolvedValue({
+        data: {
+          ...TINE_MILK,
+          name: "Ny vare",
+          source: "user",
+          kcal_per_100g: 120,
+          barcode: NOT_FOUND_CODE,
+        },
+        error: undefined,
+      });
+
+      fireEvent.click(
+        within(dialog).getByRole("button", { name: "Lagre matvare" }),
+      );
+
+      await within(dialog).findByRole("heading", { name: "Ny vare" });
+      expect(postMock).toHaveBeenCalledWith("/api/food/items", {
+        body: {
+          name: "Ny vare",
+          kcal_per_100g: 120,
+          protein_g: null,
+          carbs_g: null,
+          fat_g: null,
+          serving_size_g: null,
+          barcode: NOT_FOUND_CODE,
+        },
+      });
+    });
+
+    it("validates the barcode in the own-food form", async () => {
+      const dialog = await openLunch();
+      fireEvent.click(within(dialog).getByRole("tab", { name: "Manuelt" }));
+      fireEvent.change(within(dialog).getByLabelText("Navn"), {
+        target: { value: "Lefse" },
+      });
+      fireEvent.change(
+        within(dialog).getByLabelText("Kalorier per 100 g (kcal)"),
+        { target: { value: "300" } },
+      );
+      fireEvent.change(within(dialog).getByLabelText("Strekkode (valgfritt)"), {
+        target: { value: "12345" },
+      });
+
+      fireEvent.click(
+        within(dialog).getByRole("button", { name: "Lagre matvare" }),
+      );
+
+      expect(
+        within(dialog).getByText("Sjekk at strekkoden har 8 eller 13 siffer."),
+      ).toBeInTheDocument();
+      expect(
+        within(dialog).getByLabelText("Strekkode (valgfritt)"),
+      ).toHaveFocus();
+      expect(postMock).not.toHaveBeenCalled();
+    });
+
+    it("shows other lookup errors as an alert without Registrer selv", async () => {
+      barcodeAnswer = apiError(
+        "internal_error",
+        "Noe gikk galt. Prøv igjen om litt.",
+      );
+      const dialog = await openBarcode();
+
+      find(dialog, MILK_CODE);
+
+      expect(await within(dialog).findByRole("alert")).toHaveTextContent(
+        "Noe gikk galt. Prøv igjen om litt.",
+      );
+      expect(
+        within(dialog).queryByRole("button", { name: "Registrer selv" }),
+      ).not.toBeInTheDocument();
+    });
+
+    it("shows the OFF attribution in search only when a result comes from OFF", async () => {
+      const dialog = await openLunch();
+      const input = within(dialog).getByLabelText("Søk etter matvare");
+      fireEvent.change(input, { target: { value: "havre" } });
+      await within(dialog).findByRole("option", { name: /Havremel/ });
+      expect(within(dialog).queryByText(/Data fra/)).not.toBeInTheDocument();
+
+      searchResults = [HAVREMEL, TINE_MILK];
+      fireEvent.change(input, { target: { value: "melk" } });
+
+      await within(dialog).findByRole("option", { name: /TINE Lettmelk/ });
+      expect(within(dialog).getByText(/Data fra/)).toHaveTextContent(
+        "Data fra Open Food Facts",
+      );
+    });
+
+    it("goes back from the amount picker to Skriv strekkode", async () => {
+      barcodeAnswer = { data: TINE_MILK, error: undefined };
+      const dialog = await openBarcode();
+      find(dialog, MILK_CODE);
+      await within(dialog).findByRole("heading", { name: "TINE Lettmelk" });
+
+      fireEvent.click(
+        within(dialog).getByRole("button", { name: "Tilbake til strekkode" }),
+      );
+
+      expect(
+        within(dialog).getByRole("tab", { name: "Skriv strekkode" }),
+      ).toHaveAttribute("aria-selected", "true");
+      expect(within(dialog).getByLabelText("Strekkode")).toHaveValue(MILK_CODE);
     });
   });
 });
