@@ -969,6 +969,32 @@ Det viktigste funnet: Dekningsanalysen er regnet ut fra øvelseslista og viser a
 
 ---
 
+## 2026-11-16 – Muskelfigur i planen (FR-33)
+
+**Verktøy:** Claude Code
+**Hvem:** Osman Khalid, etter forslag fra ungefernando og Karianne i Discord
+**Bakgrunn:** Gruppa ville at øvelsessiden viser hvilke muskler som jobber på en kroppsfigur.
+
+### Hva vi ba KI om
+
+1. Legge en enkel muskelfigur inn i PRD, epics, arkitektur og sprint-status.
+
+### Hva KI produserte
+
+- FR-33 (Should) i PRD-en og Story 4.6 i epics.md.
+
+### Hva vi selv vurderte og kontrollerte
+
+- Karianne prøvde en anatomisk modell før og gikk bort fra den; derfor er figuren nå bare visning, ikke klikkbar.
+- Musklene står også som tekst, så informasjonen ikke bare avhenger av farge (tilgjengelighet).
+
+### Status
+
+- [x] Lagt inn i planen
+- [ ] Story 4.6 bygget
+
+---
+
 ## Mal for nye oppføringer
 
 ```markdown
