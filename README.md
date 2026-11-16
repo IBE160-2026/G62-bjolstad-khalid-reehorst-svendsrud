@@ -85,6 +85,17 @@ npm run gen:api
 
 Endringer i koden krever at containerne bygges på nytt: `docker compose up --build`.
 
+### Oppdatere matdata
+
+Søket finner norske merkevarer fra Open Food Facts uten nett, fordi de ligger i den committede seed-fila `backend/app/seed/data/off_norway.json` (ODbL, se `OFF_LICENSE.md` i samme mappe). Fila lastes inn ved oppstart med `APP_ENV=local`. For å hente de 1 000 mest skannede norske varene på nytt (krever nett, tar et par minutter fordi OFF tillater maks 10 søk i minuttet):
+
+```bash
+cd backend
+uv run python -m app.cli import-off-norway
+```
+
+Kommandoen skriver `Fetched N products, kept M.` og endrer ingenting hvis en side feiler. Commit de to oppdaterte filene.
+
 ## Dokumentasjon
 
 **Planlegging (BMAD)**

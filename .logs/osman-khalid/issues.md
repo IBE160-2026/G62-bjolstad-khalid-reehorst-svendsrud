@@ -64,3 +64,4 @@
 - [x] 2026-11-16 [story-3-5-porsjoner](961-2026-11-16-15-30-00-story-3-5-porsjoner.md) — pushe og lage PR for story 3.5 (løst 2026-11-16 — PR #32)
 - [x] 2026-11-16 [story-3-6-endre-slette-mat](960-2026-11-16-17-00-00-story-3-6-endre-slette-mat.md) — pushe og lage PR for story 3.6 (løst 2026-11-16 — PR #33)
 - [x] 2026-11-16 [muskelfigur-plan](959-2026-11-16-17-20-00-muskelfigur-plan.md) — pushe og lage PR for planendringen (FR-33, Story 4.6) (løst 2026-11-16 — PR #34)
+- [ ] 2026-11-16 [story-3-7] — kjøre `cd backend && uv run python -m app.cli import-off-norway` når Open Food Facts svarer (503 hele ettermiddagen 16.11), så review, commit av datafila og PR for story 3.7

@@ -60,7 +60,26 @@ def purge() -> int:
     return 0
 
 
-COMMANDS = {"check-config": check_config, "purge": purge, "seed": seed}
+def import_off_norway() -> int:
+    """Fetch the 1 000 most scanned Norwegian Open Food Facts products into the committed
+    seed file (story 3.7). Needs network; run by hand, never at startup or in tests."""
+    from app.ports.off_import import OffImportError, run_import
+
+    try:
+        fetched, kept = run_import()
+    except OffImportError as error:
+        logger.error("Import failed, seed file untouched: %s", error)
+        return 1
+    print(f"Fetched {fetched} products, kept {kept}.")
+    return 0
+
+
+COMMANDS = {
+    "check-config": check_config,
+    "import-off-norway": import_off_norway,
+    "purge": purge,
+    "seed": seed,
+}
 
 
 def main(argv: list[str] | None = None) -> int:
