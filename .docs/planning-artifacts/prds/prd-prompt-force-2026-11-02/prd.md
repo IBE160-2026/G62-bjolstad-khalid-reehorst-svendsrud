@@ -454,4 +454,4 @@ Changed by Osman Khalid on 2026-11-15: new FR-31 (Should): reset a forgotten pas
 
 Changed by Osman Khalid on 2026-11-15: new FR-32 (Should): deactivate the account, after the group's discussion on Discord 2026-11-15 (Karianne's suggestion). Updated in §4.1 and §9.1.
 
-Changed by Osman Khalid on 2026-11-16: new FR-33 (Should): a simple, non-clickable body figure on the Exercise detail showing the primary Muscle Group in dark red and secondary ones lighter, after ungefernando's suggestion on Discord 2026-11-16; Karianne tried an anatomical model earlier, so this version only shows activated muscles. Updated in §4.4 and §9.1.
+Changed by Osman Khalid on 2026-11-16: new FR-33 (Should): a simple, non-clickable body figure on the Exercise detail showing the primary Muscle Group in dark red and secondary ones lighter, after Fernando Svendsrud (ungefernando)'s suggestion on Discord 2026-11-16; Karianne tried an anatomical model earlier, so this version only shows activated muscles. Updated in §4.4 and §9.1.

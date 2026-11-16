@@ -999,7 +999,7 @@ Det viktigste funnet: Dekningsanalysen er regnet ut fra øvelseslista og viser a
 ## 2026-11-16 – Muskelfigur i planen (FR-33)
 
 **Verktøy:** Claude Code
-**Hvem:** Osman Khalid, etter forslag fra ungefernando og Karianne i Discord
+**Hvem:** Osman Khalid, etter forslag fra Fernando Svendsrud (ungefernando) og Karianne i Discord
 **Bakgrunn:** Gruppa ville at øvelsessiden viser hvilke muskler som jobber på en kroppsfigur.
 
 ### Hva vi ba KI om
