@@ -29,7 +29,7 @@
 # - Dev moves story to 'review', then runs code-review (fresh context, different LLM recommended)
 # - Retrospective appends its action items to action_items; the status view surfaces open ones
 generated: 11-15-2026 12:32
-last_updated: 11-16-2026 17:00
+last_updated: 11-16-2026 13:30
 project: Prompt Force
 project_key: NOKEY
 tracking_system: file-system
@@ -58,7 +58,7 @@ development_status:
   3-3-type-a-barcode: done
   3-4-log-a-recent-food-with-one-tap: done
   3-5-choose-servings-instead-of-grams: done
-  3-6-edit-or-delete-a-food-entry: review
+  3-6-edit-or-delete-a-food-entry: done
   3-7-find-norwegian-brand-products-in-search: backlog
   3-8-scan-a-barcode-with-the-camera-should: backlog
   epic-3-retrospective: optional
