@@ -7,6 +7,7 @@ from fastapi import FastAPI
 from app.core.errors import ErrorResponse, register_error_handlers
 from app.core.origin import make_origin_check
 from app.core.settings import get_settings
+from app.modules.exercises.router import router as exercises_router
 from app.modules.food.router import router as food_router
 from app.modules.health.router import router as health_router
 from app.modules.identity.router import router as identity_router
@@ -37,6 +38,7 @@ def create_app() -> FastAPI:
     app.include_router(identity_router, responses=ERROR_RESPONSES)
     app.include_router(profile_router, responses=ERROR_RESPONSES)
     app.include_router(food_router, responses=ERROR_RESPONSES)
+    app.include_router(exercises_router, responses=ERROR_RESPONSES)
     return app
 
 

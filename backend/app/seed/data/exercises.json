@@ -1,0 +1,569 @@
+{
+  "review_status": "utkast – gruppen må lese beskrivelser og hjelpemuskler",
+  "source": "planning-artifacts/ovelsesliste.md #1–34 (navn, utstyr, hovedmuskel, nivå, video). Type, hjelpemuskler og steg er KI-utkast skrevet i story 4.1.",
+  "equipment": [
+    { "slug": "kroppsvekt", "name": "Kroppsvekt" },
+    { "slug": "manualer", "name": "Manualer" },
+    { "slug": "stang-og-skiver", "name": "Stang og skiver" },
+    { "slug": "benk", "name": "Benk" },
+    { "slug": "kettlebell", "name": "Kettlebell" },
+    { "slug": "strikk", "name": "Strikk" },
+    { "slug": "trekkestang", "name": "Trekkestang" },
+    { "slug": "kabelmaskin", "name": "Kabelmaskin" },
+    { "slug": "beinpress-maskiner", "name": "Beinpress/maskiner" }
+  ],
+  "muscle_groups": [
+    { "slug": "ben", "name": "Ben" },
+    { "slug": "rygg", "name": "Rygg" },
+    { "slug": "bryst", "name": "Bryst" },
+    { "slug": "skuldre", "name": "Skuldre" },
+    { "slug": "armer", "name": "Armer" },
+    { "slug": "mage-kjerne", "name": "Mage/kjerne" }
+  ],
+  "exercises": [
+    {
+      "list_no": 1,
+      "slug": "bodyweight-squat",
+      "name": "Kroppsvektknebøy (Bodyweight squat)",
+      "equipment": ["kroppsvekt"],
+      "primary": "ben",
+      "secondary": ["mage-kjerne"],
+      "level": "beginner",
+      "type": "reps",
+      "steps": [
+        "Stå med føttene i skulderbreddes avstand og tærne litt utover.",
+        "Skyv hoftene bakover og bøy knærne til lårene er omtrent vannrette. Hold ryggen rett og hælene i gulvet.",
+        "Press deg opp gjennom hælene til du står rett igjen."
+      ],
+      "video_id": "otzWCWpuW-A"
+    },
+    {
+      "list_no": 2,
+      "slug": "push-up",
+      "name": "Armhevinger (Push-up)",
+      "equipment": ["kroppsvekt"],
+      "primary": "bryst",
+      "secondary": ["skuldre", "armer"],
+      "level": "beginner",
+      "type": "reps",
+      "steps": [
+        "Sett hendene litt bredere enn skuldrene og strekk kroppen ut i en rett linje fra hode til hæler.",
+        "Senk brystet mot gulvet med albuene skrått bakover, ikke rett ut til siden.",
+        "Press deg opp igjen til armene er strake. Er det tungt, kan du starte med knærne i gulvet."
+      ],
+      "video_id": "YwFmEsa_lIk"
+    },
+    {
+      "list_no": 3,
+      "slug": "plank",
+      "name": "Planke (Plank)",
+      "equipment": ["kroppsvekt"],
+      "primary": "mage-kjerne",
+      "secondary": ["skuldre"],
+      "level": "beginner",
+      "type": "time",
+      "steps": [
+        "Legg underarmene i gulvet med albuene rett under skuldrene.",
+        "Løft kroppen så den er rett fra hode til hæler. Stram magen og setet.",
+        "Hold stillingen og pust rolig. Stopp når hoftene begynner å synke."
+      ],
+      "video_id": "mwlp75MS6Rg"
+    },
+    {
+      "list_no": 4,
+      "slug": "lunges",
+      "name": "Utfall (Lunges)",
+      "equipment": ["kroppsvekt"],
+      "primary": "ben",
+      "secondary": ["mage-kjerne"],
+      "level": "beginner",
+      "type": "reps",
+      "steps": [
+        "Stå rett med føttene samlet.",
+        "Ta et langt steg fram og senk bakre kne mot gulvet. Fremre kne skal være over foten.",
+        "Skyv fra med fremre fot tilbake til start, og bytt bein."
+      ],
+      "video_id": "Pwsn3HR4L90"
+    },
+    {
+      "list_no": 5,
+      "slug": "sit-up",
+      "name": "Situps (Sit-up)",
+      "equipment": ["kroppsvekt"],
+      "primary": "mage-kjerne",
+      "secondary": [],
+      "level": "beginner",
+      "type": "reps",
+      "steps": [
+        "Ligg på ryggen med bøyde knær og føttene i gulvet.",
+        "Kryss armene over brystet og rull overkroppen opp mot knærne med magemusklene.",
+        "Senk deg rolig ned igjen uten å slenge."
+      ],
+      "video_id": "T3XsCC2Td1g"
+    },
+    {
+      "list_no": 6,
+      "slug": "burpees",
+      "name": "Burpees",
+      "equipment": ["kroppsvekt"],
+      "primary": "ben",
+      "secondary": ["bryst", "mage-kjerne"],
+      "level": "intermediate",
+      "type": "reps",
+      "steps": [
+        "Stå rett, gå ned på huk og sett hendene i gulvet.",
+        "Hopp eller gå med beina bakover til du står i armhevingsstilling.",
+        "Ta beina inn igjen og hopp opp med armene over hodet."
+      ],
+      "video_id": "xmTrNUR3BpE"
+    },
+    {
+      "list_no": 7,
+      "slug": "dumbbell-bench-press",
+      "name": "Manual benkpress (Dumbbell bench press)",
+      "equipment": ["manualer", "benk"],
+      "primary": "bryst",
+      "secondary": ["skuldre", "armer"],
+      "level": "beginner",
+      "type": "reps",
+      "steps": [
+        "Ligg på benken med en manual i hver hånd over brystet og føttene i gulvet.",
+        "Senk manualene rolig ned mot sidene av brystet med albuene skrått ut.",
+        "Press manualene opp igjen til armene er nesten strake."
+      ],
+      "video_id": "5Y3VZsLb1Ys"
+    },
+    {
+      "list_no": 8,
+      "slug": "dumbbell-shoulder-press",
+      "name": "Manual skulderpress (Dumbbell shoulder press)",
+      "equipment": ["manualer"],
+      "primary": "skuldre",
+      "secondary": ["armer"],
+      "level": "beginner",
+      "type": "reps",
+      "steps": [
+        "Sitt eller stå rett med en manual i hver hånd i skulderhøyde.",
+        "Press manualene rett opp over hodet uten å svaie i korsryggen.",
+        "Senk dem rolig tilbake til skulderhøyde."
+      ],
+      "video_id": "vlFGTI5JzjI"
+    },
+    {
+      "list_no": 9,
+      "slug": "dumbbell-bicep-curl",
+      "name": "Manual biceps curl (Dumbbell bicep curl)",
+      "equipment": ["manualer"],
+      "primary": "armer",
+      "secondary": [],
+      "level": "beginner",
+      "type": "reps",
+      "steps": [
+        "Stå rett med en manual i hver hånd og armene ned langs siden.",
+        "Bøy albuene og løft manualene mot skuldrene. Hold albuene inntil kroppen.",
+        "Senk manualene rolig ned igjen."
+      ],
+      "video_id": "6DeLZ6cbgWQ"
+    },
+    {
+      "list_no": 10,
+      "slug": "single-arm-dumbbell-row",
+      "name": "Manual roing, én arm (Single-arm dumbbell row)",
+      "equipment": ["manualer", "benk"],
+      "primary": "rygg",
+      "secondary": ["armer"],
+      "level": "beginner",
+      "type": "reps",
+      "steps": [
+        "Sett ett kne og samme hånd på benken, med ryggen rett og manualen i den andre hånden.",
+        "Trekk manualen opp mot hoften med albuen tett inntil kroppen.",
+        "Senk den rolig ned igjen. Ta like mange på hver side."
+      ],
+      "video_id": "fURsHPHgssI"
+    },
+    {
+      "list_no": 11,
+      "slug": "dumbbell-lunges",
+      "name": "Manual utfall (Dumbbell lunges)",
+      "equipment": ["manualer"],
+      "primary": "ben",
+      "secondary": ["mage-kjerne"],
+      "level": "intermediate",
+      "type": "reps",
+      "steps": [
+        "Stå rett med en manual i hver hånd og armene ned langs siden.",
+        "Ta et langt steg fram og senk bakre kne mot gulvet. Hold overkroppen rett.",
+        "Skyv fra med fremre fot tilbake til start, og bytt bein."
+      ],
+      "video_id": "NfASnq6fxzU"
+    },
+    {
+      "list_no": 12,
+      "slug": "bench-dips",
+      "name": "Hevinger på benk (Bench dips)",
+      "equipment": ["benk"],
+      "primary": "armer",
+      "secondary": ["bryst", "skuldre"],
+      "level": "beginner",
+      "type": "reps",
+      "steps": [
+        "Sett hendene på kanten av benken bak deg og beina ut foran deg.",
+        "Bøy albuene rett bakover og senk hoftene mot gulvet.",
+        "Press deg opp igjen til armene er strake. Bøy knærne for å gjøre det lettere."
+      ],
+      "video_id": "gol0_aPT28c"
+    },
+    {
+      "list_no": 13,
+      "slug": "deadlift",
+      "name": "Markløft (Deadlift)",
+      "equipment": ["stang-og-skiver"],
+      "primary": "rygg",
+      "secondary": ["ben"],
+      "level": "intermediate",
+      "type": "reps",
+      "steps": [
+        "Stå med midtfoten under stanga og ta tak rett utenfor knærne.",
+        "Stram ryggen og magen, og løft stanga ved å strekke hofter og knær samtidig. Hold stanga tett inntil beina.",
+        "Senk stanga kontrollert ned igjen med rett rygg."
+      ],
+      "video_id": "hCDzSR6bW10"
+    },
+    {
+      "list_no": 14,
+      "slug": "barbell-back-squat",
+      "name": "Knebøy med stang (Barbell back squat)",
+      "equipment": ["stang-og-skiver"],
+      "primary": "ben",
+      "secondary": ["mage-kjerne", "rygg"],
+      "level": "intermediate",
+      "type": "reps",
+      "steps": [
+        "Legg stanga på øvre del av ryggen og stå med føttene i skulderbreddes avstand.",
+        "Pust inn, stram magen og sett deg ned til lårene er omtrent vannrette.",
+        "Press deg opp gjennom hele foten til du står rett igjen."
+      ],
+      "video_id": "nEQQle9-0NA"
+    },
+    {
+      "list_no": 15,
+      "slug": "barbell-bench-press",
+      "name": "Benkpress (Barbell bench press)",
+      "equipment": ["stang-og-skiver", "benk"],
+      "primary": "bryst",
+      "secondary": ["skuldre", "armer"],
+      "level": "intermediate",
+      "type": "reps",
+      "steps": [
+        "Ligg på benken med øynene under stanga og ta tak litt bredere enn skuldrene.",
+        "Senk stanga rolig ned til nedre del av brystet.",
+        "Press stanga opp igjen til armene er strake. Bruk gjerne en makker som sikrer."
+      ],
+      "video_id": "vthMCtgVtFw"
+    },
+    {
+      "list_no": 16,
+      "slug": "bent-over-barbell-row",
+      "name": "Stående roing (Bent-over barbell row)",
+      "equipment": ["stang-og-skiver"],
+      "primary": "rygg",
+      "secondary": ["armer"],
+      "level": "intermediate",
+      "type": "reps",
+      "steps": [
+        "Hold stanga med strake armer og bøy deg fram fra hoftene med rett rygg.",
+        "Trekk stanga opp mot magen og klem skulderbladene sammen.",
+        "Senk stanga rolig ned igjen uten å reise deg opp."
+      ],
+      "video_id": "ZtTwgJTBjOQ"
+    },
+    {
+      "list_no": 17,
+      "slug": "overhead-press",
+      "name": "Militærpress (Overhead press)",
+      "equipment": ["stang-og-skiver"],
+      "primary": "skuldre",
+      "secondary": ["armer", "mage-kjerne"],
+      "level": "advanced",
+      "type": "reps",
+      "steps": [
+        "Stå rett med stanga foran skuldrene og grepet litt bredere enn skuldrene.",
+        "Stram magen og setet, og press stanga rett opp over hodet.",
+        "Senk stanga kontrollert tilbake til skuldrene."
+      ],
+      "video_id": "ZXpdJOLNoWw"
+    },
+    {
+      "list_no": 18,
+      "slug": "kettlebell-swing",
+      "name": "Kettlebell sving (Kettlebell swing)",
+      "equipment": ["kettlebell"],
+      "primary": "ben",
+      "secondary": ["rygg", "mage-kjerne"],
+      "level": "intermediate",
+      "type": "reps",
+      "steps": [
+        "Stå med føttene litt bredere enn skuldrene og hold kettlebellen med begge hender.",
+        "Bøy fra hoftene og sving kettlebellen bakover mellom beina med rett rygg.",
+        "Skyv hoftene kraftig fram så kettlebellen svinger opp til brysthøyde. Armene bare følger med."
+      ],
+      "video_id": "PAhDt_0PjP4"
+    },
+    {
+      "list_no": 19,
+      "slug": "kettlebell-goblet-squat",
+      "name": "Kettlebell goblet squat",
+      "equipment": ["kettlebell"],
+      "primary": "ben",
+      "secondary": ["mage-kjerne"],
+      "level": "beginner",
+      "type": "reps",
+      "steps": [
+        "Hold kettlebellen inntil brystet med begge hender.",
+        "Sett deg ned mellom knærne med rett rygg og hælene i gulvet.",
+        "Press deg opp igjen til du står rett."
+      ],
+      "video_id": "XzQ_qk0axb4"
+    },
+    {
+      "list_no": 20,
+      "slug": "kettlebell-row",
+      "name": "Kettlebell roing (Kettlebell row)",
+      "equipment": ["kettlebell"],
+      "primary": "rygg",
+      "secondary": ["armer"],
+      "level": "beginner",
+      "type": "reps",
+      "steps": [
+        "Stå i et lite utfall, len deg fram med rett rygg og støtt den ene hånden på låret.",
+        "Trekk kettlebellen opp mot hoften med albuen tett inntil kroppen.",
+        "Senk den rolig ned igjen. Ta like mange på hver side."
+      ],
+      "video_id": "c-ulxCyJxS8"
+    },
+    {
+      "list_no": 21,
+      "slug": "resistance-band-row",
+      "name": "Strikk roing (Resistance band row)",
+      "equipment": ["strikk"],
+      "primary": "rygg",
+      "secondary": ["armer"],
+      "level": "beginner",
+      "type": "reps",
+      "steps": [
+        "Stå på midten av strikken, hold en ende i hver hånd og bøy deg litt fram med rett rygg.",
+        "Trekk hendene opp mot magen og klem skulderbladene sammen.",
+        "Slipp rolig tilbake til armene er strake."
+      ],
+      "video_id": "TE3v7CgXiiI"
+    },
+    {
+      "list_no": 22,
+      "slug": "resistance-band-shoulder-press",
+      "name": "Strikk skulderpress (Resistance band shoulder press)",
+      "equipment": ["strikk"],
+      "primary": "skuldre",
+      "secondary": ["armer"],
+      "level": "beginner",
+      "type": "reps",
+      "steps": [
+        "Stå på strikken og hold endene i skulderhøyde.",
+        "Press hendene rett opp over hodet uten å svaie i ryggen.",
+        "Senk hendene rolig tilbake til skulderhøyde."
+      ],
+      "video_id": "tQ40C0WD6OY"
+    },
+    {
+      "list_no": 23,
+      "slug": "resistance-band-bicep-curl",
+      "name": "Strikk biceps curl (Resistance band bicep curl)",
+      "equipment": ["strikk"],
+      "primary": "armer",
+      "secondary": [],
+      "level": "beginner",
+      "type": "reps",
+      "steps": [
+        "Stå på strikken og hold endene med armene ned langs siden.",
+        "Bøy albuene og løft hendene mot skuldrene. Hold albuene inntil kroppen.",
+        "Senk hendene rolig ned igjen."
+      ],
+      "video_id": "PXLF19Oqe3M"
+    },
+    {
+      "list_no": 24,
+      "slug": "pull-up",
+      "name": "Pull-ups (Pull-up)",
+      "equipment": ["trekkestang"],
+      "primary": "rygg",
+      "secondary": ["armer"],
+      "level": "advanced",
+      "type": "reps",
+      "steps": [
+        "Heng i stanga med strake armer og grepet litt bredere enn skuldrene.",
+        "Trekk deg opp til haka er over stanga. Tenk at du drar albuene ned mot sidene.",
+        "Senk deg rolig ned til armene er strake igjen."
+      ],
+      "video_id": "8XrB3eV3_ZE"
+    },
+    {
+      "list_no": 25,
+      "slug": "hanging-leg-raise",
+      "name": "Hengende beinløft (Hanging leg raise)",
+      "equipment": ["trekkestang"],
+      "primary": "mage-kjerne",
+      "secondary": [],
+      "level": "intermediate",
+      "type": "reps",
+      "steps": [
+        "Heng i stanga med strake armer og kroppen i ro.",
+        "Løft beina fram og opp med magemusklene uten å svinge.",
+        "Senk beina rolig ned igjen. Bøy knærne for å gjøre det lettere."
+      ],
+      "video_id": "Pr1ieGZ5atk"
+    },
+    {
+      "list_no": 26,
+      "slug": "lat-pulldown",
+      "name": "Kabel nedtrekk (Lat pulldown, cable)",
+      "equipment": ["kabelmaskin"],
+      "primary": "rygg",
+      "secondary": ["armer"],
+      "level": "beginner",
+      "type": "reps",
+      "steps": [
+        "Sitt med lårene under puten og ta tak i stanga litt bredere enn skuldrene.",
+        "Trekk stanga ned mot øvre del av brystet med brystet fram.",
+        "Slipp stanga rolig opp igjen til armene er strake."
+      ],
+      "video_id": "SALxEARiMkw"
+    },
+    {
+      "list_no": 27,
+      "slug": "cable-tricep-pushdown",
+      "name": "Kabel triceps pushdown (Cable tricep pushdown)",
+      "equipment": ["kabelmaskin"],
+      "primary": "armer",
+      "secondary": [],
+      "level": "beginner",
+      "type": "reps",
+      "steps": [
+        "Stå foran kabelen og hold håndtaket med albuene inntil kroppen.",
+        "Press håndtaket ned til armene er strake. Bare underarmene beveger seg.",
+        "Slipp rolig opp igjen til underarmene er vannrette."
+      ],
+      "video_id": "_w-HpW70nSQ"
+    },
+    {
+      "list_no": 28,
+      "slug": "seated-cable-row",
+      "name": "Kabel roing sittende (Seated cable row)",
+      "equipment": ["kabelmaskin"],
+      "primary": "rygg",
+      "secondary": ["armer"],
+      "level": "beginner",
+      "type": "reps",
+      "steps": [
+        "Sitt med føttene mot fotplaten, lett bøyde knær og rett rygg.",
+        "Trekk håndtaket inn mot magen og klem skulderbladene sammen.",
+        "Slipp rolig tilbake til armene er strake, uten å runde ryggen."
+      ],
+      "video_id": "UCXxvVItLoM"
+    },
+    {
+      "list_no": 29,
+      "slug": "leg-press",
+      "name": "Beinpress (Leg press)",
+      "equipment": ["beinpress-maskiner"],
+      "primary": "ben",
+      "secondary": [],
+      "level": "beginner",
+      "type": "reps",
+      "steps": [
+        "Sitt med ryggen inntil setet og føttene i skulderbreddes avstand på platen.",
+        "Senk platen rolig til knærne er bøyd omtrent 90 grader.",
+        "Press platen opp igjen uten å låse knærne helt."
+      ],
+      "video_id": "cDGOn-yfKJA"
+    },
+    {
+      "list_no": 30,
+      "slug": "leg-curl-machine",
+      "name": "Beincurl i maskin (Leg curl machine)",
+      "equipment": ["beinpress-maskiner"],
+      "primary": "ben",
+      "secondary": [],
+      "level": "beginner",
+      "type": "reps",
+      "steps": [
+        "Still inn maskinen så knærne er på linje med dreiepunktet og puten ligger over hælene.",
+        "Bøy knærne og trekk puten ned og inn mot setet.",
+        "Slipp rolig tilbake til beina er nesten strake."
+      ],
+      "video_id": "t9sTSr-JYSs"
+    },
+    {
+      "list_no": 31,
+      "slug": "bent-over-dumbbell-row",
+      "name": "Foroverbøyd manualroing (Bent-over dumbbell row)",
+      "equipment": ["manualer"],
+      "primary": "rygg",
+      "secondary": ["armer"],
+      "level": "beginner",
+      "type": "reps",
+      "steps": [
+        "Hold en manual i hver hånd og bøy deg fram fra hoftene med rett rygg og lett bøyde knær.",
+        "Trekk manualene opp mot hoftene og klem skulderbladene sammen.",
+        "Senk manualene rolig ned igjen."
+      ],
+      "video_id": "6TSP1TRMUzs"
+    },
+    {
+      "list_no": 32,
+      "slug": "superman",
+      "name": "Superman",
+      "equipment": ["kroppsvekt"],
+      "primary": "rygg",
+      "secondary": ["ben"],
+      "level": "beginner",
+      "type": "reps",
+      "steps": [
+        "Ligg på magen med armene strake fram og beina strake bak.",
+        "Løft armer, bryst og bein litt fra gulvet samtidig. Se ned i gulvet.",
+        "Hold et par sekunder og senk deg rolig ned igjen."
+      ],
+      "video_id": "HAjQVUp9mS4"
+    },
+    {
+      "list_no": 33,
+      "slug": "glute-bridge",
+      "name": "Hoftehev (Glute bridge)",
+      "equipment": ["kroppsvekt"],
+      "primary": "ben",
+      "secondary": ["mage-kjerne"],
+      "level": "beginner",
+      "type": "reps",
+      "steps": [
+        "Ligg på ryggen med bøyde knær og føttene i gulvet.",
+        "Press hoftene opp til kroppen er rett fra knær til skuldre. Klem setet.",
+        "Senk hoftene rolig ned igjen."
+      ],
+      "video_id": "Q_Bpj91Yiis"
+    },
+    {
+      "list_no": 34,
+      "slug": "dumbbell-romanian-deadlift",
+      "name": "Rumensk markløft med manualer (Dumbbell Romanian deadlift)",
+      "equipment": ["manualer"],
+      "primary": "ben",
+      "secondary": ["rygg"],
+      "level": "intermediate",
+      "type": "reps",
+      "steps": [
+        "Stå rett med en manual i hver hånd foran lårene og lett bøyde knær.",
+        "Skyv hoftene bakover og senk manualene langs beina med rett rygg, til du kjenner strekk bak i lårene.",
+        "Skyv hoftene fram og reis deg opp igjen."
+      ],
+      "video_id": "hQgFixeXdZo"
+    }
+  ]
+}
