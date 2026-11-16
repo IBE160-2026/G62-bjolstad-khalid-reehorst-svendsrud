@@ -101,3 +101,139 @@ export function formatGrams(grams: number): string {
   const spaced = whole.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
   return decimals ? `${spaced},${decimals}` : spaced;
 }
+
+// --- Own food items (story 3.2) ---------------------------------------------------------
+
+export type OwnFoodField =
+  | "name"
+  | "kcal_per_100g"
+  | "protein_g"
+  | "carbs_g"
+  | "fat_g"
+  | "serving_size_g";
+export type OwnFoodValues = Record<OwnFoodField, string>;
+export type OwnFoodErrors = Partial<Record<OwnFoodField, string>>;
+export type OwnFoodBody = components["schemas"]["FoodItemCreate"];
+
+/** Form order, used to pick the first invalid field to focus. */
+export const OWN_FOOD_FIELDS: readonly OwnFoodField[] = [
+  "name",
+  "kcal_per_100g",
+  "protein_g",
+  "carbs_g",
+  "fat_g",
+  "serving_size_g",
+];
+
+export const OWN_FOOD_MESSAGES = {
+  name: "Skriv navnet på matvaren.",
+  nameLength: "Skriv et navn på høyst 200 tegn.",
+  kcalMissing: "Skriv inn kalorier per 100 g.",
+  kcalRange: "Kalorier per 100 g må være mellom 0 og 900.",
+  proteinRange: "Protein må være mellom 0 og 100 g.",
+  carbsRange: "Karbohydrater må være mellom 0 og 100 g.",
+  fatRange: "Fett må være mellom 0 og 100 g.",
+  macrosSum:
+    "Protein, karbohydrater og fett kan til sammen ikke være mer enn 100 g.",
+  servingRange: "Porsjonsstørrelse må være mellom 1 og 2 000 g.",
+  decimals: "Skriv tallet med høyst én desimal.",
+  notNumber: "Skriv et tall, for eksempel 12,5.",
+} as const;
+
+const NAME_MAX = 200;
+
+/** A number as typed ("12,5", "1 000"); `null` when empty. Mirrors food/schemas.py. */
+function parseNumberField(
+  text: string,
+  min: number,
+  max: number,
+  rangeMessage: string,
+): { value: number | null } | { error: string } {
+  const raw = text.replace(/\s/g, "");
+  if (raw === "") return { value: null };
+  // "2.000" is a Norwegian thousands dot, not 2; ask for a plain number instead.
+  if (/^\d{1,3}(\.\d{3})+$/.test(raw))
+    return { error: OWN_FOOD_MESSAGES.notNumber };
+  const value = raw.replace(",", ".");
+  // A leading or trailing decimal mark is fine: ",5" is 0.5 and "5," is 5.
+  if (!/^-?(\d+\.?\d*|\.\d+)$/.test(value))
+    return { error: OWN_FOOD_MESSAGES.notNumber };
+  const number = Number(value);
+  if (number < min || number > max) return { error: rangeMessage };
+  if (!/^-?\d*(\.\d?)?$/.test(value))
+    return { error: OWN_FOOD_MESSAGES.decimals };
+  return { value: number };
+}
+
+export function firstInvalidOwnFoodField(
+  errors: OwnFoodErrors,
+): OwnFoodField | undefined {
+  return OWN_FOOD_FIELDS.find((field) => errors[field]);
+}
+
+export function isOwnFoodField(field: string): field is OwnFoodField {
+  return (OWN_FOOD_FIELDS as readonly string[]).includes(field);
+}
+
+/**
+ * Client-side checks for "Registrer selv". The backend stays the source of truth; the
+ * macro sum error sits on `fat_g`, like the backend's.
+ */
+export function validateOwnFood(
+  values: OwnFoodValues,
+): { ok: true; body: OwnFoodBody } | { ok: false; errors: OwnFoodErrors } {
+  const m = OWN_FOOD_MESSAGES;
+  const errors: OwnFoodErrors = {};
+
+  const name = values.name.trim();
+  if (!name) errors.name = m.name;
+  else if (name.length > NAME_MAX) errors.name = m.nameLength;
+
+  const kcal = parseNumberField(values.kcal_per_100g, 0, 900, m.kcalRange);
+  if ("error" in kcal) errors.kcal_per_100g = kcal.error;
+  else if (kcal.value === null) errors.kcal_per_100g = m.kcalMissing;
+
+  const protein = parseNumberField(values.protein_g, 0, 100, m.proteinRange);
+  const carbs = parseNumberField(values.carbs_g, 0, 100, m.carbsRange);
+  const fat = parseNumberField(values.fat_g, 0, 100, m.fatRange);
+  if ("error" in protein) errors.protein_g = protein.error;
+  if ("error" in carbs) errors.carbs_g = carbs.error;
+  if ("error" in fat) errors.fat_g = fat.error;
+  else {
+    const sum = [protein, carbs, fat].reduce(
+      (total, part) => total + ("value" in part ? (part.value ?? 0) : 0),
+      0,
+    );
+    if (sum > 100 + 1e-9) errors.fat_g = m.macrosSum;
+  }
+
+  const serving = parseNumberField(
+    values.serving_size_g,
+    1,
+    2000,
+    m.servingRange,
+  );
+  if ("error" in serving) errors.serving_size_g = serving.error;
+
+  if (
+    firstInvalidOwnFoodField(errors) ||
+    "error" in kcal ||
+    "error" in protein ||
+    "error" in carbs ||
+    "error" in fat ||
+    "error" in serving
+  ) {
+    return { ok: false, errors };
+  }
+  return {
+    ok: true,
+    body: {
+      name,
+      kcal_per_100g: kcal.value ?? 0,
+      protein_g: protein.value,
+      carbs_g: carbs.value,
+      fat_g: fat.value,
+      serving_size_g: serving.value,
+    },
+  };
+}

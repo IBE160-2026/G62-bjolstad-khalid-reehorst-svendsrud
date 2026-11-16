@@ -862,6 +862,33 @@ Det viktigste funnet: Dekningsanalysen er regnet ut fra øvelseslista og viser a
 
 ---
 
+## 2026-11-16 – Story 3.2 (registrer egen mat)
+
+**Verktøy:** Claude Code (BMAD `bmad-build`)
+**Hvem:** Osman Khalid
+**Bakgrunn:** Når en matvare mangler i databasen, må brukeren likevel kunne logge den.
+
+### Hva vi ba KI om
+
+1. Bygge skjemaet for egen matvare og koble det til søket og gram-valget.
+
+### Hva KI produserte
+
+- Spec, endepunkt for egne matvarer, «Manuelt»-fanen, «Registrer selv»-lenken og nye tester.
+
+### Hva vi selv vurderte og kontrollerte
+
+- Osman godkjente spec-en før koding.
+- Et akseptansekriterium var formulert feil (felles «potetlefse» skal fortsatt vises for andre); vi rettet ordlyden, ikke koden.
+- Tre KI-kontrollører fant 20 punkter: 6 rettet (blant annet at «2.000» ble lest som 2 g), 14 avvist med begrunnelse.
+
+### Status
+
+- [x] Story 3.2 bygget og testet
+- [ ] Review av PR fra gruppen
+
+---
+
 ## Mal for nye oppføringer
 
 ```markdown

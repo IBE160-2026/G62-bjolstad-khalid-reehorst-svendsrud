@@ -12,6 +12,7 @@ from app.modules.food.schemas import (
     FoodDayResponse,
     FoodEntryRequest,
     FoodEntryResponse,
+    FoodItemCreate,
     FoodItemResponse,
 )
 from app.modules.identity.consent import ConsentedUser
@@ -28,6 +29,19 @@ def search_food_items(
     """Shared items plus the user's own whose name contains `q`; max 20; `[]` under 2 chars."""
     items = service.search_items(db, current_user.id, q)
     return [service.item_response(item) for item in items]
+
+
+@router.post(
+    "/items",
+    response_model=FoodItemResponse,
+    status_code=status.HTTP_201_CREATED,
+    operation_id="create_food_item",
+)
+def create_food_item(
+    body: FoodItemCreate, current_user: ConsentedUser, db: DbSession, now: Now
+) -> FoodItemResponse:
+    """Register the user's own food item (`source="user"`); only its owner can see it."""
+    return service.create_own_item(db, current_user.id, body, now)
 
 
 @router.get("/entries", response_model=FoodDayResponse, operation_id="get_food_day")

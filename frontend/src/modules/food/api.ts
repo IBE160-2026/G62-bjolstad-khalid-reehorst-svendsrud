@@ -15,6 +15,7 @@ export type FoodItem = components["schemas"]["FoodItemResponse"];
 export type FoodDay = components["schemas"]["FoodDayResponse"];
 export type FoodEntry = components["schemas"]["FoodEntryResponse"];
 export type FoodEntryRequest = components["schemas"]["FoodEntryRequest"];
+export type FoodItemCreate = components["schemas"]["FoodItemCreate"];
 
 export const SEARCH_MIN_LENGTH = 2;
 
@@ -58,5 +59,16 @@ export function useAddFoodEntry() {
       call(() => api.POST("/api/food/entries", { body })),
     onSuccess: (entry) =>
       queryClient.invalidateQueries({ queryKey: foodDayKey(entry.date) }),
+  });
+}
+
+/** Register the user's own food item; searches are refetched so it shows up there too. */
+export function useCreateFoodItem() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (body: FoodItemCreate) =>
+      call(() => api.POST("/api/food/items", { body })),
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: ["food-search"] }),
   });
 }

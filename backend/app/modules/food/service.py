@@ -18,7 +18,9 @@ from app.modules.food.schemas import (
     FoodDayResponse,
     FoodEntryRequest,
     FoodEntryResponse,
+    FoodItemCreate,
     FoodItemResponse,
+    FoodSource,
     Meal,
     MealSummary,
 )
@@ -50,7 +52,31 @@ def item_response(item: FoodItem) -> FoodItemResponse:
         protein_g=_optional(item.protein_g),
         carbs_g=_optional(item.carbs_g),
         fat_g=_optional(item.fat_g),
+        serving_size_g=_optional(item.serving_size_g),
     )
+
+
+def _decimal(value: float | None) -> Decimal | None:
+    return None if value is None else Decimal(str(value))
+
+
+def create_own_item(
+    db: DbSessionType, user_id: uuid.UUID, data: FoodItemCreate, now: datetime
+) -> FoodItemResponse:
+    """A food item only its owner can see; source and owner always come from the server."""
+    item = FoodItem(
+        source=FoodSource.USER.value,
+        owner_id=user_id,
+        name=data.name,
+        kcal_per_100g=Decimal(str(data.kcal_per_100g)),
+        protein_g=_decimal(data.protein_g),
+        carbs_g=_decimal(data.carbs_g),
+        fat_g=_decimal(data.fat_g),
+        serving_size_g=_decimal(data.serving_size_g),
+        created_at=now,
+    )
+    repository.add_item(db, item)
+    return item_response(item)
 
 
 def _entry_response(entry: FoodLogEntry, name: str) -> FoodEntryResponse:

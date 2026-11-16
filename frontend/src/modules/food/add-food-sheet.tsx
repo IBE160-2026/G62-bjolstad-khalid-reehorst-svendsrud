@@ -10,24 +10,32 @@ import {
   type ReactNode,
 } from "react";
 
-import { INPUT_CLASS } from "@/modules/identity/styles";
+import { INPUT_CLASS, LINK_CLASS } from "@/modules/identity/styles";
 import { formatKcal } from "@/modules/profile/target-result";
 
 import { SEARCH_MIN_LENGTH, useFoodSearch, type FoodItem } from "./api";
 import { AmountPicker } from "./amount-picker";
 import { MatvaretabellenAttribution } from "./attribution";
 import type { Meal } from "./meals";
+import { OwnFoodForm } from "./own-food-form";
 
 const TITLE_ID = "add-food-title";
 const SEARCH_ID = "food-search";
 const SEARCH_DELAY_MS = 200;
+const PANEL_ID = "add-food-panel";
 
-const METHODS = [
+type Method = "search" | "barcode" | "recent" | "manual";
+
+const METHODS: readonly { id: Method; label: string; enabled: boolean }[] = [
   { id: "search", label: "Søk", enabled: true },
   { id: "barcode", label: "Skriv strekkode", enabled: false },
   { id: "recent", label: "Nylig brukt", enabled: false },
-  { id: "manual", label: "Manuelt", enabled: false },
-] as const;
+  { id: "manual", label: "Manuelt", enabled: true },
+];
+
+function tabId(method: Method) {
+  return `add-food-tab-${method}`;
+}
 
 function useDebounced(value: string, delay: number): string {
   const [debounced, setDebounced] = useState(value);
@@ -38,35 +46,48 @@ function useDebounced(value: string, delay: number): string {
   return debounced;
 }
 
-function MethodPicker() {
+function MethodPicker({
+  method,
+  onSelect,
+}: {
+  method: Method;
+  onSelect: (method: Method) => void;
+}) {
   return (
     <div
       role="tablist"
       aria-label="Velg hvordan du legger til"
       className="flex flex-wrap gap-2"
     >
-      {METHODS.map((method) =>
-        method.enabled ? (
+      {METHODS.map((option) =>
+        option.enabled ? (
           <button
-            key={method.id}
+            key={option.id}
+            id={tabId(option.id)}
             type="button"
             role="tab"
-            aria-selected="true"
-            aria-controls="add-food-panel"
-            className="min-h-11 rounded-full bg-primary px-4 text-small font-medium text-primary-foreground"
+            aria-selected={option.id === method}
+            aria-controls={option.id === method ? PANEL_ID : undefined}
+            onClick={() => onSelect(option.id)}
+            className={
+              option.id === method
+                ? "min-h-11 rounded-full bg-primary px-4 text-small font-medium text-primary-foreground"
+                : "min-h-11 rounded-full border-[1.5px] border-border px-4 text-small font-medium text-foreground hover:bg-muted"
+            }
           >
-            {method.label}
+            {option.label}
           </button>
         ) : (
           <button
-            key={method.id}
+            key={option.id}
+            id={tabId(option.id)}
             type="button"
             role="tab"
             aria-selected="false"
             disabled
             className="flex min-h-11 flex-col items-center justify-center rounded-full border-[1.5px] border-border px-4 text-small text-muted-foreground opacity-70"
           >
-            <span>{method.label}</span>
+            <span>{option.label}</span>
             <span className="text-label">Kommer snart</span>
           </button>
         ),
@@ -79,10 +100,12 @@ function SearchPanel({
   query,
   setQuery,
   onPick,
+  onRegister,
 }: {
   query: string;
   setQuery: (query: string) => void;
   onPick: (item: FoodItem) => void;
+  onRegister: () => void;
 }) {
   const [highlighted, setHighlighted] = useState(0);
   const debounced = useDebounced(query, SEARCH_DELAY_MS);
@@ -147,6 +170,16 @@ function SearchPanel({
       <div role="status" className="flex flex-col gap-1">
         <p className="text-body font-medium text-foreground">Ingen treff</p>
         <p className="text-small text-muted-foreground">Prøv et annet ord.</p>
+        <p className="text-small text-muted-foreground">
+          Finner du den ikke?{" "}
+          <button
+            type="button"
+            onClick={onRegister}
+            className={`${LINK_CLASS} text-small`}
+          >
+            Registrer selv
+          </button>
+        </p>
       </div>
     );
   }
@@ -154,7 +187,12 @@ function SearchPanel({
   const active = Math.min(highlighted, results.length - 1);
 
   return (
-    <div id="add-food-panel" role="tabpanel" className="flex flex-col gap-4">
+    <div
+      id={PANEL_ID}
+      role="tabpanel"
+      aria-labelledby={tabId("search")}
+      className="flex flex-col gap-4"
+    >
       <div className="flex flex-col gap-2">
         <label
           htmlFor={SEARCH_ID}
@@ -216,7 +254,8 @@ function SearchPanel({
 
 /**
  * "Legg til mat" (story 3.1): a native `<dialog>` opened with `showModal()`; focus moves
- * in, Esc closes and the opener gets focus back. Only Søk is active in this story.
+ * in, Esc closes and the opener gets focus back. Søk and Manuelt are active; Manuelt and
+ * "Registrer selv" create the user's own item and go straight to the amount picker (3.2).
  */
 export function AddFoodSheet({
   open,
@@ -233,6 +272,9 @@ export function AddFoodSheet({
   const [picked, setPicked] = useState<FoodItem | null>(null);
   // Kept here so "Tilbake til søket" returns to the same results.
   const [query, setQuery] = useState("");
+  const [method, setMethod] = useState<Method>("search");
+  // The name to prefill when Manuelt is opened from "Ingen treff".
+  const [ownName, setOwnName] = useState("");
 
   useEffect(() => {
     const dialog = dialogRef.current;
@@ -256,6 +298,8 @@ export function AddFoodSheet({
       onClose={() => {
         setPicked(null);
         setQuery("");
+        setMethod("search");
+        setOwnName("");
         onClose();
       }}
       className="m-auto w-[calc(100%-2rem)] max-w-lg rounded-lg bg-card p-6 text-foreground shadow-sheet backdrop:bg-[var(--scrim)] max-md:h-dvh max-md:max-h-none max-md:w-full max-md:max-w-none max-md:rounded-none"
@@ -288,12 +332,41 @@ export function AddFoodSheet({
             />
           ) : (
             <>
-              <MethodPicker />
-              <SearchPanel
-                query={query}
-                setQuery={setQuery}
-                onPick={setPicked}
+              <MethodPicker
+                method={method}
+                onSelect={(next) => {
+                  if (next === method) return;
+                  setOwnName("");
+                  setMethod(next);
+                }}
               />
+              {method === "manual" ? (
+                <div
+                  id={PANEL_ID}
+                  role="tabpanel"
+                  aria-labelledby={tabId("manual")}
+                >
+                  <OwnFoodForm
+                    initialName={ownName}
+                    onCreated={(item) => {
+                      // "Tilbake til søket" then shows the new item in the search.
+                      setQuery(item.name);
+                      setMethod("search");
+                      setPicked(item);
+                    }}
+                  />
+                </div>
+              ) : (
+                <SearchPanel
+                  query={query}
+                  setQuery={setQuery}
+                  onPick={setPicked}
+                  onRegister={() => {
+                    setOwnName(query.trim());
+                    setMethod("manual");
+                  }}
+                />
+              )}
             </>
           )}
           <MatvaretabellenAttribution />
