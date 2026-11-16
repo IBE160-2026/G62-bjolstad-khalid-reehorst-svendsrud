@@ -114,6 +114,14 @@ async function openLunch() {
   return screen.getByRole("dialog", { name: "Legg til mat" });
 }
 
+async function openDinner() {
+  renderDay();
+  fireEvent.click(
+    await screen.findByRole("button", { name: "Legg til i Middag" }),
+  );
+  return screen.getByRole("dialog", { name: "Legg til mat" });
+}
+
 async function searchAndPick(dialog: HTMLElement, query: string, name: string) {
   fireEvent.change(within(dialog).getByLabelText("Søk etter matvare"), {
     target: { value: query },
@@ -172,14 +180,15 @@ describe("FoodDay", () => {
     ).toBeInTheDocument();
   });
 
-  it("opens the sheet with Søk active, the others disabled and the search focused", async () => {
+  it("opens the sheet with Søk active, Manuelt enabled, the others disabled and the search focused", async () => {
     const dialog = await openLunch();
 
     expect(within(dialog).getByRole("tab", { name: "Søk" })).toHaveAttribute(
       "aria-selected",
       "true",
     );
-    for (const name of ["Skriv strekkode", "Nylig brukt", "Manuelt"]) {
+    expect(within(dialog).getByRole("tab", { name: "Manuelt" })).toBeEnabled();
+    for (const name of ["Skriv strekkode", "Nylig brukt"]) {
       const tab = within(dialog).getByRole("tab", { name: new RegExp(name) });
       expect(tab).toBeDisabled();
       expect(tab).toHaveTextContent("Kommer snart");
@@ -454,5 +463,356 @@ describe("FoodDay", () => {
         params: { query: { date: "2026-11-17" } },
       }),
     );
+  });
+
+  describe("own food (story 3.2)", () => {
+    const LEFSE = {
+      id: "00000000-0000-4000-8000-000000000003",
+      name: "Mormors lefse",
+      source: "user",
+      kcal_per_100g: 320,
+      protein_g: null,
+      carbs_g: null,
+      fat_g: null,
+      serving_size_g: null,
+    };
+
+    async function noMatch(dialog: HTMLElement, query = "xyzq") {
+      searchResults = [];
+      fireEvent.change(within(dialog).getByLabelText("Søk etter matvare"), {
+        target: { value: query },
+      });
+      await within(dialog).findByText("Ingen treff");
+    }
+
+    it("opens the form from Ingen treff with the search text as name", async () => {
+      const dialog = await openLunch();
+      await noMatch(dialog);
+
+      fireEvent.click(
+        within(dialog).getByRole("button", { name: "Registrer selv" }),
+      );
+
+      expect(within(dialog).getByLabelText("Navn")).toHaveValue("xyzq");
+      expect(
+        within(dialog).getByLabelText("Kalorier per 100 g (kcal)"),
+      ).toHaveFocus();
+      expect(
+        within(dialog).getByRole("tab", { name: "Manuelt" }),
+      ).toHaveAttribute("aria-selected", "true");
+    });
+
+    it("opens an empty form from the Manuelt tab with the name focused", async () => {
+      const dialog = await openLunch();
+
+      fireEvent.click(within(dialog).getByRole("tab", { name: "Manuelt" }));
+
+      const name = within(dialog).getByLabelText("Navn");
+      expect(name).toHaveValue("");
+      expect(name).toHaveFocus();
+    });
+
+    it("validates before sending and focuses the first invalid field", async () => {
+      const dialog = await openLunch();
+      fireEvent.click(within(dialog).getByRole("tab", { name: "Manuelt" }));
+      fireEvent.change(
+        within(dialog).getByLabelText("Kalorier per 100 g (kcal)"),
+        {
+          target: { value: "901" },
+        },
+      );
+      fireEvent.change(within(dialog).getByLabelText("Protein (g)"), {
+        target: { value: "40" },
+      });
+      fireEvent.change(within(dialog).getByLabelText("Karbohydrater (g)"), {
+        target: { value: "40" },
+      });
+      fireEvent.change(within(dialog).getByLabelText("Fett (g)"), {
+        target: { value: "40" },
+      });
+
+      fireEvent.click(
+        within(dialog).getByRole("button", { name: "Lagre matvare" }),
+      );
+
+      expect(
+        within(dialog).getByText("Skriv navnet på matvaren."),
+      ).toBeInTheDocument();
+      expect(
+        within(dialog).getByText("Kalorier per 100 g må være mellom 0 og 900."),
+      ).toBeInTheDocument();
+      expect(
+        within(dialog).getByText(
+          "Protein, karbohydrater og fett kan til sammen ikke være mer enn 100 g.",
+        ),
+      ).toBeInTheDocument();
+      expect(within(dialog).getByLabelText("Navn")).toHaveFocus();
+      expect(within(dialog).getByLabelText("Navn")).toHaveAttribute(
+        "aria-invalid",
+        "true",
+      );
+      expect(postMock).not.toHaveBeenCalled();
+    });
+
+    it("shows the backend's field errors on the right field", async () => {
+      const dialog = await openLunch();
+      fireEvent.click(within(dialog).getByRole("tab", { name: "Manuelt" }));
+      fireEvent.change(within(dialog).getByLabelText("Navn"), {
+        target: { value: "Lefse" },
+      });
+      fireEvent.change(
+        within(dialog).getByLabelText("Kalorier per 100 g (kcal)"),
+        {
+          target: { value: "320" },
+        },
+      );
+      postMock.mockResolvedValue({
+        data: undefined,
+        error: {
+          error: {
+            code: "validation_error",
+            message: "Forespørselen er ugyldig.",
+            fields: [
+              {
+                field: "kcal_per_100g",
+                message: "Sjekk verdien i dette feltet.",
+              },
+            ],
+          },
+        },
+      });
+
+      fireEvent.click(
+        within(dialog).getByRole("button", { name: "Lagre matvare" }),
+      );
+
+      expect(
+        await within(dialog).findByText("Sjekk verdien i dette feltet."),
+      ).toBeInTheDocument();
+      expect(
+        within(dialog).getByLabelText("Kalorier per 100 g (kcal)"),
+      ).toHaveFocus();
+    });
+
+    it("creates the item, opens the amount picker with the same Meal and logs it", async () => {
+      const dialog = await openDinner();
+      await noMatch(dialog);
+      fireEvent.click(
+        within(dialog).getByRole("button", { name: "Registrer selv" }),
+      );
+      fireEvent.change(within(dialog).getByLabelText("Navn"), {
+        target: { value: "Mormors lefse" },
+      });
+      fireEvent.change(
+        within(dialog).getByLabelText("Kalorier per 100 g (kcal)"),
+        {
+          target: { value: "320" },
+        },
+      );
+      fireEvent.change(within(dialog).getByLabelText("Fett (g)"), {
+        target: { value: "10,5" },
+      });
+      postMock.mockImplementation((path: string) => {
+        if (path === "/api/food/items") {
+          return Promise.resolve({
+            data: { ...LEFSE, fat_g: 10.5 },
+            error: undefined,
+          });
+        }
+        currentDay = day([
+          { name: "Mormors lefse", meal: "dinner", grams: 80, kcal: 256 },
+        ]);
+        return Promise.resolve({
+          data: { ...currentDay.meals[2].entries[0] },
+          error: undefined,
+        });
+      });
+
+      fireEvent.click(
+        within(dialog).getByRole("button", { name: "Lagre matvare" }),
+      );
+
+      expect(
+        await within(dialog).findByRole("heading", { name: "Mormors lefse" }),
+      ).toBeInTheDocument();
+      expect(postMock).toHaveBeenCalledWith("/api/food/items", {
+        body: {
+          name: "Mormors lefse",
+          kcal_per_100g: 320,
+          protein_g: null,
+          carbs_g: null,
+          fat_g: 10.5,
+          serving_size_g: null,
+        },
+      });
+      expect(within(dialog).getByLabelText("Måltid")).toHaveValue("dinner");
+
+      fireEvent.change(within(dialog).getByLabelText("Mengde (g)"), {
+        target: { value: "80" },
+      });
+      expect(within(dialog).getByTestId("kcal-preview")).toHaveTextContent(
+        "256 kcal",
+      );
+      fireEvent.click(within(dialog).getByRole("button", { name: "Lagre" }));
+
+      await waitFor(() => expect(dialog).not.toHaveAttribute("open"));
+      expect(postMock).toHaveBeenCalledWith("/api/food/entries", {
+        body: {
+          food_item_id: LEFSE.id,
+          date: TODAY,
+          meal: "dinner",
+          grams: 80,
+        },
+      });
+      await waitFor(() =>
+        expect(screen.getByTestId("meal-dinner-total")).toHaveTextContent(
+          "256 kcal",
+        ),
+      );
+    });
+
+    async function openManual() {
+      const dialog = await openLunch();
+      fireEvent.click(within(dialog).getByRole("tab", { name: "Manuelt" }));
+      return dialog;
+    }
+
+    function type(dialog: HTMLElement, label: string, value: string) {
+      fireEvent.change(within(dialog).getByLabelText(label), {
+        target: { value },
+      });
+    }
+
+    it("keeps a fat range error when protein or carbs change, but clears the sum error", async () => {
+      const dialog = await openManual();
+      const save = () =>
+        fireEvent.click(
+          within(dialog).getByRole("button", { name: "Lagre matvare" }),
+        );
+      type(dialog, "Navn", "Lefse");
+      type(dialog, "Kalorier per 100 g (kcal)", "300");
+      type(dialog, "Fett (g)", "101");
+      save();
+      expect(
+        within(dialog).getByText("Fett må være mellom 0 og 100 g."),
+      ).toBeInTheDocument();
+      type(dialog, "Protein (g)", "5");
+      expect(
+        within(dialog).getByText("Fett må være mellom 0 og 100 g."),
+      ).toBeInTheDocument();
+
+      type(dialog, "Fett (g)", "50");
+      type(dialog, "Karbohydrater (g)", "60");
+      save();
+      const sum =
+        "Protein, karbohydrater og fett kan til sammen ikke være mer enn 100 g.";
+      expect(within(dialog).getByText(sum)).toBeInTheDocument();
+      type(dialog, "Karbohydrater (g)", "10");
+      expect(within(dialog).queryByText(sum)).not.toBeInTheDocument();
+      expect(postMock).not.toHaveBeenCalled();
+    });
+
+    it("sends only one create when the form is submitted twice in the same tick", async () => {
+      const dialog = await openManual();
+      type(dialog, "Navn", "Mormors lefse");
+      type(dialog, "Kalorier per 100 g (kcal)", "320");
+      postMock.mockReturnValue(new Promise(() => {}));
+      const form = within(dialog).getByRole("form", {
+        name: "Registrer matvare",
+      });
+
+      // One act: React cannot re-render (and disable the button) between the two.
+      act(() => {
+        form.dispatchEvent(new Event("submit", { bubbles: true, cancelable: true }));
+        form.dispatchEvent(new Event("submit", { bubbles: true, cancelable: true }));
+      });
+      await act(() => Promise.resolve());
+
+      await waitFor(() =>
+        expect(
+          within(dialog).getByRole("button", { name: "Lagrer …" }),
+        ).toBeDisabled(),
+      );
+      expect(postMock).toHaveBeenCalledTimes(1);
+      expect(
+        within(dialog).getByRole("button", { name: "Lagrer …" }),
+      ).toBeDisabled();
+    });
+
+    it("keeps the prefilled name when the selected Manuelt tab is clicked again", async () => {
+      const dialog = await openLunch();
+      await noMatch(dialog);
+      fireEvent.click(
+        within(dialog).getByRole("button", { name: "Registrer selv" }),
+      );
+
+      fireEvent.click(within(dialog).getByRole("tab", { name: "Manuelt" }));
+
+      expect(within(dialog).getByLabelText("Navn")).toHaveValue("xyzq");
+      expect(
+        within(dialog).getByLabelText("Kalorier per 100 g (kcal)"),
+      ).toHaveFocus();
+    });
+
+    it("after create, Tilbake til søket shows Søk with the new item's name searched", async () => {
+      const dialog = await openManual();
+      type(dialog, "Navn", "Mormors lefse");
+      type(dialog, "Kalorier per 100 g (kcal)", "320");
+      postMock.mockResolvedValue({ data: LEFSE, error: undefined });
+      searchResults = [LEFSE];
+      fireEvent.click(
+        within(dialog).getByRole("button", { name: "Lagre matvare" }),
+      );
+      await within(dialog).findByRole("heading", { name: "Mormors lefse" });
+
+      fireEvent.click(
+        within(dialog).getByRole("button", { name: "Tilbake til søket" }),
+      );
+
+      expect(within(dialog).getByRole("tab", { name: "Søk" })).toHaveAttribute(
+        "aria-selected",
+        "true",
+      );
+      expect(within(dialog).getByLabelText("Søk etter matvare")).toHaveValue(
+        "Mormors lefse",
+      );
+      await waitFor(() =>
+        expect(getMock).toHaveBeenCalledWith("/api/food/items", {
+          params: { query: { q: "Mormors lefse" } },
+        }),
+      );
+      expect(
+        await within(dialog).findByRole("option", { name: /Mormors lefse/ }),
+      ).toBeInTheDocument();
+    });
+
+    it("shows a create error without fields as an alert and stays on the form", async () => {
+      const dialog = await openManual();
+      type(dialog, "Navn", "Mormors lefse");
+      type(dialog, "Kalorier per 100 g (kcal)", "320");
+      postMock.mockResolvedValue({
+        data: undefined,
+        error: {
+          error: {
+            code: "internal_error",
+            message: "Noe gikk galt. Prøv igjen om litt.",
+          },
+        },
+      });
+
+      fireEvent.click(
+        within(dialog).getByRole("button", { name: "Lagre matvare" }),
+      );
+
+      expect(await within(dialog).findByRole("alert")).toHaveTextContent(
+        "Noe gikk galt. Prøv igjen om litt.",
+      );
+      expect(
+        within(dialog).queryByLabelText("Mengde (g)"),
+      ).not.toBeInTheDocument();
+      expect(
+        within(dialog).getByRole("button", { name: "Lagre matvare" }),
+      ).toBeEnabled();
+    });
   });
 });

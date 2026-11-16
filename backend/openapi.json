@@ -493,6 +493,56 @@
             "description": "Default Response"
           }
         }
+      },
+      "post": {
+        "tags": [
+          "food"
+        ],
+        "summary": "Create Food Item",
+        "description": "Register the user's own food item (`source=\"user\"`); only its owner can see it.",
+        "operationId": "create_food_item",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FoodItemCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FoodItemResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Default Response"
+          }
+        }
       }
     },
     "/api/food/entries": {
@@ -788,6 +838,69 @@
         ],
         "title": "FoodEntryResponse"
       },
+      "FoodItemCreate": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "kcal_per_100g": {
+            "type": "number",
+            "title": "Kcal Per 100G"
+          },
+          "protein_g": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Protein G"
+          },
+          "carbs_g": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Carbs G"
+          },
+          "fat_g": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fat G"
+          },
+          "serving_size_g": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Serving Size G"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name",
+          "kcal_per_100g"
+        ],
+        "title": "FoodItemCreate",
+        "description": "A user's own food item. `source` and `owner_id` are set by the server; extra keys\nsuch as those are ignored (AD-4)."
+      },
       "FoodItemResponse": {
         "properties": {
           "id": {
@@ -838,6 +951,17 @@
               }
             ],
             "title": "Fat G"
+          },
+          "serving_size_g": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Serving Size G"
           }
         },
         "type": "object",
@@ -848,7 +972,8 @@
           "kcal_per_100g",
           "protein_g",
           "carbs_g",
-          "fat_g"
+          "fat_g",
+          "serving_size_g"
         ],
         "title": "FoodItemResponse"
       },

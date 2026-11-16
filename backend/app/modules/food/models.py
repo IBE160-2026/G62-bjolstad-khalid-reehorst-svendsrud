@@ -27,6 +27,8 @@ class FoodItem(Base):
     protein_g: Mapped[Decimal | None] = mapped_column(Numeric(6, 2))
     carbs_g: Mapped[Decimal | None] = mapped_column(Numeric(6, 2))
     fat_g: Mapped[Decimal | None] = mapped_column(Numeric(6, 2))
+    # Optional grams per serving (story 3.2); servings in the amount picker come in 3.5.
+    serving_size_g: Mapped[Decimal | None] = mapped_column(Numeric(6, 1))
     created_at: Mapped[dt.datetime] = mapped_column(DateTime(timezone=True), default=utc_now)
 
 

@@ -2,12 +2,15 @@ import { describe, expect, it } from "vitest";
 
 import {
   GRAMS_MESSAGES,
+  OWN_FOOD_MESSAGES,
   defaultMeal,
+  firstInvalidOwnFoodField,
   formatGrams,
   msToNextOsloMidnight,
   osloToday,
   parseGrams,
   previewKcal,
+  validateOwnFood,
 } from "./meals";
 
 /** A UTC instant for the given Oslo wall-clock time in November (UTC+1). */
@@ -92,5 +95,128 @@ describe("msToNextOsloMidnight", () => {
     expect(msToNextOsloMidnight(new Date("2026-07-01T21:00:00Z"))).toBe(
       60 * 60 * 1000,
     );
+  });
+});
+
+describe("validateOwnFood", () => {
+  const empty = {
+    name: "",
+    kcal_per_100g: "",
+    protein_g: "",
+    carbs_g: "",
+    fat_g: "",
+    serving_size_g: "",
+  };
+  const m = OWN_FOOD_MESSAGES;
+
+  it("needs a name and kcal; the rest is optional", () => {
+    expect(validateOwnFood(empty)).toEqual({
+      ok: false,
+      errors: { name: m.name, kcal_per_100g: m.kcalMissing },
+    });
+    expect(
+      validateOwnFood({
+        ...empty,
+        name: "  Mormors lefse ",
+        kcal_per_100g: "320",
+      }),
+    ).toEqual({
+      ok: true,
+      body: {
+        name: "Mormors lefse",
+        kcal_per_100g: 320,
+        protein_g: null,
+        carbs_g: null,
+        fat_g: null,
+        serving_size_g: null,
+      },
+    });
+  });
+
+  it("accepts a decimal comma and a thousands space", () => {
+    const result = validateOwnFood({
+      name: "Lefse",
+      kcal_per_100g: "320,5",
+      protein_g: "8",
+      carbs_g: "50,2",
+      fat_g: "10",
+      serving_size_g: "1 000",
+    });
+    expect(result).toEqual({
+      ok: true,
+      body: {
+        name: "Lefse",
+        kcal_per_100g: 320.5,
+        protein_g: 8,
+        carbs_g: 50.2,
+        fat_g: 10,
+        serving_size_g: 1000,
+      },
+    });
+  });
+
+  it.each([
+    ["name", "x".repeat(201), m.nameLength],
+    ["kcal_per_100g", "901", m.kcalRange],
+    ["kcal_per_100g", "-1", m.kcalRange],
+    ["kcal_per_100g", "12,34", m.decimals],
+    ["kcal_per_100g", "mye", m.notNumber],
+    ["protein_g", "101", m.proteinRange],
+    ["carbs_g", "100,1", m.carbsRange],
+    ["fat_g", "-0,1", m.fatRange],
+    ["serving_size_g", "0,5", m.servingRange],
+    ["serving_size_g", "2000,1", m.servingRange],
+  ])("%s = %s gives %s", (field, value, message) => {
+    const result = validateOwnFood({
+      ...empty,
+      name: "Lefse",
+      kcal_per_100g: "300",
+      [field]: value,
+    });
+    expect(result).toEqual({ ok: false, errors: { [field]: message } });
+  });
+
+  it("limits protein, carbs and fat to 100 g together, shown on fat", () => {
+    const base = { ...empty, name: "Lefse", kcal_per_100g: "300" };
+    expect(
+      validateOwnFood({ ...base, protein_g: "60", carbs_g: "60" }),
+    ).toEqual({ ok: false, errors: { fat_g: m.macrosSum } });
+    expect(
+      validateOwnFood({ ...base, protein_g: "40", carbs_g: "40", fat_g: "20" })
+        .ok,
+    ).toBe(true);
+  });
+
+  it.each(["2.000", "1.500", "1.000.000"])(
+    "rejects a thousands dot in %s instead of reading it as a decimal",
+    (value) => {
+      expect(
+        validateOwnFood({
+          ...empty,
+          name: "Lefse",
+          serving_size_g: value,
+          kcal_per_100g: "300",
+        }),
+      ).toEqual({ ok: false, errors: { serving_size_g: m.notNumber } });
+    },
+  );
+
+  it.each([
+    [",5", 0.5],
+    ["5,", 5],
+    ["1.5", 1.5],
+  ])("reads %s as %d", (value, number) => {
+    const result = validateOwnFood({
+      ...empty,
+      name: "Lefse",
+      kcal_per_100g: value,
+    });
+    expect(result).toMatchObject({ ok: true, body: { kcal_per_100g: number } });
+  });
+
+  it("finds the first invalid field in form order", () => {
+    expect(
+      firstInvalidOwnFoodField({ serving_size_g: "x", kcal_per_100g: "y" }),
+    ).toBe("kcal_per_100g");
   });
 });

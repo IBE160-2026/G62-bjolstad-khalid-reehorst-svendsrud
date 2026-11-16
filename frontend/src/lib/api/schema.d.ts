@@ -182,7 +182,11 @@ export interface paths {
          */
         get: operations["search_food_items"];
         put?: never;
-        post?: never;
+        /**
+         * Create Food Item
+         * @description Register the user's own food item (`source="user"`); only its owner can see it.
+         */
+        post: operations["create_food_item"];
         delete?: never;
         options?: never;
         head?: never;
@@ -305,6 +309,25 @@ export interface components {
              */
             created_at: string;
         };
+        /**
+         * FoodItemCreate
+         * @description A user's own food item. `source` and `owner_id` are set by the server; extra keys
+         *     such as those are ignored (AD-4).
+         */
+        FoodItemCreate: {
+            /** Name */
+            name: string;
+            /** Kcal Per 100G */
+            kcal_per_100g: number;
+            /** Protein G */
+            protein_g?: number | null;
+            /** Carbs G */
+            carbs_g?: number | null;
+            /** Fat G */
+            fat_g?: number | null;
+            /** Serving Size G */
+            serving_size_g?: number | null;
+        };
         /** FoodItemResponse */
         FoodItemResponse: {
             /**
@@ -323,6 +346,8 @@ export interface components {
             carbs_g: number | null;
             /** Fat G */
             fat_g: number | null;
+            /** Serving Size G */
+            serving_size_g: number | null;
         };
         /**
          * FoodSource
@@ -836,6 +861,48 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["FoodItemResponse"][];
+                };
+            };
+            /** @description Validation error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Default Response */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    create_food_item: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["FoodItemCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FoodItemResponse"];
                 };
             };
             /** @description Validation error */

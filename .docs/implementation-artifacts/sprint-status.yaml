@@ -29,7 +29,7 @@
 # - Dev moves story to 'review', then runs code-review (fresh context, different LLM recommended)
 # - Retrospective appends its action items to action_items; the status view surfaces open ones
 generated: 11-15-2026 12:32
-last_updated: 11-16-2026 01:40
+last_updated: 11-16-2026 11:30
 project: Prompt Force
 project_key: NOKEY
 tracking_system: file-system
@@ -46,15 +46,15 @@ development_status:
   1-8-deactivate-my-account: backlog
   epic-1-retrospective: optional
 
-  epic-2: in-progress
+  epic-2: done
   2-1-get-my-calorie-target: done
   2-2-edit-my-profile: done
-  2-3-first-run-introduction: review
+  2-3-first-run-introduction: done
   epic-2-retrospective: optional
 
   epic-3: in-progress
-  3-1-search-for-a-basic-food-and-log-it: review
-  3-2-register-my-own-food: backlog
+  3-1-search-for-a-basic-food-and-log-it: done
+  3-2-register-my-own-food: review
   3-3-type-a-barcode: backlog
   3-4-log-a-recent-food-with-one-tap: backlog
   3-5-choose-servings-instead-of-grams: backlog

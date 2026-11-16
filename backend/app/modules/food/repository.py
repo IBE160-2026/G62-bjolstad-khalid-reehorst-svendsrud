@@ -45,6 +45,12 @@ def get_visible_item(db: DbSessionType, user_id: uuid.UUID, item_id: uuid.UUID) 
     return db.scalars(statement).one_or_none()
 
 
+def add_item(db: DbSessionType, item: FoodItem) -> FoodItem:
+    db.add(item)
+    db.flush()
+    return item
+
+
 def add_entry(db: DbSessionType, entry: FoodLogEntry) -> FoodLogEntry:
     db.add(entry)
     db.flush()
