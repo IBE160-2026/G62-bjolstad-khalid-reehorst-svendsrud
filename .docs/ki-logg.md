@@ -1318,6 +1318,33 @@ Det viktigste funnet: Dekningsanalysen er regnet ut fra øvelseslista og viser a
 
 ---
 
+## 2026-11-18 – Story 6.4 del 3 (hjelpeknapp og fokus i ark)
+
+**Verktøy:** Claude Code (BMAD `bmad-build`, lettere prosess med én kontrollør)
+**Hvem:** Osman Khalid
+**Bakgrunn:** Nye brukere og sensor skal få en kort forklaring på hver skjerm, og arkene skal virke med tastatur og skjermleser.
+
+### Hva vi ba KI om
+
+1. Lage «?»-hjelp og en felles test for fokus og Esc i alle ark.
+
+### Hva KI produserte
+
+- Spec med hjelpetekstene, hjelpeknapp, felles testhjelper og rettinger der testen feilet.
+
+### Hva vi selv vurderte og kontrollerte
+
+- Osman godkjente spec-en og hjelpetekstene før koding.
+- Fellestesten fant en ekte feil (utstyrsarket flyttet ikke fokus).
+- Én KI-kontrollør fant 11 punkter: 5 grupper rettet, 1 utsatt til Playwright, 2 avvist.
+
+### Status
+
+- [x] Del 3 bygget og testet
+- [ ] 6.4 del 2 (Playwright)
+
+---
+
 ## Mal for nye oppføringer
 
 ```markdown

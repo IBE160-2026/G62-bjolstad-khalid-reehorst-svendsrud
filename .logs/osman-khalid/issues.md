@@ -83,3 +83,4 @@
 - [x] 2026-11-17 [story-6-1-i-dag](947-2026-11-17-23-45-00-story-6-1-i-dag.md) — pushe og lage PR for 6.1 + 6.2 (løst 2026-11-17 — PR #47, bygger på #46; flytt til main etter #46)
 - [x] 2026-11-17 [story-6-4a-demodata](946-2026-11-17-23-55-00-story-6-4a-demodata.md) — pushe og lage PR for 6.4 del 1 (løst 2026-11-17 — PR #48)
 - [ ] 2026-11-17 [story-6-4a-demodata](946-2026-11-17-23-55-00-story-6-4a-demodata.md) — 6.4 del 2 (Playwright, krever nedlasting) og del 3 (hjelpeknapp)
+- [x] 2026-11-18 [story-6-4c-hjelp](945-2026-11-18-00-30-00-story-6-4c-hjelp.md) — pushe og lage PR for 6.4 del 3 (løst 2026-11-18 — PR #49, bygger på #48; flytt til main etter #48)

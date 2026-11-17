@@ -10,6 +10,8 @@ vi.mock("@/lib/api/client", () => ({
   api: { GET: getMock, POST: postMock, PATCH: patchMock, DELETE: deleteMock },
 }));
 
+import { expectOpenerSheetFocusCycle } from "@/test/sheet-a11y";
+
 import { EquipmentProfiles } from "./equipment-profiles";
 
 const EQUIPMENT = [
@@ -294,5 +296,26 @@ describe("EquipmentProfiles", () => {
 
     expect(screen.getByRole("button", { name: "Ny utstyrsprofil" })).toBeEnabled();
     expect(screen.queryByText("Du kan ha opptil 10 utstyrsprofiler.")).not.toBeInTheDocument();
+  });
+});
+
+describe("sheet accessibility (story 6.4)", () => {
+  it("Ny utstyrsprofil: focus moves in, Esc closes, focus back on the opener", async () => {
+    renderProfiles();
+    await screen.findByText("Hjemme");
+
+    await expectOpenerSheetFocusCycle(
+      screen.getByRole("button", { name: "Ny utstyrsprofil" }),
+      () => screen.getByRole("dialog", { name: "Ny utstyrsprofil" }),
+    );
+  });
+
+  it("Endre: focus moves in, Esc closes, focus back on the opener", async () => {
+    renderProfiles();
+
+    await expectOpenerSheetFocusCycle(
+      await screen.findByRole("button", { name: "Endre Hjemme" }),
+      () => screen.getByRole("dialog", { name: "Endre utstyrsprofil" }),
+    );
   });
 });
