@@ -8,12 +8,18 @@ import { ApiError, call } from "@/modules/identity/api";
 
 export type Workout = components["schemas"]["WorkoutResponse"];
 export type WorkoutExercise = components["schemas"]["WorkoutExerciseResponse"];
+export type WorkoutSet = components["schemas"]["SetResponse"];
+export type SetValues = Pick<WorkoutSet, "reps" | "weight_kg" | "seconds" | "done">;
 
 /** The Økt page: always the workout in progress. */
 export const WORKOUT_PATH = "/trening/okt";
 
 /** The server refuses more than this (422). */
 export const MAX_WORKOUT_EXERCISES = 20;
+/** The server refuses more sets than this per exercise (422). */
+export const MAX_SETS = 20;
+/** The reps suggested in an empty set (FR23); ticking "Ferdig" on an empty set saves it. */
+export const SUGGESTED_REPS = 10;
 
 export const ACTIVE_WORKOUT_KEY = ["workouts", "active"] as const;
 
@@ -42,10 +48,30 @@ export function useActiveWorkout() {
   });
 }
 
+/**
+ * Writes on the Økt page (sets, remove, reorder) run one at a time, in the order they were
+ * made, so a later answer (the whole workout) never gets overwritten by an earlier one that
+ * arrived late, e.g. a blur save of reps followed at once by ticking "Ferdig".
+ */
+let writeQueue: Promise<unknown> = Promise.resolve();
+function serial<T>(run: () => Promise<T>): Promise<T> {
+  const next = writeQueue.then(run, run);
+  writeQueue = next.catch(() => undefined);
+  return next;
+}
+
+/** Sets being deleted: hidden from every stored answer until the delete has settled, so
+ * an earlier write's answer that lands later never brings a deleted row back. */
+const pendingDeletes = new Set<string>();
+
 /** Every write returns the whole workout; it is the one in progress, so cache it as such. */
 function useStoreWorkout() {
   const queryClient = useQueryClient();
-  return (workout: Workout) => queryClient.setQueryData(ACTIVE_WORKOUT_KEY, workout);
+  return (workout: Workout) => {
+    let shown = workout;
+    for (const setId of pendingDeletes) shown = withoutSet(shown, setId);
+    queryClient.setQueryData(ACTIVE_WORKOUT_KEY, shown);
+  };
 }
 
 async function startWorkout(date: string): Promise<Workout> {
@@ -105,10 +131,12 @@ export function useRemoveWorkoutExercise() {
   const store = useStoreWorkout();
   return useMutation({
     mutationFn: ({ workoutId, id }: { workoutId: string; id: string }) =>
-      call(() =>
-        api.DELETE("/api/workouts/{workout_id}/exercises/{workout_exercise_id}", {
-          params: { path: { workout_id: workoutId, workout_exercise_id: id } },
-        }),
+      serial(() =>
+        call(() =>
+          api.DELETE("/api/workouts/{workout_id}/exercises/{workout_exercise_id}", {
+            params: { path: { workout_id: workoutId, workout_exercise_id: id } },
+          }),
+        ),
       ),
     onSuccess: store,
     onError: () => queryClient.invalidateQueries({ queryKey: ACTIVE_WORKOUT_KEY }),
@@ -120,11 +148,13 @@ export function useReorderWorkoutExercises() {
   const store = useStoreWorkout();
   return useMutation({
     mutationFn: ({ workoutId, ids }: { workoutId: string; ids: string[] }) =>
-      call(() =>
-        api.PUT("/api/workouts/{workout_id}/exercises/order", {
-          params: { path: { workout_id: workoutId } },
-          body: { ids },
-        }),
+      serial(() =>
+        call(() =>
+          api.PUT("/api/workouts/{workout_id}/exercises/order", {
+            params: { path: { workout_id: workoutId } },
+            body: { ids },
+          }),
+        ),
       ),
     onSuccess: store,
     onError: () => queryClient.invalidateQueries({ queryKey: ACTIVE_WORKOUT_KEY }),
@@ -138,4 +168,126 @@ export function moveId(ids: string[], index: number, direction: -1 | 1): string[
   const next = [...ids];
   [next[index], next[target]] = [next[target], next[index]];
   return next;
+}
+
+// --- Sets (story 5.2) ---------------------------------------------------------------------
+
+
+/** Refetch after an error, except for field errors: the server state did not change. */
+function useRefetchOnError() {
+  const queryClient = useQueryClient();
+  return (error: Error) => {
+    if (error instanceof ApiError && error.code === "validation_error") return;
+    return queryClient.invalidateQueries({ queryKey: ACTIVE_WORKOUT_KEY });
+  };
+}
+
+export function useAddSet() {
+  const store = useStoreWorkout();
+  const onError = useRefetchOnError();
+  return useMutation({
+    mutationFn: ({
+      workoutId,
+      workoutExerciseId,
+      body,
+    }: {
+      workoutId: string;
+      workoutExerciseId: string;
+      /** Values and 0-based position, for "Angre"; left out for a new empty set last. */
+      body?: Partial<SetValues> & { position?: number };
+    }) =>
+      serial(() =>
+        call(() =>
+          api.POST("/api/workouts/{workout_id}/exercises/{workout_exercise_id}/sets", {
+            params: { path: { workout_id: workoutId, workout_exercise_id: workoutExerciseId } },
+            body: { done: false, ...body },
+          }),
+        ),
+      ),
+    onSuccess: store,
+    onError,
+  });
+}
+
+export function useUpdateSet() {
+  const store = useStoreWorkout();
+  const onError = useRefetchOnError();
+  return useMutation({
+    mutationFn: ({
+      workoutId,
+      setId,
+      body,
+    }: {
+      workoutId: string;
+      setId: string;
+      body: Partial<SetValues>;
+    }) =>
+      serial(() =>
+        call(() =>
+          api.PATCH("/api/workouts/{workout_id}/sets/{set_id}", {
+            params: { path: { workout_id: workoutId, set_id: setId } },
+            body,
+          }),
+        ),
+      ),
+    onSuccess: store,
+    onError,
+  });
+}
+
+/** The workout without one set, the others renumbered: shown at once while deleting. */
+export function withoutSet(workout: Workout, setId: string): Workout {
+  return {
+    ...workout,
+    exercises: workout.exercises.map((exercise) => ({
+      ...exercise,
+      sets: exercise.sets
+        .filter((set) => set.id !== setId)
+        .map((set, position) => ({ ...set, position })),
+    })),
+  };
+}
+
+/** Delete is immediate: the row disappears before the server answers (UX-DR11). */
+export function useDeleteSet() {
+  const queryClient = useQueryClient();
+  const store = useStoreWorkout();
+  return useMutation({
+    mutationFn: ({ workoutId, setId }: { workoutId: string; setId: string }) =>
+      serial(() =>
+        call(() =>
+          api.DELETE("/api/workouts/{workout_id}/sets/{set_id}", {
+            params: { path: { workout_id: workoutId, set_id: setId } },
+          }),
+        ),
+      ),
+    onMutate: async ({ setId }) => {
+      pendingDeletes.add(setId);
+      // A refetch in flight must not bring the row back either.
+      await queryClient.cancelQueries({ queryKey: ACTIVE_WORKOUT_KEY });
+      const current = queryClient.getQueryData<Workout | null>(ACTIVE_WORKOUT_KEY);
+      if (current) queryClient.setQueryData(ACTIVE_WORKOUT_KEY, withoutSet(current, setId));
+    },
+    onSuccess: store,
+    onError: (_error, { setId }) => {
+      pendingDeletes.delete(setId);
+      return queryClient.invalidateQueries({ queryKey: ACTIVE_WORKOUT_KEY });
+    },
+    onSettled: (_data, _error, { setId }) => {
+      pendingDeletes.delete(setId);
+    },
+  });
+}
+
+/** "12,5" or "12.5" → 12.5; empty → null; anything else → undefined (not a number). */
+export function parseNumber(text: string): number | null | undefined {
+  const trimmed = text.trim().replace(",", ".");
+  if (trimmed === "") return null;
+  if (!/^-?\d+(\.\d*)?$|^-?\.\d+$/.test(trimmed)) return undefined;
+  return Number(trimmed);
+}
+
+/** 12.5 → "12,5" (Norwegian decimal comma); null → "". */
+export function formatNumber(value: number | null | undefined): string {
+  return value === null || value === undefined ? "" : String(value).replace(".", ",");
 }

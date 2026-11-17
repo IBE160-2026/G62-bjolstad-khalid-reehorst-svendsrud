@@ -29,6 +29,7 @@ from app.modules.exercises.schemas import (
     ExerciseListItem,
     ExerciseSearchItem,
     ExerciseSearchResponse,
+    ExerciseType,
     SEARCH_MAX_LENGTH,
     SEARCH_MIN_LENGTH,
     SuggestionsResponse,
@@ -83,6 +84,15 @@ def get_list_items(
     left out. Used by other modules, e.g. workouts, which never read the repository."""
     exercises = repository.get_exercises(db, list(set(exercise_ids)))
     return {exercise.id: _list_item(exercise, _primary(exercise)) for exercise in exercises}
+
+
+def get_types(
+    db: DbSessionType, exercise_ids: Iterable[uuid.UUID]
+) -> dict[uuid.UUID, ExerciseType]:
+    """Each exercise's type (reps or time) by id; unknown ids are left out. Used by
+    workouts to validate and show sets."""
+    exercises = repository.get_exercises(db, list(set(exercise_ids)))
+    return {exercise.id: ExerciseType(exercise.type) for exercise in exercises}
 
 
 def get_exercise(db: DbSessionType, exercise_id: str) -> ExerciseDetail:

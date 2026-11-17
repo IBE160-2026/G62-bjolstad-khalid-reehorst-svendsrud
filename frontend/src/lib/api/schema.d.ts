@@ -530,7 +530,8 @@ export interface paths {
         put?: never;
         /**
          * Add Workout Exercise
-         * @description Add an exercise last. Each exercise once (409), at most 20 (422).
+         * @description Add an exercise last with three empty sets. Each exercise once (409), at most 20
+         *     (422).
          */
         post: operations["add_workout_exercise"];
         delete?: never;
@@ -577,6 +578,50 @@ export interface paths {
         options?: never;
         head?: never;
         patch?: never;
+        trace?: never;
+    };
+    "/api/workouts/{workout_id}/exercises/{workout_exercise_id}/sets": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Add Set
+         * @description Add a set to an exercise, last or at `position`. At most 20 sets per exercise.
+         */
+        post: operations["add_set"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/workouts/{workout_id}/sets/{set_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Delete Set
+         * @description Delete a set; the others keep their order.
+         */
+        delete: operations["delete_set"];
+        options?: never;
+        head?: never;
+        /**
+         * Update Set
+         * @description Change reps, kg, seconds or done; null clears a value.
+         */
+        patch: operations["update_set"];
         trace?: never;
     };
 }
@@ -972,6 +1017,59 @@ export interface components {
             password: string;
         };
         /**
+         * SetCreate
+         * @description A new set (story 5.2). Values are optional (an empty set is fine); `position` is
+         *     0-based and puts the set there (used by "Angre"); without it the set is added last.
+         */
+        SetCreate: {
+            /** Reps */
+            reps?: number | null;
+            /** Weight Kg */
+            weight_kg?: number | null;
+            /** Seconds */
+            seconds?: number | null;
+            /**
+             * Done
+             * @default false
+             */
+            done: boolean;
+            /** Position */
+            position?: number | null;
+        };
+        /** SetResponse */
+        SetResponse: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Position */
+            position: number;
+            /** Reps */
+            reps: number | null;
+            /** Weight Kg */
+            weight_kg: number | null;
+            /** Seconds */
+            seconds: number | null;
+            /** Done */
+            done: boolean;
+        };
+        /**
+         * SetUpdate
+         * @description Change a set. A left-out field is unchanged; null clears `reps`, `weight_kg` or
+         *     `seconds` (null `done` is unchanged).
+         */
+        SetUpdate: {
+            /** Reps */
+            reps?: number | null;
+            /** Weight Kg */
+            weight_kg?: number | null;
+            /** Seconds */
+            seconds?: number | null;
+            /** Done */
+            done?: boolean | null;
+        };
+        /**
          * Sex
          * @enum {string}
          */
@@ -1048,10 +1146,13 @@ export interface components {
             /** Name */
             name: string;
             level: components["schemas"]["Level"];
+            type: components["schemas"]["ExerciseType"];
             /** Primary Muscle Group */
             primary_muscle_group: string;
             /** Equipment */
             equipment: string[];
+            /** Sets */
+            sets: components["schemas"]["SetResponse"][];
         };
         /** WorkoutResponse */
         WorkoutResponse: {
@@ -2571,6 +2672,164 @@ export interface operations {
                 };
             };
             /** @description Validation error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Default Response */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    add_set: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                workout_id: string;
+                workout_exercise_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["SetCreate"] | null;
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WorkoutResponse"];
+                };
+            };
+            /** @description workout_not_found, workout_exercise_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description set_limit, validation_error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Default Response */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    delete_set: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                workout_id: string;
+                set_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WorkoutResponse"];
+                };
+            };
+            /** @description workout_not_found, set_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Validation error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Default Response */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    update_set: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                workout_id: string;
+                set_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SetUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WorkoutResponse"];
+                };
+            };
+            /** @description workout_not_found, set_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description validation_error */
             422: {
                 headers: {
                     [name: string]: unknown;

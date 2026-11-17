@@ -1,20 +1,27 @@
-"""Workout rules (story 5.1): start or resume the one workout in progress, add exercises
-last, remove them and change their order. Exercises are looked up through the exercises
-service, never its repository."""
+"""Workout rules (stories 5.1, 5.2): start or resume the one workout in progress, add exercises
+last, remove them and change their order, and log the sets of each exercise. Exercises are
+looked up through the exercises service, never its repository."""
 
 import datetime as dt
 import uuid
 from datetime import datetime
+from decimal import Decimal
 
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session as DbSessionType
 
-from app.core.errors import AppError
+from app.core.errors import VALIDATION_MESSAGE, AppError, FieldError
 from app.modules.exercises import service as exercises_service
+from app.modules.exercises.schemas import ExerciseType
 from app.modules.workouts import repository
-from app.modules.workouts.models import Workout, WorkoutExercise
+from app.modules.workouts.models import Set, Workout, WorkoutExercise
 from app.modules.workouts.schemas import (
+    DEFAULT_SETS,
     MAX_EXERCISES,
+    MAX_SETS,
+    SetCreate,
+    SetResponse,
+    SetUpdate,
     WorkoutExerciseResponse,
     WorkoutResponse,
 )
@@ -29,6 +36,15 @@ EXERCISE_LIMIT_CODE = "workout_exercise_limit"
 EXERCISE_LIMIT_MESSAGE = "Du kan ha opptil 20 øvelser i én økt."
 INVALID_ORDER_CODE = "invalid_workout_order"
 INVALID_ORDER_MESSAGE = "Rekkefølgen stemmer ikke med økta. Last inn siden på nytt."
+SET_NOT_FOUND_CODE = "set_not_found"
+SET_NOT_FOUND_MESSAGE = "Fant ikke settet. Last inn siden på nytt."
+SET_LIMIT_CODE = "set_limit"
+SET_LIMIT_MESSAGE = "Du kan ha opptil 20 sett per øvelse."
+VALIDATION_CODE = "validation_error"
+REPS_REQUIRED_MESSAGE = "Fyll inn repetisjoner."
+SECONDS_REQUIRED_MESSAGE = "Fyll inn sekunder."
+NOT_FOR_TIME_MESSAGE = "Fjern verdien: denne øvelsen måles i sekunder."
+NOT_FOR_REPS_MESSAGE = "Fjern verdien: denne øvelsen måles i repetisjoner og kg."
 
 
 def _parse_id(value: str) -> uuid.UUID | None:
@@ -63,8 +79,21 @@ def _get_unfinished(db: DbSessionType, user_id: uuid.UUID, workout_id: str) -> W
     return workout
 
 
+def _set_response(set_: Set) -> SetResponse:
+    return SetResponse(
+        id=set_.id,
+        position=set_.position,
+        reps=set_.reps,
+        weight_kg=float(set_.weight_kg) if set_.weight_kg is not None else None,
+        seconds=set_.seconds,
+        done=set_.done,
+    )
+
+
 def _response(db: DbSessionType, workout: Workout) -> WorkoutResponse:
-    items = exercises_service.get_list_items(db, (we.exercise_id for we in workout.exercises))
+    ids = [we.exercise_id for we in workout.exercises]
+    items = exercises_service.get_list_items(db, ids)
+    types = exercises_service.get_types(db, ids)
     exercises = []
     for we in workout.exercises:
         item = items[we.exercise_id]  # RESTRICT keeps every referenced exercise
@@ -74,8 +103,10 @@ def _response(db: DbSessionType, workout: Workout) -> WorkoutResponse:
                 exercise_id=we.exercise_id,
                 name=item.name,
                 level=item.level,
+                type=types[we.exercise_id],
                 primary_muscle_group=item.primary_muscle_group,
                 equipment=item.equipment,
+                sets=[_set_response(set_) for set_ in we.sets],
             )
         )
     return WorkoutResponse(id=workout.id, date=workout.date, exercises=exercises)
@@ -112,17 +143,20 @@ def get_workout(db: DbSessionType, user_id: uuid.UUID, workout_id: str) -> Worko
 
 
 def add_exercise(
-    db: DbSessionType, user_id: uuid.UUID, workout_id: str, exercise_id: str
+    db: DbSessionType, user_id: uuid.UUID, workout_id: str, exercise_id: str, now: datetime
 ) -> WorkoutResponse:
-    """Add the exercise last. 404 for an unknown workout or exercise, 409 if it is already
-    in the workout, 422 beyond 20 exercises."""
+    """Add the exercise last with three empty sets (FR23). 404 for an unknown workout or
+    exercise, 409 if it is already in the workout, 422 beyond 20 exercises."""
     workout = _get_unfinished(db, user_id, workout_id)
     exercise = exercises_service.get_exercise(db, exercise_id)  # 404 exercise_not_found
     if any(we.exercise_id == exercise.id for we in workout.exercises):
         raise AppError(409, ALREADY_IN_WORKOUT_CODE, ALREADY_IN_WORKOUT_MESSAGE)
     if len(workout.exercises) >= MAX_EXERCISES:
         raise AppError(422, EXERCISE_LIMIT_CODE, EXERCISE_LIMIT_MESSAGE)
-    added = WorkoutExercise(exercise_id=exercise.id)
+    added = WorkoutExercise(
+        exercise_id=exercise.id,
+        sets=[Set(position=i, done=False, created_at=now) for i in range(DEFAULT_SETS)],
+    )
     _renumber(workout, [*workout.exercises, added])
     try:
         db.flush()
@@ -158,5 +192,128 @@ def reorder_exercises(
     if len(ids) != len(by_id) or set(ids) != set(by_id):
         raise AppError(422, INVALID_ORDER_CODE, INVALID_ORDER_MESSAGE)
     _renumber(workout, [by_id[we_id] for we_id in ids])
+    db.flush()
+    return _response(db, workout)
+
+
+# --- Sets (story 5.2) ---------------------------------------------------------------------
+
+
+def _set_not_found() -> AppError:
+    # Same answer for a missing set and a set of another workout or user (FR3).
+    return AppError(404, SET_NOT_FOUND_CODE, SET_NOT_FOUND_MESSAGE)
+
+
+def _find_set(workout: Workout, set_id: str) -> tuple[WorkoutExercise, Set]:
+    parsed = _parse_id(set_id)
+    if parsed is not None:
+        for we in workout.exercises:
+            for set_ in we.sets:
+                if set_.id == parsed:
+                    return we, set_
+    raise _set_not_found()
+
+
+def _renumber_sets(we: WorkoutExercise, ordered: list[Set]) -> None:
+    for position, set_ in enumerate(ordered):
+        set_.position = position
+    we.sets = ordered
+
+
+def _check_set(
+    exercise_type: ExerciseType,
+    sent: dict[str, object],
+    reps: int | None,
+    seconds: int | None,
+    done: bool,
+) -> None:
+    """422 with field errors when a value does not fit the exercise type (only non-null
+    values sent now count) or when a done set lacks its main value."""
+    fields: list[FieldError] = []
+    if exercise_type == ExerciseType.TIME:
+        for name in ("reps", "weight_kg"):
+            if sent.get(name) is not None:
+                fields.append(FieldError(field=name, message=NOT_FOR_TIME_MESSAGE))
+    elif sent.get("seconds") is not None:
+        fields.append(FieldError(field="seconds", message=NOT_FOR_REPS_MESSAGE))
+    if not fields and done:
+        if exercise_type == ExerciseType.REPS and reps is None:
+            fields.append(FieldError(field="reps", message=REPS_REQUIRED_MESSAGE))
+        if exercise_type == ExerciseType.TIME and seconds is None:
+            fields.append(FieldError(field="seconds", message=SECONDS_REQUIRED_MESSAGE))
+    if fields:
+        raise AppError(422, VALIDATION_CODE, VALIDATION_MESSAGE, fields)
+
+
+def _exercise_type(db: DbSessionType, we: WorkoutExercise) -> ExerciseType:
+    return exercises_service.get_types(db, [we.exercise_id])[we.exercise_id]
+
+
+def _kg(value: float | None) -> Decimal | None:
+    return None if value is None else Decimal(str(value))
+
+
+def add_set(
+    db: DbSessionType,
+    user_id: uuid.UUID,
+    workout_id: str,
+    workout_exercise_id: str,
+    body: SetCreate,
+    now: datetime,
+) -> WorkoutResponse:
+    """Add a set at `position` (0-based; clamped to the end), or last. At most 20 sets per
+    exercise (422). The workout row stays locked (FOR UPDATE) until commit, so parallel
+    adds run one at a time and cannot pass the limit or break the positions."""
+    workout = _get_unfinished(db, user_id, workout_id)
+    parsed = _parse_id(workout_exercise_id)
+    we = next((item for item in workout.exercises if item.id == parsed), None)
+    if parsed is None or we is None:
+        raise AppError(404, WORKOUT_EXERCISE_NOT_FOUND_CODE, WORKOUT_EXERCISE_NOT_FOUND_MESSAGE)
+    if len(we.sets) >= MAX_SETS:
+        raise AppError(422, SET_LIMIT_CODE, SET_LIMIT_MESSAGE)
+    sent = body.model_dump(include={"reps", "weight_kg", "seconds"})
+    _check_set(_exercise_type(db, we), sent, body.reps, body.seconds, body.done)
+    added = Set(
+        reps=body.reps,
+        weight_kg=_kg(body.weight_kg),
+        seconds=body.seconds,
+        done=body.done,
+        created_at=now,
+    )
+    sets = list(we.sets)
+    position = len(sets) if body.position is None else min(body.position, len(sets))
+    sets.insert(position, added)
+    _renumber_sets(we, sets)
+    db.flush()
+    return _response(db, workout)
+
+
+def update_set(
+    db: DbSessionType, user_id: uuid.UUID, workout_id: str, set_id: str, body: SetUpdate
+) -> WorkoutResponse:
+    """Change the fields that were sent; null clears a value."""
+    workout = _get_unfinished(db, user_id, workout_id)
+    we, set_ = _find_set(workout, set_id)
+    sent = body.model_dump(include=body.model_fields_set & {"reps", "weight_kg", "seconds"})
+    reps = body.reps if "reps" in body.model_fields_set else set_.reps
+    seconds = body.seconds if "seconds" in body.model_fields_set else set_.seconds
+    done = set_.done if body.done is None else body.done
+    _check_set(_exercise_type(db, we), sent, reps, seconds, done)
+    set_.reps = reps
+    set_.seconds = seconds
+    if "weight_kg" in body.model_fields_set:
+        set_.weight_kg = _kg(body.weight_kg)
+    set_.done = done
+    db.flush()
+    return _response(db, workout)
+
+
+def delete_set(
+    db: DbSessionType, user_id: uuid.UUID, workout_id: str, set_id: str
+) -> WorkoutResponse:
+    """Delete a set for good; the others are renumbered and keep their order."""
+    workout = _get_unfinished(db, user_id, workout_id)
+    we, set_ = _find_set(workout, set_id)
+    _renumber_sets(we, [item for item in we.sets if item is not set_])
     db.flush()
     return _response(db, workout)

@@ -1,4 +1,4 @@
-"""Endpoints under /api/workouts (story 5.1). All require consent; every write returns the
+"""Endpoints under /api/workouts (stories 5.1, 5.2). All require consent; every write returns the
 whole workout. Another user's or a missing workout is 404 `workout_not_found` (FR3)."""
 
 from fastapi import APIRouter, Response, status
@@ -10,6 +10,8 @@ from app.modules.identity.consent import ConsentedUser
 from app.modules.workouts import service
 from app.modules.workouts.schemas import (
     ActiveWorkoutResponse,
+    SetCreate,
+    SetUpdate,
     WorkoutCreate,
     WorkoutExerciseAdd,
     WorkoutExerciseOrder,
@@ -66,10 +68,15 @@ def get_workout(workout_id: str, current_user: ConsentedUser, db: DbSession) -> 
     },
 )
 def add_workout_exercise(
-    workout_id: str, body: WorkoutExerciseAdd, current_user: ConsentedUser, db: DbSession
+    workout_id: str,
+    body: WorkoutExerciseAdd,
+    current_user: ConsentedUser,
+    db: DbSession,
+    now: Now,
 ) -> WorkoutResponse:
-    """Add an exercise last. Each exercise once (409), at most 20 (422)."""
-    return service.add_exercise(db, current_user.id, workout_id, body.exercise_id)
+    """Add an exercise last with three empty sets. Each exercise once (409), at most 20
+    (422)."""
+    return service.add_exercise(db, current_user.id, workout_id, body.exercise_id, now)
 
 
 @router.put(
@@ -98,3 +105,55 @@ def remove_workout_exercise(
 ) -> WorkoutResponse:
     """Remove one exercise from the workout; the others keep their order."""
     return service.remove_exercise(db, current_user.id, workout_id, workout_exercise_id)
+
+
+@router.post(
+    "/{workout_id}/exercises/{workout_exercise_id}/sets",
+    response_model=WorkoutResponse,
+    operation_id="add_set",
+    responses={
+        404: {"model": ErrorResponse, "description": "workout_not_found, workout_exercise_not_found"},
+        422: {"model": ErrorResponse, "description": "set_limit, validation_error"},
+    },
+)
+def add_set(
+    workout_id: str,
+    workout_exercise_id: str,
+    current_user: ConsentedUser,
+    db: DbSession,
+    now: Now,
+    body: SetCreate | None = None,
+) -> WorkoutResponse:
+    """Add a set to an exercise, last or at `position`. At most 20 sets per exercise."""
+    return service.add_set(
+        db, current_user.id, workout_id, workout_exercise_id, body or SetCreate(), now
+    )
+
+
+@router.patch(
+    "/{workout_id}/sets/{set_id}",
+    response_model=WorkoutResponse,
+    operation_id="update_set",
+    responses={
+        404: {"model": ErrorResponse, "description": "workout_not_found, set_not_found"},
+        422: {"model": ErrorResponse, "description": "validation_error"},
+    },
+)
+def update_set(
+    workout_id: str, set_id: str, body: SetUpdate, current_user: ConsentedUser, db: DbSession
+) -> WorkoutResponse:
+    """Change reps, kg, seconds or done; null clears a value."""
+    return service.update_set(db, current_user.id, workout_id, set_id, body)
+
+
+@router.delete(
+    "/{workout_id}/sets/{set_id}",
+    response_model=WorkoutResponse,
+    operation_id="delete_set",
+    responses={404: {"model": ErrorResponse, "description": "workout_not_found, set_not_found"}},
+)
+def delete_set(
+    workout_id: str, set_id: str, current_user: ConsentedUser, db: DbSession
+) -> WorkoutResponse:
+    """Delete a set; the others keep their order."""
+    return service.delete_set(db, current_user.id, workout_id, set_id)

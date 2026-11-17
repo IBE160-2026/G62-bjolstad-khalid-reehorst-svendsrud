@@ -1186,6 +1186,32 @@ Det viktigste funnet: Dekningsanalysen er regnet ut fra øvelseslista og viser a
 
 ---
 
+## 2026-11-17 – Story 5.2 (logge sett)
+
+**Verktøy:** Claude Code (BMAD `bmad-build`, lettere prosess med én kontrollør)
+**Hvem:** Osman Khalid
+**Bakgrunn:** Brukeren skal kunne registrere nøyaktig hva hun gjorde i hvert sett.
+
+### Hva vi ba KI om
+
+1. Lage settrader med repetisjoner/kg eller sekunder, «Ferdig»-hake og sletting med angre.
+
+### Hva KI produserte
+
+- Spec, ny tabell og endepunkter for sett, settrader på Økt-siden og nye tester.
+
+### Hva vi selv vurderte og kontrollerte
+
+- Osman godkjente spec-en før koding.
+- Én KI-kontrollør fant 12 punkter: 5 grupper rettet, 3 avvist med begrunnelse (ett fordi låsen allerede fantes).
+
+### Status
+
+- [x] Story 5.2 bygget og testet
+- [ ] Review av PR fra gruppen
+
+---
+
 ## Mal for nye oppføringer
 
 ```markdown
