@@ -1051,6 +1051,34 @@ Det viktigste funnet: Dekningsanalysen er regnet ut fra øvelseslista og viser a
 
 ---
 
+## 2026-11-17 – Story 3.7 (norske merkevarer i søket)
+
+**Verktøy:** Claude Code (BMAD `bmad-build`)
+**Hvem:** Osman Khalid
+**Bakgrunn:** Søket fant bare råvarer; brukere vil finne for eksempel «Tine Lettmelk» uten å skrive strekkode.
+
+### Hva vi ba KI om
+
+1. Lage en importkommando som henter populære norske produkter fra Open Food Facts og lagrer dem i repoet.
+
+### Hva KI produserte
+
+- Importkommando, innlasting ved oppstart, lisensfil (ODbL), README-avsnitt og tester.
+
+### Hva vi selv vurderte og kontrollerte
+
+- Osman godkjente nedlastingen og valgte de mest populære produktene (først 2 000, så 1 000 da Open Food Facts var ustabil).
+- Open Food Facts svarte «503» store deler av en dag; KI la til nye forsøk og en hurtigbuffer så importen kunne fortsette der den stoppet.
+- Søk på «lettmelk» ble sjekket i den ekte appen og finner TINE og Q.
+- Tre KI-kontrollører fant 21 punkter: 7 grupper rettet, 7 avvist med begrunnelse.
+
+### Status
+
+- [x] Story 3.7 bygget og testet
+- [ ] Review av PR fra gruppen
+
+---
+
 ## Mal for nye oppføringer
 
 ```markdown

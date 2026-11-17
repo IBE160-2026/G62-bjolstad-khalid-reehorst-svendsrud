@@ -1,6 +1,6 @@
 """Offline import of the most scanned Norwegian Open Food Facts products (story 3.7).
 
-`python -m app.cli import-off-norway` fetches 20 pages of 100 products from the OFF search
+`python -m app.cli import-off-norway` fetches PAGES pages of 100 products from the OFF search
 API (at most 10 searches per minute: we wait at least 6 s between pages), keeps products
 with a name, a valid EAN and kcal per 100 g, and writes a committed seed file. The app
 itself never calls the search API; `seed_if_empty` loads the file. Data fra Open Food
@@ -10,6 +10,7 @@ Facts (ODbL 1.0). Never run in tests: they pass a stubbed `urlopen` and a fake `
 import http.client
 import json
 import os
+import shutil
 import time
 import urllib.error
 import urllib.request
@@ -39,6 +40,9 @@ SECONDS_BETWEEN_ATTEMPTS = 30.0
 MAX_PAGE_BYTES = 20_000_000
 
 DATA_DIR = Path(__file__).resolve().parent.parent / "seed" / "data"
+# Pages fetched so far are kept here (git-ignored), so a rerun after an OFF 503 only
+# fetches the missing pages. Removed after a successful import.
+CACHE_DIR = Path(__file__).resolve().parents[2] / ".off_import_cache"
 OUTPUT_FILE = DATA_DIR / "off_norway.json"
 LICENSE_FILE = DATA_DIR / "OFF_LICENSE.md"
 
@@ -74,13 +78,34 @@ def fetch_products(
     urlopen: Callable[..., Any] = urllib.request.urlopen,
     sleep: Callable[[float], None] = time.sleep,
     pages: int = PAGES,
+    cache_dir: Path | None = None,
 ) -> list[dict[str, Any]]:
-    """Every product on pages 1..pages, in OFF's order (most scanned first)."""
+    """Every product on pages 1..pages, in OFF's order (most scanned first).
+
+    With `cache_dir`, each fetched page is saved there and reused on the next run, so an
+    interrupted import resumes where it stopped instead of starting over.
+    """
     products: list[dict[str, Any]] = []
+    fetched_any = False
     for page in range(1, pages + 1):
-        if page > 1:
+        cached = cache_dir / f"page_{page}.json" if cache_dir else None
+        if cached is not None and cached.exists():
+            try:
+                products.extend(json.loads(cached.read_text(encoding="utf-8")))
+                continue
+            except ValueError:
+                cached.unlink()  # a damaged page (interrupted run) is simply fetched again
+        if fetched_any:
             sleep(SECONDS_BETWEEN_PAGES)
-        products.extend(_fetch_page_with_retries(urlopen, sleep, page))
+        page_products = _fetch_page_with_retries(urlopen, sleep, page)
+        fetched_any = True
+        if cached is not None:
+            try:
+                cached.parent.mkdir(parents=True, exist_ok=True)
+                _write_atomic(cached, json.dumps(page_products))
+            except OSError as error:
+                raise OffImportError(f"page {page}: cannot cache: {error}") from error
+        products.extend(page_products)
     return products
 
 
@@ -166,10 +191,14 @@ def run_import(
     sleep: Callable[[float], None] = time.sleep,
     data_dir: Path = DATA_DIR,
     today: date | None = None,
+    cache_dir: Path | None = None,
 ) -> tuple[int, int]:
     """Fetch, filter and write. Returns (fetched, kept). Raises OffImportError before
-    writing anything if any page fails."""
-    products = fetch_products(urlopen, sleep)
+    writing anything if any page fails; pages already fetched stay in `cache_dir` so the
+    next run resumes. The cache is removed after a successful write."""
+    products = fetch_products(urlopen, sleep, cache_dir=cache_dir)
     rows = select_products(products)
     write_outputs(rows, data_dir, today or date.today())
+    if cache_dir is not None:
+        shutil.rmtree(cache_dir, ignore_errors=True)
     return len(products), len(rows)

@@ -96,6 +96,7 @@ def seed_off_items(db: DbSessionType, path: Path | None = None) -> int:
     db.flush()
     return added
 
+
 def seed_exercises(db: DbSessionType, path: Path = EXERCISES_FILE) -> int:
     """Insert every equipment type, muscle group and exercise whose slug is missing, so
     exercises added to the file later (#35–39) also reach an existing database. Existing

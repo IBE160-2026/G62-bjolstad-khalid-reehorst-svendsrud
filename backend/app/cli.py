@@ -63,11 +63,11 @@ def purge() -> int:
 def import_off_norway() -> int:
     """Fetch the 1 000 most scanned Norwegian Open Food Facts products into the committed
     seed file (story 3.7). Needs network; run by hand, never at startup or in tests."""
-    from app.ports.off_import import OffImportError, run_import
+    from app.ports.off_import import CACHE_DIR, OffImportError, run_import
 
     try:
-        fetched, kept = run_import()
-    except OffImportError as error:
+        fetched, kept = run_import(cache_dir=CACHE_DIR)
+    except (OffImportError, OSError, ValueError) as error:
         logger.error("Import failed, seed file untouched: %s", error)
         return 1
     print(f"Fetched {fetched} products, kept {kept}.")

@@ -87,14 +87,16 @@ Endringer i koden krever at containerne bygges på nytt: `docker compose up --bu
 
 ### Oppdatere matdata
 
-Søket finner norske merkevarer fra Open Food Facts uten nett, fordi de ligger i den committede seed-fila `backend/app/seed/data/off_norway.json` (ODbL, se `OFF_LICENSE.md` i samme mappe). Fila lastes inn ved oppstart med `APP_ENV=local`. For å hente de 1 000 mest skannede norske varene på nytt (krever nett, tar et par minutter fordi OFF tillater maks 10 søk i minuttet):
+Søket finner norske merkevarer fra Open Food Facts uten nett, fordi de ligger i den committede seed-fila `backend/app/seed/data/off_norway.json` (ODbL, se `OFF_LICENSE.md` i samme mappe). Fila lastes inn ved oppstart med `APP_ENV=local`. For å hente de 1 000 mest skannede norske varene på nytt (krever nett; minst ca. 1 minutt fordi OFF tillater maks 10 søk i minuttet, men opptil 10–15 minutter når OFF svarer «503», fordi hver side prøves 3 ganger med 30 sekunders pause):
 
 ```bash
 cd backend
 uv run python -m app.cli import-off-norway
 ```
 
-Kommandoen skriver `Fetched N products, kept M.` og endrer ingenting hvis en side feiler. Commit de to oppdaterte filene.
+Kommandoen skriver `Fetched N products, kept M.` og endrer ingenting hvis en side feiler. Sidene som allerede er hentet, ligger i `backend/.off_import_cache/` (ikke i git), så neste kjøring henter bare de som mangler. Commit de to oppdaterte filene.
+
+En database som allerede har varene, får ikke nye verdier for dem ved oppstart (bare nye strekkoder legges til). For å ta inn rettede verdier lokalt: `docker compose down -v` og start på nytt (sletter lokale testdata).
 
 ## Dokumentasjon
 

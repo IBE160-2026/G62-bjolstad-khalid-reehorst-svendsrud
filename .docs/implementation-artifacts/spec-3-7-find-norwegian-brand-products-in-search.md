@@ -2,7 +2,7 @@
 title: 'Story 3.7: Find Norwegian brand products in search'
 type: 'feature'
 created: '2026-11-16'
-status: 'in-progress'
+status: 'done'
 baseline_commit: '3a64078ca090c109bf281d680eb7021f9981a491'
 route: 'dispatch'
 review_loop_iteration: 0
@@ -50,9 +50,9 @@ context:
 ## Tasks & Acceptance
 
 **Execution:**
-- [ ] import command, seed loading, tests -- FR11, FR16, NFR6.
-- [ ] run the import once; commit `off_norway.json` and `OFF_LICENSE.md`.
-- [ ] README note.
+- [x] import command, seed loading, tests -- FR11, FR16, NFR6.
+- [x] run the import once; commit `off_norway.json` and `OFF_LICENSE.md`.
+- [x] README note.
 
 **Acceptance Criteria:**
 - Given the running stack after the seed, when a user searches "lettmelk", then TINE and Q lettmelk products appear with "Data fra Open Food Facts".
@@ -67,8 +67,26 @@ context:
 ## Spec Change Log
 
 - 2026-11-16: the OFF search API answered 503 on several runs (page 1, 2 and 11). Osman approved retries (3 tries per page, 30 s apart) and then 10 pages (1 000 products) instead of 20; `PAGES` can be raised later. Import still pending: the data file is created when OFF answers. Last try 16.11 evening failed at page 8 (503).
+- 2026-11-17: the import keeps fetched pages in `backend/.off_import_cache/` (git-ignored) so a rerun after a 503 only fetches the missing pages; it then succeeded: 1 000 fetched, 941 kept (`off_norway.json`, 170 kB). The frozen "2 000 / pages 1–20" is superseded by the 10-page decision above.
 
 ## Review Triage Log
+
+| Layer | Finding | Verdict | Evidence | Route |
+|---|---|---|---|---|
+| BH, EC, VG | Cached page written non-atomically; damaged page blocks every rerun | medium | Plain `write_text`; unguarded `json.loads` | patch |
+| BH, EC | Cache cleanup can crash after a successful write; CLI catches only `OffImportError` | low | `rmdir` raises on stray files | patch |
+| VG | CLI's `cache_dir` argument untested | medium | Stub discarded kwargs | patch |
+| BH | License count not checked against the data; test bound still 2 000 | low | Files could drift | patch |
+| BH, EC | Docstring says 20 pages; `seed.py` missing a blank line | low | Direct corrections | patch |
+| BH | README underestimates run time; no resume or re-seed note | low | Doc only | patch |
+| BH | Seed tests load the full OFF file | low | Slower suite; patched path in `test_seed.py` | patch |
+| BH, EC | `off_norway.json` missing from the diff | false | Excluded from the review diff on purpose (8 471 lines of data) | rejected |
+| BH, EC | Cache has no age/URL check | low | Cache is removed after every successful run | rejected |
+| BH, EC | The two output files are replaced separately | low | Needs a disk error between two local writes | rejected |
+| EC | Malformed committed file crashes startup | low | File is generated and validated by a test | rejected |
+| EC | Concurrent startups can race on the shared-barcode index | low | One backend process | rejected |
+| EC | No pause before the first network page when resuming | low | Reruns start minutes apart | rejected |
+| BH | Imports private `_text`; tests use `OSError` not `HTTPError(503)` | low | Same failure path (`URLError` subclass) | rejected |
 
 ## Verification
 

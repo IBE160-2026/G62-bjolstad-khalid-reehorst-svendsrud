@@ -154,18 +154,22 @@ def test_network_error_leaves_files_untouched(tmp_path: Path, error: BaseExcepti
 def test_cli_prints_counts_and_exits_non_zero_on_error(
     monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str], tmp_path: Path
 ) -> None:
+    calls: list[dict[str, object]] = []
     real_run_import = off_import.run_import
     monkeypatch.setattr(
         off_import,
         "run_import",
-        lambda: real_run_import(
-            StubSearch([PAGE_1, PAGE_2]), FakeSleep(), tmp_path, date(2026, 11, 16)
-        ),
+        lambda **kwargs: (
+            calls.append(kwargs),
+            real_run_import(StubSearch([PAGE_1, PAGE_2]), FakeSleep(), tmp_path, date(2026, 11, 16)),
+        )[1],
     )
     assert cli.main(["import-off-norway"]) == 0
     assert "Fetched 9 products, kept 3." in capsys.readouterr().out
+    # The command turns on the page cache, so a rerun after an OFF 503 resumes.
+    assert calls == [{"cache_dir": off_import.CACHE_DIR}]
 
-    def failing() -> tuple[int, int]:
+    def failing(**_: object) -> tuple[int, int]:
         raise off_import.OffImportError("page 1: 503")
 
     monkeypatch.setattr(off_import, "run_import", failing)
@@ -179,13 +183,17 @@ def test_committed_seed_file_is_valid() -> None:
     rows = json.loads(seed.OFF_NORWAY_FILE.read_text(encoding="utf-8"))
     barcodes = [row["barcode"] for row in rows]
 
-    assert 0 < len(rows) <= 2000
+    assert 0 < len(rows) <= off_import.PAGES * 100
     assert barcodes == sorted(set(barcodes))
     for row in rows:
         assert is_valid_ean(row["barcode"])
         assert row["name"]
         assert 0 <= row["kcal_per_100g"] <= 900
-    assert (seed.OFF_NORWAY_FILE.parent / "OFF_LICENSE.md").exists()
+    license_text = (seed.OFF_NORWAY_FILE.parent / "OFF_LICENSE.md").read_text(encoding="utf-8")
+    # The license states the same count as the data file, and the required attribution.
+    assert str(len(rows)) in license_text
+    for text in ("Data fra Open Food Facts", "ODbL"):
+        assert text in license_text
 
 
 # --- Seed loading -------------------------------------------------------------------------
@@ -308,4 +316,44 @@ def test_a_page_that_keeps_failing_stops_the_import(tmp_path: Path) -> None:
 
     assert stub.page_2_attempts == off_import.ATTEMPTS_PER_PAGE
     assert not (tmp_path / "off_norway.json").exists()
+
+
+def test_an_interrupted_import_resumes_from_the_cached_pages(tmp_path: Path) -> None:
+    cache = tmp_path / "cache"
+    data = tmp_path / "data"
+    data.mkdir()
+
+    # First run: page 2 keeps failing, so only page 1 is cached and nothing is written.
+    with pytest.raises(off_import.OffImportError):
+        off_import.run_import(
+            StubSearch([PAGE_1], OSError("503")), FakeSleep(), data, cache_dir=cache
+        )
+    assert (cache / "page_1.json").exists()
+    assert not (data / "off_norway.json").exists()
+
+    # Second run: page 1 comes from the cache, the rest from OFF; the cache is removed.
+    stub = StubSearch([PAGE_1, PAGE_2])
+    fetched, kept = off_import.run_import(
+        stub, FakeSleep(), data, date(2026, 11, 17), cache_dir=cache
+    )
+    requested_pages = [
+        int(re.search(r"[?&]page=(\d+)", request.full_url).group(1))
+        for request, _ in stub.requests
+    ]
+    assert 1 not in requested_pages
+    assert (fetched, kept) == (9, 3)
+    assert (data / "off_norway.json").exists()
+    assert not cache.exists()
+
+
+def test_a_damaged_cached_page_is_fetched_again(tmp_path: Path) -> None:
+    cache = tmp_path / "cache"
+    cache.mkdir()
+    (cache / "page_1.json").write_text("[{ halv", encoding="utf-8")
+    stub = StubSearch([PAGE_1, PAGE_2])
+
+    fetched, _ = off_import.run_import(stub, FakeSleep(), tmp_path, date(2026, 11, 17), cache_dir=cache)
+
+    assert fetched == 9
+    assert not cache.exists()
 
