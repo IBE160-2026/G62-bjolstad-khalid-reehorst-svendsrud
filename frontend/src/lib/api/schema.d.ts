@@ -923,6 +923,31 @@ export interface components {
             status: "ok";
         };
         /**
+         * LastTimeResponse
+         * @description The done sets of this exercise in the user's latest earlier workout (story 5.3).
+         */
+        LastTimeResponse: {
+            /**
+             * Date
+             * Format: date
+             */
+            date: string;
+            /** Sets */
+            sets: components["schemas"]["LastTimeSet"][];
+        };
+        /**
+         * LastTimeSet
+         * @description One done set from last time (story 5.3).
+         */
+        LastTimeSet: {
+            /** Reps */
+            reps: number | null;
+            /** Weight Kg */
+            weight_kg: number | null;
+            /** Seconds */
+            seconds: number | null;
+        };
+        /**
          * Level
          * @enum {string}
          */
@@ -1153,6 +1178,7 @@ export interface components {
             equipment: string[];
             /** Sets */
             sets: components["schemas"]["SetResponse"][];
+            last_time: components["schemas"]["LastTimeResponse"] | null;
         };
         /** WorkoutResponse */
         WorkoutResponse: {

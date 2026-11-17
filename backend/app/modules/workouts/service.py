@@ -1,9 +1,12 @@
-"""Workout rules (stories 5.1, 5.2): start or resume the one workout in progress, add exercises
-last, remove them and change their order, and log the sets of each exercise. Exercises are
-looked up through the exercises service, never its repository."""
+"""Workout rules (stories 5.1-5.3): start or resume the one workout in progress, add exercises
+last, remove them and change their order, log the sets of each exercise and show what the
+user did last time. Exercises are looked up through the exercises service, never its
+repository."""
 
 import datetime as dt
 import uuid
+from collections.abc import Iterable
+from dataclasses import dataclass
 from datetime import datetime
 from decimal import Decimal
 
@@ -19,6 +22,8 @@ from app.modules.workouts.schemas import (
     DEFAULT_SETS,
     MAX_EXERCISES,
     MAX_SETS,
+    LastTimeResponse,
+    LastTimeSet,
     SetCreate,
     SetResponse,
     SetUpdate,
@@ -79,6 +84,54 @@ def _get_unfinished(db: DbSessionType, user_id: uuid.UUID, workout_id: str) -> W
     return workout
 
 
+@dataclass(frozen=True)
+class HistoryRow:
+    """One set of an earlier workout, as loaded for "Sist" (story 5.3)."""
+
+    workout_id: uuid.UUID
+    date: dt.date
+    created_at: datetime
+    exercise_id: uuid.UUID
+    position: int
+    reps: int | None
+    weight_kg: Decimal | float | None
+    seconds: int | None
+    done: bool = True
+
+
+def last_time(
+    history: Iterable[HistoryRow], exercise_id: uuid.UUID, before_date: dt.date
+) -> LastTimeResponse | None:
+    """The done sets of `exercise_id` from the latest workout dated before `before_date`
+    that has any (pure, no I/O). Only done sets with a value count; on the same date the
+    later-created workout wins; sets in position order. None when there is none."""
+    by_workout: dict[uuid.UUID, list[HistoryRow]] = {}
+    for row in history:
+        if row.exercise_id != exercise_id or row.date >= before_date or not row.done:
+            continue
+        if row.reps is None and row.seconds is None:
+            continue
+        by_workout.setdefault(row.workout_id, []).append(row)
+    if not by_workout:
+        return None
+    # Latest date, then latest created; the workout id only breaks exact ties.
+    latest = max(
+        by_workout.values(),
+        key=lambda rows: (rows[0].date, rows[0].created_at, str(rows[0].workout_id)),
+    )
+    return LastTimeResponse(
+        date=latest[0].date,
+        sets=[
+            LastTimeSet(
+                reps=row.reps,
+                weight_kg=float(row.weight_kg) if row.weight_kg is not None else None,
+                seconds=row.seconds,
+            )
+            for row in sorted(latest, key=lambda row: row.position)
+        ],
+    )
+
+
 def _set_response(set_: Set) -> SetResponse:
     return SetResponse(
         id=set_.id,
@@ -94,6 +147,11 @@ def _response(db: DbSessionType, workout: Workout) -> WorkoutResponse:
     ids = [we.exercise_id for we in workout.exercises]
     items = exercises_service.get_list_items(db, ids)
     types = exercises_service.get_types(db, ids)
+    # One query for the history of every exercise in the workout (story 5.3).
+    history = [
+        HistoryRow(*row)
+        for row in repository.get_history(db, workout.user_id, set(ids), workout.date)
+    ]
     exercises = []
     for we in workout.exercises:
         item = items[we.exercise_id]  # RESTRICT keeps every referenced exercise
@@ -107,6 +165,7 @@ def _response(db: DbSessionType, workout: Workout) -> WorkoutResponse:
                 primary_muscle_group=item.primary_muscle_group,
                 equipment=item.equipment,
                 sets=[_set_response(set_) for set_ in we.sets],
+                last_time=last_time(history, we.exercise_id, workout.date),
             )
         )
     return WorkoutResponse(id=workout.id, date=workout.date, exercises=exercises)

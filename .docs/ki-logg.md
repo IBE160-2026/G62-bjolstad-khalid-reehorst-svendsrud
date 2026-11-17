@@ -1212,6 +1212,33 @@ Det viktigste funnet: Dekningsanalysen er regnet ut fra øvelseslista og viser a
 
 ---
 
+## 2026-11-17 – Story 5.3 (se hva jeg gjorde sist)
+
+**Verktøy:** Claude Code (BMAD `bmad-build`, lettere prosess med én kontrollør)
+**Hvem:** Osman Khalid
+**Bakgrunn:** Brukeren skal se forrige økts sett for å vite hva hun skal slå.
+
+### Hva vi ba KI om
+
+1. Lage regelen for «sist» som en testet funksjon og vise den under hver øvelse.
+
+### Hva KI produserte
+
+- Spec, regelfunksjon med tester, utvidet økt-svar og «Sist»/«Første gang» på Økt-siden.
+
+### Hva vi selv vurderte og kontrollerte
+
+- Osman godkjente spec-en før koding.
+- KI fant at UX-dokumentet (skjul linja) og PRD-en («Første gang») var uenige; PRD-en ble fulgt.
+- Én KI-kontrollør fant 11 punkter: 3 grupper rettet, 5 avvist med begrunnelse.
+
+### Status
+
+- [x] Story 5.3 bygget og testet
+- [ ] Review av PR fra gruppen
+
+---
+
 ## Mal for nye oppføringer
 
 ```markdown

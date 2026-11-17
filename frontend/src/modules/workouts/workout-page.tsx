@@ -10,6 +10,7 @@ import { ListSkeleton, LoadError } from "@/modules/exercises/list-parts";
 import { LINK_CLASS, SECONDARY_BUTTON_CLASS } from "@/modules/identity/styles";
 
 import {
+  lastTimeText,
   MAX_SETS,
   moveId,
   useActiveWorkout,
@@ -50,6 +51,7 @@ function AddExerciseLink() {
 
 function Row({
   exercise,
+  workoutDate,
   first,
   last,
   busy,
@@ -58,6 +60,7 @@ function Row({
   children,
 }: {
   exercise: WorkoutExercise;
+  workoutDate: string;
   first: boolean;
   last: boolean;
   busy: boolean;
@@ -120,6 +123,10 @@ function Row({
         <X aria-hidden="true" className="size-5" />
       </button>
       </div>
+      {/* What the user did last time (story 5.3); outside the link to keep its name short. */}
+      <p data-testid="last-time" className="px-2 text-small text-muted-foreground">
+        {lastTimeText(exercise.last_time, workoutDate)}
+      </p>
       {children}
     </li>
   );
@@ -422,6 +429,7 @@ function WorkoutView({ workout }: { workout: Workout }) {
             <Row
               key={exercise.id}
               exercise={exercise}
+              workoutDate={workout.date}
               first={index === 0}
               last={index === workout.exercises.length - 1}
               busy={busy}
@@ -470,7 +478,8 @@ function WorkoutView({ workout }: { workout: Workout }) {
   );
 }
 
-/** Økt (stories 5.1, 5.2): the workout in progress with its exercises and their sets. */
+/** Økt (stories 5.1-5.3): the workout in progress with its exercises, their sets and what
+ * the user did last time. */
 export function WorkoutPage() {
   const active = useActiveWorkout();
 
