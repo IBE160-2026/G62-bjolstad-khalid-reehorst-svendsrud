@@ -1,4 +1,4 @@
-"""Request and response bodies for /api/workouts (stories 5.1, 5.2)."""
+"""Request and response bodies for /api/workouts (stories 5.1, 5.2, 5.3)."""
 
 import datetime as dt
 import uuid
@@ -130,6 +130,24 @@ class SetResponse(BaseModel):
     done: bool
 
 
+class LastTimeSet(BaseModel):
+    """One done set from last time (story 5.3)."""
+
+    reps: int | None
+    # Null means bodyweight.
+    weight_kg: float | None
+    seconds: int | None
+
+
+class LastTimeResponse(BaseModel):
+    """The done sets of this exercise in the user's latest earlier workout (story 5.3)."""
+
+    # The date of that earlier workout.
+    date: dt.date
+    # In order.
+    sets: list[LastTimeSet]
+
+
 class WorkoutExerciseResponse(BaseModel):
     # The workout exercise's own id (used to remove and reorder).
     id: uuid.UUID
@@ -142,6 +160,9 @@ class WorkoutExerciseResponse(BaseModel):
     equipment: list[str]
     # In order.
     sets: list[SetResponse]
+    # What the user did last time (latest workout dated before this one), or null the
+    # first time ("Første gang").
+    last_time: LastTimeResponse | None
 
 
 class WorkoutResponse(BaseModel):

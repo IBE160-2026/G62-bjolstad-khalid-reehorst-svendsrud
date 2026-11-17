@@ -19,9 +19,13 @@ import { AddToWorkout } from "./add-to-workout";
 import {
   exerciseCountText,
   formatNumber,
+  lastSetText,
+  lastTimeText,
   moveId,
+  shortDateText,
   parseNumber,
   workoutDateText,
+  type LastTime,
   type Workout,
   type WorkoutSet,
 } from "./api";
@@ -36,6 +40,7 @@ const PUSH_UP = {
   equipment: ["Kroppsvekt"],
   type: "reps" as const,
   sets: [],
+  last_time: null as LastTime | null,
 };
 const SQUAT = {
   exercise_id: "e-squat",
@@ -45,6 +50,7 @@ const SQUAT = {
   equipment: ["Kroppsvekt"],
   type: "reps" as const,
   sets: [],
+  last_time: null as LastTime | null,
 };
 const PLANK = {
   exercise_id: "e-plank",
@@ -54,6 +60,7 @@ const PLANK = {
   equipment: ["Kroppsvekt"],
   type: "time" as const,
   sets: [],
+  last_time: null as LastTime | null,
 };
 const CATALOG = Object.fromEntries([PUSH_UP, SQUAT, PLANK].map((e) => [e.exercise_id, e]));
 
@@ -797,5 +804,85 @@ describe("sets (story 5.2)", () => {
     expect(parseNumber("1,2,3")).toBeUndefined();
     expect(formatNumber(12.5)).toBe("12,5");
     expect(formatNumber(null)).toBe("");
+  });
+});
+
+describe("last time (story 5.3)", () => {
+  it("formats kg, bodyweight and seconds with a short Norwegian date", () => {
+    const lastTime = {
+      date: "2026-11-03",
+      sets: [
+        { reps: 10, weight_kg: 8, seconds: null },
+        { reps: 8, weight_kg: 8, seconds: null },
+      ],
+    };
+    expect(lastTimeText(lastTime, "2026-11-17")).toBe("Sist: 8 kg × 10, 8 kg × 8 (3. nov)");
+    expect(
+      lastTimeText(
+        {
+          date: "2025-11-03",
+          sets: [
+            { reps: 10, weight_kg: null, seconds: null },
+            { reps: 8, weight_kg: 12.5, seconds: null },
+          ],
+        },
+        "2026-01-05",
+      ),
+    ).toBe("Sist: 10 rep, 12,5 kg × 8 (3. nov 2025)");
+    expect(
+      lastTimeText({ date: "2026-05-01", sets: [{ reps: null, weight_kg: null, seconds: 45 }] }, "2026-11-17"),
+    ).toBe("Sist: 45 s (1. mai)");
+    expect(lastTimeText(null, "2026-11-17")).toBe("Første gang");
+  });
+
+  it("formats kg values, seconds with kg, dates, and skips empty values", () => {
+    const set = (reps: number | null, weight_kg: number | null, seconds: number | null) => ({
+      reps,
+      weight_kg,
+      seconds,
+    });
+    expect(lastSetText(set(8, 2.25, null))).toBe("2,25 kg × 8");
+    expect(lastSetText(set(5, 100, null))).toBe("100 kg × 5");
+    expect(lastSetText(set(10, 0, null))).toBe("0 kg × 10");
+    expect(lastSetText(set(null, 10, 45))).toBe("10 kg × 45 s");
+    expect(lastSetText(set(null, 8, null))).toBe("8 kg");
+    expect(lastSetText(set(null, null, null))).toBeNull();
+    expect(
+      lastTimeText({ date: "2026-11-03", sets: [set(null, null, null), set(10, null, null)] }, "2026-11-17"),
+    ).toBe("Sist: 10 rep (3. nov)");
+    expect(lastTimeText({ date: "2026-11-03", sets: [set(null, null, null)] }, "2026-11-17")).toBe(
+      "Første gang",
+    );
+    expect(shortDateText("2026-01-05", "2026-11-17")).toBe("5. jan");
+    expect(shortDateText("2026-12-31", "2026-12-31")).toBe("31. des");
+    expect(shortDateText("2025-12-31", "2026-01-02")).toBe("31. des 2025");
+  });
+
+  it("shows Sist under the exercise name, or Første gang", async () => {
+    server.workout = {
+      id: "w-1",
+      date: "2026-11-17",
+      exercises: [
+        {
+          id: "we-1",
+          ...PUSH_UP,
+          last_time: {
+            date: "2026-11-03",
+            sets: [
+              { reps: 10, weight_kg: null, seconds: null },
+              { reps: 10, weight_kg: null, seconds: null },
+            ],
+          },
+        },
+        { id: "we-2", ...SQUAT },
+      ],
+    };
+    renderWith(<WorkoutPage />);
+
+    const lines = await screen.findAllByTestId("last-time");
+    expect(lines.map((line) => line.textContent)).toEqual([
+      "Sist: 10 rep, 10 rep (3. nov)",
+      "Første gang",
+    ]);
   });
 });

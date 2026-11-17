@@ -2853,6 +2853,74 @@
         ],
         "title": "HealthResponse"
       },
+      "LastTimeResponse": {
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date",
+            "title": "Date"
+          },
+          "sets": {
+            "items": {
+              "$ref": "#/components/schemas/LastTimeSet"
+            },
+            "type": "array",
+            "title": "Sets"
+          }
+        },
+        "type": "object",
+        "required": [
+          "date",
+          "sets"
+        ],
+        "title": "LastTimeResponse",
+        "description": "The done sets of this exercise in the user's latest earlier workout (story 5.3)."
+      },
+      "LastTimeSet": {
+        "properties": {
+          "reps": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reps"
+          },
+          "weight_kg": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Weight Kg"
+          },
+          "seconds": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Seconds"
+          }
+        },
+        "type": "object",
+        "required": [
+          "reps",
+          "weight_kg",
+          "seconds"
+        ],
+        "title": "LastTimeSet",
+        "description": "One done set from last time (story 5.3)."
+      },
       "Level": {
         "type": "string",
         "enum": [
@@ -3160,9 +3228,7 @@
           "position": {
             "anyOf": [
               {
-                "type": "integer",
-                "maximum": 19.0,
-                "minimum": 0.0
+                "type": "integer"
               },
               {
                 "type": "null"
@@ -3455,6 +3521,16 @@
             },
             "type": "array",
             "title": "Sets"
+          },
+          "last_time": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/LastTimeResponse"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "type": "object",
@@ -3466,7 +3542,8 @@
           "type",
           "primary_muscle_group",
           "equipment",
-          "sets"
+          "sets",
+          "last_time"
         ],
         "title": "WorkoutExerciseResponse"
       },
