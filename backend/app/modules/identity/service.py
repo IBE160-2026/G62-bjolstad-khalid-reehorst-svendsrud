@@ -13,6 +13,7 @@ from sqlalchemy.orm import Session as DbSessionType
 
 from app.core.errors import AppError
 from app.core.settings import get_settings
+from app.modules.exercises import service as exercises_service
 from app.modules.identity import repository
 from app.modules.identity.models import User
 
@@ -80,6 +81,8 @@ def register(db: DbSessionType, email: str, password: str, now: datetime) -> Reg
         user = repository.add_user(db, email, hash_password(password))
     except repository.EmailTakenError:
         raise _email_unavailable() from None
+    # "Hjemme" and "Treningssenter" (story 4.2), through the exercises service only.
+    exercises_service.create_default_profiles(db, user.id, now)
 
     token = new_session_token()
     expires_at = now + SESSION_LIFETIME

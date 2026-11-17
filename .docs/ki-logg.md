@@ -1079,6 +1079,33 @@ Det viktigste funnet: Dekningsanalysen er regnet ut fra øvelseslista og viser a
 
 ---
 
+## 2026-11-17 – Story 4.2 (lagre utstyret mitt)
+
+**Verktøy:** Claude Code (BMAD `bmad-build`)
+**Hvem:** Osman Khalid
+**Bakgrunn:** Appen må vite hvilket utstyr brukeren har for å foreslå øvelser de faktisk kan gjøre.
+
+### Hva vi ba KI om
+
+1. Lage utstyrsprofiler med standardprofilene «Hjemme» og «Treningssenter».
+
+### Hva KI produserte
+
+- Spec, tabeller og endepunkter for utstyrsprofiler, standardprofiler ved registrering, «Utstyr» på Profil-siden og nye tester.
+
+### Hva vi selv vurderte og kontrollerte
+
+- Osman godkjente spec-en før koding.
+- Kroppsvekt er alltid med, og dette håndheves av serveren, ikke bare i skjermbildet.
+- Tre KI-kontrollører fant 22 punkter: 7 grupper rettet, 1 utsatt, 7 avvist med begrunnelse.
+
+### Status
+
+- [x] Story 4.2 bygget og testet
+- [ ] Review av PR fra gruppen
+
+---
+
 ## Mal for nye oppføringer
 
 ```markdown
