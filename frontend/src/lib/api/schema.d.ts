@@ -323,6 +323,28 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/exercises/suggestions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Suggestions
+         * @description Exercises whose required equipment is all in the user's chosen Equipment Profile,
+         *     ordered Nybegynner, Middels, Øvet. Another user's profile, or an id that is unknown or
+         *     not a UUID, is 404 `equipment_profile_not_found`.
+         */
+        get: operations["get_suggestions"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/exercises/equipment-profiles": {
         parameters: {
             query?: never;
@@ -764,6 +786,22 @@ export interface components {
          * @enum {string}
          */
         Sex: "female" | "male";
+        /**
+         * SuggestionsResponse
+         * @description Exercises that fit one Equipment Profile (story 4.3), ordered Nybegynner, Middels,
+         *     Øvet, then muscle group, then name.
+         */
+        SuggestionsResponse: {
+            /**
+             * Profile Id
+             * Format: uuid
+             */
+            profile_id: string;
+            /** Profile Name */
+            profile_name: string;
+            /** Exercises */
+            exercises: components["schemas"]["ExerciseListItem"][];
+        };
         /** UserResponse */
         UserResponse: {
             /**
@@ -1600,6 +1638,55 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["EquipmentResponse"][];
+                };
+            };
+            /** @description Validation error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Default Response */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    get_suggestions: {
+        parameters: {
+            query: {
+                profile_id: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SuggestionsResponse"];
+                };
+            };
+            /** @description equipment_profile_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
             /** @description Validation error */

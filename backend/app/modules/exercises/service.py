@@ -2,7 +2,10 @@
 (story 4.2) with their defaults, limits and the always-included bodyweight."""
 
 import uuid
+from collections.abc import Iterable
+from dataclasses import dataclass
 from datetime import datetime, timedelta
+from typing import Generic, TypeVar
 
 from sqlalchemy.orm import Session as DbSessionType
 
@@ -23,6 +26,7 @@ from app.modules.exercises.schemas import (
     EquipmentResponse,
     ExerciseDetail,
     ExerciseListItem,
+    SuggestionsResponse,
 )
 
 EXERCISE_NOT_FOUND_CODE = "exercise_not_found"
@@ -50,20 +54,21 @@ def _equipment(exercise: Exercise) -> list[str]:
     return [item.name for item in items]
 
 
+def _list_item(exercise: Exercise, primary: MuscleGroup) -> ExerciseListItem:
+    return ExerciseListItem(
+        id=exercise.id,
+        name=exercise.name,
+        level=exercise.level,
+        primary_muscle_group=primary.name,
+        equipment=_equipment(exercise),
+    )
+
+
 def list_exercises(db: DbSessionType) -> list[ExerciseListItem]:
     """Every exercise, ordered by primary muscle group (seed order), then name."""
     rows = [(exercise, _primary(exercise)) for exercise in repository.list_exercises(db)]
     rows.sort(key=lambda row: (row[1].position, row[0].name.lower()))
-    return [
-        ExerciseListItem(
-            id=exercise.id,
-            name=exercise.name,
-            level=exercise.level,
-            primary_muscle_group=primary.name,
-            equipment=_equipment(exercise),
-        )
-        for exercise, primary in rows
-    ]
+    return [_list_item(exercise, primary) for exercise, primary in rows]
 
 
 def get_exercise(db: DbSessionType, exercise_id: str) -> ExerciseDetail:
@@ -86,6 +91,42 @@ def get_exercise(db: DbSessionType, exercise_id: str) -> ExerciseDetail:
         equipment=_equipment(exercise),
         steps=list(exercise.steps),
         video_id=exercise.video_id,
+    )
+
+
+# --- Suggestion rule (story 4.3, AD-5) ---
+
+LEVEL_ORDER = {"beginner": 0, "intermediate": 1, "advanced": 2}
+
+T = TypeVar("T")
+
+
+@dataclass(frozen=True)
+class SuggestionCandidate(Generic[T]):
+    """What the suggestion rule needs to know about one exercise. `item` is carried
+    through untouched (an ORM row, a seed dict, a response model, ...)."""
+
+    name: str
+    level: str
+    # Seed position of the primary muscle group (Ben first).
+    muscle_position: int
+    # Slugs of every equipment type the exercise requires; all are needed.
+    equipment_slugs: frozenset[str]
+    item: T
+
+
+def suggest_exercises(
+    exercises: Iterable[SuggestionCandidate[T]], equipment_slugs: Iterable[str]
+) -> list[SuggestionCandidate[T]]:
+    """The exercises whose required equipment is all in `equipment_slugs`, ordered
+    Nybegynner, Middels, Øvet, then primary muscle group (seed order), then name.
+
+    Pure: reads no database, so it is unit-tested over the seed file (AD-5).
+    """
+    available = frozenset(equipment_slugs)
+    fitting = [e for e in exercises if e.equipment_slugs <= available]
+    return sorted(
+        fitting, key=lambda e: (LEVEL_ORDER[e.level], e.muscle_position, e.name.lower())
     )
 
 
@@ -249,3 +290,39 @@ def delete_profile(db: DbSessionType, user_id: uuid.UUID, profile_id: uuid.UUID)
     if repository.count_profiles(db, user_id) <= 1:
         raise AppError(409, LAST_PROFILE_CODE, LAST_PROFILE_MESSAGE)
     repository.delete_profile(db, profile)
+
+
+# --- Suggestions endpoint (story 4.3) ---
+
+
+def get_suggestions(
+    db: DbSessionType, user_id: uuid.UUID, profile_id: str
+) -> SuggestionsResponse:
+    """Exercises that fit the user's profile, ordered by `suggest_exercises`. Another
+    user's, a missing or a non-UUID profile id is 404 `equipment_profile_not_found`."""
+    try:
+        parsed = uuid.UUID(profile_id)
+    except ValueError:
+        raise AppError(404, PROFILE_NOT_FOUND_CODE, PROFILE_NOT_FOUND_MESSAGE) from None
+    profile = _get_profile(db, user_id, parsed)
+    _ensure_bodyweight(db, [profile])
+    candidates: list[SuggestionCandidate[ExerciseListItem]] = []
+    for exercise in repository.list_exercises(db):
+        primary = _primary(exercise)
+        required = frozenset(link.equipment.slug for link in exercise.equipment_links)
+        candidates.append(
+            SuggestionCandidate(
+                name=exercise.name,
+                level=exercise.level,
+                muscle_position=primary.position,
+                equipment_slugs=required,
+                item=_list_item(exercise, primary),
+            )
+        )
+    slugs = [item.equipment.slug for item in profile.items]
+    suggested = suggest_exercises(candidates, slugs)
+    return SuggestionsResponse(
+        profile_id=profile.id,
+        profile_name=profile.name,
+        exercises=[candidate.item for candidate in suggested],
+    )

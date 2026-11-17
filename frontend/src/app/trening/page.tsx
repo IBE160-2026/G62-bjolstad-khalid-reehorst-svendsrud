@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
-import { ExerciseList } from "@/modules/exercises/exercise-list";
+import { Suggestions } from "@/modules/exercises/suggestions";
 
 export const metadata: Metadata = { title: "Trening" };
 
 export default function TrainingPage() {
-  return <ExerciseList />;
+  return <Suggestions />;
 }

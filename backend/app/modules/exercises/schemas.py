@@ -85,3 +85,12 @@ class EquipmentProfileUpdate(BaseModel):
 
     name: ProfileName | None = None
     equipment: list[str] | None = Field(default=None, max_length=EQUIPMENT_LIST_MAX)
+
+
+class SuggestionsResponse(BaseModel):
+    """Exercises that fit one Equipment Profile (story 4.3), ordered Nybegynner, Middels,
+    Øvet, then muscle group, then name."""
+
+    profile_id: uuid.UUID
+    profile_name: str
+    exercises: list[ExerciseListItem]

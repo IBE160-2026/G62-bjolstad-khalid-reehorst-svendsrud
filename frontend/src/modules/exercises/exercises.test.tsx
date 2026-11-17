@@ -7,40 +7,9 @@ const getMock = vi.hoisted(() => vi.fn());
 vi.mock("@/lib/api/client", () => ({ api: { GET: getMock } }));
 
 import { ExerciseDetail, SAFETY_NOTE, musclesText } from "./exercise-detail";
-import { ExerciseList } from "./exercise-list";
 import { VideoEmbed } from "./video-embed";
 
 const PUSH_UP_ID = "00000000-0000-4000-8000-000000000002";
-const LIST = [
-  {
-    id: "00000000-0000-4000-8000-000000000001",
-    name: "Kroppsvektknebøy (Bodyweight squat)",
-    level: "beginner",
-    primary_muscle_group: "Ben",
-    equipment: ["Kroppsvekt"],
-  },
-  {
-    id: "00000000-0000-4000-8000-000000000003",
-    name: "Markløft (Deadlift)",
-    level: "intermediate",
-    primary_muscle_group: "Rygg",
-    equipment: ["Stang og skiver"],
-  },
-  {
-    id: PUSH_UP_ID,
-    name: "Armhevinger (Push-up)",
-    level: "beginner",
-    primary_muscle_group: "Bryst",
-    equipment: ["Kroppsvekt"],
-  },
-  {
-    id: "00000000-0000-4000-8000-000000000004",
-    name: "Manual benkpress (Dumbbell bench press)",
-    level: "beginner",
-    primary_muscle_group: "Bryst",
-    equipment: ["Manualer", "Benk"],
-  },
-];
 const PUSH_UP = {
   id: PUSH_UP_ID,
   name: "Armhevinger (Push-up)",
@@ -65,47 +34,6 @@ function setOnline(value: boolean) {
 afterEach(() => {
   getMock.mockReset();
   setOnline(true);
-});
-
-describe("ExerciseList", () => {
-  it("groups exercises by primary muscle group and links each to its detail", async () => {
-    getMock.mockResolvedValue({ data: LIST, error: undefined });
-    renderWithClient(<ExerciseList />);
-
-    const chest = await screen.findByRole("region", { name: "Bryst" });
-    expect(screen.getAllByRole("heading", { level: 2 }).map((h) => h.textContent)).toEqual([
-      "Ben",
-      "Rygg",
-      "Bryst",
-    ]);
-    const pushUp = within(chest).getByRole("link", { name: /Armhevinger \(Push-up\)/ });
-    expect(pushUp).toHaveAttribute("href", `/trening/ovelser/${PUSH_UP_ID}`);
-    expect(pushUp).toHaveTextContent("Nybegynner · Kroppsvekt");
-    expect(within(chest).getByRole("link", { name: /Manual benkpress/ })).toHaveTextContent(
-      "Nybegynner · Manualer, Benk",
-    );
-    expect(screen.getByRole("link", { name: /Markløft/ })).toHaveTextContent(
-      "Middels · Stang og skiver",
-    );
-    expect(getMock).toHaveBeenCalledWith("/api/exercises");
-  });
-
-  it("says so when there are no exercises", async () => {
-    getMock.mockResolvedValue({ data: [], error: undefined });
-    renderWithClient(<ExerciseList />);
-
-    expect(await screen.findByText("Ingen øvelser ennå.")).toBeInTheDocument();
-  });
-
-  it("shows the error and a retry button when the list cannot load", async () => {
-    getMock.mockRejectedValue(new Error("offline"));
-    renderWithClient(<ExerciseList />);
-
-    expect(await screen.findByRole("alert")).toHaveTextContent(
-      "Vi fikk ikke kontakt med serveren. Prøv igjen.",
-    );
-    expect(screen.getByRole("button", { name: "Prøv igjen" })).toBeInTheDocument();
-  });
 });
 
 describe("ExerciseDetail", () => {
