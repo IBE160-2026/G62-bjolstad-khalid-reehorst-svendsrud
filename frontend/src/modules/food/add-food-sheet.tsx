@@ -12,6 +12,7 @@ import {
 
 import { useIsMutating } from "@tanstack/react-query";
 
+import { useDebounced } from "@/lib/use-debounced";
 import { INPUT_CLASS, LINK_CLASS } from "@/modules/identity/styles";
 import { formatKcal } from "@/modules/profile/target-result";
 
@@ -52,15 +53,6 @@ const METHODS: readonly { id: Method; label: string; enabled: boolean }[] = [
 
 function tabId(method: Method) {
   return `add-food-tab-${method}`;
-}
-
-function useDebounced(value: string, delay: number): string {
-  const [debounced, setDebounced] = useState(value);
-  useEffect(() => {
-    const timer = setTimeout(() => setDebounced(value), delay);
-    return () => clearTimeout(timer);
-  }, [value, delay]);
-  return debounced;
 }
 
 function MethodPicker({

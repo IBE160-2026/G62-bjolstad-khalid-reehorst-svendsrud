@@ -1133,6 +1133,33 @@ Det viktigste funnet: Dekningsanalysen er regnet ut fra øvelseslista og viser a
 
 ---
 
+## 2026-11-17 – Story 4.4 (søk etter øvelser)
+
+**Verktøy:** Claude Code (BMAD `bmad-build`)
+**Hvem:** Osman Khalid
+**Bakgrunn:** Brukere som vet hvilken øvelse de vil gjøre, skal finne den raskt.
+
+### Hva vi ba KI om
+
+1. Lage navnesøk på Trening som også viser øvelser profilen ikke passer til, merket med hva som mangler.
+
+### Hva KI produserte
+
+- Spec, søkeendepunkt, søkefelt med «Mangler»-merking og nye tester.
+
+### Hva vi selv vurderte og kontrollerte
+
+- Osman godkjente spec-en før koding.
+- KI oppdaget at spec-en feilaktig sa at matsøket bruker 300 ms ventetid (det er 200 ms); avviket er logget i spec-en.
+- Tre KI-kontrollører fant 21 punkter: 8 grupper rettet, 3 avvist med begrunnelse.
+
+### Status
+
+- [x] Story 4.4 bygget og testet
+- [ ] Review av PR fra gruppen
+
+---
+
 ## Mal for nye oppføringer
 
 ```markdown
