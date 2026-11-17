@@ -1,0 +1,8471 @@
+[
+ {
+  "barcode": "0011210693005",
+  "name": "Tabasco Sauce Salsa Picante Mc Ilhenny",
+  "kcal_per_100g": 37,
+  "protein_g": 0.8,
+  "carbs_g": 4.2,
+  "fat_g": 0.4,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "0033200011309",
+  "name": "Arm&hammer Baking Soda",
+  "kcal_per_100g": 0,
+  "protein_g": 0,
+  "carbs_g": 0,
+  "fat_g": 0,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "0037600160421",
+  "name": "Skippy Peanøttsmør Creamy",
+  "kcal_per_100g": 618,
+  "protein_g": 26,
+  "carbs_g": 14,
+  "fat_g": 50,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "0037600160490",
+  "name": "Skippy super chunk",
+  "kcal_per_100g": 622,
+  "protein_g": 26,
+  "carbs_g": 13,
+  "fat_g": 50,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "0038900029401",
+  "name": "Dole Mango Snack Cup",
+  "kcal_per_100g": 63,
+  "protein_g": 0.6,
+  "carbs_g": 14.1,
+  "fat_g": 0.2,
+  "serving_size_g": 63
+ },
+ {
+  "barcode": "0039047001152",
+  "name": "Walkers Shortbread Pure Butter",
+  "kcal_per_100g": 533,
+  "protein_g": 5.6,
+  "carbs_g": 58.4,
+  "fat_g": 30.3,
+  "serving_size_g": 19
+ },
+ {
+  "barcode": "0041143024324",
+  "name": "Sun maid Rosiner",
+  "kcal_per_100g": 318,
+  "protein_g": 3.2,
+  "carbs_g": 69.4,
+  "fat_g": 0.5,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "0041143028919",
+  "name": "Sun maid Rosiner",
+  "kcal_per_100g": 316,
+  "protein_g": 3,
+  "carbs_g": 76.9,
+  "fat_g": 0.7,
+  "serving_size_g": 30
+ },
+ {
+  "barcode": "0041500763675",
+  "name": "Frenchs Yellow Mustard Classic French´S",
+  "kcal_per_100g": 85,
+  "protein_g": 4.3,
+  "carbs_g": 1.2,
+  "fat_g": 4.4,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "0041500888125",
+  "name": "Frank's Redhot Sause Original Frank´S",
+  "kcal_per_100g": 29,
+  "protein_g": 1.1,
+  "carbs_g": 0.9,
+  "fat_g": 0.6,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "0041500934303",
+  "name": "Frank's Redhot Wings Sauce",
+  "kcal_per_100g": 31,
+  "protein_g": 0.7,
+  "carbs_g": 2.3,
+  "fat_g": 1.4,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "0043647400017",
+  "name": "Wilkin&sons Crystal Marmelade Ltd.",
+  "kcal_per_100g": 270,
+  "protein_g": 0,
+  "carbs_g": 68,
+  "fat_g": 0,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "0046000820118",
+  "name": "Old El Paso Refried Beans Old Elpaso",
+  "kcal_per_100g": 73,
+  "protein_g": 5,
+  "carbs_g": 13,
+  "fat_g": 0,
+  "serving_size_g": 124
+ },
+ {
+  "barcode": "0048327203421",
+  "name": "Ybarra Olivenolje Original",
+  "kcal_per_100g": 900,
+  "protein_g": 0,
+  "carbs_g": 0,
+  "fat_g": 100,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "0049000067729",
+  "name": "Fanta Berry",
+  "kcal_per_100g": 42.25,
+  "protein_g": 0,
+  "carbs_g": null,
+  "fat_g": 0,
+  "serving_size_g": 355
+ },
+ {
+  "barcode": "0049733000215",
+  "name": "Cholula Hot Sauce Original",
+  "kcal_per_100g": 23,
+  "protein_g": 0.7,
+  "carbs_g": 2,
+  "fat_g": 1,
+  "serving_size_g": 5
+ },
+ {
+  "barcode": "0052600112751",
+  "name": "Durkee Marshmallow Fluff Vanilje",
+  "kcal_per_100g": 333,
+  "protein_g": 0,
+  "carbs_g": 83,
+  "fat_g": 0,
+  "serving_size_g": 12
+ },
+ {
+  "barcode": "0070177077563",
+  "name": "Twinings Earl Grey Tea 25pos",
+  "kcal_per_100g": 1,
+  "protein_g": 0,
+  "carbs_g": 0,
+  "fat_g": 0,
+  "serving_size_g": 2
+ },
+ {
+  "barcode": "0070177077693",
+  "name": "Twinings English Breakfast Tea 25pos",
+  "kcal_per_100g": 1,
+  "protein_g": 0,
+  "carbs_g": 0,
+  "fat_g": 0,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "0070177078775",
+  "name": "Twinings Lady Grey Tea 25pos",
+  "kcal_per_100g": 1,
+  "protein_g": 0,
+  "carbs_g": 0,
+  "fat_g": 0,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "0071475740012",
+  "name": "Cardinis Cæsar Dressing",
+  "kcal_per_100g": 607,
+  "protein_g": 2.3,
+  "carbs_g": 1.9,
+  "fat_g": 65.5,
+  "serving_size_g": 1
+ },
+ {
+  "barcode": "0072600069145",
+  "name": "Herr Foods Inc. Cheese Curls - Carolina Reaper flavoured",
+  "kcal_per_100g": 552,
+  "protein_g": 5,
+  "carbs_g": 55,
+  "fat_g": 34,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "0076397004075",
+  "name": "La costena Chipotle Chili",
+  "kcal_per_100g": 66,
+  "protein_g": 2.1,
+  "carbs_g": 14.2,
+  "fat_g": 1.6,
+  "serving_size_g": 30
+ },
+ {
+  "barcode": "0078895124095",
+  "name": "Lee Kum Kee Peking Duck Sauce",
+  "kcal_per_100g": 248,
+  "protein_g": 2.6,
+  "carbs_g": 43,
+  "fat_g": 6.4,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "0078895147100",
+  "name": "Lee Kum Kee Oystersauce Gl.Fri",
+  "kcal_per_100g": 112,
+  "protein_g": 0.5,
+  "carbs_g": 28,
+  "fat_g": 0.5,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "0078895710922",
+  "name": "Lee Kum Kee Pure Sesame Oil",
+  "kcal_per_100g": 828,
+  "protein_g": 0.5,
+  "carbs_g": 0.5,
+  "fat_g": 92,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "0079581184003",
+  "name": "Calypso Lemonade Original",
+  "kcal_per_100g": 47,
+  "protein_g": 0,
+  "carbs_g": 12,
+  "fat_g": 0,
+  "serving_size_g": 473
+ },
+ {
+  "barcode": "0079581184010",
+  "name": "Calypso Lemonade Ocean Blue",
+  "kcal_per_100g": 47,
+  "protein_g": 0,
+  "carbs_g": 12,
+  "fat_g": 0,
+  "serving_size_g": 473
+ },
+ {
+  "barcode": "0079581184041",
+  "name": "Calypso Paradise Punch Lemonade",
+  "kcal_per_100g": 49,
+  "protein_g": 0,
+  "carbs_g": 12,
+  "fat_g": 0.5,
+  "serving_size_g": 230
+ },
+ {
+  "barcode": "0079581184096",
+  "name": "king juice company Calypso",
+  "kcal_per_100g": 50,
+  "protein_g": 0,
+  "carbs_g": 13,
+  "fat_g": 0.5,
+  "serving_size_g": 473
+ },
+ {
+  "barcode": "0098304100250",
+  "name": "Chatham Krutonger Caesar",
+  "kcal_per_100g": 465,
+  "protein_g": 8,
+  "carbs_g": 59,
+  "fat_g": 21,
+  "serving_size_g": 7
+ },
+ {
+  "barcode": "0602652257780",
+  "name": "Be-Kind Bar Caramel Almond&Seasalt",
+  "kcal_per_100g": 527,
+  "protein_g": 16,
+  "carbs_g": 19,
+  "fat_g": 39,
+  "serving_size_g": 40
+ },
+ {
+  "barcode": "0613668024129",
+  "name": "Mississippi belle Pannekakemiks",
+  "kcal_per_100g": 320,
+  "protein_g": 8,
+  "carbs_g": 71,
+  "fat_g": 0,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "0613668024709",
+  "name": "Mb Macaroni & Cheese Dinner Missisippi Belle",
+  "kcal_per_100g": 358,
+  "protein_g": 11,
+  "carbs_g": 71,
+  "fat_g": 2,
+  "serving_size_g": 70
+ },
+ {
+  "barcode": "0615357118867",
+  "name": "Taylors of Harrogate English Breakfast 20pos",
+  "kcal_per_100g": 0,
+  "protein_g": 0,
+  "carbs_g": 0,
+  "fat_g": 0,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "0633148100013",
+  "name": "Tajin Krydder m/Lime og Chili",
+  "kcal_per_100g": 190,
+  "protein_g": 4,
+  "carbs_g": 38,
+  "fat_g": 2.5,
+  "serving_size_g": 1
+ },
+ {
+  "barcode": "0637793000902",
+  "name": "Mackays Appelsinmarmelade",
+  "kcal_per_100g": 269,
+  "protein_g": 0.3,
+  "carbs_g": 67,
+  "fat_g": 0,
+  "serving_size_g": 5
+ },
+ {
+  "barcode": "0648436101276",
+  "name": "Paldo Volcano Chicken Noodle 140G",
+  "kcal_per_100g": 385.71,
+  "protein_g": 7.86,
+  "carbs_g": 63.57,
+  "fat_g": 11.43,
+  "serving_size_g": 140
+ },
+ {
+  "barcode": "0682430611737",
+  "name": "Voss eau artésienne",
+  "kcal_per_100g": 0,
+  "protein_g": 0,
+  "carbs_g": 0,
+  "fat_g": 0,
+  "serving_size_g": 240
+ },
+ {
+  "barcode": "0701648010344",
+  "name": "GURU ZERO Guru zéro",
+  "kcal_per_100g": 4.23,
+  "protein_g": 0,
+  "carbs_g": 0.56,
+  "fat_g": 0,
+  "serving_size_g": 355
+ },
+ {
+  "barcode": "0702020001080",
+  "name": "Rians La faisselle",
+  "kcal_per_100g": 76,
+  "protein_g": 4.3,
+  "carbs_g": 4.5,
+  "fat_g": 4.5,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "0705599017339",
+  "name": "Kodiak Cakes Peanut Butter Chocolate Chip Protein Packed Chewy Granola Bar",
+  "kcal_per_100g": 400,
+  "protein_g": 20,
+  "carbs_g": 57.14,
+  "fat_g": 10,
+  "serving_size_g": 35
+ },
+ {
+  "barcode": "0705599018398",
+  "name": "Kodiak Cakes Soft-Baked Sandwich Breakfast Bars",
+  "kcal_per_100g": 380,
+  "protein_g": 20,
+  "carbs_g": 46,
+  "fat_g": 16,
+  "serving_size_g": 50
+ },
+ {
+  "barcode": "0705599018435",
+  "name": "Kodiak Soft Baked Sandwich Breakfast Bars Cinnamon Oat & Apple",
+  "kcal_per_100g": 380,
+  "protein_g": 20,
+  "carbs_g": 46,
+  "fat_g": 16,
+  "serving_size_g": 50
+ },
+ {
+  "barcode": "0705599018756",
+  "name": "Kodiak Peak Oatmeal Berries & Cream",
+  "kcal_per_100g": 386.67,
+  "protein_g": 26.67,
+  "carbs_g": 56,
+  "fat_g": 6.67,
+  "serving_size_g": 75
+ },
+ {
+  "barcode": "0708163260933",
+  "name": "Boulder Canyon Avocado Oil Classic Sea Salt Kettle Style Potato Chips",
+  "kcal_per_100g": 535.71,
+  "protein_g": 10.71,
+  "carbs_g": 57.14,
+  "fat_g": 32.14,
+  "serving_size_g": 28
+ },
+ {
+  "barcode": "0720516022234",
+  "name": "Orgran Knekkebrød Quinoa glutenfri",
+  "kcal_per_100g": 331,
+  "protein_g": 8.1,
+  "carbs_g": 72.9,
+  "fat_g": 2.6,
+  "serving_size_g": 7.5
+ },
+ {
+  "barcode": "0720516024450",
+  "name": "Orgran Egg-Erstatning Vegan",
+  "kcal_per_100g": 350,
+  "protein_g": 14.9,
+  "carbs_g": 46.8,
+  "fat_g": 3.2,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "0818850020877",
+  "name": "Sam's F&B 100% Lychee Juice",
+  "kcal_per_100g": 46,
+  "protein_g": 0,
+  "carbs_g": 11.5,
+  "fat_g": 0,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "1220000450028",
+  "name": "Sweet Baby Ray's Sweet Baby Rays bbq",
+  "kcal_per_100g": 181,
+  "protein_g": 1.04,
+  "carbs_g": 42,
+  "fat_g": 0.15,
+  "serving_size_g": 10
+ },
+ {
+  "barcode": "1230000068048",
+  "name": "Beyond Burger Original Plant-Based Patties",
+  "kcal_per_100g": 173.45,
+  "protein_g": 15.93,
+  "carbs_g": 3.27,
+  "fat_g": 11.5,
+  "serving_size_g": 113
+ },
+ {
+  "barcode": "1703543090000",
+  "name": "IKEA Allemansrätten Saucenpulver",
+  "kcal_per_100g": 80,
+  "protein_g": 0.9,
+  "carbs_g": 5.1,
+  "fat_g": 6.2,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "1705413540004",
+  "name": "IKEA Kafferep - Cinnamon buns",
+  "kcal_per_100g": 304,
+  "protein_g": 6.5,
+  "carbs_g": 46,
+  "fat_g": 7.8,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "20069490",
+  "name": "Baresa Pesto alla Genovese",
+  "kcal_per_100g": 364,
+  "protein_g": 4.1,
+  "carbs_g": 4.8,
+  "fat_g": 35.9,
+  "serving_size_g": 60
+ },
+ {
+  "barcode": "20092962",
+  "name": "Gastronomia di Mare Stremel-Lachs",
+  "kcal_per_100g": 243,
+  "protein_g": 21.9,
+  "carbs_g": 0,
+  "fat_g": 17.3,
+  "serving_size_g": 125
+ },
+ {
+  "barcode": "20224042",
+  "name": "Lidl Stiftung & Co. KG Saumon sauce oseille & son riz pilaf",
+  "kcal_per_100g": 150,
+  "protein_g": 7.1,
+  "carbs_g": 15,
+  "fat_g": 6.7,
+  "serving_size_g": 300
+ },
+ {
+  "barcode": "3036810201372",
+  "name": "Maille Dijon Original",
+  "kcal_per_100g": 151,
+  "protein_g": 7,
+  "carbs_g": 3.5,
+  "fat_g": 11,
+  "serving_size_g": 10
+ },
+ {
+  "barcode": "3036810204069",
+  "name": "Unilever norge as Sennep Honey Dijon 230g Maille",
+  "kcal_per_100g": 240,
+  "protein_g": 5.2,
+  "carbs_g": 36,
+  "fat_g": 7.3,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "3083681127621",
+  "name": "Bonduelle 3 pack corn",
+  "kcal_per_100g": 73,
+  "protein_g": 2.7,
+  "carbs_g": 11,
+  "fat_g": 1.4,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "3083681163155",
+  "name": "Bonduelle Lunch bowl Riz & haricots 250g",
+  "kcal_per_100g": 143,
+  "protein_g": 4.2,
+  "carbs_g": 22,
+  "fat_g": 3.4,
+  "serving_size_g": 250
+ },
+ {
+  "barcode": "3116740032366",
+  "name": "Lutti Bubblizz Original",
+  "kcal_per_100g": 339,
+  "protein_g": 5.2,
+  "carbs_g": 78,
+  "fat_g": 0,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "3161910238710",
+  "name": "Cœur de Lion Camembert coeur de lion",
+  "kcal_per_100g": 273,
+  "protein_g": 20,
+  "carbs_g": 1,
+  "fat_g": 21,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "3185200000177",
+  "name": "Tipiak Caesar croutons",
+  "kcal_per_100g": 428,
+  "protein_g": 9.8,
+  "carbs_g": 64.4,
+  "fat_g": 14.2,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "3228024210138",
+  "name": "Président Burger cheese with cheddar",
+  "kcal_per_100g": 248,
+  "protein_g": 14,
+  "carbs_g": 7.5,
+  "fat_g": 18,
+  "serving_size_g": 20
+ },
+ {
+  "barcode": "3254474019274",
+  "name": "Green Giant Maiskorn i saltlake",
+  "kcal_per_100g": 77,
+  "protein_g": 2.4,
+  "carbs_g": 12.6,
+  "fat_g": 1.2,
+  "serving_size_g": 80
+ },
+ {
+  "barcode": "3387390339499",
+  "name": "Nestlé Fitness",
+  "kcal_per_100g": 366,
+  "protein_g": 9.4,
+  "carbs_g": 72.2,
+  "fat_g": 2.1,
+  "serving_size_g": 30
+ },
+ {
+  "barcode": "4000177158210",
+  "name": "Capri-Sun 4000177158210",
+  "kcal_per_100g": 34,
+  "protein_g": 0,
+  "carbs_g": 8.1,
+  "fat_g": 0,
+  "serving_size_g": 200
+ },
+ {
+  "barcode": "4000339697908",
+  "name": "Philadelphia Naturell",
+  "kcal_per_100g": 226,
+  "protein_g": 5.4,
+  "carbs_g": 4.3,
+  "fat_g": 21,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "4000607562105",
+  "name": "Fritt Chewy Candy",
+  "kcal_per_100g": 401,
+  "protein_g": 2,
+  "carbs_g": 79,
+  "fat_g": 8.5,
+  "serving_size_g": 11.7
+ },
+ {
+  "barcode": "4001518722930",
+  "name": "BAXT AS Griesson Soft Cake Orange 4001518722930 Zartes Gebäck mit fruchtiger Füllung (mit Orangensaft aus Orangensaftkonzentrat) (55%) und Schokolade (17%)",
+  "kcal_per_100g": 381,
+  "protein_g": 3,
+  "carbs_g": 69,
+  "fat_g": 10,
+  "serving_size_g": 25
+ },
+ {
+  "barcode": "4001686505021",
+  "name": "Haribo Maoam Karamell",
+  "kcal_per_100g": 409,
+  "protein_g": 1.5,
+  "carbs_g": 84,
+  "fat_g": 7.8,
+  "serving_size_g": 4.4
+ },
+ {
+  "barcode": "4001724039204",
+  "name": "Dr. Oetker Pizza Pepperoni-Salame",
+  "kcal_per_100g": 262,
+  "protein_g": 10,
+  "carbs_g": 26,
+  "fat_g": 13,
+  "serving_size_g": 320
+ },
+ {
+  "barcode": "4001724039389",
+  "name": "Dr. Oetker Ristorante Pizza Pasta",
+  "kcal_per_100g": 228,
+  "protein_g": 8.05,
+  "carbs_g": 28.29,
+  "fat_g": 8.78,
+  "serving_size_g": 410
+ },
+ {
+  "barcode": "4001724039778",
+  "name": "Dr. Oetker Ristorante Pizza Mozzarella",
+  "kcal_per_100g": 244,
+  "protein_g": 10,
+  "carbs_g": 23,
+  "fat_g": 12,
+  "serving_size_g": 355
+ },
+ {
+  "barcode": "4001724039808",
+  "name": "Dr. Oetker Ristorante Pizza Special",
+  "kcal_per_100g": 242,
+  "protein_g": 10.4,
+  "carbs_g": 25.2,
+  "fat_g": 11.3,
+  "serving_size_g": 345
+ },
+ {
+  "barcode": "4001724047292",
+  "name": "Dr. Oetker Suprema Salame Romano",
+  "kcal_per_100g": 234.29,
+  "protein_g": 10.06,
+  "carbs_g": 27.52,
+  "fat_g": 8.83,
+  "serving_size_g": 487
+ },
+ {
+  "barcode": "4002359015809",
+  "name": "Ben's Original Sweet & Sour Original",
+  "kcal_per_100g": 71,
+  "protein_g": 0.5,
+  "carbs_g": 16,
+  "fat_g": 0.5,
+  "serving_size_g": 225
+ },
+ {
+  "barcode": "4002971253009",
+  "name": "Ehrmann Grand dessert chocolade",
+  "kcal_per_100g": 119,
+  "protein_g": 2.8,
+  "carbs_g": 16,
+  "fat_g": 4.9,
+  "serving_size_g": 190
+ },
+ {
+  "barcode": "4009700021571",
+  "name": "Danone Chocolate pudding",
+  "kcal_per_100g": 136,
+  "protein_g": 2.6,
+  "carbs_g": 17.4,
+  "fat_g": 4.9,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "4009900484220",
+  "name": "Wrigley's Extra White Sweet Mint",
+  "kcal_per_100g": 156,
+  "protein_g": 0,
+  "carbs_g": 65,
+  "fat_g": 0,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "4013265001053",
+  "name": "Glockengold Multivitamin Fruktdryck",
+  "kcal_per_100g": 21,
+  "protein_g": 0.5,
+  "carbs_g": 4.9,
+  "fat_g": 0.5,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "4014400910063",
+  "name": "Storck Werther's Original",
+  "kcal_per_100g": 424,
+  "protein_g": 0.3,
+  "carbs_g": 86.9,
+  "fat_g": 8.4,
+  "serving_size_g": 5
+ },
+ {
+  "barcode": "4014400926279",
+  "name": "Mamba",
+  "kcal_per_100g": 396,
+  "protein_g": 1.6,
+  "carbs_g": 84.3,
+  "fat_g": 5.9,
+  "serving_size_g": 27
+ },
+ {
+  "barcode": "4014400926293",
+  "name": "Mamba Sour",
+  "kcal_per_100g": 395,
+  "protein_g": 1.6,
+  "carbs_g": 83.2,
+  "fat_g": 5.9,
+  "serving_size_g": 24
+ },
+ {
+  "barcode": "4016337960128",
+  "name": "bibigo 비비고 biri beinidd Korean Style Fried Chicken with sweet & spicy sauce",
+  "kcal_per_100g": 157,
+  "protein_g": 12,
+  "carbs_g": 13,
+  "fat_g": 5.7,
+  "serving_size_g": 350
+ },
+ {
+  "barcode": "4023800062104",
+  "name": "Schluckwerder Marzipanbrot",
+  "kcal_per_100g": 454.55,
+  "protein_g": 6.06,
+  "carbs_g": 66.67,
+  "fat_g": 18.18,
+  "serving_size_g": 33
+ },
+ {
+  "barcode": "4056489822585",
+  "name": "Deluxe pistachio pesto",
+  "kcal_per_100g": 346,
+  "protein_g": 4.9,
+  "carbs_g": 6.6,
+  "fat_g": 33,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "42069775",
+  "name": "Mars norge extra white",
+  "kcal_per_100g": 160,
+  "protein_g": 0,
+  "carbs_g": 65,
+  "fat_g": 0,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "4580352290121",
+  "name": "Samyang Potato ramen",
+  "kcal_per_100g": 433,
+  "protein_g": 10,
+  "carbs_g": 65,
+  "fat_g": 15,
+  "serving_size_g": 120
+ },
+ {
+  "barcode": "4605362007115",
+  "name": "Babkiny Roasted Sunflower Salted Seeds",
+  "kcal_per_100g": 720,
+  "protein_g": 16,
+  "carbs_g": 0,
+  "fat_g": 52,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "4711931037060",
+  "name": "Royal Family Mochi Strawberry Cheesecake",
+  "kcal_per_100g": 355,
+  "protein_g": 1.6,
+  "carbs_g": 73,
+  "fat_g": 6.4,
+  "serving_size_g": 15
+ },
+ {
+  "barcode": "4751037280830",
+  "name": "Rudy’s Kombucha Rudy's Kombucha Mandarin & Yuzu",
+  "kcal_per_100g": 12,
+  "protein_g": 0.01,
+  "carbs_g": 3,
+  "fat_g": 0,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "4770179117002",
+  "name": "Pergale Strawberries milk chocolate",
+  "kcal_per_100g": 526,
+  "protein_g": 6.3,
+  "carbs_g": 56,
+  "fat_g": 31,
+  "serving_size_g": 30
+ },
+ {
+  "barcode": "4770179990568",
+  "name": "Pergalé Bringebær med sjokolade",
+  "kcal_per_100g": 538,
+  "protein_g": 6.3,
+  "carbs_g": 59,
+  "fat_g": 31,
+  "serving_size_g": 90
+ },
+ {
+  "barcode": "4770190035040",
+  "name": "Vici пушена сьомга филе слайс",
+  "kcal_per_100g": 171,
+  "protein_g": 21,
+  "carbs_g": 0.3,
+  "fat_g": 9.5,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "4820075505523",
+  "name": "Millennium air chocolate",
+  "kcal_per_100g": 564,
+  "protein_g": 6.9,
+  "carbs_g": 54.9,
+  "fat_g": 35.2,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "5000112636833",
+  "name": "Cola-Cola Coca cola orginal taste",
+  "kcal_per_100g": 42,
+  "protein_g": 0,
+  "carbs_g": 10.6,
+  "fat_g": 0,
+  "serving_size_g": 500
+ },
+ {
+  "barcode": "5000112636840",
+  "name": "Coca-Cola Company Coca-Cola CokeZERO flaske",
+  "kcal_per_100g": 0.3,
+  "protein_g": 0,
+  "carbs_g": 0,
+  "fat_g": 0,
+  "serving_size_g": 250
+ },
+ {
+  "barcode": "5000112636864",
+  "name": "COCA-COLA EUROPEAN PARTNERS NORGE A Coca cola",
+  "kcal_per_100g": 42,
+  "protein_g": 0,
+  "carbs_g": 10.8,
+  "fat_g": 0,
+  "serving_size_g": 250
+ },
+ {
+  "barcode": "5000112636871",
+  "name": "Coca cola company Coca-Cola Zero Sugar",
+  "kcal_per_100g": 0.3,
+  "protein_g": 0,
+  "carbs_g": 0,
+  "fat_g": 0,
+  "serving_size_g": 250
+ },
+ {
+  "barcode": "5000112637380",
+  "name": "Coca-Cola Original Taste",
+  "kcal_per_100g": 42,
+  "protein_g": 0,
+  "carbs_g": 10.6,
+  "fat_g": 0,
+  "serving_size_g": 330
+ },
+ {
+  "barcode": "5000112637397",
+  "name": "Coca-Cola Company Coca-Cola Zero Uten Sukker",
+  "kcal_per_100g": 0.3,
+  "protein_g": 0,
+  "carbs_g": 0,
+  "fat_g": 0,
+  "serving_size_g": 330
+ },
+ {
+  "barcode": "5000112641455",
+  "name": "Sprite Zero Sugar Lemon-Lime",
+  "kcal_per_100g": 1,
+  "protein_g": 0,
+  "carbs_g": 0,
+  "fat_g": 0,
+  "serving_size_g": 330
+ },
+ {
+  "barcode": "5000112669169",
+  "name": "Fanta Orange Zero Sugar",
+  "kcal_per_100g": 3,
+  "protein_g": 0,
+  "carbs_g": 0.4,
+  "fat_g": 0,
+  "serving_size_g": 330
+ },
+ {
+  "barcode": "5000112669220",
+  "name": "Fanta",
+  "kcal_per_100g": 43,
+  "protein_g": 0,
+  "carbs_g": 11,
+  "fat_g": 0,
+  "serving_size_g": 500
+ },
+ {
+  "barcode": "5000157073020",
+  "name": "Heinz Worcester Sauce",
+  "kcal_per_100g": 97,
+  "protein_g": 0.7,
+  "carbs_g": 22,
+  "fat_g": 0.7,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "5000159335737",
+  "name": "Maltesers Chocolate Bucket",
+  "kcal_per_100g": 503,
+  "protein_g": 8.5,
+  "carbs_g": 61,
+  "fat_g": 25,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "5000159460880",
+  "name": "Snickers Ice Cream",
+  "kcal_per_100g": 341,
+  "protein_g": 6,
+  "carbs_g": 33,
+  "fat_g": 20,
+  "serving_size_g": 72.5
+ },
+ {
+  "barcode": "5000159484695",
+  "name": "Twix Ice Cream",
+  "kcal_per_100g": 280.74,
+  "protein_g": 2.78,
+  "carbs_g": 34.8,
+  "fat_g": 14.62,
+  "serving_size_g": 43.1
+ },
+ {
+  "barcode": "5000159532921",
+  "name": "BE-KIND caram-alm-sea salt",
+  "kcal_per_100g": 534,
+  "protein_g": 16,
+  "carbs_g": 19,
+  "fat_g": 40,
+  "serving_size_g": 30
+ },
+ {
+  "barcode": "5000184321064",
+  "name": "Hellmann's Majoneesi",
+  "kcal_per_100g": 720,
+  "protein_g": 1.1,
+  "carbs_g": 1.4,
+  "fat_g": 79,
+  "serving_size_g": 14
+ },
+ {
+  "barcode": "5000189983281",
+  "name": "After Eight Dark Chocolate Thins",
+  "kcal_per_100g": 426,
+  "protein_g": 2.1,
+  "carbs_g": 73.5,
+  "fat_g": 12.9,
+  "serving_size_g": 16.6
+ },
+ {
+  "barcode": "5000328029962",
+  "name": "Lay's Stax - Sour Cream & Onion Flavour",
+  "kcal_per_100g": 490,
+  "protein_g": 4,
+  "carbs_g": 60,
+  "fat_g": 25,
+  "serving_size_g": 30
+ },
+ {
+  "barcode": "5000396021202",
+  "name": "Pladis (UK) Limited Ritz Crackers Original",
+  "kcal_per_100g": 485,
+  "protein_g": 7.8,
+  "carbs_g": 61,
+  "fat_g": 23,
+  "serving_size_g": 30
+ },
+ {
+  "barcode": "5010029000160",
+  "name": "Weetabix",
+  "kcal_per_100g": 362,
+  "protein_g": 12,
+  "carbs_g": 69,
+  "fat_g": 2,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "5010029227062",
+  "name": "Oreo O's",
+  "kcal_per_100g": 382,
+  "protein_g": 7.9,
+  "carbs_g": 81,
+  "fat_g": 2.1,
+  "serving_size_g": 30
+ },
+ {
+  "barcode": "5010134913935",
+  "name": "MULTIBEV AS Stone's Ginger Joe Alkoholfri Ingefærøl, 0,33 l",
+  "kcal_per_100g": 49,
+  "protein_g": null,
+  "carbs_g": null,
+  "fat_g": null,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "5010478248441",
+  "name": "Swizzels Love Hearts Giant",
+  "kcal_per_100g": 389,
+  "protein_g": 0.1,
+  "carbs_g": 89.9,
+  "fat_g": 3.1,
+  "serving_size_g": 51
+ },
+ {
+  "barcode": "5010651001313",
+  "name": "Billington's Unraffinierter Rohrzucker dunkler Muscovado",
+  "kcal_per_100g": 383,
+  "protein_g": 0,
+  "carbs_g": 95,
+  "fat_g": 0,
+  "serving_size_g": 4
+ },
+ {
+  "barcode": "5011053013591",
+  "name": "Miguelañez Juicy Drop Pop",
+  "kcal_per_100g": 376,
+  "protein_g": 0,
+  "carbs_g": 94,
+  "fat_g": 0,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "5011053022272",
+  "name": "Brynild Gummies 57g Bazooka roja",
+  "kcal_per_100g": 358,
+  "protein_g": 3.6,
+  "carbs_g": 84,
+  "fat_g": 0.8,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "5011053026713",
+  "name": "Bazooka Juicy Drop Mallows Sweet and Sour Fizzy Marshmallows Raspberry",
+  "kcal_per_100g": 345,
+  "protein_g": 3.4,
+  "carbs_g": 83,
+  "fat_g": 0.1,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "5011476102957",
+  "name": "Nestlé Multi Cheerios",
+  "kcal_per_100g": 384,
+  "protein_g": 9.5,
+  "carbs_g": 72.5,
+  "fat_g": 4.3,
+  "serving_size_g": 30
+ },
+ {
+  "barcode": "5012427143708",
+  "name": "Løksuppe 400g Baxters",
+  "kcal_per_100g": 37,
+  "protein_g": 0.6,
+  "carbs_g": 7.3,
+  "fat_g": 0.53,
+  "serving_size_g": 400
+ },
+ {
+  "barcode": "5021554002154",
+  "name": "Clearspring Organic Apple Cider Vinegar",
+  "kcal_per_100g": 29,
+  "protein_g": 0.3,
+  "carbs_g": 2.4,
+  "fat_g": 0.2,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "5021554989172",
+  "name": "Clearspring Organic Peanut Butter Crunchy",
+  "kcal_per_100g": 564,
+  "protein_g": 26,
+  "carbs_g": 7.6,
+  "fat_g": 49,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "5021554989196",
+  "name": "Clearspring BioKitchen Organic Peanut Butter Smooth",
+  "kcal_per_100g": 590,
+  "protein_g": 26,
+  "carbs_g": 7.6,
+  "fat_g": 49,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "5024278003100",
+  "name": "BYRNNYLY Wholebake Pecan Flapjack",
+  "kcal_per_100g": 465,
+  "protein_g": 7.62,
+  "carbs_g": 51.5,
+  "fat_g": 24.62,
+  "serving_size_g": 80
+ },
+ {
+  "barcode": "5024333178040",
+  "name": "Spring water",
+  "kcal_per_100g": 0,
+  "protein_g": 0,
+  "carbs_g": 0,
+  "fat_g": 0,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "5032722311541",
+  "name": "Biona Organic Kirsebærjuice",
+  "kcal_per_100g": 54,
+  "protein_g": 0,
+  "carbs_g": 14,
+  "fat_g": 0,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "5034210521869",
+  "name": "Fish4ever Thon listao entier à l'huile d'olive bio",
+  "kcal_per_100g": 156,
+  "protein_g": 30,
+  "carbs_g": 0,
+  "fat_g": 4.1,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "5050083122811",
+  "name": "Kellogg's Choco Krispies",
+  "kcal_per_100g": 386,
+  "protein_g": 6.3,
+  "carbs_g": 84,
+  "fat_g": 1.9,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "5050083123924",
+  "name": "Kellogg's All bran regular flakes",
+  "kcal_per_100g": 358,
+  "protein_g": 11,
+  "carbs_g": 65,
+  "fat_g": 2.2,
+  "serving_size_g": 30
+ },
+ {
+  "barcode": "5053827206907",
+  "name": "Kellogg's Frosties",
+  "kcal_per_100g": 375,
+  "protein_g": 4.5,
+  "carbs_g": 87,
+  "fat_g": 0.6,
+  "serving_size_g": 30
+ },
+ {
+  "barcode": "5053990127726",
+  "name": "Pringles Original",
+  "kcal_per_100g": 516,
+  "protein_g": 5.9,
+  "carbs_g": 53,
+  "fat_g": 30,
+  "serving_size_g": 30
+ },
+ {
+  "barcode": "5053990176007",
+  "name": "Pringles sweet chili",
+  "kcal_per_100g": 523,
+  "protein_g": 6.3,
+  "carbs_g": 55,
+  "fat_g": 30,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "5056784903766",
+  "name": "Monster Energy Ultra Strawberry Dreams Uten Sukker",
+  "kcal_per_100g": 2,
+  "protein_g": 0,
+  "carbs_g": 0.8,
+  "fat_g": 0,
+  "serving_size_g": 500
+ },
+ {
+  "barcode": "5056784907580",
+  "name": "Monster Energy Zero Sugar, Lando Norris",
+  "kcal_per_100g": 2,
+  "protein_g": 0,
+  "carbs_g": 0.7,
+  "fat_g": 0,
+  "serving_size_g": 500
+ },
+ {
+  "barcode": "5059319023168",
+  "name": "Kellogg's Coco Pops",
+  "kcal_per_100g": 380,
+  "protein_g": 10,
+  "carbs_g": 77,
+  "fat_g": 2.2,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "5059319028828",
+  "name": "Kellogg's Miel Pops Loops",
+  "kcal_per_100g": 396,
+  "protein_g": 9.3,
+  "carbs_g": 76,
+  "fat_g": 4.4,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "5060191281195",
+  "name": "CONAXESS TRADE NORGE AS Mr Freeze Freeze Pops",
+  "kcal_per_100g": 30,
+  "protein_g": 0,
+  "carbs_g": 6.9,
+  "fat_g": 0,
+  "serving_size_g": 45
+ },
+ {
+  "barcode": "5060194790731",
+  "name": "OLUF LORENTZEN AS Sushi Ingefær",
+  "kcal_per_100g": 10,
+  "protein_g": 0.2,
+  "carbs_g": 1.3,
+  "fat_g": 0,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "5060337502238",
+  "name": "Monster Ultra White",
+  "kcal_per_100g": 2,
+  "protein_g": 0,
+  "carbs_g": 0.9,
+  "fat_g": 0,
+  "serving_size_g": 500
+ },
+ {
+  "barcode": "5060466516304",
+  "name": "Coca-cola europacific partners norge as Original",
+  "kcal_per_100g": 62,
+  "protein_g": 0,
+  "carbs_g": 16,
+  "fat_g": 0,
+  "serving_size_g": 500
+ },
+ {
+  "barcode": "5060517889937",
+  "name": "1471 Lørenskog Juiced Mango Loco",
+  "kcal_per_100g": 47.8,
+  "protein_g": 0,
+  "carbs_g": 12,
+  "fat_g": 0,
+  "serving_size_g": 500
+ },
+ {
+  "barcode": "5060560280835",
+  "name": "MANILife PEANUT BUTTER",
+  "kcal_per_100g": 613,
+  "protein_g": 26.9,
+  "carbs_g": 9.1,
+  "fat_g": 49.3,
+  "serving_size_g": 15
+ },
+ {
+  "barcode": "5060639126095",
+  "name": "COCA-COLA EUROPEAN PARTNERS NORGE A Pipeline Punch",
+  "kcal_per_100g": 36,
+  "protein_g": 0,
+  "carbs_g": 9,
+  "fat_g": 0,
+  "serving_size_g": 500
+ },
+ {
+  "barcode": "5060947541214",
+  "name": "Monster Ultra Rosá",
+  "kcal_per_100g": 3,
+  "protein_g": 0,
+  "carbs_g": 0.9,
+  "fat_g": 0,
+  "serving_size_g": 500
+ },
+ {
+  "barcode": "5060947541986",
+  "name": "Monster Energy Juiced Aussie Lemonade Style",
+  "kcal_per_100g": 41.6,
+  "protein_g": 0,
+  "carbs_g": 10.6,
+  "fat_g": 0,
+  "serving_size_g": 500
+ },
+ {
+  "barcode": "5060947547483",
+  "name": "Monster Ultra Peachy Keen",
+  "kcal_per_100g": 3,
+  "protein_g": 0,
+  "carbs_g": 0.7,
+  "fat_g": 0,
+  "serving_size_g": 500
+ },
+ {
+  "barcode": "5061013940566",
+  "name": "Monster Energy Zero Sugar",
+  "kcal_per_100g": 3,
+  "protein_g": 0,
+  "carbs_g": 1,
+  "fat_g": 0,
+  "serving_size_g": 500
+ },
+ {
+  "barcode": "5061013945219",
+  "name": "Monster Juiced Bad Apple",
+  "kcal_per_100g": 36,
+  "protein_g": 0,
+  "carbs_g": 9.1,
+  "fat_g": 0,
+  "serving_size_g": 500
+ },
+ {
+  "barcode": "5065000523183",
+  "name": "Multibev Pukka Night Tea",
+  "kcal_per_100g": 347,
+  "protein_g": 9.9,
+  "carbs_g": 70.8,
+  "fat_g": 2.7,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "5202258226156",
+  "name": "Greco Original Original Feta",
+  "kcal_per_100g": 273,
+  "protein_g": 16,
+  "carbs_g": 0.5,
+  "fat_g": 23,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "5410013154808",
+  "name": "Spa Touch Blackcurrant",
+  "kcal_per_100g": 0,
+  "protein_g": 0,
+  "carbs_g": 0,
+  "fat_g": 0,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "5410126006353",
+  "name": "LOTUS BISCOFF Fourré - Crème saveur Chocolat - 150g",
+  "kcal_per_100g": 504,
+  "protein_g": 4.9,
+  "carbs_g": 67,
+  "fat_g": 24,
+  "serving_size_g": 30
+ },
+ {
+  "barcode": "5410228102762",
+  "name": "Leffe Blonde",
+  "kcal_per_100g": 58,
+  "protein_g": 0.4,
+  "carbs_g": 5.4,
+  "fat_g": 0,
+  "serving_size_g": 250
+ },
+ {
+  "barcode": "5411188100324",
+  "name": "alpro Blueberry",
+  "kcal_per_100g": 70,
+  "protein_g": 3.7,
+  "carbs_g": 8.2,
+  "fat_g": 2.2,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "5411188111085",
+  "name": "alpro Nutty Almond",
+  "kcal_per_100g": 24,
+  "protein_g": 0.5,
+  "carbs_g": 2.7,
+  "fat_g": 1.1,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "5411188112549",
+  "name": "alpro Rýžový nápoj",
+  "kcal_per_100g": 47,
+  "protein_g": 0.1,
+  "carbs_g": 9.5,
+  "fat_g": 1,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "5411188112709",
+  "name": "alpro Geröstete Mandel Ohne Zucker",
+  "kcal_per_100g": 15,
+  "protein_g": 0.5,
+  "carbs_g": 0,
+  "fat_g": 1.1,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "5411188115472",
+  "name": "Alpro soyamelk",
+  "kcal_per_100g": 39,
+  "protein_g": 3,
+  "carbs_g": 2.5,
+  "fat_g": 1.8,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "5411188118732",
+  "name": "alpro Coco & Almond",
+  "kcal_per_100g": 24,
+  "protein_g": 0.3,
+  "carbs_g": 2.5,
+  "fat_g": 1.3,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "5411188137979",
+  "name": "alpro Soja Natur",
+  "kcal_per_100g": 49,
+  "protein_g": 4,
+  "carbs_g": 2.2,
+  "fat_g": 2.3,
+  "serving_size_g": 200
+ },
+ {
+  "barcode": "5411188141174",
+  "name": "alpro Plantgurt no sugars natural",
+  "kcal_per_100g": 42,
+  "protein_g": 4,
+  "carbs_g": 0,
+  "fat_g": 2.3,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "5700419083360",
+  "name": "Philadelphia Light",
+  "kcal_per_100g": 145,
+  "protein_g": 7.2,
+  "carbs_g": 5.1,
+  "fat_g": 10,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "5701027004198",
+  "name": "JOZO Fint salt med jod",
+  "kcal_per_100g": 0,
+  "protein_g": 0,
+  "carbs_g": 0,
+  "fat_g": 0,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "5701038033248",
+  "name": "Green Choice Peanut butter Crunchy",
+  "kcal_per_100g": 592,
+  "protein_g": 26,
+  "carbs_g": 7.6,
+  "fat_g": 49,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "5701259000661",
+  "name": "Dansukker Brun Farin",
+  "kcal_per_100g": 389,
+  "protein_g": 0,
+  "carbs_g": 97,
+  "fat_g": 0,
+  "serving_size_g": 5.5
+ },
+ {
+  "barcode": "5701259100187",
+  "name": "Dansukker Sukker",
+  "kcal_per_100g": 400,
+  "protein_g": 0,
+  "carbs_g": 100,
+  "fat_g": 0,
+  "serving_size_g": 1000
+ },
+ {
+  "barcode": "5701259100781",
+  "name": "Dansukker Melis",
+  "kcal_per_100g": 400,
+  "protein_g": 0,
+  "carbs_g": 100,
+  "fat_g": 0,
+  "serving_size_g": 65
+ },
+ {
+  "barcode": "5711953030895",
+  "name": "ARLA FOODS AMBA Apetina herbs & spices",
+  "kcal_per_100g": 535,
+  "protein_g": 10,
+  "carbs_g": 0.5,
+  "fat_g": 55,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "5711953036583",
+  "name": "ARLA FOODS AMBA Castello white with Chili",
+  "kcal_per_100g": 412,
+  "protein_g": 15,
+  "carbs_g": 0.5,
+  "fat_g": 39,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "5711953047954",
+  "name": "Arla Cheddar & Mozzarella",
+  "kcal_per_100g": 363,
+  "protein_g": 25,
+  "carbs_g": 2.7,
+  "fat_g": 28,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "5711953156595",
+  "name": "Apetina Mozzarella",
+  "kcal_per_100g": 301,
+  "protein_g": 24,
+  "carbs_g": 3.2,
+  "fat_g": 21,
+  "serving_size_g": 30
+ },
+ {
+  "barcode": "5711953171109",
+  "name": "Castello Galic Whipped Cream Cheese",
+  "kcal_per_100g": 267,
+  "protein_g": 4.8,
+  "carbs_g": 3.1,
+  "fat_g": 26,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "5712840020012",
+  "name": "Raw-Bite The organic fruit & nut bite - cashew",
+  "kcal_per_100g": 465,
+  "protein_g": 12,
+  "carbs_g": 44,
+  "fat_g": 25,
+  "serving_size_g": 50
+ },
+ {
+  "barcode": "5730800523724",
+  "name": "Arla Cocio Classic Sjokomelk",
+  "kcal_per_100g": 78,
+  "protein_g": 3.6,
+  "carbs_g": 11,
+  "fat_g": 2.1,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "5738001011002",
+  "name": "Kellogg's Cornflakes Kellogg´s",
+  "kcal_per_100g": 378,
+  "protein_g": 7,
+  "carbs_g": 84,
+  "fat_g": 0.9,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "5738001092490",
+  "name": "Kellogg's Kelloggs Corn Flakes",
+  "kcal_per_100g": 378,
+  "protein_g": 7,
+  "carbs_g": 84,
+  "fat_g": 0.9,
+  "serving_size_g": 30
+ },
+ {
+  "barcode": "5744001420942",
+  "name": "The Organic Crave Protein Chips Salt & Pepper",
+  "kcal_per_100g": 423,
+  "protein_g": 25,
+  "carbs_g": 53,
+  "fat_g": 11,
+  "serving_size_g": 23
+ },
+ {
+  "barcode": "5745000657223",
+  "name": "True Dates - Sour Cola",
+  "kcal_per_100g": 321,
+  "protein_g": 2.2,
+  "carbs_g": 81,
+  "fat_g": 1.2,
+  "serving_size_g": 40
+ },
+ {
+  "barcode": "5760466642019",
+  "name": "Arla ORIGINAL WHITE CHEESE",
+  "kcal_per_100g": 226,
+  "protein_g": 12,
+  "carbs_g": 6.3,
+  "fat_g": 17,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "5900020023582",
+  "name": "Nestlé Lion Caramel & Chocolate Taste Frokostblanding",
+  "kcal_per_100g": 403,
+  "protein_g": 8.6,
+  "carbs_g": 74.3,
+  "fat_g": 6.4,
+  "serving_size_g": 30
+ },
+ {
+  "barcode": "5900020035714",
+  "name": "NESTLÉ NORGE AS Go Free Corn Flakes 375g",
+  "kcal_per_100g": 382,
+  "protein_g": 7.4,
+  "carbs_g": 82.9,
+  "fat_g": 1.4,
+  "serving_size_g": 30
+ },
+ {
+  "barcode": "5900020037046",
+  "name": "Nestlé Havre Cheerios 375g",
+  "kcal_per_100g": 386.67,
+  "protein_g": 10.67,
+  "carbs_g": 67.33,
+  "fat_g": 6,
+  "serving_size_g": 30
+ },
+ {
+  "barcode": "5900259068002",
+  "name": "Cheetos Cheese Flavored Corn Chips",
+  "kcal_per_100g": 481,
+  "protein_g": 6.1,
+  "carbs_g": 62,
+  "fat_g": 23,
+  "serving_size_g": 30
+ },
+ {
+  "barcode": "5900259094728",
+  "name": "Doritos Hot Corn",
+  "kcal_per_100g": 496,
+  "protein_g": 6.2,
+  "carbs_g": 58,
+  "fat_g": 25,
+  "serving_size_g": 30
+ },
+ {
+  "barcode": "5900259099129",
+  "name": "cheetos sweet chilli flavoured",
+  "kcal_per_100g": 496.67,
+  "protein_g": 6.33,
+  "carbs_g": 63.33,
+  "fat_g": 24,
+  "serving_size_g": 30
+ },
+ {
+  "barcode": "5900259115485",
+  "name": "Cheetos Spirals",
+  "kcal_per_100g": 514,
+  "protein_g": 5.8,
+  "carbs_g": 59,
+  "fat_g": 28,
+  "serving_size_g": 30
+ },
+ {
+  "barcode": "5900259117564",
+  "name": "Doritos Doriros Sweet Chili Flavoured 100g",
+  "kcal_per_100g": 496,
+  "protein_g": 6.1,
+  "carbs_g": 59,
+  "fat_g": 25,
+  "serving_size_g": 30
+ },
+ {
+  "barcode": "5900259127600",
+  "name": "Lay's Lays solone",
+  "kcal_per_100g": 526,
+  "protein_g": 6.6,
+  "carbs_g": 51,
+  "fat_g": 32,
+  "serving_size_g": 30
+ },
+ {
+  "barcode": "5900300550258",
+  "name": "Lipton The",
+  "kcal_per_100g": 4,
+  "protein_g": 0.5,
+  "carbs_g": 0.5,
+  "fat_g": 0,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "5900951310973",
+  "name": "snickers",
+  "kcal_per_100g": 490,
+  "protein_g": 8.7,
+  "carbs_g": 60,
+  "fat_g": 23,
+  "serving_size_g": 37.5
+ },
+ {
+  "barcode": "5902409703887",
+  "name": "Fruvita Jogurt typu islandzkiego SKYR Naturalny 0% tłuszczu",
+  "kcal_per_100g": 66,
+  "protein_g": 12,
+  "carbs_g": 3.8,
+  "fat_g": 0,
+  "serving_size_g": 150
+ },
+ {
+  "barcode": "64025131",
+  "name": "Cloetta Mynthon Zip Mint Menthol-Mint",
+  "kcal_per_100g": 242,
+  "protein_g": 0.4,
+  "carbs_g": 97,
+  "fat_g": 0.3,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "6410708762683",
+  "name": "Olivenolje Ex.Virgin 500ml Eldorado",
+  "kcal_per_100g": 900,
+  "protein_g": 0,
+  "carbs_g": 0,
+  "fat_g": 100,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "6411401019012",
+  "name": "Karl Fazer Melkesjokolade",
+  "kcal_per_100g": 550,
+  "protein_g": 11,
+  "carbs_g": 49,
+  "fat_g": 33,
+  "serving_size_g": 7.8
+ },
+ {
+  "barcode": "6412500070188",
+  "name": "Panda Paksu Pepe XXL Original",
+  "kcal_per_100g": 328,
+  "protein_g": 3.5,
+  "carbs_g": 76,
+  "fat_g": 0.4,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7020650113205",
+  "name": "NORGESMØLLENE Siktet Hvetemel",
+  "kcal_per_100g": 343,
+  "protein_g": 12.1,
+  "carbs_g": 68.1,
+  "fat_g": 1.4,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7020655411993",
+  "name": "Norgesmøllene as Byggryn hele",
+  "kcal_per_100g": 334,
+  "protein_g": 8.7,
+  "carbs_g": 65.6,
+  "fat_g": 2,
+  "serving_size_g": 50
+ },
+ {
+  "barcode": "7020655841165",
+  "name": "Møllerens Urkraft Lettkokte Havregryn",
+  "kcal_per_100g": 369,
+  "protein_g": 14.17,
+  "carbs_g": 69.17,
+  "fat_g": 6.67,
+  "serving_size_g": 60
+ },
+ {
+  "barcode": "7020655841370",
+  "name": "Norgesmøllene AS Store Havregryn",
+  "kcal_per_100g": 389,
+  "protein_g": 11.4,
+  "carbs_g": 63.1,
+  "fat_g": 7.8,
+  "serving_size_g": 60
+ },
+ {
+  "barcode": "7020655841493",
+  "name": "Møllerens Glutenfri Lettkokte havregryn",
+  "kcal_per_100g": 369,
+  "protein_g": 14.1,
+  "carbs_g": 57.2,
+  "fat_g": 6.7,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7020656900205",
+  "name": "Møllerens Havregranola 4-korn",
+  "kcal_per_100g": 340,
+  "protein_g": 11,
+  "carbs_g": 49,
+  "fat_g": 6.7,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7020656900267",
+  "name": "Mr. Kraft Havregranola Spelt og kanel",
+  "kcal_per_100g": 340,
+  "protein_g": 10.5,
+  "carbs_g": 48.2,
+  "fat_g": 6.8,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7020712023954",
+  "name": "Hatting Axa Bjørn havrestykker",
+  "kcal_per_100g": 244,
+  "protein_g": 11.4,
+  "carbs_g": 35.1,
+  "fat_g": 4.4,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7021010001057",
+  "name": "Orkla Nugatti",
+  "kcal_per_100g": 526.67,
+  "protein_g": 4.6,
+  "carbs_g": 62,
+  "fat_g": 28,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7022810204808",
+  "name": "Lea Pepperkaker",
+  "kcal_per_100g": 449,
+  "protein_g": 7,
+  "carbs_g": 70,
+  "fat_g": 15.6,
+  "serving_size_g": 6
+ },
+ {
+  "barcode": "7023530141015",
+  "name": "Lofoten Hjemmelagde fiskekaker 60%, 7 Stk, 450 g",
+  "kcal_per_100g": 146,
+  "protein_g": 11,
+  "carbs_g": 7.9,
+  "fat_g": 7.6,
+  "serving_size_g": 65
+ },
+ {
+  "barcode": "7023539701531",
+  "name": "LOFOTEN AS Makrellfilet i tomat",
+  "kcal_per_100g": 243,
+  "protein_g": 11,
+  "carbs_g": 5.9,
+  "fat_g": 19,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7023539701562",
+  "name": "LOFOTEN AS makrell",
+  "kcal_per_100g": 261,
+  "protein_g": 13,
+  "carbs_g": 4.6,
+  "fat_g": 21,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7023550001658",
+  "name": "Isbjørn Is Sandwich original kjeks med vaniljeis",
+  "kcal_per_100g": 278,
+  "protein_g": 4.9,
+  "carbs_g": 43,
+  "fat_g": 9.8,
+  "serving_size_g": 60
+ },
+ {
+  "barcode": "7024850011156",
+  "name": "Nordfjord Grillpølser",
+  "kcal_per_100g": 257,
+  "protein_g": 10,
+  "carbs_g": 7,
+  "fat_g": 21,
+  "serving_size_g": 56
+ },
+ {
+  "barcode": "7025110072160",
+  "name": "Coop Kjøttdeig storfe, 14% fett",
+  "kcal_per_100g": 205,
+  "protein_g": 20,
+  "carbs_g": 0,
+  "fat_g": 14,
+  "serving_size_g": 400
+ },
+ {
+  "barcode": "7025110079527",
+  "name": "Coop Karbonadedeig storfe 5% fett",
+  "kcal_per_100g": 133,
+  "protein_g": 22,
+  "carbs_g": 0,
+  "fat_g": 5,
+  "serving_size_g": 400
+ },
+ {
+  "barcode": "7025110095503",
+  "name": "Coop Aprikossyltetøy",
+  "kcal_per_100g": 158,
+  "protein_g": 0.5,
+  "carbs_g": 39,
+  "fat_g": 0.1,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7025110144720",
+  "name": "OATLY NORWAY AS Havredrikk naturell",
+  "kcal_per_100g": 45,
+  "protein_g": 1,
+  "carbs_g": 6.4,
+  "fat_g": 1.5,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7025110151131",
+  "name": "Änglamark Økologisk Helmelk 3,5% fett fra Rørosmeieriet",
+  "kcal_per_100g": 64,
+  "protein_g": 3.3,
+  "carbs_g": 4.8,
+  "fat_g": 3.5,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7025110179111",
+  "name": "Coop Frokostegg Fra Frittgående Høner 12 egg L",
+  "kcal_per_100g": 149,
+  "protein_g": 13,
+  "carbs_g": 0.3,
+  "fat_g": 11,
+  "serving_size_g": 58
+ },
+ {
+  "barcode": "7025110184283",
+  "name": "Coop Scampi naturell",
+  "kcal_per_100g": 84,
+  "protein_g": 15,
+  "carbs_g": 0.8,
+  "fat_g": 0.6,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7025110184344",
+  "name": "Coop Frokostegg (18 stk M/L/XL)",
+  "kcal_per_100g": 148.33,
+  "protein_g": 13,
+  "carbs_g": 0.33,
+  "fat_g": 11,
+  "serving_size_g": 60
+ },
+ {
+  "barcode": "7025110184924",
+  "name": "DEN STOLTE HANE AS Kyllingfilet i biter",
+  "kcal_per_100g": 111,
+  "protein_g": 23,
+  "carbs_g": 0,
+  "fat_g": 2.1,
+  "serving_size_g": 400
+ },
+ {
+  "barcode": "7025110197313",
+  "name": "Coop Blåbær",
+  "kcal_per_100g": 39.9,
+  "protein_g": 0.49,
+  "carbs_g": 9.8,
+  "fat_g": 0.21,
+  "serving_size_g": 70
+ },
+ {
+  "barcode": "7025110216441",
+  "name": "Coop Potetchips Salt",
+  "kcal_per_100g": 512,
+  "protein_g": 5.8,
+  "carbs_g": 47,
+  "fat_g": 33,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7025110218575",
+  "name": "Coop Eple Juice",
+  "kcal_per_100g": 45,
+  "protein_g": 0.5,
+  "carbs_g": 10,
+  "fat_g": 0.5,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7025165010827",
+  "name": "GOMAN ØSTFOLD/LETTBAKT Coop Skåret Toastloff 750g",
+  "kcal_per_100g": 274,
+  "protein_g": 8.4,
+  "carbs_g": 49,
+  "fat_g": 3.9,
+  "serving_size_g": 33
+ },
+ {
+  "barcode": "7025165311030",
+  "name": "Coop Sportsknekkebrød",
+  "kcal_per_100g": 425,
+  "protein_g": 16,
+  "carbs_g": 28,
+  "fat_g": 25,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7025168001327",
+  "name": "Coop Superbrød",
+  "kcal_per_100g": 255,
+  "protein_g": 8.5,
+  "carbs_g": 44,
+  "fat_g": 3.3,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7026450051051",
+  "name": "Honning Centralen Honningcentralen Akasiehonning",
+  "kcal_per_100g": 95.43,
+  "protein_g": 1,
+  "carbs_g": 80,
+  "fat_g": 0,
+  "serving_size_g": 15
+ },
+ {
+  "barcode": "7026450052393",
+  "name": "HONNING CENTRALEN Flytende fjellhonning",
+  "kcal_per_100g": 334,
+  "protein_g": 1,
+  "carbs_g": 80,
+  "fat_g": 0,
+  "serving_size_g": 10
+ },
+ {
+  "barcode": "7026450053338",
+  "name": "Honningcentralen SA Ekte honning",
+  "kcal_per_100g": 334,
+  "protein_g": 1,
+  "carbs_g": 80,
+  "fat_g": 0,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7026450053956",
+  "name": "Kraftig honning Blomsterhonning (Honey)",
+  "kcal_per_100g": 334,
+  "protein_g": 1,
+  "carbs_g": 80,
+  "fat_g": 0,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7026450054472",
+  "name": "Honningcentralen S.A. Agave & Honning Topping",
+  "kcal_per_100g": 317,
+  "protein_g": 0.48,
+  "carbs_g": 77.5,
+  "fat_g": 0,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7027110215530",
+  "name": "KING OSCAR AS King Oscar Makrell i Tomat uten Skinn",
+  "kcal_per_100g": 231,
+  "protein_g": 12,
+  "carbs_g": 4.6,
+  "fat_g": 18,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7027110222460",
+  "name": "King Oscar Sardiner I Saus Laget Av Solmodne Tomater",
+  "kcal_per_100g": 198,
+  "protein_g": 14,
+  "carbs_g": 3.4,
+  "fat_g": 14,
+  "serving_size_g": 102
+ },
+ {
+  "barcode": "7027110223238",
+  "name": "King Oscar Makrell i tomatsaus",
+  "kcal_per_100g": 192,
+  "protein_g": 9.3,
+  "carbs_g": 7.1,
+  "fat_g": 14,
+  "serving_size_g": 30
+ },
+ {
+  "barcode": "7029161119645",
+  "name": "Mesterbakeren steinovnsbakt surdeigsbrød",
+  "kcal_per_100g": 296,
+  "protein_g": 12,
+  "carbs_g": 39,
+  "fat_g": 9.1,
+  "serving_size_g": 50
+ },
+ {
+  "barcode": "7029161124694",
+  "name": "Mesterbakeren Havrebrød",
+  "kcal_per_100g": 248,
+  "protein_g": 11,
+  "carbs_g": 40,
+  "fat_g": 3.5,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7029161131579",
+  "name": "Mesterbakeren Grovt & Godt Proteinbrød",
+  "kcal_per_100g": 212,
+  "protein_g": 22,
+  "carbs_g": 16,
+  "fat_g": 4.7,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7029161132613",
+  "name": "Urkraft Havrebrød med spelt",
+  "kcal_per_100g": 216,
+  "protein_g": 9.2,
+  "carbs_g": 28,
+  "fat_g": 5.7,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7030019535685",
+  "name": "Hansa borg as Mango IPA",
+  "kcal_per_100g": 44,
+  "protein_g": 0.4,
+  "carbs_g": 2.5,
+  "fat_g": 0.2,
+  "serving_size_g": 500
+ },
+ {
+  "barcode": "7031451235683",
+  "name": "GASTROMAT AS Gastromat",
+  "kcal_per_100g": 148,
+  "protein_g": 23,
+  "carbs_g": 12,
+  "fat_g": 0.6,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7032060010265",
+  "name": "REMA 1000 Rapsolje",
+  "kcal_per_100g": 828,
+  "protein_g": 0,
+  "carbs_g": 0,
+  "fat_g": 92,
+  "serving_size_g": 13.6
+ },
+ {
+  "barcode": "7032060011064",
+  "name": "REMA 1000 Mandler",
+  "kcal_per_100g": 600,
+  "protein_g": 21,
+  "carbs_g": 6.6,
+  "fat_g": 52,
+  "serving_size_g": 10
+ },
+ {
+  "barcode": "7032069101131",
+  "name": "Grovbrød for store og små superhelter",
+  "kcal_per_100g": 236,
+  "protein_g": 8.8,
+  "carbs_g": 41,
+  "fat_g": 2.2,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7032069101636",
+  "name": "REMA 1000 R Lett & Sprø Chips Salt 30% mindre fett",
+  "kcal_per_100g": 440,
+  "protein_g": 3.4,
+  "carbs_g": 58,
+  "fat_g": 21,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7032069711439",
+  "name": "REMA 1000 Frisk & Søt Appelsinjuice presset fra solmodne appelsiner",
+  "kcal_per_100g": 47,
+  "protein_g": 1,
+  "carbs_g": 9.6,
+  "fat_g": 0.5,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7032069712160",
+  "name": "NEN Frokostjuice",
+  "kcal_per_100g": 41,
+  "protein_g": 0,
+  "carbs_g": 10,
+  "fat_g": 0,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7032069712825",
+  "name": "REMA 1000 Iste smak av Fersken",
+  "kcal_per_100g": 29,
+  "protein_g": 0,
+  "carbs_g": 7.2,
+  "fat_g": 0,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7032069713402",
+  "name": "REMA 1000 Kikerter i lake",
+  "kcal_per_100g": 119,
+  "protein_g": 6.5,
+  "carbs_g": 16,
+  "fat_g": 2,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7032069714812",
+  "name": "REMA 1000 Mais",
+  "kcal_per_100g": 79,
+  "protein_g": 2.3,
+  "carbs_g": 14,
+  "fat_g": 1,
+  "serving_size_g": 165
+ },
+ {
+  "barcode": "7032069714850",
+  "name": "REMA 1000 Peanøttsmør",
+  "kcal_per_100g": 637,
+  "protein_g": 22,
+  "carbs_g": 12,
+  "fat_g": 54,
+  "serving_size_g": 15
+ },
+ {
+  "barcode": "7032069715543",
+  "name": "Texmex Fullkorn tortilla wraps (25cm)",
+  "kcal_per_100g": 288,
+  "protein_g": 9.3,
+  "carbs_g": 46,
+  "fat_g": 6,
+  "serving_size_g": 62
+ },
+ {
+  "barcode": "7032069715550",
+  "name": "REMA 1000 TexMex Tortilla Chips Salt",
+  "kcal_per_100g": 470,
+  "protein_g": 6.6,
+  "carbs_g": 64,
+  "fat_g": 20,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7032069715567",
+  "name": "REMA 1000 Tex Mex Tortilla Chips Ost",
+  "kcal_per_100g": 470,
+  "protein_g": 6.6,
+  "carbs_g": 64,
+  "fat_g": 20,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7032069715574",
+  "name": "REMA 1000 Tortilla Rolls Hot & Spicy",
+  "kcal_per_100g": 502,
+  "protein_g": 6,
+  "carbs_g": 59,
+  "fat_g": 26,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7032069715840",
+  "name": "REMA 1000 Grønn Pesto",
+  "kcal_per_100g": 535,
+  "protein_g": 5,
+  "carbs_g": 3.9,
+  "fat_g": 55,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7032069715871",
+  "name": "REMA 1000 Pastasaus med tomat og basilikum",
+  "kcal_per_100g": 35,
+  "protein_g": 1.6,
+  "carbs_g": 4.8,
+  "fat_g": 0.7,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7032069716922",
+  "name": "REMA 1000 Solsikkeolje",
+  "kcal_per_100g": 828,
+  "protein_g": 0,
+  "carbs_g": 0,
+  "fat_g": 92,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7032069718131",
+  "name": "REMA 1000 Hakkede tomater med hvitløk",
+  "kcal_per_100g": 25,
+  "protein_g": 1.3,
+  "carbs_g": 3.6,
+  "fat_g": 0.5,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7032069718148",
+  "name": "REMA 1000 Tomater hakkede med basilikum og oregano",
+  "kcal_per_100g": 22,
+  "protein_g": 1,
+  "carbs_g": 3.8,
+  "fat_g": 0.5,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7032069718605",
+  "name": "REMA 1000 Erter",
+  "kcal_per_100g": 67,
+  "protein_g": 5.2,
+  "carbs_g": 8,
+  "fat_g": 0.5,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7032069719114",
+  "name": "Prima Lavpris Riskake",
+  "kcal_per_100g": 379,
+  "protein_g": 8.4,
+  "carbs_g": 78,
+  "fat_g": 2.8,
+  "serving_size_g": 7
+ },
+ {
+  "barcode": "7032069720417",
+  "name": "REMA 1000 Svisker",
+  "kcal_per_100g": 170,
+  "protein_g": 2.3,
+  "carbs_g": 37,
+  "fat_g": 0.3,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7032069724545",
+  "name": "Kolonihagen Pumpkin seeds",
+  "kcal_per_100g": 584,
+  "protein_g": 36,
+  "carbs_g": 2,
+  "fat_g": 46,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7032069724552",
+  "name": "Kolonihagen Økologiske chiafrø",
+  "kcal_per_100g": 479,
+  "protein_g": 21,
+  "carbs_g": 1.8,
+  "fat_g": 34,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7032069726952",
+  "name": "REMA 1000 Salte Peanøtter",
+  "kcal_per_100g": 584,
+  "protein_g": 26,
+  "carbs_g": 6,
+  "fat_g": 48,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7032069728161",
+  "name": "REMA 1000 Passata Tomater 390 g",
+  "kcal_per_100g": 25,
+  "protein_g": 1.2,
+  "carbs_g": 4.2,
+  "fat_g": 0.5,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7032069728574",
+  "name": "REMA 1000 Cashewnøtter",
+  "kcal_per_100g": 591,
+  "protein_g": 18,
+  "carbs_g": 29,
+  "fat_g": 44,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7032069730768",
+  "name": "Kolonihagen Gresk-inspirert yoghurt 2%",
+  "kcal_per_100g": 65,
+  "protein_g": 8,
+  "carbs_g": 3.7,
+  "fat_g": 2,
+  "serving_size_g": 60
+ },
+ {
+  "barcode": "7032069731437",
+  "name": "REMA 1000 Sparkling Appelsin & sitron",
+  "kcal_per_100g": 30,
+  "protein_g": 0,
+  "carbs_g": 7.5,
+  "fat_g": 0,
+  "serving_size_g": 330
+ },
+ {
+  "barcode": "7032069732502",
+  "name": "REMA 1000 Valnøttkjerner",
+  "kcal_per_100g": 684,
+  "protein_g": 14,
+  "carbs_g": 2.8,
+  "fat_g": 67,
+  "serving_size_g": 10
+ },
+ {
+  "barcode": "7032069732908",
+  "name": "Prima Lavpris Egg, M",
+  "kcal_per_100g": 270.91,
+  "protein_g": 13,
+  "carbs_g": 0.3,
+  "fat_g": 11,
+  "serving_size_g": 60
+ },
+ {
+  "barcode": "7032069733387",
+  "name": "PRIMA LAVPRIS Tunfisk i vann",
+  "kcal_per_100g": 115,
+  "protein_g": 27,
+  "carbs_g": 0,
+  "fat_g": 0.8,
+  "serving_size_g": 120
+ },
+ {
+  "barcode": "7032069736685",
+  "name": "REMA 1000 Økologiske Kikerter",
+  "kcal_per_100g": 123,
+  "protein_g": 6.7,
+  "carbs_g": 15,
+  "fat_g": 2.5,
+  "serving_size_g": 50
+ },
+ {
+  "barcode": "7032069736715",
+  "name": "Kolonihagen Sorte bønner",
+  "kcal_per_100g": 106,
+  "protein_g": 7.6,
+  "carbs_g": 13,
+  "fat_g": 1,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7032069736890",
+  "name": "Koloni hagen ØKOLOGISK PEANØTTSMØR MED BITER",
+  "kcal_per_100g": 613,
+  "protein_g": 28,
+  "carbs_g": 11,
+  "fat_g": 49,
+  "serving_size_g": 28
+ },
+ {
+  "barcode": "7032069737606",
+  "name": "REMA 1000 Tropisk nektar",
+  "kcal_per_100g": 50,
+  "protein_g": 0.5,
+  "carbs_g": 12,
+  "fat_g": 0.5,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7032069738610",
+  "name": "Lerøy Prima Lavpris- Seifilet i blokk",
+  "kcal_per_100g": 84,
+  "protein_g": 18,
+  "carbs_g": 0,
+  "fat_g": 1.3,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7032069740354",
+  "name": "R Tomatpasta",
+  "kcal_per_100g": 82,
+  "protein_g": 4.4,
+  "carbs_g": 14,
+  "fat_g": 0.4,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7032069760901",
+  "name": "REMA 1000 Plantebasert havredrikk",
+  "kcal_per_100g": 52,
+  "protein_g": 0.8,
+  "carbs_g": 7.6,
+  "fat_g": 2,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7032069761090",
+  "name": "REMA 1000 Kjelepoppet Popcorn med smør",
+  "kcal_per_100g": 563,
+  "protein_g": 7.8,
+  "carbs_g": 38,
+  "fat_g": 40,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7033330013245",
+  "name": "Fjordland Original",
+  "kcal_per_100g": 723,
+  "protein_g": 0.5,
+  "carbs_g": 0.5,
+  "fat_g": 80,
+  "serving_size_g": 10
+ },
+ {
+  "barcode": "7033330013290",
+  "name": "Bremykt mykere",
+  "kcal_per_100g": 703,
+  "protein_g": 0.5,
+  "carbs_g": 0.5,
+  "fat_g": 78,
+  "serving_size_g": 6
+ },
+ {
+  "barcode": "7033330036695",
+  "name": "Tine Sjokoladepudding med vaniljesaus",
+  "kcal_per_100g": 133,
+  "protein_g": 3.1,
+  "carbs_g": 18,
+  "fat_g": 5.5,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7033330055887",
+  "name": "Brelett",
+  "kcal_per_100g": 390,
+  "protein_g": 4.4,
+  "carbs_g": 3.2,
+  "fat_g": 40,
+  "serving_size_g": 10
+ },
+ {
+  "barcode": "7033330087086",
+  "name": "Fjordland Risengrynsgrøt",
+  "kcal_per_100g": 106.74,
+  "protein_g": 3.9,
+  "carbs_g": 17,
+  "fat_g": 2.6,
+  "serving_size_g": 460
+ },
+ {
+  "barcode": "7033330089448",
+  "name": "Fjordland Butter Chickpeas With Rice",
+  "kcal_per_100g": 127,
+  "protein_g": 3.3,
+  "carbs_g": 17,
+  "fat_g": 4.7,
+  "serving_size_g": 400
+ },
+ {
+  "barcode": "7034280001757",
+  "name": "Synnøve Original, Skivet hvitost",
+  "kcal_per_100g": 338,
+  "protein_g": 26,
+  "carbs_g": 0,
+  "fat_g": 26,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7034280001795",
+  "name": "Synnøve finden as Gulost Original skivet",
+  "kcal_per_100g": 338,
+  "protein_g": 26,
+  "carbs_g": 0,
+  "fat_g": 26,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7034280005489",
+  "name": "Synnøve Granola med honningristede pekannøtter",
+  "kcal_per_100g": 430,
+  "protein_g": 9,
+  "carbs_g": 65,
+  "fat_g": 14,
+  "serving_size_g": 40
+ },
+ {
+  "barcode": "7034280008824",
+  "name": "Synnøve Granola jordbær",
+  "kcal_per_100g": 381,
+  "protein_g": 9.4,
+  "carbs_g": 59,
+  "fat_g": 7.4,
+  "serving_size_g": 40
+ },
+ {
+  "barcode": "7034280009494",
+  "name": "Peppes Pizza Dressing",
+  "kcal_per_100g": 267,
+  "protein_g": 1.2,
+  "carbs_g": 4.6,
+  "fat_g": 27.2,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7034281576001",
+  "name": "Synnøve GRESK Gresk Yoghurt med Vanilje og Granola",
+  "kcal_per_100g": 69.95,
+  "protein_g": 8.48,
+  "carbs_g": 14,
+  "fat_g": 3.21,
+  "serving_size_g": 165
+ },
+ {
+  "barcode": "7034281582002",
+  "name": "Synnøve Gresk Yoghurt Naturell",
+  "kcal_per_100g": 71,
+  "protein_g": 8.3,
+  "carbs_g": 4.9,
+  "fat_g": 2,
+  "serving_size_g": 87.5
+ },
+ {
+  "barcode": "7034281586000",
+  "name": "Synnøve Gresk yogurt Naturell 2% Fett",
+  "kcal_per_100g": 71,
+  "protein_g": 8.3,
+  "carbs_g": 4.9,
+  "fat_g": 2,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7035110400146",
+  "name": "Findus Fiskegrateng Ekstra Fin, Fransk oppskrift",
+  "kcal_per_100g": 150,
+  "protein_g": 13,
+  "carbs_g": 5,
+  "fat_g": 8.7,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7035110400894",
+  "name": "Findus Matlyst fiskepinner",
+  "kcal_per_100g": 208,
+  "protein_g": 12,
+  "carbs_g": 18,
+  "fat_g": 9.6,
+  "serving_size_g": 25
+ },
+ {
+  "barcode": "7035119999269",
+  "name": "Findus Fish & Crisp",
+  "kcal_per_100g": 216,
+  "protein_g": 12,
+  "carbs_g": 17,
+  "fat_g": 11,
+  "serving_size_g": 120
+ },
+ {
+  "barcode": "7035620003424",
+  "name": "Eldorado Rosiner",
+  "kcal_per_100g": 338,
+  "protein_g": 3,
+  "carbs_g": 76.9,
+  "fat_g": 0.7,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7035620004162",
+  "name": "Unil as Eplejuice fra konsentrat",
+  "kcal_per_100g": 42,
+  "protein_g": 0,
+  "carbs_g": 10,
+  "fat_g": 0.1,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7035620018930",
+  "name": "Eldorado Pasta penne",
+  "kcal_per_100g": 363,
+  "protein_g": 12,
+  "carbs_g": 74,
+  "fat_g": 1.5,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7035620022357",
+  "name": "Eldorado Mørk kokesjokolade",
+  "kcal_per_100g": 511,
+  "protein_g": 5.9,
+  "carbs_g": 58,
+  "fat_g": 27,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7035620023170",
+  "name": "First Price Tomatketchup",
+  "kcal_per_100g": 90,
+  "protein_g": 1,
+  "carbs_g": 21,
+  "fat_g": 0,
+  "serving_size_g": 17
+ },
+ {
+  "barcode": "7035620026416",
+  "name": "Eldorado Mozzarella",
+  "kcal_per_100g": 225,
+  "protein_g": 17,
+  "carbs_g": 1,
+  "fat_g": 17,
+  "serving_size_g": 125
+ },
+ {
+  "barcode": "7035620026515",
+  "name": "Eldorado Mellombar Sjokolade & Krisp",
+  "kcal_per_100g": 413.04,
+  "protein_g": 6.96,
+  "carbs_g": 73.04,
+  "fat_g": 11.3,
+  "serving_size_g": 23
+ },
+ {
+  "barcode": "7035620029769",
+  "name": "Unil as EXTRA VIRGIN OLIVENOLJE",
+  "kcal_per_100g": 824,
+  "protein_g": 0,
+  "carbs_g": 0,
+  "fat_g": 91.6,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7035620035555",
+  "name": "Unil as Pistasj Nøtter Salte m/Skall 150g Eldorado",
+  "kcal_per_100g": 610,
+  "protein_g": 20.5,
+  "carbs_g": 28.7,
+  "fat_g": 43.8,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7035620035647",
+  "name": "Eldorado Chili nøtter",
+  "kcal_per_100g": 546,
+  "protein_g": 14,
+  "carbs_g": 38,
+  "fat_g": 37,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7035620035678",
+  "name": "Eldorado Peanøtter røstet og saltet",
+  "kcal_per_100g": 607,
+  "protein_g": 26,
+  "carbs_g": 16,
+  "fat_g": 47,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7035620037184",
+  "name": "Unil as Cola",
+  "kcal_per_100g": 40,
+  "protein_g": 0,
+  "carbs_g": 10,
+  "fat_g": 0,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7035620037290",
+  "name": "Unil as Cola Uten Sukker",
+  "kcal_per_100g": 0,
+  "protein_g": 0,
+  "carbs_g": 0.1,
+  "fat_g": 0,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7035620043215",
+  "name": "Eldorado Micro Popcorn Med Smørsmak",
+  "kcal_per_100g": 415,
+  "protein_g": 9.7,
+  "carbs_g": 49,
+  "fat_g": 18,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7035620043598",
+  "name": "Eldorado Eple Juice Fra Konsentrat",
+  "kcal_per_100g": 47,
+  "protein_g": 0,
+  "carbs_g": 10,
+  "fat_g": 0.1,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7035620044830",
+  "name": "Eldorado Smøremyk",
+  "kcal_per_100g": 630,
+  "protein_g": 0,
+  "carbs_g": 0,
+  "fat_g": 70,
+  "serving_size_g": 10
+ },
+ {
+  "barcode": "7035620045141",
+  "name": "PetPack Drikker Sukkerfri Julebrus",
+  "kcal_per_100g": 0.8,
+  "protein_g": 0,
+  "carbs_g": 0.2,
+  "fat_g": 0,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7035620045400",
+  "name": "Eldorado Mellombar salt karamel",
+  "kcal_per_100g": 412,
+  "protein_g": 7.7,
+  "carbs_g": 68,
+  "fat_g": 11,
+  "serving_size_g": 23
+ },
+ {
+  "barcode": "7035620046292",
+  "name": "Eldorado Rugbrød",
+  "kcal_per_100g": 198,
+  "protein_g": 5.2,
+  "carbs_g": 41,
+  "fat_g": 0.9,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7035620047169",
+  "name": "Unil as Hummus Dipp 140g Eldorado",
+  "kcal_per_100g": 290,
+  "protein_g": 7.2,
+  "carbs_g": 10,
+  "fat_g": 23,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7035620047480",
+  "name": "Eldorado Hvitløks Baguetter",
+  "kcal_per_100g": 292,
+  "protein_g": 7,
+  "carbs_g": 43,
+  "fat_g": 9.6,
+  "serving_size_g": 175
+ },
+ {
+  "barcode": "7035620048883",
+  "name": "Unil as Rapsolje 1l Eldorado",
+  "kcal_per_100g": 900,
+  "protein_g": null,
+  "carbs_g": null,
+  "fat_g": 100,
+  "serving_size_g": 14
+ },
+ {
+  "barcode": "7035620049408",
+  "name": "Eldorado Iste med smak av sitron",
+  "kcal_per_100g": 25,
+  "protein_g": 0,
+  "carbs_g": 6.3,
+  "fat_g": 0,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7035620049439",
+  "name": "Unil as Solsikkeolje 1l Eldorado",
+  "kcal_per_100g": 900,
+  "protein_g": 0,
+  "carbs_g": 0,
+  "fat_g": 100,
+  "serving_size_g": 10
+ },
+ {
+  "barcode": "7035620050459",
+  "name": "First Price Sjokoladekjeks",
+  "kcal_per_100g": 216.44,
+  "protein_g": 5.6,
+  "carbs_g": 63,
+  "fat_g": 23,
+  "serving_size_g": 20
+ },
+ {
+  "barcode": "7035620051999",
+  "name": "First Price Tyttebærsyltetøy",
+  "kcal_per_100g": 179.02,
+  "protein_g": 1.9,
+  "carbs_g": 42,
+  "fat_g": 0,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7035620052385",
+  "name": "FLO Sitron & Lime Kullsyredrikk",
+  "kcal_per_100g": 33,
+  "protein_g": 0.1,
+  "carbs_g": 8,
+  "fat_g": 0.1,
+  "serving_size_g": 330
+ },
+ {
+  "barcode": "7035620052774",
+  "name": "Eldorado MellomBar",
+  "kcal_per_100g": 365.22,
+  "protein_g": 8.7,
+  "carbs_g": 60.87,
+  "fat_g": 13.48,
+  "serving_size_g": 23
+ },
+ {
+  "barcode": "7035620053573",
+  "name": "First Price Egg fra frittgående høner",
+  "kcal_per_100g": 149,
+  "protein_g": 13,
+  "carbs_g": 0.3,
+  "fat_g": 11,
+  "serving_size_g": 58
+ },
+ {
+  "barcode": "7035620053849",
+  "name": "First Price Baguetter Små",
+  "kcal_per_100g": 245,
+  "protein_g": 8,
+  "carbs_g": 46,
+  "fat_g": 2,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7035620056864",
+  "name": "Eldorado Sjokoflak",
+  "kcal_per_100g": 337,
+  "protein_g": 11,
+  "carbs_g": 73,
+  "fat_g": 3,
+  "serving_size_g": 7.5
+ },
+ {
+  "barcode": "7035620058110",
+  "name": "vilje Kikerter Økologisk",
+  "kcal_per_100g": 137,
+  "protein_g": 7,
+  "carbs_g": 24.6,
+  "fat_g": 2.4,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7035620058622",
+  "name": "First Price Tortilla Chips Med Ostesmak",
+  "kcal_per_100g": 472,
+  "protein_g": 6.6,
+  "carbs_g": 64,
+  "fat_g": 20,
+  "serving_size_g": 200
+ },
+ {
+  "barcode": "7035620058837",
+  "name": "Vilje Lentils",
+  "kcal_per_100g": 87,
+  "protein_g": 6.4,
+  "carbs_g": 15,
+  "fat_g": 0.5,
+  "serving_size_g": 230
+ },
+ {
+  "barcode": "7035620059582",
+  "name": "Vilje Oliven Olje",
+  "kcal_per_100g": 828,
+  "protein_g": 0,
+  "carbs_g": 0,
+  "fat_g": 92,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7035620062315",
+  "name": "vilje Crunchy Peanøttsmør",
+  "kcal_per_100g": 604,
+  "protein_g": 28,
+  "carbs_g": 11,
+  "fat_g": 49,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7035620062490",
+  "name": "vilje Fetaost",
+  "kcal_per_100g": 276,
+  "protein_g": 17,
+  "carbs_g": 0.7,
+  "fat_g": 23,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7036110004785",
+  "name": "Mills Potetmos",
+  "kcal_per_100g": 360,
+  "protein_g": 6,
+  "carbs_g": 79,
+  "fat_g": 0.5,
+  "serving_size_g": 90
+ },
+ {
+  "barcode": "7036110006086",
+  "name": "Mills 2 poser Ekte majones",
+  "kcal_per_100g": 705,
+  "protein_g": 1,
+  "carbs_g": 2,
+  "fat_g": 77,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7036110007731",
+  "name": "Mills Grov leverpostei toppet med bacon",
+  "kcal_per_100g": 145.99,
+  "protein_g": 11,
+  "carbs_g": 10,
+  "fat_g": 23,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7036110008172",
+  "name": "Mills Uten Melk Og Soya",
+  "kcal_per_100g": 630,
+  "protein_g": 0,
+  "carbs_g": 0,
+  "fat_g": 70,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7036110008202",
+  "name": "Hjertego'",
+  "kcal_per_100g": 540,
+  "protein_g": 0.5,
+  "carbs_g": 0.5,
+  "fat_g": 60,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7036110008844",
+  "name": "Mills Peanut Butter",
+  "kcal_per_100g": 610,
+  "protein_g": 24,
+  "carbs_g": 14,
+  "fat_g": 49,
+  "serving_size_g": 20
+ },
+ {
+  "barcode": "7036110009759",
+  "name": "Mills Ekte Majones Tube",
+  "kcal_per_100g": 725,
+  "protein_g": 1,
+  "carbs_g": 2,
+  "fat_g": 79,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7036110009773",
+  "name": "Mills Olivero Med Smør- Og Olivenolje",
+  "kcal_per_100g": 540,
+  "protein_g": 0.5,
+  "carbs_g": 0.5,
+  "fat_g": 60,
+  "serving_size_g": 4
+ },
+ {
+  "barcode": "7036110009834",
+  "name": "Mills Kaviar",
+  "kcal_per_100g": 430,
+  "protein_g": 8,
+  "carbs_g": 13,
+  "fat_g": 39,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7036110009841",
+  "name": "Mills Ekte Majones Tube",
+  "kcal_per_100g": 725,
+  "protein_g": 1,
+  "carbs_g": 2,
+  "fat_g": 79,
+  "serving_size_g": 160
+ },
+ {
+  "barcode": "7036110009940",
+  "name": "Mills Kaviar Original Stor Tube",
+  "kcal_per_100g": 430,
+  "protein_g": 8,
+  "carbs_g": 13,
+  "fat_g": 39,
+  "serving_size_g": 6
+ },
+ {
+  "barcode": "7036110009988",
+  "name": "Mills Polarkaviar",
+  "kcal_per_100g": 475,
+  "protein_g": 8,
+  "carbs_g": 14,
+  "fat_g": 43,
+  "serving_size_g": 12
+ },
+ {
+  "barcode": "7036110010472",
+  "name": "Mills AS Soft Flora Original med rapsolje",
+  "kcal_per_100g": 540,
+  "protein_g": 0.5,
+  "carbs_g": 0.5,
+  "fat_g": 60,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7036110010588",
+  "name": "MILLS AS Optimal",
+  "kcal_per_100g": 900,
+  "protein_g": 0,
+  "carbs_g": 0,
+  "fat_g": 100,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7036110010595",
+  "name": "Mills Lettmargarin",
+  "kcal_per_100g": 97.3,
+  "protein_g": 1,
+  "carbs_g": 1,
+  "fat_g": 40,
+  "serving_size_g": 10
+ },
+ {
+  "barcode": "7036110010786",
+  "name": "Soft flora Lett",
+  "kcal_per_100g": 153.19,
+  "protein_g": 0.4,
+  "carbs_g": 0.5,
+  "fat_g": 40,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7036110011936",
+  "name": "Mills Soft Flora Original",
+  "kcal_per_100g": 540,
+  "protein_g": 0.5,
+  "carbs_g": 0.5,
+  "fat_g": 60,
+  "serving_size_g": 5
+ },
+ {
+  "barcode": "7036110011943",
+  "name": "Mills Soft Flora Lett",
+  "kcal_per_100g": 605.56,
+  "protein_g": 0.5,
+  "carbs_g": 0.5,
+  "fat_g": 40,
+  "serving_size_g": 5
+ },
+ {
+  "barcode": "7037120018663",
+  "name": "Mack Isbjørn Lite",
+  "kcal_per_100g": 29,
+  "protein_g": 0.4,
+  "carbs_g": 0.9,
+  "fat_g": 0,
+  "serving_size_g": 333
+ },
+ {
+  "barcode": "7037203626563",
+  "name": "Gilde Ovnsbakt Leverpostei",
+  "kcal_per_100g": 243,
+  "protein_g": 9.4,
+  "carbs_g": 4.6,
+  "fat_g": 20,
+  "serving_size_g": 15
+ },
+ {
+  "barcode": "7037204190926",
+  "name": "NORTURA SA (GILDE) Gilde Go og Mager Salami",
+  "kcal_per_100g": 197,
+  "protein_g": 28,
+  "carbs_g": 0.9,
+  "fat_g": 9,
+  "serving_size_g": 5
+ },
+ {
+  "barcode": "7037204196256",
+  "name": "Nortura sa g Silania Salami",
+  "kcal_per_100g": 388,
+  "protein_g": 25,
+  "carbs_g": 0,
+  "fat_g": 31,
+  "serving_size_g": 4
+ },
+ {
+  "barcode": "7037204198922",
+  "name": "Gilde Klassisk Fårepølse",
+  "kcal_per_100g": 338,
+  "protein_g": 24,
+  "carbs_g": 0,
+  "fat_g": 27,
+  "serving_size_g": 5
+ },
+ {
+  "barcode": "7037204303258",
+  "name": "Gilde Stjernebacon",
+  "kcal_per_100g": 274,
+  "protein_g": 16,
+  "carbs_g": 0.1,
+  "fat_g": 23,
+  "serving_size_g": 140
+ },
+ {
+  "barcode": "7037204740640",
+  "name": "Gilde Vår utvalgte roastbiff",
+  "kcal_per_100g": 126,
+  "protein_g": 24,
+  "carbs_g": 1.8,
+  "fat_g": 2.5,
+  "serving_size_g": 10
+ },
+ {
+  "barcode": "7037206100022",
+  "name": "Gilde Ekte kokt skinne",
+  "kcal_per_100g": 97,
+  "protein_g": 19,
+  "carbs_g": 1.4,
+  "fat_g": 1.8,
+  "serving_size_g": 11
+ },
+ {
+  "barcode": "7037206100084",
+  "name": "Gilde Krydder skinke",
+  "kcal_per_100g": 383.64,
+  "protein_g": 17.27,
+  "carbs_g": 1.91,
+  "fat_g": 1.64,
+  "serving_size_g": 15
+ },
+ {
+  "barcode": "7037206101371",
+  "name": "Gilde Kjøttpølse",
+  "kcal_per_100g": 214,
+  "protein_g": 9.5,
+  "carbs_g": 5.9,
+  "fat_g": 18,
+  "serving_size_g": 90
+ },
+ {
+  "barcode": "7037210119256",
+  "name": "Diplom-Is Vaniljeis",
+  "kcal_per_100g": 178,
+  "protein_g": 3.4,
+  "carbs_g": 22,
+  "fat_g": 8.4,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7037210119270",
+  "name": "Diplom-Is Tress kuleis",
+  "kcal_per_100g": 178,
+  "protein_g": 3.5,
+  "carbs_g": 22,
+  "fat_g": 8.2,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7037400001330",
+  "name": "Lerum Syltetøy 80% jordbær utan tilsatt sukker",
+  "kcal_per_100g": 42.54,
+  "protein_g": 0.4,
+  "carbs_g": 5.6,
+  "fat_g": 0.2,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7037400003174",
+  "name": "LERUM AS Tyttebærsyltetøy",
+  "kcal_per_100g": 179,
+  "protein_g": 0.3,
+  "carbs_g": 42.8,
+  "fat_g": 0.2,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7037421097565",
+  "name": "Baxt Pepperkaker",
+  "kcal_per_100g": 434,
+  "protein_g": 6.1,
+  "carbs_g": 68.6,
+  "fat_g": 15.1,
+  "serving_size_g": 6
+ },
+ {
+  "barcode": "7037610027045",
+  "name": "ORKLA FOODS NORGE AS (STABBURET) Bergensk fiskesuppe",
+  "kcal_per_100g": 37,
+  "protein_g": 2.1,
+  "carbs_g": 5.4,
+  "fat_g": 0.7,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7037610027335",
+  "name": "ORKLA FOODS NORGE AS (STABBURET) Toronto Lofoten fiskesuppe",
+  "kcal_per_100g": 108,
+  "protein_g": 5.2,
+  "carbs_g": 15,
+  "fat_g": 2.8,
+  "serving_size_g": 250
+ },
+ {
+  "barcode": "7037610035248",
+  "name": "Orkla Foods Norge Toro Jasminris Boil in Bag 960g",
+  "kcal_per_100g": 123.43,
+  "protein_g": 2.9,
+  "carbs_g": 27,
+  "fat_g": 0.2,
+  "serving_size_g": 175
+ },
+ {
+  "barcode": "7037610050326",
+  "name": "TORO Lasagne XL Original",
+  "kcal_per_100g": 177,
+  "protein_g": 12,
+  "carbs_g": 13,
+  "fat_g": 8.33,
+  "serving_size_g": 300
+ },
+ {
+  "barcode": "7037610221443",
+  "name": "Orkla foods norge Original tomatsuppe med makaroni",
+  "kcal_per_100g": 35,
+  "protein_g": 0.92,
+  "carbs_g": 6.8,
+  "fat_g": 0.4,
+  "serving_size_g": 250
+ },
+ {
+  "barcode": "7037710020069",
+  "name": "ORKLA CONFECTIONERY & SNACKS NORGE Smash! Salt Karamell",
+  "kcal_per_100g": 530,
+  "protein_g": 7.6,
+  "carbs_g": 54,
+  "fat_g": 31,
+  "serving_size_g": 40
+ },
+ {
+  "barcode": "7037710020939",
+  "name": "Nidar Troika",
+  "kcal_per_100g": 393.94,
+  "protein_g": 3.18,
+  "carbs_g": 57.58,
+  "fat_g": 18.18,
+  "serving_size_g": 66
+ },
+ {
+  "barcode": "7037710021998",
+  "name": "Smash!",
+  "kcal_per_100g": 540,
+  "protein_g": 8.1,
+  "carbs_g": 53,
+  "fat_g": 33,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7037710034424",
+  "name": "Nidar Smørbukk Original",
+  "kcal_per_100g": 400,
+  "protein_g": 3.08,
+  "carbs_g": 68,
+  "fat_g": 13.2,
+  "serving_size_g": 25
+ },
+ {
+  "barcode": "7037710037876",
+  "name": "Orkla confectionery & snacks Skipper Lakrisbåter",
+  "kcal_per_100g": 340,
+  "protein_g": 4.7,
+  "carbs_g": 78,
+  "fat_g": 0.56,
+  "serving_size_g": 25
+ },
+ {
+  "barcode": "7037710090055",
+  "name": "Nidar Smash",
+  "kcal_per_100g": 540,
+  "protein_g": 8.1,
+  "carbs_g": 53,
+  "fat_g": 33,
+  "serving_size_g": 25
+ },
+ {
+  "barcode": "7038010000065",
+  "name": "Tine sa Helmelk",
+  "kcal_per_100g": 64,
+  "protein_g": 3.5,
+  "carbs_g": 4.5,
+  "fat_g": 3.5,
+  "serving_size_g": 300
+ },
+ {
+  "barcode": "7038010000737",
+  "name": "Tine Kulturmelk",
+  "kcal_per_100g": 54,
+  "protein_g": 3.3,
+  "carbs_g": 4.4,
+  "fat_g": 2.6,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7038010000911",
+  "name": "tine lettmelk",
+  "kcal_per_100g": 37,
+  "protein_g": 3.6,
+  "carbs_g": 4.7,
+  "fat_g": 0.5,
+  "serving_size_g": 200
+ },
+ {
+  "barcode": "7038010000980",
+  "name": "Tine Lettmelk 1,0 % fett",
+  "kcal_per_100g": 42,
+  "protein_g": 3.6,
+  "carbs_g": 4.7,
+  "fat_g": 1,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7038010001642",
+  "name": "Tine Lettmelk 1,0% fett",
+  "kcal_per_100g": 42,
+  "protein_g": 3.6,
+  "carbs_g": 4.7,
+  "fat_g": 1,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7038010001918",
+  "name": "Tine Lettmelk 0,5% fett",
+  "kcal_per_100g": 37,
+  "protein_g": 3.6,
+  "carbs_g": 4.7,
+  "fat_g": 0.5,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7038010002151",
+  "name": "Tine sa Skummet melk",
+  "kcal_per_100g": 34,
+  "protein_g": 3.6,
+  "carbs_g": 4.7,
+  "fat_g": 0.1,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7038010002274",
+  "name": "Tine Biola Syrnet Melk Jordbær",
+  "kcal_per_100g": 52,
+  "protein_g": 3.1,
+  "carbs_g": 9.7,
+  "fat_g": 0.1,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7038010002625",
+  "name": "Litago original sjokolademelk",
+  "kcal_per_100g": 69,
+  "protein_g": 3.6,
+  "carbs_g": 10,
+  "fat_g": 1.6,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7038010002663",
+  "name": "TINE SA Litago Med Jordbærsmak",
+  "kcal_per_100g": 65,
+  "protein_g": 3.3,
+  "carbs_g": 9.8,
+  "fat_g": 1.4,
+  "serving_size_g": 500
+ },
+ {
+  "barcode": "7038010003103",
+  "name": "Tine Kremfløte",
+  "kcal_per_100g": 353,
+  "protein_g": 2.1,
+  "carbs_g": 2.9,
+  "fat_g": 37,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7038010003202",
+  "name": "Tine Kremtopp sprayboks",
+  "kcal_per_100g": 326,
+  "protein_g": 2.2,
+  "carbs_g": 5.1,
+  "fat_g": 33,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7038010003813",
+  "name": "Tine IsKaffe Cappuccino",
+  "kcal_per_100g": 56,
+  "protein_g": 2.8,
+  "carbs_g": 9.5,
+  "fat_g": 0.7,
+  "serving_size_g": 330
+ },
+ {
+  "barcode": "7038010004254",
+  "name": "Tine sa Restitusjonsdrikk Banan og jordbær",
+  "kcal_per_100g": 68.79,
+  "protein_g": 6.06,
+  "carbs_g": 9.09,
+  "fat_g": 0.79,
+  "serving_size_g": 330
+ },
+ {
+  "barcode": "7038010004261",
+  "name": "Tine Restitusjonsdrikk Kakao",
+  "kcal_per_100g": 70.61,
+  "protein_g": 6.06,
+  "carbs_g": 9.09,
+  "fat_g": 0.91,
+  "serving_size_g": 330
+ },
+ {
+  "barcode": "7038010004858",
+  "name": "Tine Seterrømme 35% fett",
+  "kcal_per_100g": 336,
+  "protein_g": 2.2,
+  "carbs_g": 2.9,
+  "fat_g": 35,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7038010005459",
+  "name": "Tine Lettrømme 17 % fett",
+  "kcal_per_100g": 179,
+  "protein_g": 2.8,
+  "carbs_g": 3.7,
+  "fat_g": 17,
+  "serving_size_g": 300
+ },
+ {
+  "barcode": "7038010006982",
+  "name": "Tine Nyt Yoghurt Nøttetoffe & Sjokoladecrisp",
+  "kcal_per_100g": 138.66,
+  "protein_g": 3.9,
+  "carbs_g": 18,
+  "fat_g": 7.9,
+  "serving_size_g": 119
+ },
+ {
+  "barcode": "7038010008139",
+  "name": "Sunniva Original Eple",
+  "kcal_per_100g": 45,
+  "protein_g": 0.1,
+  "carbs_g": 10.5,
+  "fat_g": 0,
+  "serving_size_g": 150
+ },
+ {
+  "barcode": "7038010010187",
+  "name": "Tine Meierismør",
+  "kcal_per_100g": 742,
+  "protein_g": 0.5,
+  "carbs_g": 0.5,
+  "fat_g": 82,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7038010010316",
+  "name": "Tine Meierismør",
+  "kcal_per_100g": 742,
+  "protein_g": 0.5,
+  "carbs_g": 0.5,
+  "fat_g": 82,
+  "serving_size_g": 3
+ },
+ {
+  "barcode": "7038010010347",
+  "name": "Tine sa Meierismør",
+  "kcal_per_100g": 742,
+  "protein_g": 0.5,
+  "carbs_g": 0.5,
+  "fat_g": 82,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7038010013966",
+  "name": "Tine Norvegia Original",
+  "kcal_per_100g": 344,
+  "protein_g": 27,
+  "carbs_g": 0,
+  "fat_g": 26,
+  "serving_size_g": 12
+ },
+ {
+  "barcode": "7038010013973",
+  "name": "Tine Norvegia",
+  "kcal_per_100g": 98.95,
+  "protein_g": 27,
+  "carbs_g": 0,
+  "fat_g": 26,
+  "serving_size_g": 32
+ },
+ {
+  "barcode": "7038010014604",
+  "name": "Norvegia Orginal",
+  "kcal_per_100g": 344,
+  "protein_g": 27,
+  "carbs_g": 0,
+  "fat_g": 26,
+  "serving_size_g": 60
+ },
+ {
+  "barcode": "7038010016745",
+  "name": "Norvegia lettost, 16% fert",
+  "kcal_per_100g": 268,
+  "protein_g": 31,
+  "carbs_g": 0,
+  "fat_g": 16,
+  "serving_size_g": 10
+ },
+ {
+  "barcode": "7038010016851",
+  "name": "Tine Edamer Ost",
+  "kcal_per_100g": 355,
+  "protein_g": 28,
+  "carbs_g": 0.1,
+  "fat_g": 27,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7038010017865",
+  "name": "Tine Norsk Gräddost",
+  "kcal_per_100g": 418,
+  "protein_g": 19,
+  "carbs_g": 0,
+  "fat_g": 38,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7038010018428",
+  "name": "Tine sa Graddost",
+  "kcal_per_100g": 418,
+  "protein_g": 19,
+  "carbs_g": 0,
+  "fat_g": 38,
+  "serving_size_g": 11
+ },
+ {
+  "barcode": "7038010023248",
+  "name": "Tine Kremgo' Ananas og Mandarin",
+  "kcal_per_100g": 241,
+  "protein_g": 6.2,
+  "carbs_g": 7.4,
+  "fat_g": 22,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7038010023279",
+  "name": "Tine Kremgo' Krydder",
+  "kcal_per_100g": 254,
+  "protein_g": 6.7,
+  "carbs_g": 2.8,
+  "fat_g": 24,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7038010023507",
+  "name": "Tine sa Snøfrisk 125G Tine",
+  "kcal_per_100g": 259,
+  "protein_g": 6.6,
+  "carbs_g": 2,
+  "fat_g": 25,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7038010024801",
+  "name": "Tine Kremgo Naturell",
+  "kcal_per_100g": 254,
+  "protein_g": 6.7,
+  "carbs_g": 2.8,
+  "fat_g": 24,
+  "serving_size_g": 15
+ },
+ {
+  "barcode": "7038010028434",
+  "name": "Tine Fløtemysost",
+  "kcal_per_100g": 430,
+  "protein_g": 11,
+  "carbs_g": 38,
+  "fat_g": 26,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7038010028441",
+  "name": "Tine Gudbrandsdalsost",
+  "kcal_per_100g": 440,
+  "protein_g": 10,
+  "carbs_g": 37,
+  "fat_g": 28,
+  "serving_size_g": 10
+ },
+ {
+  "barcode": "7038010029073",
+  "name": "Tine Julebrunost Krydret og søt",
+  "kcal_per_100g": 457,
+  "protein_g": 12,
+  "carbs_g": 43,
+  "fat_g": 26,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7038010029530",
+  "name": "Tine Gudbrandsdalsost original",
+  "kcal_per_100g": 338.46,
+  "protein_g": 10,
+  "carbs_g": 35,
+  "fat_g": 28,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7038010029646",
+  "name": "Tine Fløtemysost Skivet",
+  "kcal_per_100g": 430,
+  "protein_g": 11,
+  "carbs_g": 38,
+  "fat_g": 26,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7038010030628",
+  "name": "Tine Prim Original 8 %",
+  "kcal_per_100g": 284,
+  "protein_g": 6.7,
+  "carbs_g": 46,
+  "fat_g": 8,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7038010035524",
+  "name": "TINE SA Rislunsj Bringebær & Rips",
+  "kcal_per_100g": 141,
+  "protein_g": 2.9,
+  "carbs_g": 21,
+  "fat_g": 5.1,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7038010041914",
+  "name": "Tine sa Kremfløte",
+  "kcal_per_100g": 353,
+  "protein_g": 2.1,
+  "carbs_g": 2.9,
+  "fat_g": 37,
+  "serving_size_g": 300
+ },
+ {
+  "barcode": "7038010043291",
+  "name": "Tine Matfløte 18% fett",
+  "kcal_per_100g": 183,
+  "protein_g": 1.4,
+  "carbs_g": 3.9,
+  "fat_g": 18,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7038010043321",
+  "name": "Tine LAKTOSEFRI FLØTE",
+  "kcal_per_100g": 188,
+  "protein_g": 2.9,
+  "carbs_g": 3.7,
+  "fat_g": 18,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7038010043642",
+  "name": "Sunniva Appelsin juice",
+  "kcal_per_100g": 44,
+  "protein_g": 0.7,
+  "carbs_g": 9.1,
+  "fat_g": 0.2,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7038010045073",
+  "name": "Tine Naturell yoghurt 3% fett",
+  "kcal_per_100g": 63,
+  "protein_g": 8.5,
+  "carbs_g": 3.3,
+  "fat_g": 2,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7038010045080",
+  "name": "Tine Yoghurt Vanilje",
+  "kcal_per_100g": 79,
+  "protein_g": 3.9,
+  "carbs_g": 9.3,
+  "fat_g": 3,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7038010045301",
+  "name": "Tine sa Lett-Rømme-Røros",
+  "kcal_per_100g": 180,
+  "protein_g": 2.9,
+  "carbs_g": 4.1,
+  "fat_g": 17,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7038010052347",
+  "name": "Tine Økologisk Helmelk",
+  "kcal_per_100g": 68,
+  "protein_g": 3.3,
+  "carbs_g": 4.5,
+  "fat_g": 4.1,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7038010052422",
+  "name": "Tine Helmelk 3,5%",
+  "kcal_per_100g": 64,
+  "protein_g": 3.5,
+  "carbs_g": 4.5,
+  "fat_g": 3.5,
+  "serving_size_g": 150
+ },
+ {
+  "barcode": "7038010053368",
+  "name": "Tine Gulost",
+  "kcal_per_100g": 351,
+  "protein_g": 27,
+  "carbs_g": 0,
+  "fat_g": 27,
+  "serving_size_g": 10
+ },
+ {
+  "barcode": "7038010053962",
+  "name": "Tine sa Biola Syrnet Melk Mango",
+  "kcal_per_100g": 33,
+  "protein_g": 3.2,
+  "carbs_g": 5,
+  "fat_g": 0,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7038010054471",
+  "name": "Tine Cottage Cheese Original 4,3% fett",
+  "kcal_per_100g": 96,
+  "protein_g": 13,
+  "carbs_g": 1.5,
+  "fat_g": 4.3,
+  "serving_size_g": 400
+ },
+ {
+  "barcode": "7038010054488",
+  "name": "Tine Cottage Cheese Mager 2% fett",
+  "kcal_per_100g": 79,
+  "protein_g": 13,
+  "carbs_g": 2.1,
+  "fat_g": 2,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7038010054730",
+  "name": "Blåbær Biola",
+  "kcal_per_100g": 25,
+  "protein_g": 3.2,
+  "carbs_g": 9,
+  "fat_g": 0.1,
+  "serving_size_g": 250
+ },
+ {
+  "barcode": "7038010054747",
+  "name": "Biola Bringebær",
+  "kcal_per_100g": 51,
+  "protein_g": 3.3,
+  "carbs_g": 9,
+  "fat_g": 0.1,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7038010054822",
+  "name": "Tine Kefir",
+  "kcal_per_100g": 57,
+  "protein_g": 3.3,
+  "carbs_g": 4.2,
+  "fat_g": 3,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7038010055515",
+  "name": "Piano vaniljesaus uten tilsatt sukker",
+  "kcal_per_100g": 94,
+  "protein_g": 3.3,
+  "carbs_g": 7.1,
+  "fat_g": 5.2,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7038010055546",
+  "name": "Yt Protein Kakao",
+  "kcal_per_100g": 105.76,
+  "protein_g": 9.09,
+  "carbs_g": 15.15,
+  "fat_g": 0.79,
+  "serving_size_g": 330
+ },
+ {
+  "barcode": "7038010055652",
+  "name": "Tine Naturell Yoghourt",
+  "kcal_per_100g": 63,
+  "protein_g": 4.1,
+  "carbs_g": 5.1,
+  "fat_g": 3,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7038010055690",
+  "name": "TINE SA Skogsbær Yoghurt",
+  "kcal_per_100g": 82,
+  "protein_g": 3.8,
+  "carbs_g": 9.4,
+  "fat_g": 3,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7038010058721",
+  "name": "Sunniva Premium Appelsinjuice med fruktkjøtt",
+  "kcal_per_100g": 43,
+  "protein_g": 0.7,
+  "carbs_g": 8.8,
+  "fat_g": 0.2,
+  "serving_size_g": 150
+ },
+ {
+  "barcode": "7038010061837",
+  "name": "YT Proteinshake",
+  "kcal_per_100g": 69.1,
+  "protein_g": 9.55,
+  "carbs_g": 5,
+  "fat_g": 0.91,
+  "serving_size_g": 220
+ },
+ {
+  "barcode": "7038010061844",
+  "name": "Yt Proteinpudding - Sjokolade",
+  "kcal_per_100g": 76,
+  "protein_g": 10.53,
+  "carbs_g": 4.9,
+  "fat_g": 1.4,
+  "serving_size_g": 190
+ },
+ {
+  "barcode": "7038010062315",
+  "name": "Tine Ost Revet Økonomipakke",
+  "kcal_per_100g": 308,
+  "protein_g": 24,
+  "carbs_g": 4,
+  "fat_g": 22,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7038010063572",
+  "name": "Tine sa Piskbart og kokestabilt plantebasert matlagingsprodukt",
+  "kcal_per_100g": 276,
+  "protein_g": 0,
+  "carbs_g": 12,
+  "fat_g": 26,
+  "serving_size_g": 300
+ },
+ {
+  "barcode": "7038010064128",
+  "name": "Tine Rislunsj jordbær uten tilsatt sukker",
+  "kcal_per_100g": 105,
+  "protein_g": 3.1,
+  "carbs_g": 13,
+  "fat_g": 4,
+  "serving_size_g": 150
+ },
+ {
+  "barcode": "7038010064609",
+  "name": "Tine SA Lettmelk med sjokolade",
+  "kcal_per_100g": 45,
+  "protein_g": 3.6,
+  "carbs_g": 5.3,
+  "fat_g": 1.1,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7038010065477",
+  "name": "Tine Lettmelk Vaniljesmak Usøtet",
+  "kcal_per_100g": 42,
+  "protein_g": 3.6,
+  "carbs_g": 4.7,
+  "fat_g": 1,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7038010066191",
+  "name": "Litago Sjokomelk Uten tilsatt sukker, inneholder søtstoffer.",
+  "kcal_per_100g": 46,
+  "protein_g": 3.8,
+  "carbs_g": 4.8,
+  "fat_g": 1.1,
+  "serving_size_g": 500
+ },
+ {
+  "barcode": "7038010067327",
+  "name": "Sunniva Iste fersken",
+  "kcal_per_100g": 29,
+  "protein_g": 0,
+  "carbs_g": 7,
+  "fat_g": 0,
+  "serving_size_g": 500
+ },
+ {
+  "barcode": "7038010067631",
+  "name": "YT Proteinbar Salt Karamell",
+  "kcal_per_100g": 362,
+  "protein_g": 40,
+  "carbs_g": 11,
+  "fat_g": 17,
+  "serving_size_g": 50
+ },
+ {
+  "barcode": "7038010068133",
+  "name": "YT Proteinmelk Naturell",
+  "kcal_per_100g": 43,
+  "protein_g": 5.9,
+  "carbs_g": 4.5,
+  "fat_g": 0.1,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7038010068157",
+  "name": "Tine YT Proteinmelk, Kakao",
+  "kcal_per_100g": 46,
+  "protein_g": 6,
+  "carbs_g": 4.8,
+  "fat_g": 0.2,
+  "serving_size_g": 330
+ },
+ {
+  "barcode": "7038010068195",
+  "name": "Tine Go morgen yoghurt skogsbær",
+  "kcal_per_100g": 117,
+  "protein_g": 4.4,
+  "carbs_g": 17,
+  "fat_g": 3.3,
+  "serving_size_g": 190
+ },
+ {
+  "barcode": "7038010068218",
+  "name": "Tine sa Go' Morgen Jordbær Yoghurt",
+  "kcal_per_100g": 119,
+  "protein_g": 4.3,
+  "carbs_g": 17,
+  "fat_g": 3.4,
+  "serving_size_g": 190
+ },
+ {
+  "barcode": "7038010068249",
+  "name": "GO MORGEN Vanilje-yoghurt med havrekrisp",
+  "kcal_per_100g": 125,
+  "protein_g": 4.5,
+  "carbs_g": 17,
+  "fat_g": 4.4,
+  "serving_size_g": 190
+ },
+ {
+  "barcode": "7038010068980",
+  "name": "YT Proteinyoghurt vanilje",
+  "kcal_per_100g": 67,
+  "protein_g": 9.2,
+  "carbs_g": 3.2,
+  "fat_g": 1.8,
+  "serving_size_g": 215
+ },
+ {
+  "barcode": "7038010068997",
+  "name": "Yt Proteinyoghurt Pasjonsfrukt",
+  "kcal_per_100g": 69,
+  "protein_g": 9.3,
+  "carbs_g": 3.7,
+  "fat_g": 1.8,
+  "serving_size_g": 215
+ },
+ {
+  "barcode": "7038010069451",
+  "name": "Tine Gresk yogurt Laktosefri",
+  "kcal_per_100g": 64,
+  "protein_g": 8.5,
+  "carbs_g": 3.3,
+  "fat_g": 2,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7038010070235",
+  "name": "Tine Mager Kesam (Vanilje, Uten Sukker, 420g Tot)",
+  "kcal_per_100g": 65,
+  "protein_g": 9.5,
+  "carbs_g": 4.4,
+  "fat_g": 1,
+  "serving_size_g": 420
+ },
+ {
+  "barcode": "7038010070365",
+  "name": "Tine Gresk Type Naturell Yoghurt",
+  "kcal_per_100g": 64,
+  "protein_g": 8.5,
+  "carbs_g": 3.3,
+  "fat_g": 2,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7038010071737",
+  "name": "Tine Mager cottage cheese 2%",
+  "kcal_per_100g": 79,
+  "protein_g": 13,
+  "carbs_g": 2.1,
+  "fat_g": 2,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7038010071751",
+  "name": "Tine Mellommelk 2,0% fett",
+  "kcal_per_100g": 50,
+  "protein_g": 3.5,
+  "carbs_g": 4.6,
+  "fat_g": 2,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7038010071881",
+  "name": "Tine Mager Cottage Cheese Mango",
+  "kcal_per_100g": 81,
+  "protein_g": 13,
+  "carbs_g": 2.9,
+  "fat_g": 1.8,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7038010072482",
+  "name": "Tine Gresk Yoghurt Naturell Lett 1.5% Økonomipakke",
+  "kcal_per_100g": 51,
+  "protein_g": 4.1,
+  "carbs_g": 5.2,
+  "fat_g": 1.5,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7039010011129",
+  "name": "ORKLA FOODS NORGE AS (STABBURET) Kyllingpostei",
+  "kcal_per_100g": 134,
+  "protein_g": 10.6,
+  "carbs_g": 5,
+  "fat_g": 7.9,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7039010012980",
+  "name": "Nora Tomatbønner",
+  "kcal_per_100g": 83,
+  "protein_g": 3.8,
+  "carbs_g": 14,
+  "fat_g": 0.6,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7039010013222",
+  "name": "Nora Hjemmelaget Jordbærsyltetøy",
+  "kcal_per_100g": 145,
+  "protein_g": 0.3,
+  "carbs_g": 35,
+  "fat_g": 0.1,
+  "serving_size_g": 12
+ },
+ {
+  "barcode": "7039010013253",
+  "name": "Nora Hjemmelaget",
+  "kcal_per_100g": 136,
+  "protein_g": 0.6,
+  "carbs_g": 32,
+  "fat_g": 0.1,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7039010015653",
+  "name": "Nora Moste jordbær - ingen biter",
+  "kcal_per_100g": 183,
+  "protein_g": 0.2,
+  "carbs_g": 44,
+  "fat_g": 0.1,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7039010015660",
+  "name": "Nora Moste bringebær",
+  "kcal_per_100g": 184,
+  "protein_g": 0.4,
+  "carbs_g": 43,
+  "fat_g": 0.4,
+  "serving_size_g": 20
+ },
+ {
+  "barcode": "7039010015790",
+  "name": "Orkla foods norge Rømme Dressing",
+  "kcal_per_100g": 295,
+  "protein_g": 1,
+  "carbs_g": 6,
+  "fat_g": 30,
+  "serving_size_g": 20
+ },
+ {
+  "barcode": "7039010016285",
+  "name": "Orkla Stabbur-Makrell Grovhakket Filet i tomatsaus",
+  "kcal_per_100g": 238,
+  "protein_g": 12,
+  "carbs_g": 3.9,
+  "fat_g": 19,
+  "serving_size_g": 110
+ },
+ {
+  "barcode": "7039010016308",
+  "name": "Stabburet Stabbur-Makrell Grovhakket i salsa",
+  "kcal_per_100g": 220.91,
+  "protein_g": 12,
+  "carbs_g": 6.5,
+  "fat_g": 19,
+  "serving_size_g": 110
+ },
+ {
+  "barcode": "7039010016322",
+  "name": "Stabburet Makrell i Tomat",
+  "kcal_per_100g": 238,
+  "protein_g": 12,
+  "carbs_g": 3.9,
+  "fat_g": 19,
+  "serving_size_g": 40
+ },
+ {
+  "barcode": "7039010016339",
+  "name": "Orkla foods norge Stabbur-Makrell Tomat&Basilikum 110g",
+  "kcal_per_100g": 244,
+  "protein_g": 12,
+  "carbs_g": 4.3,
+  "fat_g": 19,
+  "serving_size_g": 11
+ },
+ {
+  "barcode": "7039010016346",
+  "name": "Stabbur-Makrell Finhakket makrellfilet i tomatsaus",
+  "kcal_per_100g": 182,
+  "protein_g": 10,
+  "carbs_g": 7.3,
+  "fat_g": 12,
+  "serving_size_g": 22
+ },
+ {
+  "barcode": "7039010016360",
+  "name": "Stabbur-Makrell Stabbur makrell fillets i tomatsaus",
+  "kcal_per_100g": 156,
+  "protein_g": 11,
+  "carbs_g": 2.7,
+  "fat_g": 8.9,
+  "serving_size_g": 125
+ },
+ {
+  "barcode": "7039010020602",
+  "name": "ORKLA FOODS NORGE AS (STABBURET) Mors Flatbrød Hjemmebakt 520g",
+  "kcal_per_100g": 362,
+  "protein_g": 9.1,
+  "carbs_g": 72,
+  "fat_g": 1.6,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7039010067874",
+  "name": "Idun Hamburgerdressing",
+  "kcal_per_100g": 238,
+  "protein_g": 0.6,
+  "carbs_g": 9.4,
+  "fat_g": 22,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7039010073998",
+  "name": "ORKLA FOODS NORGE AS (STABBURET) Nugatti Max",
+  "kcal_per_100g": 490,
+  "protein_g": 6.8,
+  "carbs_g": 36,
+  "fat_g": 32,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7039010081047",
+  "name": "Idun Grov Sennep",
+  "kcal_per_100g": 176,
+  "protein_g": 5.7,
+  "carbs_g": 21,
+  "fat_g": 6.6,
+  "serving_size_g": 5
+ },
+ {
+  "barcode": "7039010081061",
+  "name": "Idun Sennep",
+  "kcal_per_100g": 153,
+  "protein_g": 5.9,
+  "carbs_g": 17,
+  "fat_g": 6.6,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7039010081320",
+  "name": "Idun Tomatketchup",
+  "kcal_per_100g": 95,
+  "protein_g": 1.7,
+  "carbs_g": 21,
+  "fat_g": 0,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7039010081337",
+  "name": "ORKLA FOODS NORGE AS (STABBURET) Idun Tomatketchup",
+  "kcal_per_100g": 95,
+  "protein_g": 1.7,
+  "carbs_g": 21,
+  "fat_g": 0,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7039010082402",
+  "name": "Idun Pølsesennep",
+  "kcal_per_100g": 111,
+  "protein_g": 3.8,
+  "carbs_g": 15,
+  "fat_g": 3.6,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7039010082426",
+  "name": "Idun Bodsennep",
+  "kcal_per_100g": 144,
+  "protein_g": 5.5,
+  "carbs_g": 12,
+  "fat_g": 6.7,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7039010087117",
+  "name": "Nora Hele Agurker",
+  "kcal_per_100g": 42,
+  "protein_g": 0.3,
+  "carbs_g": 10,
+  "fat_g": 0.1,
+  "serving_size_g": 27
+ },
+ {
+  "barcode": "7039010087155",
+  "name": "Nora Skivede Rødbeter",
+  "kcal_per_100g": 63,
+  "protein_g": 0.5,
+  "carbs_g": 15,
+  "fat_g": 0.1,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7039010132435",
+  "name": "Stabburet Leverpostei",
+  "kcal_per_100g": 225,
+  "protein_g": 10,
+  "carbs_g": 3.6,
+  "fat_g": 19,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7039010133678",
+  "name": "ORKLA FOODS NORGE AS (STABBURET) Stabburet Leverpostei",
+  "kcal_per_100g": 225,
+  "protein_g": 10,
+  "carbs_g": 3.6,
+  "fat_g": 19,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7039010149020",
+  "name": "Stabburet Stabbur-Makrell",
+  "kcal_per_100g": 256,
+  "protein_g": 13,
+  "carbs_g": 3,
+  "fat_g": 21,
+  "serving_size_g": 170
+ },
+ {
+  "barcode": "7039010181341",
+  "name": "Idun Tomatketchup",
+  "kcal_per_100g": 42,
+  "protein_g": 1.7,
+  "carbs_g": 8,
+  "fat_g": 0,
+  "serving_size_g": 5
+ },
+ {
+  "barcode": "7039010521260",
+  "name": "Saritas Butterchicken",
+  "kcal_per_100g": 203,
+  "protein_g": 1.5,
+  "carbs_g": 12,
+  "fat_g": 17,
+  "serving_size_g": 360
+ },
+ {
+  "barcode": "7039010540247",
+  "name": "Sjokade",
+  "kcal_per_100g": 380,
+  "protein_g": 1.1,
+  "carbs_g": 43,
+  "fat_g": 19,
+  "serving_size_g": 15
+ },
+ {
+  "barcode": "7039010545716",
+  "name": "ORKLA FOODS NORGE AS (STABBURET) Chunky Burgerdressing",
+  "kcal_per_100g": 321,
+  "protein_g": 1,
+  "carbs_g": 10,
+  "fat_g": 30,
+  "serving_size_g": 10
+ },
+ {
+  "barcode": "7039010562034",
+  "name": "TORO Meksikansk Gryte",
+  "kcal_per_100g": 143,
+  "protein_g": 8.9,
+  "carbs_g": 12,
+  "fat_g": 6.1,
+  "serving_size_g": 350
+ },
+ {
+  "barcode": "7039010563857",
+  "name": "Orkla Rett i koppen Sjokoladedrikk",
+  "kcal_per_100g": 123,
+  "protein_g": 3.2,
+  "carbs_g": 23,
+  "fat_g": 1.6,
+  "serving_size_g": 220
+ },
+ {
+  "barcode": "7039010565257",
+  "name": "Idun Tomatketcup uten tilsatt sukker og kunstig søtningsmiddel",
+  "kcal_per_100g": 42,
+  "protein_g": 1.5,
+  "carbs_g": 7.9,
+  "fat_g": 0.1,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7039010565349",
+  "name": "Orkla foods norge Stabbur-Makrell grovhakket",
+  "kcal_per_100g": 190,
+  "protein_g": 10,
+  "carbs_g": 5.3,
+  "fat_g": 14,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7039010578530",
+  "name": "Bare Bra Granola Hasselnøtt & Kokos",
+  "kcal_per_100g": 460,
+  "protein_g": 11,
+  "carbs_g": 41,
+  "fat_g": 23,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7039010578547",
+  "name": "Bare Bra Kakao og bringebær Granola",
+  "kcal_per_100g": 377.78,
+  "protein_g": 11.9,
+  "carbs_g": 52.9,
+  "fat_g": 8,
+  "serving_size_g": 45
+ },
+ {
+  "barcode": "7039010578561",
+  "name": "Bare Bra Granola uten tilsatt sukker, Kakao, kokos & Mandel",
+  "kcal_per_100g": 448.89,
+  "protein_g": 14,
+  "carbs_g": 44.44,
+  "fat_g": 20,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7039010597340",
+  "name": "Mr Lee Nudler med kyllingsmak",
+  "kcal_per_100g": 79,
+  "protein_g": 1.69,
+  "carbs_g": 10.9,
+  "fat_g": 3.09,
+  "serving_size_g": 485
+ },
+ {
+  "barcode": "7039310001073",
+  "name": "Orkla confectionery & snacks Kaptein",
+  "kcal_per_100g": 410,
+  "protein_g": 14,
+  "carbs_g": 73,
+  "fat_g": 6.4,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7039317003766",
+  "name": "ORKLA CONFECTIONERY & SNACKS NORGE Sætres Beste salinas",
+  "kcal_per_100g": 478,
+  "protein_g": 11,
+  "carbs_g": 58,
+  "fat_g": 22,
+  "serving_size_g": 4.1
+ },
+ {
+  "barcode": "7039317004930",
+  "name": "ORKLA CONFECTIONERY & SNACKS NORGE French Fries m / Salt",
+  "kcal_per_100g": 488,
+  "protein_g": 2.2,
+  "carbs_g": 67,
+  "fat_g": 23,
+  "serving_size_g": 90
+ },
+ {
+  "barcode": "7039317005470",
+  "name": "ORKLA CONFECTIONERY & SNACKS NORGE Digestive",
+  "kcal_per_100g": 495,
+  "protein_g": 6.5,
+  "carbs_g": 66,
+  "fat_g": 22,
+  "serving_size_g": 14.3
+ },
+ {
+  "barcode": "7039317005524",
+  "name": "OLW Cheez Doodles",
+  "kcal_per_100g": 530,
+  "protein_g": 10,
+  "carbs_g": 53,
+  "fat_g": 30,
+  "serving_size_g": 30
+ },
+ {
+  "barcode": "7039317005531",
+  "name": "OLW Cheese Doodles Original",
+  "kcal_per_100g": 530,
+  "protein_g": 10,
+  "carbs_g": 53,
+  "fat_g": 30,
+  "serving_size_g": 30
+ },
+ {
+  "barcode": "7039317005920",
+  "name": "Orkla Kornmo Original",
+  "kcal_per_100g": 436,
+  "protein_g": 9,
+  "carbs_g": 69,
+  "fat_g": 13,
+  "serving_size_g": 9
+ },
+ {
+  "barcode": "7039317006224",
+  "name": "Orkla confectionery & snacks gjende original",
+  "kcal_per_100g": 480,
+  "protein_g": 6,
+  "carbs_g": 69,
+  "fat_g": 19,
+  "serving_size_g": 7.1
+ },
+ {
+  "barcode": "7039317006248",
+  "name": "Sætre Eventyrkjeks",
+  "kcal_per_100g": 440,
+  "protein_g": 8.5,
+  "carbs_g": 60,
+  "fat_g": 16,
+  "serving_size_g": 25
+ },
+ {
+  "barcode": "7039317006712",
+  "name": "Orkla confectionery & snacks Totenflak Salt",
+  "kcal_per_100g": 531,
+  "protein_g": 6,
+  "carbs_g": 55,
+  "fat_g": 31,
+  "serving_size_g": 30
+ },
+ {
+  "barcode": "7039317007009",
+  "name": "SÆTRE Snackers salte kjeks",
+  "kcal_per_100g": 550,
+  "protein_g": 5.3,
+  "carbs_g": 60,
+  "fat_g": 31,
+  "serving_size_g": 25
+ },
+ {
+  "barcode": "7039317007184",
+  "name": "Kornmo Bakte Knekkebrød Havre & Solsikke",
+  "kcal_per_100g": 430,
+  "protein_g": 9,
+  "carbs_g": 67,
+  "fat_g": 13,
+  "serving_size_g": 20
+ },
+ {
+  "barcode": "7039317007351",
+  "name": "Orkla Bixit Havrekjeks sjokolade",
+  "kcal_per_100g": 480,
+  "protein_g": 7.4,
+  "carbs_g": 60,
+  "fat_g": 22,
+  "serving_size_g": 9.5
+ },
+ {
+  "barcode": "7039317007412",
+  "name": "Orkla confectionery & snacks Bixit havrekjeks original",
+  "kcal_per_100g": 0,
+  "protein_g": 0,
+  "carbs_g": 0,
+  "fat_g": 0,
+  "serving_size_g": 15.8
+ },
+ {
+  "barcode": "7039317007931",
+  "name": "OLW Cheez Doodles",
+  "kcal_per_100g": 520,
+  "protein_g": 10,
+  "carbs_g": 53,
+  "fat_g": 30,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7039317008204",
+  "name": "Orkla Confectionery & Snacks Norge AS Sour Cream & Onion",
+  "kcal_per_100g": 520,
+  "protein_g": 5,
+  "carbs_g": 54,
+  "fat_g": 31,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7039317008440",
+  "name": "Orkla confectionery & snacks norge as Sjoko vanilje",
+  "kcal_per_100g": 500,
+  "protein_g": 5.2,
+  "carbs_g": 63,
+  "fat_g": 25,
+  "serving_size_g": 14.6
+ },
+ {
+  "barcode": "7039317008594",
+  "name": "Kims Salt Crunch  Minibag",
+  "kcal_per_100g": 537,
+  "protein_g": 4.6,
+  "carbs_g": 56,
+  "fat_g": 32,
+  "serving_size_g": 80
+ },
+ {
+  "barcode": "7039317008631",
+  "name": "Kims Pepper Punch",
+  "kcal_per_100g": 520,
+  "protein_g": 5,
+  "carbs_g": 54,
+  "fat_g": 31,
+  "serving_size_g": 30
+ },
+ {
+  "barcode": "7039317008655",
+  "name": "Kims Salt Crunch",
+  "kcal_per_100g": 537,
+  "protein_g": 4.6,
+  "carbs_g": 56,
+  "fat_g": 32,
+  "serving_size_g": 30
+ },
+ {
+  "barcode": "7039317008679",
+  "name": "Polly peanøtter",
+  "kcal_per_100g": 628,
+  "protein_g": 24,
+  "carbs_g": 14,
+  "fat_g": 52,
+  "serving_size_g": 30
+ },
+ {
+  "barcode": "7039317008914",
+  "name": "Sætre Marie kjeks",
+  "kcal_per_100g": 444,
+  "protein_g": 7.5,
+  "carbs_g": 73,
+  "fat_g": 13,
+  "serving_size_g": 4
+ },
+ {
+  "barcode": "7039317008945",
+  "name": "Kims Mexican Fiesta",
+  "kcal_per_100g": 521,
+  "protein_g": 5,
+  "carbs_g": 54,
+  "fat_g": 31,
+  "serving_size_g": 30
+ },
+ {
+  "barcode": "7039410000143",
+  "name": "Confecta Fint Havsalt",
+  "kcal_per_100g": 0,
+  "protein_g": 0,
+  "carbs_g": 0,
+  "fat_g": 0,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7039610000981",
+  "name": "Prior Kyllingbryst",
+  "kcal_per_100g": 111,
+  "protein_g": 23,
+  "carbs_g": 0,
+  "fat_g": 2.1,
+  "serving_size_g": 275
+ },
+ {
+  "barcode": "7039610001353",
+  "name": "Prior Naturell kyllingfilet",
+  "kcal_per_100g": 101,
+  "protein_g": 20,
+  "carbs_g": 0.9,
+  "fat_g": 1.8,
+  "serving_size_g": 12
+ },
+ {
+  "barcode": "7039610001506",
+  "name": "Prior Kalkunfilet Naturell",
+  "kcal_per_100g": 107,
+  "protein_g": 22,
+  "carbs_g": 1.9,
+  "fat_g": 1.2,
+  "serving_size_g": 13.8
+ },
+ {
+  "barcode": "7039610001872",
+  "name": "Joikakaker i viltsaus",
+  "kcal_per_100g": 120,
+  "protein_g": 6.1,
+  "carbs_g": 7,
+  "fat_g": 7.4,
+  "serving_size_g": 500
+ },
+ {
+  "barcode": "7039610005887",
+  "name": "Nortura sa p Egg Økologisk m/L/XL 6stk Prior",
+  "kcal_per_100g": 146,
+  "protein_g": 13,
+  "carbs_g": 0.3,
+  "fat_g": 11,
+  "serving_size_g": 60
+ },
+ {
+  "barcode": "7039610007010",
+  "name": "Nortura sa p Ekstra Store Egg",
+  "kcal_per_100g": 149,
+  "protein_g": 13,
+  "carbs_g": 0.3,
+  "fat_g": 11,
+  "serving_size_g": 73
+ },
+ {
+  "barcode": "7039610007096",
+  "name": "Prior God Morgen Egg",
+  "kcal_per_100g": 231.65,
+  "protein_g": 13,
+  "carbs_g": 0.3,
+  "fat_g": 11,
+  "serving_size_g": 65
+ },
+ {
+  "barcode": "7039610010836",
+  "name": "Prior Crispy Sticks Tex-Mex",
+  "kcal_per_100g": 166,
+  "protein_g": 16,
+  "carbs_g": 6.8,
+  "fat_g": 8.4,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7039610025205",
+  "name": "Prior Grillpølse av kylling og kalkun",
+  "kcal_per_100g": 152,
+  "protein_g": 11,
+  "carbs_g": 6.2,
+  "fat_g": 9,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7039610027797",
+  "name": "NORTURA SA (PRIOR) Sprøbakte Nuggets",
+  "kcal_per_100g": 162,
+  "protein_g": 14,
+  "carbs_g": 11,
+  "fat_g": 6.6,
+  "serving_size_g": 290
+ },
+ {
+  "barcode": "7039610055493",
+  "name": "Nortura sa p Prior Kalkunkorv",
+  "kcal_per_100g": 162,
+  "protein_g": 11,
+  "carbs_g": 4.7,
+  "fat_g": 11,
+  "serving_size_g": 10
+ },
+ {
+  "barcode": "7040110569908",
+  "name": "Freia Melkesjokolade",
+  "kcal_per_100g": 550,
+  "protein_g": 8.1,
+  "carbs_g": 55,
+  "fat_g": 33,
+  "serving_size_g": 200
+ },
+ {
+  "barcode": "7040110571307",
+  "name": "Mondelez norge Firkløver",
+  "kcal_per_100g": 565,
+  "protein_g": 9.1,
+  "carbs_g": 48.5,
+  "fat_g": 36.5,
+  "serving_size_g": 8.3
+ },
+ {
+  "barcode": "7040110572304",
+  "name": "Mondelez norge Melkesjokolade Fruktnøtt",
+  "kcal_per_100g": 525,
+  "protein_g": 7.8,
+  "carbs_g": 55,
+  "fat_g": 30,
+  "serving_size_g": 200
+ },
+ {
+  "barcode": "7040110648207",
+  "name": "Mondelez norge Melkerull",
+  "kcal_per_100g": 550,
+  "protein_g": 8.1,
+  "carbs_g": 54.7,
+  "fat_g": 32.7,
+  "serving_size_g": 2.5
+ },
+ {
+  "barcode": "7040510887374",
+  "name": "pink lady epler",
+  "kcal_per_100g": 49,
+  "protein_g": 0.3,
+  "carbs_g": 10.6,
+  "fat_g": 0.2,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7040511504225",
+  "name": "SEASON Avokado",
+  "kcal_per_100g": 191,
+  "protein_g": 1.8,
+  "carbs_g": 0.4,
+  "fat_g": 19.6,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7040511829748",
+  "name": "Cevita Blåbær",
+  "kcal_per_100g": 61,
+  "protein_g": 0.3,
+  "carbs_g": 12.5,
+  "fat_g": 0.3,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7040515501572",
+  "name": "Gartner Agurk",
+  "kcal_per_100g": 10,
+  "protein_g": 0.8,
+  "carbs_g": 1.2,
+  "fat_g": 0.1,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7040518520303",
+  "name": "Bama dagligvare lagerført Mango Pasjon",
+  "kcal_per_100g": 50,
+  "protein_g": 0.5,
+  "carbs_g": 11.1,
+  "fat_g": 0.2,
+  "serving_size_g": 250
+ },
+ {
+  "barcode": "7040518520310",
+  "name": "Bama dagligvare lagerført Smoothie Bringebær&Jordbær 250ml Bendit",
+  "kcal_per_100g": 49,
+  "protein_g": 0.4,
+  "carbs_g": 11.1,
+  "fat_g": 0.1,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7041015011110",
+  "name": "Hennig-Olsen Sørlandsis Tricolor",
+  "kcal_per_100g": 186,
+  "protein_g": 3.7,
+  "carbs_g": 23.5,
+  "fat_g": 8.4,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7041111124882",
+  "name": "NøttiFrutti Original Cashew & Papaya",
+  "kcal_per_100g": 471,
+  "protein_g": 13,
+  "carbs_g": 46,
+  "fat_g": 27,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7041111130890",
+  "name": "Den Lilla Nötfabriken Spesial - Macademia, Cashew, Mandler, Peanøtter/jordnötter, Røstet, med havsalt",
+  "kcal_per_100g": 630,
+  "protein_g": 18,
+  "carbs_g": 9.7,
+  "fat_g": 59,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7041111133440",
+  "name": "Den Lille Nøttefabrikken Nøtti Frutti Original",
+  "kcal_per_100g": 471,
+  "protein_g": 13,
+  "carbs_g": 46,
+  "fat_g": 27,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7041111135765",
+  "name": "Brynild AS Dent Crush, bringebærpastiller",
+  "kcal_per_100g": 131,
+  "protein_g": 0.9,
+  "carbs_g": 62,
+  "fat_g": 0,
+  "serving_size_g": 25
+ },
+ {
+  "barcode": "7041111152526",
+  "name": "Den Lille Nøttefabrikken Chilinøtter",
+  "kcal_per_100g": 561,
+  "protein_g": 17,
+  "carbs_g": 35,
+  "fat_g": 39,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7041614006876",
+  "name": "Bakehuset Toast Loff",
+  "kcal_per_100g": 260,
+  "protein_g": 8.5,
+  "carbs_g": 47.7,
+  "fat_g": 3.1,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7041614006883",
+  "name": "Bakehuset direkte Toast Kneip",
+  "kcal_per_100g": 250,
+  "protein_g": 9.9,
+  "carbs_g": 42.5,
+  "fat_g": 3.2,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7041614007941",
+  "name": "Bakehuset direkte Grovbrød 750g Våre Groveste",
+  "kcal_per_100g": 247,
+  "protein_g": 12.4,
+  "carbs_g": 36.1,
+  "fat_g": 3.7,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7041614008085",
+  "name": "Bakehuset direkte Norsk Fjellbrød Skåret 750g Bakehuset",
+  "kcal_per_100g": 243,
+  "protein_g": 8.8,
+  "carbs_g": 42.7,
+  "fat_g": 3.1,
+  "serving_size_g": 70
+ },
+ {
+  "barcode": "7041710920007",
+  "name": "PS sprøstekt løk",
+  "kcal_per_100g": 618,
+  "protein_g": 3.8,
+  "carbs_g": 32,
+  "fat_g": 52,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7041810010073",
+  "name": "Kavli Mager Skinkeost",
+  "kcal_per_100g": 131,
+  "protein_g": 17,
+  "carbs_g": 0,
+  "fat_g": 6.8,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7041810010387",
+  "name": "Kavli o. as hovedlager Baconost",
+  "kcal_per_100g": 222,
+  "protein_g": 16,
+  "carbs_g": 0,
+  "fat_g": 17,
+  "serving_size_g": 17
+ },
+ {
+  "barcode": "7041810010394",
+  "name": "Kavli Skinkeost Tube",
+  "kcal_per_100g": 214,
+  "protein_g": 16,
+  "carbs_g": 0,
+  "fat_g": 17,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7041810010400",
+  "name": "Kavli Rekeost",
+  "kcal_per_100g": 216,
+  "protein_g": 17,
+  "carbs_g": 0,
+  "fat_g": 16,
+  "serving_size_g": 15
+ },
+ {
+  "barcode": "7041810016136",
+  "name": "Kavli o. as hovedlager Hapå",
+  "kcal_per_100g": 314,
+  "protein_g": 7,
+  "carbs_g": 58,
+  "fat_g": 6,
+  "serving_size_g": 20
+ },
+ {
+  "barcode": "7041810125098",
+  "name": "Kavli Cheddar Dipp",
+  "kcal_per_100g": 169,
+  "protein_g": 10,
+  "carbs_g": 2.6,
+  "fat_g": 13,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7042961003334",
+  "name": "Bread Of The World Hvitløksbrød",
+  "kcal_per_100g": 362,
+  "protein_g": 7,
+  "carbs_g": 42,
+  "fat_g": 18,
+  "serving_size_g": 205
+ },
+ {
+  "barcode": "7044416010201",
+  "name": "Sopps Fusilli fullkorn",
+  "kcal_per_100g": 351.76,
+  "protein_g": 14,
+  "carbs_g": 65,
+  "fat_g": 2,
+  "serving_size_g": 85
+ },
+ {
+  "barcode": "7044416010294",
+  "name": "Lantmännen cerealia as Spaghetti Fullkorn og Fiber",
+  "kcal_per_100g": 350,
+  "protein_g": 14,
+  "carbs_g": 65,
+  "fat_g": 2,
+  "serving_size_g": 85
+ },
+ {
+  "barcode": "7044416011444",
+  "name": "AXA Express Havregrøt",
+  "kcal_per_100g": 372,
+  "protein_g": 14,
+  "carbs_g": 61,
+  "fat_g": 5.9,
+  "serving_size_g": 50
+ },
+ {
+  "barcode": "7044416012199",
+  "name": "AXA Express Havregrøt Rosin & Vaniljesmak",
+  "kcal_per_100g": 360,
+  "protein_g": 12,
+  "carbs_g": 61,
+  "fat_g": 6,
+  "serving_size_g": 50
+ },
+ {
+  "barcode": "7044416013141",
+  "name": "AXA Bjørn Lettkokte Havregryn",
+  "kcal_per_100g": 367,
+  "protein_g": 13,
+  "carbs_g": 58,
+  "fat_g": 6.8,
+  "serving_size_g": 40
+ },
+ {
+  "barcode": "7044416013172",
+  "name": "Lantmännen cerealia as Store Havre Gryn",
+  "kcal_per_100g": 367,
+  "protein_g": 13,
+  "carbs_g": 58,
+  "fat_g": 6.8,
+  "serving_size_g": 40
+ },
+ {
+  "barcode": "7044416013622",
+  "name": "AXA 4korn",
+  "kcal_per_100g": 342,
+  "protein_g": 11,
+  "carbs_g": 72,
+  "fat_g": 3.5,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7044416013653",
+  "name": "Lantmännen cerealia as Müsli Blåbær",
+  "kcal_per_100g": 345,
+  "protein_g": 9.4,
+  "carbs_g": 64,
+  "fat_g": 2.7,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7044416013684",
+  "name": "LANTMANNEN CEREALIA AS Müsli Frukt",
+  "kcal_per_100g": 360,
+  "protein_g": 9.4,
+  "carbs_g": 65,
+  "fat_g": 4.8,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7044416013714",
+  "name": "AXA Gold Müsli Energi",
+  "kcal_per_100g": 380,
+  "protein_g": 8.6,
+  "carbs_g": 61,
+  "fat_g": 9,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7044416014841",
+  "name": "Havregrynsgrøt Økologiske Havregryn",
+  "kcal_per_100g": 375,
+  "protein_g": 12,
+  "carbs_g": 60,
+  "fat_g": 7,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7044416015367",
+  "name": "Regal Hvetemel",
+  "kcal_per_100g": 350,
+  "protein_g": 12,
+  "carbs_g": 68,
+  "fat_g": 2,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7044416016227",
+  "name": "Axa Müsli Frukt & Bær",
+  "kcal_per_100g": 353,
+  "protein_g": 10,
+  "carbs_g": 64,
+  "fat_g": 3.6,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7044610874494",
+  "name": "RINGNES AS Solo",
+  "kcal_per_100g": 43,
+  "protein_g": 0.5,
+  "carbs_g": 10,
+  "fat_g": 0.5,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7044610874661",
+  "name": "RINGNES AS Pepsi Max",
+  "kcal_per_100g": 0.2,
+  "protein_g": 0,
+  "carbs_g": 0,
+  "fat_g": 0,
+  "serving_size_g": 250
+ },
+ {
+  "barcode": "7044610874685",
+  "name": "Pepsi Max",
+  "kcal_per_100g": 0.4,
+  "protein_g": 0,
+  "carbs_g": 0,
+  "fat_g": 0,
+  "serving_size_g": 250
+ },
+ {
+  "barcode": "7044610874906",
+  "name": "RINGNES AS Imsdal",
+  "kcal_per_100g": 0,
+  "protein_g": null,
+  "carbs_g": null,
+  "fat_g": null,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7044610876290",
+  "name": "Pepsi Max",
+  "kcal_per_100g": 0.6,
+  "protein_g": 0,
+  "carbs_g": 0,
+  "fat_g": 0,
+  "serving_size_g": 330
+ },
+ {
+  "barcode": "7044610876351",
+  "name": "Solo Super",
+  "kcal_per_100g": 4,
+  "protein_g": 0.5,
+  "carbs_g": 0.8,
+  "fat_g": 0.5,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7044610876658",
+  "name": "Farris Frus",
+  "kcal_per_100g": 2,
+  "protein_g": 0,
+  "carbs_g": 0.1,
+  "fat_g": 0,
+  "serving_size_g": 500
+ },
+ {
+  "barcode": "7044613877126",
+  "name": "Farris Frus Eple & kiwi",
+  "kcal_per_100g": 1,
+  "protein_g": 0,
+  "carbs_g": 0.03,
+  "fat_g": 0,
+  "serving_size_g": 330
+ },
+ {
+  "barcode": "7044930238709",
+  "name": "Grans Siesta",
+  "kcal_per_100g": 42,
+  "protein_g": 0,
+  "carbs_g": 10.6,
+  "fat_g": 0,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7045810000416",
+  "name": "Orkla foods norge Brun lapskaus",
+  "kcal_per_100g": 92,
+  "protein_g": 2.6,
+  "carbs_g": 8.8,
+  "fat_g": 4.8,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7045910003041",
+  "name": "Kavli o. as hovedlager Flatbrød",
+  "kcal_per_100g": 350,
+  "protein_g": 9.5,
+  "carbs_g": 66,
+  "fat_g": 1.8,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7046280010165",
+  "name": "SalatMestern Hvitløksdressing",
+  "kcal_per_100g": 546,
+  "protein_g": 0.6,
+  "carbs_g": 1.2,
+  "fat_g": 59.8,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7046280029372",
+  "name": "REMA 1000 Hummus",
+  "kcal_per_100g": 236,
+  "protein_g": 4.6,
+  "carbs_g": 12,
+  "fat_g": 18,
+  "serving_size_g": 55
+ },
+ {
+  "barcode": "7048840000012",
+  "name": "Q-meieriene as Q Helmelk",
+  "kcal_per_100g": 65.25,
+  "protein_g": 3.5,
+  "carbs_g": 4.5,
+  "fat_g": 3.7,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7048840000029",
+  "name": "Q-Meiriene AS Lettmelk, 1% fett",
+  "kcal_per_100g": 42,
+  "protein_g": 3.7,
+  "carbs_g": 4.5,
+  "fat_g": 1,
+  "serving_size_g": 200
+ },
+ {
+  "barcode": "7048840000456",
+  "name": "Q Lettrømme med skrulokk",
+  "kcal_per_100g": 179,
+  "protein_g": 2.8,
+  "carbs_g": 3.7,
+  "fat_g": 17,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7048840000470",
+  "name": "Kavli Kefir Naturell",
+  "kcal_per_100g": 46,
+  "protein_g": 3.4,
+  "carbs_g": 3.6,
+  "fat_g": 2,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7048840000500",
+  "name": "Q Melk Lett",
+  "kcal_per_100g": 37,
+  "protein_g": 3.7,
+  "carbs_g": 4.5,
+  "fat_g": 0.5,
+  "serving_size_g": 330
+ },
+ {
+  "barcode": "7048840000548",
+  "name": "Q Lettmelk, 1% fett",
+  "kcal_per_100g": 42,
+  "protein_g": 3.7,
+  "carbs_g": 4.5,
+  "fat_g": 1,
+  "serving_size_g": 200
+ },
+ {
+  "barcode": "7048840005468",
+  "name": "Q Frokost Yoghurt vanilje",
+  "kcal_per_100g": 72,
+  "protein_g": 4.4,
+  "carbs_g": 7.5,
+  "fat_g": 2.7,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7048840005499",
+  "name": "Q Naturell Yoghurt",
+  "kcal_per_100g": 61,
+  "protein_g": 4.9,
+  "carbs_g": 3.7,
+  "fat_g": 3,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7048840081950",
+  "name": "Q Lettmelk 0,5%",
+  "kcal_per_100g": 37,
+  "protein_g": 3.7,
+  "carbs_g": 4.5,
+  "fat_g": 0.5,
+  "serving_size_g": 200
+ },
+ {
+  "barcode": "7048840090150",
+  "name": "Q-meieriene as Fersk Sjokolademelk",
+  "kcal_per_100g": 66,
+  "protein_g": 3.4,
+  "carbs_g": 9.6,
+  "fat_g": 1.5,
+  "serving_size_g": 200
+ },
+ {
+  "barcode": "7048840091539",
+  "name": "skyr",
+  "kcal_per_100g": 62.74,
+  "protein_g": 9.8,
+  "carbs_g": 3.8,
+  "fat_g": 0.3,
+  "serving_size_g": 160
+ },
+ {
+  "barcode": "7048840105816",
+  "name": "Q Yoghurt JORDBÆR",
+  "kcal_per_100g": 72,
+  "protein_g": 4.4,
+  "carbs_g": 8,
+  "fat_g": 2.7,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7048840200979",
+  "name": "Q-MEIERIENE AS Helmelk",
+  "kcal_per_100g": 65.5,
+  "protein_g": 3.5,
+  "carbs_g": 4.5,
+  "fat_g": 3.7,
+  "serving_size_g": 200
+ },
+ {
+  "barcode": "7048840207299",
+  "name": "Skyr Proteinyoghurt Bringebær Med Hint Av Panna Cotta",
+  "kcal_per_100g": 55.62,
+  "protein_g": 9.38,
+  "carbs_g": 3.88,
+  "fat_g": 0.19,
+  "serving_size_g": 160
+ },
+ {
+  "barcode": "7048840211487",
+  "name": "Kavli Kefir Blåbær & Solbær",
+  "kcal_per_100g": 62,
+  "protein_g": 3,
+  "carbs_g": 8.5,
+  "fat_g": 1.8,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7048840211722",
+  "name": "Q Yoghurt - Uten tilsatt sukker - Jorbær lime",
+  "kcal_per_100g": 61,
+  "protein_g": 4.6,
+  "carbs_g": 4.4,
+  "fat_g": 2.7,
+  "serving_size_g": 800
+ },
+ {
+  "barcode": "7048840222896",
+  "name": "Skyr Naturell proteinyoghurt",
+  "kcal_per_100g": 60,
+  "protein_g": 11.11,
+  "carbs_g": 3.6,
+  "fat_g": 0.22,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7048840223909",
+  "name": "Q UTEN tilsatt sukker Mango",
+  "kcal_per_100g": 61,
+  "protein_g": 4.5,
+  "carbs_g": 4.3,
+  "fat_g": 2.7,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7048840225774",
+  "name": "Q Protein Yoghurt Naturell",
+  "kcal_per_100g": 73.02,
+  "protein_g": 11,
+  "carbs_g": 3.6,
+  "fat_g": 1.5,
+  "serving_size_g": 215
+ },
+ {
+  "barcode": "7048840226689",
+  "name": "Q Protein Yoghurt Vanilje",
+  "kcal_per_100g": 67,
+  "protein_g": 9.5,
+  "carbs_g": 3.8,
+  "fat_g": 1.4,
+  "serving_size_g": 215
+ },
+ {
+  "barcode": "7050122106152",
+  "name": "Maarud Potetgull rifla salt",
+  "kcal_per_100g": 523.33,
+  "protein_g": 5.6,
+  "carbs_g": 45,
+  "fat_g": 35,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7050122113167",
+  "name": "Maarud Pom-Bear Paprika",
+  "kcal_per_100g": 520,
+  "protein_g": 3.2,
+  "carbs_g": 60,
+  "fat_g": 29,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7050122120615",
+  "name": "Maarud Tortilla cheese",
+  "kcal_per_100g": 497,
+  "protein_g": 6.5,
+  "carbs_g": 62,
+  "fat_g": 24,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7050122301434",
+  "name": "Maarud Potetgull Sourcream & Onion",
+  "kcal_per_100g": 515,
+  "protein_g": 6.1,
+  "carbs_g": 46,
+  "fat_g": 33,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7050122304343",
+  "name": "Maarud Potetgull classic salt",
+  "kcal_per_100g": 515,
+  "protein_g": 5.7,
+  "carbs_g": 46,
+  "fat_g": 33,
+  "serving_size_g": 30
+ },
+ {
+  "barcode": "7050122304350",
+  "name": "Maarud Potetgull Paprika",
+  "kcal_per_100g": 506,
+  "protein_g": 6,
+  "carbs_g": 47,
+  "fat_g": 32,
+  "serving_size_g": 30
+ },
+ {
+  "barcode": "7050122304367",
+  "name": "Maarud Potetgull Salt & Pepper",
+  "kcal_per_100g": 516.67,
+  "protein_g": 5.7,
+  "carbs_g": 46,
+  "fat_g": 33,
+  "serving_size_g": 250
+ },
+ {
+  "barcode": "7050122305531",
+  "name": "Maarud Potetgull Intense Bacon BBQ Style",
+  "kcal_per_100g": 515,
+  "protein_g": 5.7,
+  "carbs_g": 47,
+  "fat_g": 33,
+  "serving_size_g": 30
+ },
+ {
+  "barcode": "7052860000037",
+  "name": "Bergbys Sennep AS Søt Pølsesennep",
+  "kcal_per_100g": 252,
+  "protein_g": 4.5,
+  "carbs_g": 49,
+  "fat_g": 4.5,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7056831970121",
+  "name": "Røros Knekks med Spelt & Havsalt",
+  "kcal_per_100g": 333.33,
+  "protein_g": 8.33,
+  "carbs_g": 41.67,
+  "fat_g": 13.33,
+  "serving_size_g": 12
+ },
+ {
+  "barcode": "7070622010490",
+  "name": "Midsona norge Eplemos Usøtet Økologisk 360g Helios",
+  "kcal_per_100g": 51,
+  "protein_g": 0.3,
+  "carbs_g": 12.8,
+  "fat_g": 0.1,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7070622012012",
+  "name": "Midsona norge Grønnsakbuljong Gjærfri Økol 130g Helios",
+  "kcal_per_100g": 175,
+  "protein_g": 2.2,
+  "carbs_g": 37.3,
+  "fat_g": 0.9,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7070841001767",
+  "name": "Lerum Syltetøy 80% bringebær utan tilsett sukker",
+  "kcal_per_100g": 42,
+  "protein_g": 0.9,
+  "carbs_g": 3,
+  "fat_g": 0.3,
+  "serving_size_g": 20
+ },
+ {
+  "barcode": "7070841003150",
+  "name": "LERUM AS Lerum Solbærsirup 0,75l",
+  "kcal_per_100g": 51,
+  "protein_g": 0.1,
+  "carbs_g": 12.5,
+  "fat_g": 0.1,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7070841003433",
+  "name": "Lerum AS Syltetøy 80% kirsebær uten tilsatt sukker",
+  "kcal_per_100g": 58,
+  "protein_g": 0.6,
+  "carbs_g": 17.1,
+  "fat_g": 0,
+  "serving_size_g": 20
+ },
+ {
+  "barcode": "7070841004270",
+  "name": "LERUM AS Jordbær",
+  "kcal_per_100g": 48,
+  "protein_g": 0.2,
+  "carbs_g": 4,
+  "fat_g": 0.1,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7070866013349",
+  "name": "Möllers Möller's Tran Naturell",
+  "kcal_per_100g": 200,
+  "protein_g": 0,
+  "carbs_g": 0,
+  "fat_g": 22.6,
+  "serving_size_g": 5
+ },
+ {
+  "barcode": "7070866013370",
+  "name": "Møller Tran, Naturell",
+  "kcal_per_100g": 900,
+  "protein_g": 0,
+  "carbs_g": 0,
+  "fat_g": 100,
+  "serving_size_g": 5
+ },
+ {
+  "barcode": "7070866013400",
+  "name": "Møllers Tran Sitron",
+  "kcal_per_100g": 820,
+  "protein_g": 0,
+  "carbs_g": 0,
+  "fat_g": 92,
+  "serving_size_g": 5
+ },
+ {
+  "barcode": "7070866013431",
+  "name": "Møller’s Möller's Tran med sitronsmak",
+  "kcal_per_100g": 45,
+  "protein_g": 0,
+  "carbs_g": 0,
+  "fat_g": 5,
+  "serving_size_g": 5
+ },
+ {
+  "barcode": "7070866037826",
+  "name": "Müller Möller's Omega-3 Taste of LEMON",
+  "kcal_per_100g": 900,
+  "protein_g": 0,
+  "carbs_g": 0,
+  "fat_g": 100,
+  "serving_size_g": 5
+ },
+ {
+  "barcode": "7070866039899",
+  "name": "Maxim Salt karamell protein barre",
+  "kcal_per_100g": 363.64,
+  "protein_g": 52.89,
+  "carbs_g": 74.71,
+  "fat_g": 28.43,
+  "serving_size_g": 55
+ },
+ {
+  "barcode": "7071319023144",
+  "name": "Bonaventura sales Yokos Naturell",
+  "kcal_per_100g": 89,
+  "protein_g": 1,
+  "carbs_g": 0.5,
+  "fat_g": 8.3,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7071319024981",
+  "name": "Bonaventura sales Smoremyk",
+  "kcal_per_100g": 675,
+  "protein_g": 0,
+  "carbs_g": 0,
+  "fat_g": 75,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7071319027357",
+  "name": "Bonaventura sales Mylk Barista Havre",
+  "kcal_per_100g": 54,
+  "protein_g": 0.7,
+  "carbs_g": 5.7,
+  "fat_g": 3,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7071319031811",
+  "name": "Berit Granola med puffet norsk havre",
+  "kcal_per_100g": 332,
+  "protein_g": 8.6,
+  "carbs_g": 46,
+  "fat_g": 8,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7071688002535",
+  "name": "Bondens Best Potetchips Havsalt & Pepper",
+  "kcal_per_100g": 506,
+  "protein_g": 5.3,
+  "carbs_g": 51,
+  "fat_g": 30,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7071688003556",
+  "name": "Sørlands Chips Havsalt & Ramsløk",
+  "kcal_per_100g": 473,
+  "protein_g": 5.7,
+  "carbs_g": 53,
+  "fat_g": 25,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7071688004164",
+  "name": "Sørlandschips Spansk Paprika",
+  "kcal_per_100g": 504,
+  "protein_g": 7,
+  "carbs_g": 58,
+  "fat_g": 26,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7071688004171",
+  "name": "Sørlands chips crème fraiche",
+  "kcal_per_100g": 499,
+  "protein_g": 6,
+  "carbs_g": 57,
+  "fat_g": 26,
+  "serving_size_g": 200
+ },
+ {
+  "barcode": "7071688004188",
+  "name": "Sørlands Chips Havsalt & eplekjekk eddik",
+  "kcal_per_100g": 454,
+  "protein_g": 7.4,
+  "carbs_g": 50,
+  "fat_g": 24,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7071688004713",
+  "name": "Sørlandschips AS Original Sørlands chips, havsalt",
+  "kcal_per_100g": 487,
+  "protein_g": 6,
+  "carbs_g": 55,
+  "fat_g": 26,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7071848024124",
+  "name": "United bakeries norway Knekkebrød Godt for Deg 235g Sigdal",
+  "kcal_per_100g": 555,
+  "protein_g": 24.6,
+  "carbs_g": 75.5,
+  "fat_g": 40.7,
+  "serving_size_g": 23.5
+ },
+ {
+  "barcode": "7071864018589",
+  "name": "Aunt mabels Milk chocolate muffin",
+  "kcal_per_100g": 394,
+  "protein_g": 5.6,
+  "carbs_g": 45.9,
+  "fat_g": 20.9,
+  "serving_size_g": 95
+ },
+ {
+  "barcode": "7071864018619",
+  "name": "Aunt Mabel's Double Chocolate Muffin",
+  "kcal_per_100g": 392,
+  "protein_g": 5.9,
+  "carbs_g": 43.8,
+  "fat_g": 21.3,
+  "serving_size_g": 95
+ },
+ {
+  "barcode": "7072130010580",
+  "name": "Idun industri as dagligvare Mors hjemmebakte gjær original",
+  "kcal_per_100g": 350,
+  "protein_g": 43,
+  "carbs_g": 20,
+  "fat_g": 5.7,
+  "serving_size_g": 13
+ },
+ {
+  "barcode": "7072130060943",
+  "name": "IDUN INDUSTRIER AS Sjokoladesaus",
+  "kcal_per_100g": 315,
+  "protein_g": 2,
+  "carbs_g": 63,
+  "fat_g": 5.4,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7076809890015",
+  "name": "Barilla Tortellini prosciutto & fromaggio",
+  "kcal_per_100g": 404,
+  "protein_g": 15.5,
+  "carbs_g": 55.8,
+  "fat_g": 12.5,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7090006470047",
+  "name": "Rørosmeieriet Røros Smør Økologisk",
+  "kcal_per_100g": 782,
+  "protein_g": 0.8,
+  "carbs_g": 0.1,
+  "fat_g": 87,
+  "serving_size_g": 10
+ },
+ {
+  "barcode": "7090006470184",
+  "name": "Rørosmeieriet as Helmjølk",
+  "kcal_per_100g": 67,
+  "protein_g": 3.3,
+  "carbs_g": 4.5,
+  "fat_g": 4,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7090006470405",
+  "name": "Rørosmeieriet as Økologisk Røros Yoghurt Naturell",
+  "kcal_per_100g": 71,
+  "protein_g": 4.2,
+  "carbs_g": 4.9,
+  "fat_g": 4,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7090009370306",
+  "name": "odelia Rapsolje",
+  "kcal_per_100g": 900,
+  "protein_g": 0,
+  "carbs_g": 0,
+  "fat_g": 100,
+  "serving_size_g": 450
+ },
+ {
+  "barcode": "7090017540012",
+  "name": "Handl norway as Sukrin - sachet",
+  "kcal_per_100g": 0,
+  "protein_g": 0,
+  "carbs_g": 100,
+  "fat_g": 0,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7090037971100",
+  "name": "Den Sorte Havre Müsli Med Belgisk Sjokolade",
+  "kcal_per_100g": 420,
+  "protein_g": 10,
+  "carbs_g": 57,
+  "fat_g": 15,
+  "serving_size_g": 40
+ },
+ {
+  "barcode": "7090042651271",
+  "name": "Honning Sommer Honnin",
+  "kcal_per_100g": 334,
+  "protein_g": 1,
+  "carbs_g": 80,
+  "fat_g": 0,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7090046311683",
+  "name": "Sunshine Delights Dried Mango Golden Mango",
+  "kcal_per_100g": 341,
+  "protein_g": 1.8,
+  "carbs_g": 80,
+  "fat_g": 0.6,
+  "serving_size_g": 200
+ },
+ {
+  "barcode": "7090046311706",
+  "name": "Sunshine Delights Dried Peach Tørket Fersken",
+  "kcal_per_100g": 336,
+  "protein_g": 0.8,
+  "carbs_g": 81,
+  "fat_g": 0.2,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7090046313472",
+  "name": "Dippies Chocolate Dipped Mango",
+  "kcal_per_100g": 381,
+  "protein_g": 3.3,
+  "carbs_g": 66,
+  "fat_g": 10,
+  "serving_size_g": 15
+ },
+ {
+  "barcode": "7090046313625",
+  "name": "Dippies Chocolate dipped pineapple",
+  "kcal_per_100g": 399,
+  "protein_g": 2.7,
+  "carbs_g": 69,
+  "fat_g": 11,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7090046315261",
+  "name": "A Date With Strawberry stacey",
+  "kcal_per_100g": 350,
+  "protein_g": 2.3,
+  "carbs_g": 76,
+  "fat_g": 2.5,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7090046315292",
+  "name": "Cooper Sour Cola Flavoured Dates",
+  "kcal_per_100g": 352,
+  "protein_g": 2.3,
+  "carbs_g": 81.6,
+  "fat_g": 3.5,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7090046319122",
+  "name": "Calango Sweet Strawberry Soft and juicy dried mango",
+  "kcal_per_100g": 334,
+  "protein_g": 1.8,
+  "carbs_g": 78,
+  "fat_g": 0.7,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7300400101332",
+  "name": "Wasa Rugsprø",
+  "kcal_per_100g": 340,
+  "protein_g": 10,
+  "carbs_g": 61,
+  "fat_g": 2,
+  "serving_size_g": 10
+ },
+ {
+  "barcode": "7300400118408",
+  "name": "wasa Husman Fullkornsknekkebrød",
+  "kcal_per_100g": 330,
+  "protein_g": 10,
+  "carbs_g": 59,
+  "fat_g": 1.5,
+  "serving_size_g": 12.9
+ },
+ {
+  "barcode": "7300400118415",
+  "name": "wasa Husman",
+  "kcal_per_100g": 330,
+  "protein_g": 9,
+  "carbs_g": 60,
+  "fat_g": 1.5,
+  "serving_size_g": 12.9
+ },
+ {
+  "barcode": "7300400120715",
+  "name": "wasa Frukost Fullkorn",
+  "kcal_per_100g": 397.22,
+  "protein_g": 13,
+  "carbs_g": 59,
+  "fat_g": 9.5,
+  "serving_size_g": 14.2
+ },
+ {
+  "barcode": "7300400121644",
+  "name": "wasa Delikatess Sesam",
+  "kcal_per_100g": 354.84,
+  "protein_g": 10.75,
+  "carbs_g": 53.76,
+  "fat_g": 6.45,
+  "serving_size_g": 9.3
+ },
+ {
+  "barcode": "7300400122689",
+  "name": "wasa Sandwich Cheese & Chives",
+  "kcal_per_100g": 472,
+  "protein_g": 9,
+  "carbs_g": 49,
+  "fat_g": 24,
+  "serving_size_g": 37
+ },
+ {
+  "barcode": "7300400127363",
+  "name": "wasa Sandwich Tomato & Basil",
+  "kcal_per_100g": 479,
+  "protein_g": 12,
+  "carbs_g": 53.5,
+  "fat_g": 23,
+  "serving_size_g": 40
+ },
+ {
+  "barcode": "7300400129459",
+  "name": "wasa Knekkebrød Runde Sesam & Havsalt",
+  "kcal_per_100g": 409,
+  "protein_g": 12,
+  "carbs_g": 62,
+  "fat_g": 11,
+  "serving_size_g": 15
+ },
+ {
+  "barcode": "7300400130288",
+  "name": "wasa Havre",
+  "kcal_per_100g": 370,
+  "protein_g": 12,
+  "carbs_g": 63,
+  "fat_g": 5.6,
+  "serving_size_g": 17.5
+ },
+ {
+  "barcode": "7300400481878",
+  "name": "Knekkebrød Sesam&Havsalt Gl.Fri 240g Wasa",
+  "kcal_per_100g": 414,
+  "protein_g": 6,
+  "carbs_g": 66,
+  "fat_g": 12,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7300400482165",
+  "name": "Wasa - Tunn 100",
+  "kcal_per_100g": 354.55,
+  "protein_g": 11,
+  "carbs_g": 54,
+  "fat_g": 5,
+  "serving_size_g": 11
+ },
+ {
+  "barcode": "7300400482523",
+  "name": "wasa Wholegrain Biscuits - Cranberry & Oat Flakes",
+  "kcal_per_100g": 464,
+  "protein_g": 8.8,
+  "carbs_g": 58,
+  "fat_g": 20,
+  "serving_size_g": 10.8
+ },
+ {
+  "barcode": "7300400482530",
+  "name": "wasa Dark Chocolate Wholegrain Biscuits",
+  "kcal_per_100g": 457,
+  "protein_g": 9,
+  "carbs_g": 59,
+  "fat_g": 19,
+  "serving_size_g": 10.8
+ },
+ {
+  "barcode": "7300400482554",
+  "name": "wasa Wholegrain Biscuits - Crunchy Oat Flakes",
+  "kcal_per_100g": 461,
+  "protein_g": 8.3,
+  "carbs_g": 61,
+  "fat_g": 19,
+  "serving_size_g": 10.8
+ },
+ {
+  "barcode": "7300400482585",
+  "name": "BARILLA NORGE AS Wasa Tynn Havre 265g",
+  "kcal_per_100g": 408.7,
+  "protein_g": 11.3,
+  "carbs_g": 62.61,
+  "fat_g": 10.43,
+  "serving_size_g": 11.5
+ },
+ {
+  "barcode": "7300400482691",
+  "name": "wasa Din Stund Chia & Havsalt",
+  "kcal_per_100g": 350,
+  "protein_g": 10,
+  "carbs_g": 58,
+  "fat_g": 4,
+  "serving_size_g": 10
+ },
+ {
+  "barcode": "7300400482950",
+  "name": "wasa Sport+ knekkebrød",
+  "kcal_per_100g": 341.94,
+  "protein_g": 10.97,
+  "carbs_g": 56.13,
+  "fat_g": 3.23,
+  "serving_size_g": 15.5
+ },
+ {
+  "barcode": "7310130013287",
+  "name": "Axa Granola natural",
+  "kcal_per_100g": 416.35,
+  "protein_g": 8.7,
+  "carbs_g": 50,
+  "fat_g": 20,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7310130013348",
+  "name": "Axa Havre Ring Mandel & Hasselnøtt",
+  "kcal_per_100g": 394,
+  "protein_g": 11,
+  "carbs_g": 67,
+  "fat_g": 7.7,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7310130801709",
+  "name": "Lantmännen Start! Naturell granola",
+  "kcal_per_100g": 430,
+  "protein_g": 9,
+  "carbs_g": 63,
+  "fat_g": 14,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7310340111049",
+  "name": "Dansukker Rørsukker",
+  "kcal_per_100g": 400,
+  "protein_g": 0,
+  "carbs_g": 100,
+  "fat_g": 0,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7310340111056",
+  "name": "Unil as Råsukker Biter 500g Dansukker",
+  "kcal_per_100g": 400,
+  "protein_g": 0,
+  "carbs_g": 100,
+  "fat_g": 0,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7310340464404",
+  "name": "Dansukker Vit sirap",
+  "kcal_per_100g": 320,
+  "protein_g": 0,
+  "carbs_g": 80,
+  "fat_g": 0,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7310350119752",
+  "name": "Cloetta norge as Salt Sild 100g Malaco",
+  "kcal_per_100g": 348,
+  "protein_g": 0,
+  "carbs_g": 86,
+  "fat_g": 0,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7310401016481",
+  "name": "Loka Citron",
+  "kcal_per_100g": 0,
+  "protein_g": 0,
+  "carbs_g": 0,
+  "fat_g": 0,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7310619135707",
+  "name": "Gilde Seltin",
+  "kcal_per_100g": 0,
+  "protein_g": 0,
+  "carbs_g": 0,
+  "fat_g": 0,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7310700676485",
+  "name": "Philadelphia Light Hvitløk & Urter",
+  "kcal_per_100g": 140,
+  "protein_g": 6.8,
+  "carbs_g": 5.3,
+  "fat_g": 9.7,
+  "serving_size_g": 30
+ },
+ {
+  "barcode": "7310865005168",
+  "name": "Arla Svenskt Smör - Normalsaltat",
+  "kcal_per_100g": 739,
+  "protein_g": 0.6,
+  "carbs_g": 0.7,
+  "fat_g": 82,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7311040084794",
+  "name": "Unil as Tomatpuré",
+  "kcal_per_100g": 91,
+  "protein_g": 4.8,
+  "carbs_g": 14.5,
+  "fat_g": 1,
+  "serving_size_g": 140
+ },
+ {
+  "barcode": "7311040172521",
+  "name": "Eldorado Mandler",
+  "kcal_per_100g": 577,
+  "protein_g": 21.1,
+  "carbs_g": 18.5,
+  "fat_g": 49.2,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7311041000175",
+  "name": "Eldorado rosiner",
+  "kcal_per_100g": 341,
+  "protein_g": 3,
+  "carbs_g": 77.7,
+  "fat_g": 0.7,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7311041013427",
+  "name": "Unil as Frukt Müsli 1kg First Price",
+  "kcal_per_100g": 369,
+  "protein_g": 12,
+  "carbs_g": 58,
+  "fat_g": 7.7,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7311041013601",
+  "name": "Unil as Mais",
+  "kcal_per_100g": 84,
+  "protein_g": 2.8,
+  "carbs_g": 13,
+  "fat_g": 1.4,
+  "serving_size_g": 258
+ },
+ {
+  "barcode": "7311041019771",
+  "name": "First Price Myke Tortilla Lefser",
+  "kcal_per_100g": 332,
+  "protein_g": 9.3,
+  "carbs_g": 54,
+  "fat_g": 8,
+  "serving_size_g": 40
+ },
+ {
+  "barcode": "7311041022689",
+  "name": "Unil as Kjeks med krem og vaniljesmak",
+  "kcal_per_100g": 470,
+  "protein_g": 6.3,
+  "carbs_g": 79.4,
+  "fat_g": 13.7,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7311041024362",
+  "name": "Unil as Appelsinjuice",
+  "kcal_per_100g": 43,
+  "protein_g": 0.7,
+  "carbs_g": 9.6,
+  "fat_g": 0,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7311041024720",
+  "name": "First Price Kaviar",
+  "kcal_per_100g": 448,
+  "protein_g": 9,
+  "carbs_g": 13.2,
+  "fat_g": 38.8,
+  "serving_size_g": 14
+ },
+ {
+  "barcode": "7311041029268",
+  "name": "Unil as Majones",
+  "kcal_per_100g": 718,
+  "protein_g": 1,
+  "carbs_g": 0,
+  "fat_g": 79,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7311041029299",
+  "name": "Unil as Pesto alla Genovese",
+  "kcal_per_100g": 456,
+  "protein_g": 6.3,
+  "carbs_g": 6,
+  "fat_g": 45,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7311041048290",
+  "name": "Unil as Maiskorn 380g Eldorado",
+  "kcal_per_100g": 55,
+  "protein_g": 1.5,
+  "carbs_g": 9.9,
+  "fat_g": 1.1,
+  "serving_size_g": 240
+ },
+ {
+  "barcode": "7311041048931",
+  "name": "Unil as Nøttemiks",
+  "kcal_per_100g": 532,
+  "protein_g": 18.7,
+  "carbs_g": 37.1,
+  "fat_g": 35.4,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7311041083918",
+  "name": "First Price Tunfisk biter i Vann Msc",
+  "kcal_per_100g": 97,
+  "protein_g": 24,
+  "carbs_g": 0,
+  "fat_g": 0.2,
+  "serving_size_g": 120
+ },
+ {
+  "barcode": "7311041085011",
+  "name": "First Price Kidneybønner",
+  "kcal_per_100g": 120,
+  "protein_g": 8,
+  "carbs_g": 13,
+  "fat_g": 0.7,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7311070001952",
+  "name": "Pågen Rasker Fullkorn",
+  "kcal_per_100g": 271,
+  "protein_g": 9.6,
+  "carbs_g": 46,
+  "fat_g": 4.3,
+  "serving_size_g": 40
+ },
+ {
+  "barcode": "7311070006209",
+  "name": "Pågen Gifflar",
+  "kcal_per_100g": 373,
+  "protein_g": 7.3,
+  "carbs_g": 52,
+  "fat_g": 14,
+  "serving_size_g": 23
+ },
+ {
+  "barcode": "7311070006339",
+  "name": "Pågen Gifflar Raspberry & Vanilla",
+  "kcal_per_100g": 353,
+  "protein_g": 7.5,
+  "carbs_g": 56,
+  "fat_g": 11,
+  "serving_size_g": 260
+ },
+ {
+  "barcode": "7311070006353",
+  "name": "Pågen Kardemumma Gifflar",
+  "kcal_per_100g": 343,
+  "protein_g": 7.7,
+  "carbs_g": 53,
+  "fat_g": 11,
+  "serving_size_g": 23
+ },
+ {
+  "barcode": "7311171008386",
+  "name": "Havre fras Havrefras Original",
+  "kcal_per_100g": 392,
+  "protein_g": 14,
+  "carbs_g": 62,
+  "fat_g": 6.7,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7311310026790",
+  "name": "Paulig norway Rock Salt m/Kvern 140g St.Maria",
+  "kcal_per_100g": 131,
+  "protein_g": 2.1,
+  "carbs_g": 28,
+  "fat_g": 0.26,
+  "serving_size_g": 20
+ },
+ {
+  "barcode": "7311310031015",
+  "name": "Santa Maria AB Spice Mix Taco - Orginal",
+  "kcal_per_100g": 297,
+  "protein_g": 10,
+  "carbs_g": 44,
+  "fat_g": 6,
+  "serving_size_g": 7
+ },
+ {
+  "barcode": "7311310034061",
+  "name": "Santa Maria Mango Chutney",
+  "kcal_per_100g": 250,
+  "protein_g": 0.5,
+  "carbs_g": 61,
+  "fat_g": 0.5,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7311310034405",
+  "name": "Santa Maria Sweet Chili Sauce",
+  "kcal_per_100g": 136,
+  "protein_g": 0,
+  "carbs_g": 32,
+  "fat_g": 0.5,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7311310034542",
+  "name": "Santa Maria Sweet Chili Sauce",
+  "kcal_per_100g": 178,
+  "protein_g": 0,
+  "carbs_g": 43,
+  "fat_g": 0.2,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7311310035341",
+  "name": "Santa Maria Teriyaki Sauce",
+  "kcal_per_100g": 179,
+  "protein_g": 2.8,
+  "carbs_g": 40,
+  "fat_g": 0,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7311310038342",
+  "name": "Santa Maria Dip Tex Mex Style",
+  "kcal_per_100g": 130,
+  "protein_g": 1.9,
+  "carbs_g": 7.5,
+  "fat_g": 10,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7311310038397",
+  "name": "Santa Maria Dip Nacho Cheese Style",
+  "kcal_per_100g": 130,
+  "protein_g": 2.5,
+  "carbs_g": 7.7,
+  "fat_g": 9.9,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7311311020599",
+  "name": "Santa Maria Tortilla Original Medium 8pk",
+  "kcal_per_100g": 302,
+  "protein_g": 8.3,
+  "carbs_g": 55,
+  "fat_g": 4.9,
+  "serving_size_g": 40
+ },
+ {
+  "barcode": "7311311021169",
+  "name": "Santa Maria Tortilla Original Large 6pk",
+  "kcal_per_100g": 302,
+  "protein_g": 8.3,
+  "carbs_g": 55,
+  "fat_g": 4.9,
+  "serving_size_g": 62
+ },
+ {
+  "barcode": "7311311021183",
+  "name": "Santa Maria Tortilla Original",
+  "kcal_per_100g": 302,
+  "protein_g": 8.3,
+  "carbs_g": 55,
+  "fat_g": 4.9,
+  "serving_size_g": 62
+ },
+ {
+  "barcode": "7311312000873",
+  "name": "Santa Maria Chunky Salsa Medium",
+  "kcal_per_100g": 32,
+  "protein_g": 1.6,
+  "carbs_g": 5.5,
+  "fat_g": 0,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7311312000897",
+  "name": "Santa Maria Salsa Chunky Hot",
+  "kcal_per_100g": 34,
+  "protein_g": 1.5,
+  "carbs_g": 6.1,
+  "fat_g": 0,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7311312002112",
+  "name": "Santa Maria Tacosaus Medium",
+  "kcal_per_100g": 34,
+  "protein_g": 1.5,
+  "carbs_g": 5.5,
+  "fat_g": 0,
+  "serving_size_g": 10
+ },
+ {
+  "barcode": "7311312005274",
+  "name": "Santa Maria Red Curry Paste",
+  "kcal_per_100g": 102,
+  "protein_g": 2.7,
+  "carbs_g": 20,
+  "fat_g": 1.4,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7311312005298",
+  "name": "Santa Maria Oyster Sauce",
+  "kcal_per_100g": 77,
+  "protein_g": 2.6,
+  "carbs_g": 15,
+  "fat_g": 0.6,
+  "serving_size_g": 15
+ },
+ {
+  "barcode": "7311312005458",
+  "name": "Santa Maria Coconut Milk Original",
+  "kcal_per_100g": 180,
+  "protein_g": 1.9,
+  "carbs_g": 2.7,
+  "fat_g": 18,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7311312005465",
+  "name": "Santa Maria Light Coconut Milk",
+  "kcal_per_100g": 79,
+  "protein_g": 0.8,
+  "carbs_g": 0.9,
+  "fat_g": 8,
+  "serving_size_g": 250
+ },
+ {
+  "barcode": "7311312005489",
+  "name": "Santa Maria Rich Coconut Cream",
+  "kcal_per_100g": 238,
+  "protein_g": 2.3,
+  "carbs_g": 2.6,
+  "fat_g": 24,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7311312007612",
+  "name": "Santa Maria Naanbrød",
+  "kcal_per_100g": 268,
+  "protein_g": 8,
+  "carbs_g": 48,
+  "fat_g": 4,
+  "serving_size_g": 130
+ },
+ {
+  "barcode": "7311312007834",
+  "name": "Santa Maria Tortilla Strips Sweet Chili",
+  "kcal_per_100g": 472.5,
+  "protein_g": 6.6,
+  "carbs_g": 63.5,
+  "fat_g": 20,
+  "serving_size_g": 40
+ },
+ {
+  "barcode": "7311312008732",
+  "name": "Santa Maria Tortilla Strips Crunchy&Cheesy",
+  "kcal_per_100g": 472,
+  "protein_g": 6.6,
+  "carbs_g": 64,
+  "fat_g": 20,
+  "serving_size_g": 20
+ },
+ {
+  "barcode": "7311312008794",
+  "name": "Santa Maria Egg Noodles",
+  "kcal_per_100g": 370,
+  "protein_g": 12,
+  "carbs_g": 75,
+  "fat_g": 1.8,
+  "serving_size_g": 62.5
+ },
+ {
+  "barcode": "7311312009302",
+  "name": "Santa Maria Dip Nacho Cheese Style",
+  "kcal_per_100g": 128,
+  "protein_g": 2.4,
+  "carbs_g": 4.7,
+  "fat_g": 11,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7311800361707",
+  "name": "Polarbröd Polarbrød fullkorn",
+  "kcal_per_100g": 260,
+  "protein_g": 8.6,
+  "carbs_g": 45,
+  "fat_g": 3.6,
+  "serving_size_g": 38
+ },
+ {
+  "barcode": "7311800389701",
+  "name": "Polarbröd Polarbrød Havre",
+  "kcal_per_100g": 260,
+  "protein_g": 11,
+  "carbs_g": 42,
+  "fat_g": 4,
+  "serving_size_g": 37.5
+ },
+ {
+  "barcode": "7311870010895",
+  "name": "Bregott Smör extrasaltat",
+  "kcal_per_100g": 678,
+  "protein_g": 0.4,
+  "carbs_g": 0.4,
+  "fat_g": 75,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7312080004025",
+  "name": "Leksands Gul Fuldkornsknækbrød",
+  "kcal_per_100g": 350,
+  "protein_g": 8.9,
+  "carbs_g": 80,
+  "fat_g": 1.6,
+  "serving_size_g": 12
+ },
+ {
+  "barcode": "7318690081623",
+  "name": "Ica Basic Gaudaost",
+  "kcal_per_100g": 340,
+  "protein_g": 23,
+  "carbs_g": 0.5,
+  "fat_g": 28,
+  "serving_size_g": 16
+ },
+ {
+  "barcode": "7331974102500",
+  "name": "Famous Fresh Dates",
+  "kcal_per_100g": 267,
+  "protein_g": 1.71,
+  "carbs_g": 59,
+  "fat_g": 0.89,
+  "serving_size_g": 25
+ },
+ {
+  "barcode": "7340001800203",
+  "name": "Vitamin Well AB Protein bar - cookies & cream",
+  "kcal_per_100g": 352.73,
+  "protein_g": 37,
+  "carbs_g": 31,
+  "fat_g": 12,
+  "serving_size_g": 55
+ },
+ {
+  "barcode": "7340001800494",
+  "name": "Barebells Protein Bar Caramel Cashew",
+  "kcal_per_100g": 363,
+  "protein_g": 36,
+  "carbs_g": 28,
+  "fat_g": 15,
+  "serving_size_g": 55
+ },
+ {
+  "barcode": "7340001804546",
+  "name": "Barebells Soft Protein Bar Caramel Choco",
+  "kcal_per_100g": 369.09,
+  "protein_g": 27.27,
+  "carbs_g": 43.64,
+  "fat_g": 14.55,
+  "serving_size_g": 55
+ },
+ {
+  "barcode": "7340001805390",
+  "name": "Barebells COCO CHOCO",
+  "kcal_per_100g": 394.55,
+  "protein_g": 29,
+  "carbs_g": 36,
+  "fat_g": 20,
+  "serving_size_g": 55
+ },
+ {
+  "barcode": "7340005403363",
+  "name": "OLW Cheez ballz",
+  "kcal_per_100g": 540,
+  "protein_g": 11,
+  "carbs_g": 53,
+  "fat_g": 31,
+  "serving_size_g": 30
+ },
+ {
+  "barcode": "7340005404162",
+  "name": "OLW Cheez ballz",
+  "kcal_per_100g": 540,
+  "protein_g": 11,
+  "carbs_g": 53,
+  "fat_g": 31,
+  "serving_size_g": 38
+ },
+ {
+  "barcode": "7340011340188",
+  "name": "Coop Xtra Rapsolje",
+  "kcal_per_100g": 900,
+  "protein_g": 0,
+  "carbs_g": 0,
+  "fat_g": 100,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7340011342434",
+  "name": "Coop X-tra Cornflakes",
+  "kcal_per_100g": 380,
+  "protein_g": 8,
+  "carbs_g": 83,
+  "fat_g": 1,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7340011342618",
+  "name": "Coop Olive Oil",
+  "kcal_per_100g": 900,
+  "protein_g": 0,
+  "carbs_g": 0,
+  "fat_g": 100,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7340011345176",
+  "name": "Coop Tortelloni med tomat og ost",
+  "kcal_per_100g": 288,
+  "protein_g": 10,
+  "carbs_g": 41,
+  "fat_g": 9,
+  "serving_size_g": 125
+ },
+ {
+  "barcode": "7340011350644",
+  "name": "Coop Pesto Rosso med soltørkede tomater",
+  "kcal_per_100g": 357,
+  "protein_g": 6.5,
+  "carbs_g": 9.1,
+  "fat_g": 32,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7340011350767",
+  "name": "PRINCES POLSKA solsikkeolje",
+  "kcal_per_100g": 900,
+  "protein_g": 0,
+  "carbs_g": 0,
+  "fat_g": 100,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7340011350811",
+  "name": "Coop Rapsolje",
+  "kcal_per_100g": 900,
+  "protein_g": 0,
+  "carbs_g": 0,
+  "fat_g": 100,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7340011355304",
+  "name": "Coop Sitronsaft",
+  "kcal_per_100g": 42,
+  "protein_g": 0,
+  "carbs_g": 6.5,
+  "fat_g": 0,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7340011364306",
+  "name": "Coop Grønn Pesto",
+  "kcal_per_100g": 441,
+  "protein_g": 5.5,
+  "carbs_g": 4.7,
+  "fat_g": 44,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7340011404811",
+  "name": "Coop X-tra Mozzarella",
+  "kcal_per_100g": 225,
+  "protein_g": 17,
+  "carbs_g": 1,
+  "fat_g": 17,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7340011428602",
+  "name": "Änglamark Dark chocolate",
+  "kcal_per_100g": 632,
+  "protein_g": 9.8,
+  "carbs_g": 23,
+  "fat_g": 53,
+  "serving_size_g": 50
+ },
+ {
+  "barcode": "7340011446873",
+  "name": "Änglamark Majskakor med havssalt",
+  "kcal_per_100g": 377,
+  "protein_g": 9.3,
+  "carbs_g": 70,
+  "fat_g": 4.2,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7340011447313",
+  "name": "INTERCOMM FOODS S.A gresk extra virgin olivenolje",
+  "kcal_per_100g": 900,
+  "protein_g": 0,
+  "carbs_g": 0,
+  "fat_g": 100,
+  "serving_size_g": 110
+ },
+ {
+  "barcode": "7340011448310",
+  "name": "Coop Peanøttsmør",
+  "kcal_per_100g": 646,
+  "protein_g": 22,
+  "carbs_g": 12,
+  "fat_g": 55,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7340011454915",
+  "name": "Arla Kremost Naturell",
+  "kcal_per_100g": 208,
+  "protein_g": 3.6,
+  "carbs_g": 3.1,
+  "fat_g": 20,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7340011456704",
+  "name": "Coop Saltede popkorn",
+  "kcal_per_100g": 498,
+  "protein_g": 7.7,
+  "carbs_g": 45,
+  "fat_g": 29,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7340011460923",
+  "name": "Coop Salte cashewnøtter",
+  "kcal_per_100g": 613,
+  "protein_g": 19,
+  "carbs_g": 22,
+  "fat_g": 49,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7340011473039",
+  "name": "BREDABEST BV Änglamark Peanøttsmør Crunchy",
+  "kcal_per_100g": 612,
+  "protein_g": 30,
+  "carbs_g": 9.5,
+  "fat_g": 49,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7340011488422",
+  "name": "Coop Salte peanøtter",
+  "kcal_per_100g": 619,
+  "protein_g": 25,
+  "carbs_g": 11,
+  "fat_g": 51,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7340011496717",
+  "name": "Coop Mozarella Sticks",
+  "kcal_per_100g": 310,
+  "protein_g": 17,
+  "carbs_g": 19,
+  "fat_g": 18,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7340011497363",
+  "name": "MOKATE SP. Z.O.O. Sjokodrikk",
+  "kcal_per_100g": 386,
+  "protein_g": 8.4,
+  "carbs_g": 78,
+  "fat_g": 3.8,
+  "serving_size_g": 34
+ },
+ {
+  "barcode": "7340154813648",
+  "name": "Mac Heaven",
+  "kcal_per_100g": 397,
+  "protein_g": 14,
+  "carbs_g": 64,
+  "fat_g": 8.9,
+  "serving_size_g": 92
+ },
+ {
+  "barcode": "7340191104846",
+  "name": "Coop Bacon chips",
+  "kcal_per_100g": 487,
+  "protein_g": 8.8,
+  "carbs_g": 58,
+  "fat_g": 24,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7340191109995",
+  "name": "Coop Cheese Flips",
+  "kcal_per_100g": 625,
+  "protein_g": 6.6,
+  "carbs_g": 39,
+  "fat_g": 49,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7340191110069",
+  "name": "MASKINPAKKING AS Coop Kakao 250g",
+  "kcal_per_100g": 361,
+  "protein_g": 19,
+  "carbs_g": 8.9,
+  "fat_g": 21,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7340191118775",
+  "name": "Coop Tomat puré fra konsentrat",
+  "kcal_per_100g": 93,
+  "protein_g": 4.8,
+  "carbs_g": 15,
+  "fat_g": 1,
+  "serving_size_g": 140
+ },
+ {
+  "barcode": "7340191124172",
+  "name": "Coop Tunfisk I Olje",
+  "kcal_per_100g": 182,
+  "protein_g": 24,
+  "carbs_g": 0,
+  "fat_g": 9.5,
+  "serving_size_g": 140
+ },
+ {
+  "barcode": "7340191129801",
+  "name": "Änglamark Kikärtor",
+  "kcal_per_100g": 105,
+  "protein_g": 6.1,
+  "carbs_g": 11,
+  "fat_g": 2.8,
+  "serving_size_g": 230
+ },
+ {
+  "barcode": "7340191134782",
+  "name": "Coop Cookies med sjokolade",
+  "kcal_per_100g": 509,
+  "protein_g": 4.9,
+  "carbs_g": 60,
+  "fat_g": 27,
+  "serving_size_g": 18.8
+ },
+ {
+  "barcode": "7340191135888",
+  "name": "Coop XtraX-Tra Tomatketchup",
+  "kcal_per_100g": 79,
+  "protein_g": 0.9,
+  "carbs_g": 18,
+  "fat_g": 0,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7340191140011",
+  "name": "Coop Marie Kjeks",
+  "kcal_per_100g": 448,
+  "protein_g": 8.6,
+  "carbs_g": 75,
+  "fat_g": 12,
+  "serving_size_g": 10
+ },
+ {
+  "barcode": "7340191141438",
+  "name": "Coop Tortilla Chips Salt",
+  "kcal_per_100g": 470,
+  "protein_g": 6.6,
+  "carbs_g": 64,
+  "fat_g": 20,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7340191143265",
+  "name": "Coop Kaurajuoma",
+  "kcal_per_100g": 60,
+  "protein_g": 1,
+  "carbs_g": 7.8,
+  "fat_g": 2.8,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7340191143890",
+  "name": "Coop Valnøtter",
+  "kcal_per_100g": 684,
+  "protein_g": 14,
+  "carbs_g": 2.8,
+  "fat_g": 67,
+  "serving_size_g": 200
+ },
+ {
+  "barcode": "7340191144262",
+  "name": "Coop Soft Bites",
+  "kcal_per_100g": 377,
+  "protein_g": 3,
+  "carbs_g": 70,
+  "fat_g": 9,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7340191144712",
+  "name": "Coop Tortilla Cheese Chips",
+  "kcal_per_100g": 471,
+  "protein_g": 7.7,
+  "carbs_g": 60,
+  "fat_g": 21,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7340191145030",
+  "name": "Coop Cashew Nuts No Salt",
+  "kcal_per_100g": 603,
+  "protein_g": 21,
+  "carbs_g": 20,
+  "fat_g": 48,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7340191146068",
+  "name": "Coop Guacamole Style Dip",
+  "kcal_per_100g": 132,
+  "protein_g": 2.2,
+  "carbs_g": 9,
+  "fat_g": 9.5,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7340191148741",
+  "name": "Coop Hot Taco Sauce",
+  "kcal_per_100g": 53,
+  "protein_g": 1.5,
+  "carbs_g": 10,
+  "fat_g": 0.3,
+  "serving_size_g": 30
+ },
+ {
+  "barcode": "7340191148918",
+  "name": "Coop Mozzarella",
+  "kcal_per_100g": 226,
+  "protein_g": 17,
+  "carbs_g": 1,
+  "fat_g": 17,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7340191149779",
+  "name": "Coop Mozzarella",
+  "kcal_per_100g": 301,
+  "protein_g": 26,
+  "carbs_g": 2,
+  "fat_g": 21,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7340191150393",
+  "name": "Änglamark Mandeldryck",
+  "kcal_per_100g": 25,
+  "protein_g": 0.7,
+  "carbs_g": 1.7,
+  "fat_g": 1.7,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7340191151987",
+  "name": "Coop Sweet Potato Fries",
+  "kcal_per_100g": 159,
+  "protein_g": 2,
+  "carbs_g": 21,
+  "fat_g": 6.8,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7340191156159",
+  "name": "Xtra Spaghetti",
+  "kcal_per_100g": 354,
+  "protein_g": 13,
+  "carbs_g": 71,
+  "fat_g": 1.2,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7340191159440",
+  "name": "Coop Corn Cakes Cheese Flavour",
+  "kcal_per_100g": 409,
+  "protein_g": 7.3,
+  "carbs_g": 63,
+  "fat_g": 14,
+  "serving_size_g": 10
+ },
+ {
+  "barcode": "7340191159570",
+  "name": "Coop Rice Cakes Sea Salt",
+  "kcal_per_100g": 383,
+  "protein_g": 7.3,
+  "carbs_g": 80,
+  "fat_g": 3,
+  "serving_size_g": 7.1
+ },
+ {
+  "barcode": "7340191162235",
+  "name": "Coop Tranbär Tranebær Karpalo",
+  "kcal_per_100g": 329,
+  "protein_g": 0,
+  "carbs_g": 77,
+  "fat_g": 1.1,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7340191165632",
+  "name": "Coop Fusilli Fullkorn",
+  "kcal_per_100g": 350,
+  "protein_g": 12,
+  "carbs_g": 66,
+  "fat_g": 2.5,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7340191166165",
+  "name": "Coop Salte kjeks",
+  "kcal_per_100g": 491,
+  "protein_g": 7,
+  "carbs_g": 65,
+  "fat_g": 22,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7350000153477",
+  "name": "Pandy Sure kolaflasker",
+  "kcal_per_100g": 140,
+  "protein_g": 4.8,
+  "carbs_g": 16,
+  "fat_g": 0,
+  "serving_size_g": 50
+ },
+ {
+  "barcode": "7350000159288",
+  "name": "PANDY FLUFFY CLOUDS",
+  "kcal_per_100g": 170,
+  "protein_g": 4,
+  "carbs_g": 12,
+  "fat_g": 0,
+  "serving_size_g": 50
+ },
+ {
+  "barcode": "7350022561700",
+  "name": "BuonaSi Olivenolje, extra virgin",
+  "kcal_per_100g": 900,
+  "protein_g": 0,
+  "carbs_g": 0,
+  "fat_g": 100,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7350028543762",
+  "name": "Friggs Chiafro & havssalt",
+  "kcal_per_100g": 383,
+  "protein_g": 8.5,
+  "carbs_g": 76,
+  "fat_g": 3.2,
+  "serving_size_g": 5
+ },
+ {
+  "barcode": "7350054797436",
+  "name": "Dave & Jon's Dadlar Fizzy Berries",
+  "kcal_per_100g": 320,
+  "protein_g": 2.1,
+  "carbs_g": 64.8,
+  "fat_g": 3,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7350066440146",
+  "name": "Get Raw AB Raspberry Almond Bar",
+  "kcal_per_100g": 451,
+  "protein_g": 10,
+  "carbs_g": 43,
+  "fat_g": 24,
+  "serving_size_g": 42
+ },
+ {
+  "barcode": "7350066440153",
+  "name": "Get Raw AB Caramel Hazelnut Bar",
+  "kcal_per_100g": 451,
+  "protein_g": 10,
+  "carbs_g": 33,
+  "fat_g": 24,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7350066440504",
+  "name": "Get Raw AB No-Bake Raspberry Crumble",
+  "kcal_per_100g": 450,
+  "protein_g": 10,
+  "carbs_g": 45,
+  "fat_g": 24,
+  "serving_size_g": 35
+ },
+ {
+  "barcode": "7350066440672",
+  "name": "Get Raw AB Swedish Cinnamon Bun Ball",
+  "kcal_per_100g": 440,
+  "protein_g": 10,
+  "carbs_g": 42,
+  "fat_g": 24,
+  "serving_size_g": 25
+ },
+ {
+  "barcode": "7350068291111",
+  "name": "ProPud protein pudding chocolate",
+  "kcal_per_100g": 72,
+  "protein_g": 10,
+  "carbs_g": 4.6,
+  "fat_g": 1.5,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7350068291210",
+  "name": "ProPud Proteinshake sjokolade",
+  "kcal_per_100g": 58,
+  "protein_g": 6.1,
+  "carbs_g": 4.9,
+  "fat_g": 1.5,
+  "serving_size_g": 330
+ },
+ {
+  "barcode": "7350092180023",
+  "name": "Humm lemon ginger kombucha",
+  "kcal_per_100g": 20,
+  "protein_g": 0,
+  "carbs_g": 5,
+  "fat_g": 0,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7350101604588",
+  "name": "Tweak Smoothie Chews",
+  "kcal_per_100g": 150,
+  "protein_g": 4.02,
+  "carbs_g": 11.1,
+  "fat_g": 0.9,
+  "serving_size_g": 35
+ },
+ {
+  "barcode": "7392672104104",
+  "name": "Salakis Turkisk Naturell Yoghurt",
+  "kcal_per_100g": 120,
+  "protein_g": 3.2,
+  "carbs_g": 4.5,
+  "fat_g": 10,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7394376615290",
+  "name": "Oatly iMat Fraiche",
+  "kcal_per_100g": 177,
+  "protein_g": 1,
+  "carbs_g": 9.1,
+  "fat_g": 15,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7394376615665",
+  "name": "Oatly Økologisk Havre Drikk",
+  "kcal_per_100g": 39,
+  "protein_g": 1.1,
+  "carbs_g": 7.2,
+  "fat_g": 0.5,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7394376618963",
+  "name": "Oatly Havredrik barista edition",
+  "kcal_per_100g": 61,
+  "protein_g": 1.1,
+  "carbs_g": 7.1,
+  "fat_g": 3,
+  "serving_size_g": 240
+ },
+ {
+  "barcode": "7394376620300",
+  "name": "Oatly Kaurajuoma vanilja",
+  "kcal_per_100g": 68,
+  "protein_g": 1.1,
+  "carbs_g": 9.6,
+  "fat_g": 2.6,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7394376620799",
+  "name": "Oatly oat drink",
+  "kcal_per_100g": 48,
+  "protein_g": 1.1,
+  "carbs_g": 7,
+  "fat_g": 1.5,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7610029224016",
+  "name": "Denner Chocolate Cookies",
+  "kcal_per_100g": 497,
+  "protein_g": 6.3,
+  "carbs_g": 57,
+  "fat_g": 26,
+  "serving_size_g": 18
+ },
+ {
+  "barcode": "7613034532336",
+  "name": "NESTLÉ NORGE AS Cafe Vanilla",
+  "kcal_per_100g": 406,
+  "protein_g": 8.3,
+  "carbs_g": 71.3,
+  "fat_g": 9,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7613035962965",
+  "name": "Nescafé Brasero",
+  "kcal_per_100g": 118,
+  "protein_g": 7.8,
+  "carbs_g": 3.1,
+  "fat_g": 0.2,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7613039860380",
+  "name": "Nescafé Nescafe Gull 100g",
+  "kcal_per_100g": 118,
+  "protein_g": 7.8,
+  "carbs_g": 3.1,
+  "fat_g": 0.2,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7613287109552",
+  "name": "Nestlé Lion White",
+  "kcal_per_100g": 500,
+  "protein_g": 4.9,
+  "carbs_g": 65,
+  "fat_g": 24,
+  "serving_size_g": 30
+ },
+ {
+  "barcode": "7613287111180",
+  "name": "NESTLÉ NORGE AS Nescafé Gold Koffeinfri 100g",
+  "kcal_per_100g": 118,
+  "protein_g": 7.8,
+  "carbs_g": 3.1,
+  "fat_g": 0.2,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7622201721787",
+  "name": "Freia Sjokonøtt",
+  "kcal_per_100g": 555,
+  "protein_g": 3.8,
+  "carbs_g": 58,
+  "fat_g": 34,
+  "serving_size_g": 15
+ },
+ {
+  "barcode": "7622201746148",
+  "name": "Freia Boble Melkesjokolade",
+  "kcal_per_100g": 552,
+  "protein_g": 7.6,
+  "carbs_g": 55,
+  "fat_g": 33,
+  "serving_size_g": 37.5
+ },
+ {
+  "barcode": "7622201802028",
+  "name": "Mini Oreo",
+  "kcal_per_100g": 473.68,
+  "protein_g": 5.1,
+  "carbs_g": 68,
+  "fat_g": 20,
+  "serving_size_g": 19
+ },
+ {
+  "barcode": "7622202016455",
+  "name": "Freia Melkesjokolade Oppfinnerserien Cornflakes, Fudge og Havsalt",
+  "kcal_per_100g": 528,
+  "protein_g": 7.3,
+  "carbs_g": 58,
+  "fat_g": 29,
+  "serving_size_g": 24
+ },
+ {
+  "barcode": "7622202016950",
+  "name": "Freia Melkesjokolade Fizzy Bringebær Og Marengs",
+  "kcal_per_100g": 535,
+  "protein_g": 7,
+  "carbs_g": 58,
+  "fat_g": 30,
+  "serving_size_g": 24
+ },
+ {
+  "barcode": "7622202045615",
+  "name": "Oreo Gingerbread",
+  "kcal_per_100g": 481,
+  "protein_g": 5.4,
+  "carbs_g": 68,
+  "fat_g": 20,
+  "serving_size_g": 11
+ },
+ {
+  "barcode": "7622202050145",
+  "name": "Freia Mondelez Norway",
+  "kcal_per_100g": 568,
+  "protein_g": 7.7,
+  "carbs_g": 52,
+  "fat_g": 36,
+  "serving_size_g": 23.5
+ },
+ {
+  "barcode": "7622202050176",
+  "name": "Ritz Crackers, salte kjeks",
+  "kcal_per_100g": 490,
+  "protein_g": 7.4,
+  "carbs_g": 64,
+  "fat_g": 22,
+  "serving_size_g": 30
+ },
+ {
+  "barcode": "7622202207259",
+  "name": "Jelibon Sour Patch Jordbær",
+  "kcal_per_100g": 363,
+  "protein_g": 0,
+  "carbs_g": 90,
+  "fat_g": 0,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7622202242618",
+  "name": "Freia Melkesjokolade Kvikk Lunsj og Appelsin",
+  "kcal_per_100g": 538,
+  "protein_g": 7.7,
+  "carbs_g": 57,
+  "fat_g": 30,
+  "serving_size_g": 190
+ },
+ {
+  "barcode": "7622202257346",
+  "name": "Freia Melkesjokolade",
+  "kcal_per_100g": 550,
+  "protein_g": 8.1,
+  "carbs_g": 55,
+  "fat_g": 33,
+  "serving_size_g": 25
+ },
+ {
+  "barcode": "7622210115720",
+  "name": "MONDELEZ NORGE AS Freia bakepulver",
+  "kcal_per_100g": 135,
+  "protein_g": 0.1,
+  "carbs_g": 33.5,
+  "fat_g": 0,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "7622210166692",
+  "name": "Philadelphia Naturell Laktosefri",
+  "kcal_per_100g": 221,
+  "protein_g": 5.6,
+  "carbs_g": 3.2,
+  "fat_g": 21,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "7622210477439",
+  "name": "Oreo Golden",
+  "kcal_per_100g": 484,
+  "protein_g": 5.5,
+  "carbs_g": 69,
+  "fat_g": 20,
+  "serving_size_g": 11
+ },
+ {
+  "barcode": "7622210664181",
+  "name": "Mondelez Oboy The Original Great Taste",
+  "kcal_per_100g": 379,
+  "protein_g": 4.6,
+  "carbs_g": 82,
+  "fat_g": 2.7,
+  "serving_size_g": 18
+ },
+ {
+  "barcode": "7622210690883",
+  "name": "Milka Alpenmilch Schokolade",
+  "kcal_per_100g": 539,
+  "protein_g": 6.5,
+  "carbs_g": 57,
+  "fat_g": 31,
+  "serving_size_g": 30
+ },
+ {
+  "barcode": "7622210761231",
+  "name": "Green and Black's Black's Organic Tasting Collection Boxed Chocolates",
+  "kcal_per_100g": 564,
+  "protein_g": 9,
+  "carbs_g": 41,
+  "fat_g": 39,
+  "serving_size_g": 15
+ },
+ {
+  "barcode": "7622210816672",
+  "name": "Freia Kvikk Lunsj",
+  "kcal_per_100g": 537.5,
+  "protein_g": 8.1,
+  "carbs_g": 58,
+  "fat_g": 30,
+  "serving_size_g": 24
+ },
+ {
+  "barcode": "7622300137847",
+  "name": "Freia Melkehjerter",
+  "kcal_per_100g": 565.96,
+  "protein_g": 7.6,
+  "carbs_g": 52,
+  "fat_g": 36,
+  "serving_size_g": 4.3
+ },
+ {
+  "barcode": "7622300248987",
+  "name": "O'boy Oboy",
+  "kcal_per_100g": 379,
+  "protein_g": 3.9,
+  "carbs_g": 82,
+  "fat_g": 2.6,
+  "serving_size_g": 18
+ },
+ {
+  "barcode": "7622300286675",
+  "name": "Mondelez norge Regia Kakao",
+  "kcal_per_100g": 395,
+  "protein_g": 9.4,
+  "carbs_g": 73,
+  "fat_g": 6.3,
+  "serving_size_g": 32
+ },
+ {
+  "barcode": "7622300414399",
+  "name": "Mondelez norge Melkesjokolade Kvikk Lunsj",
+  "kcal_per_100g": 537,
+  "protein_g": 8.1,
+  "carbs_g": 57,
+  "fat_g": 30,
+  "serving_size_g": 25
+ },
+ {
+  "barcode": "7622300591052",
+  "name": "Freia Melkesjokoladekjeks",
+  "kcal_per_100g": 508,
+  "protein_g": 5.7,
+  "carbs_g": 59,
+  "fat_g": 27,
+  "serving_size_g": 23
+ },
+ {
+  "barcode": "7622400928727",
+  "name": "Freia Mørk Sjokolade 86%",
+  "kcal_per_100g": 645,
+  "protein_g": 8.5,
+  "carbs_g": 18,
+  "fat_g": 56,
+  "serving_size_g": 20
+ },
+ {
+  "barcode": "7622400984235",
+  "name": "Freia 70% kokesjokolade",
+  "kcal_per_100g": 600,
+  "protein_g": 7.3,
+  "carbs_g": 32.5,
+  "fat_g": 46.5,
+  "serving_size_g": 16.7
+ },
+ {
+  "barcode": "7640155340526",
+  "name": "Rhythm 108 Ooh-la-la Tea Biscuits Almond Biscotti Sharing Bag",
+  "kcal_per_100g": 529,
+  "protein_g": 7.1,
+  "carbs_g": 52.4,
+  "fat_g": 32,
+  "serving_size_g": 32
+ },
+ {
+  "barcode": "7792799000011",
+  "name": "Eco de los Andes Agua",
+  "kcal_per_100g": 30,
+  "protein_g": 0,
+  "carbs_g": 4,
+  "fat_g": 0,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "8001020114182",
+  "name": "Pertagni Fersk eggepasta fylt med tomat, mozzarella og basilikum",
+  "kcal_per_100g": 277,
+  "protein_g": 10,
+  "carbs_g": 30,
+  "fat_g": 13,
+  "serving_size_g": 125
+ },
+ {
+  "barcode": "8001665128674",
+  "name": "Rana Ravioli med ricotta og spinat",
+  "kcal_per_100g": 251,
+  "protein_g": 11,
+  "carbs_g": 31.7,
+  "fat_g": 11,
+  "serving_size_g": 125
+ },
+ {
+  "barcode": "8001665128698",
+  "name": "Rana Tortellini med sopp",
+  "kcal_per_100g": 269,
+  "protein_g": 9.5,
+  "carbs_g": 33,
+  "fat_g": 9.6,
+  "serving_size_g": 125
+ },
+ {
+  "barcode": "8001665128704",
+  "name": "OLUF LORENTZEN AS Rana Fersk Ravioli med 4 Oster",
+  "kcal_per_100g": 273,
+  "protein_g": 11,
+  "carbs_g": 28,
+  "fat_g": 12,
+  "serving_size_g": 125
+ },
+ {
+  "barcode": "8001665128728",
+  "name": "Rana Ravioli med basilikum, ost og pinjekjerner",
+  "kcal_per_100g": 309,
+  "protein_g": 8.7,
+  "carbs_g": 29,
+  "fat_g": 16,
+  "serving_size_g": 125
+ },
+ {
+  "barcode": "8001665700016",
+  "name": "Rana Tortellini with ham and mozzarella",
+  "kcal_per_100g": 265,
+  "protein_g": 13,
+  "carbs_g": 31,
+  "fat_g": 8.8,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "8002270000218",
+  "name": "Multibev San Pellegrino 1l flaske",
+  "kcal_per_100g": 0,
+  "protein_g": 0,
+  "carbs_g": 0,
+  "fat_g": 0,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "8002503401256",
+  "name": "Ambrosi Fromage au lait de vache",
+  "kcal_per_100g": 225,
+  "protein_g": 17,
+  "carbs_g": 1,
+  "fat_g": 18,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "8002503403687",
+  "name": "Albrosi Burrata",
+  "kcal_per_100g": 217,
+  "protein_g": 13,
+  "carbs_g": 1.3,
+  "fat_g": 18,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "8002670004205",
+  "name": "Granarolo Mozzarella",
+  "kcal_per_100g": 216,
+  "protein_g": 17,
+  "carbs_g": 1,
+  "fat_g": 16,
+  "serving_size_g": 125
+ },
+ {
+  "barcode": "80050094",
+  "name": "Kinder Maxi Barra de chocolate con leche rellena a base de leche",
+  "kcal_per_100g": 566,
+  "protein_g": 8.7,
+  "carbs_g": 53.5,
+  "fat_g": 35,
+  "serving_size_g": 21
+ },
+ {
+  "barcode": "8005121000085",
+  "name": "Divella Spaghetti Ristorante 8",
+  "kcal_per_100g": 358,
+  "protein_g": 13,
+  "carbs_g": 72,
+  "fat_g": 1.7,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "8005121000146",
+  "name": "Divella Linguine 14",
+  "kcal_per_100g": 355,
+  "protein_g": 13,
+  "carbs_g": 72,
+  "fat_g": 1.7,
+  "serving_size_g": 80
+ },
+ {
+  "barcode": "8005121000177",
+  "name": "Divella Rigatoni 17",
+  "kcal_per_100g": 355,
+  "protein_g": 13,
+  "carbs_g": 72,
+  "fat_g": 1.7,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "8005121000276",
+  "name": "Divella Penne Ziti Rigate 27",
+  "kcal_per_100g": 360,
+  "protein_g": 13,
+  "carbs_g": 72,
+  "fat_g": 1.7,
+  "serving_size_g": 80
+ },
+ {
+  "barcode": "8005121000405",
+  "name": "Divella Fusilli 40",
+  "kcal_per_100g": 355,
+  "protein_g": 13,
+  "carbs_g": 72,
+  "fat_g": 1.7,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "8005121000740",
+  "name": "Pastina DIVELLA Stelline 74",
+  "kcal_per_100g": 355,
+  "protein_g": 13,
+  "carbs_g": 72,
+  "fat_g": 1.7,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "8005121040845",
+  "name": "Divella Canelloni 84",
+  "kcal_per_100g": 355,
+  "protein_g": 13,
+  "carbs_g": 72,
+  "fat_g": 1.7,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "8005121052084",
+  "name": "Divella Spaghetti Ristorante 8",
+  "kcal_per_100g": 347,
+  "protein_g": 14,
+  "carbs_g": 64.5,
+  "fat_g": 2.2,
+  "serving_size_g": 80
+ },
+ {
+  "barcode": "8008698010778",
+  "name": "Schär Sauerteigbrot mit Preiselbeeren",
+  "kcal_per_100g": 218.75,
+  "protein_g": 4.1,
+  "carbs_g": 38,
+  "fat_g": 3.7,
+  "serving_size_g": 48
+ },
+ {
+  "barcode": "8010721001509",
+  "name": "OLUF LORENTZEN AS Parmigiano Reggiano Revet Fersk Parmesan DOP 60g",
+  "kcal_per_100g": 402,
+  "protein_g": 32,
+  "carbs_g": 0,
+  "fat_g": 30,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "8017596067630",
+  "name": "Eurospin Filetti di salmone al naturale",
+  "kcal_per_100g": 204,
+  "protein_g": 20,
+  "carbs_g": 0,
+  "fat_g": 14,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "8056039883406",
+  "name": "Quelli Della Pizza Prime Pizzabunn",
+  "kcal_per_100g": 242,
+  "protein_g": 11,
+  "carbs_g": 43,
+  "fat_g": 2.4,
+  "serving_size_g": 250
+ },
+ {
+  "barcode": "8076800105056",
+  "name": "Barilla Pâtes spaghetti n°5 1kg",
+  "kcal_per_100g": 359,
+  "protein_g": 13,
+  "carbs_g": 71,
+  "fat_g": 2,
+  "serving_size_g": 80
+ },
+ {
+  "barcode": "8076804215058",
+  "name": "Barilla Spaghetti",
+  "kcal_per_100g": 353,
+  "protein_g": 12.8,
+  "carbs_g": 70.9,
+  "fat_g": 2,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "8076809513388",
+  "name": "Barilla Arrabbiata",
+  "kcal_per_100g": 60,
+  "protein_g": 1.4,
+  "carbs_g": 5.5,
+  "fat_g": 3.1,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "8076809513753",
+  "name": "Barilla Pesto alla Genovese",
+  "kcal_per_100g": 492,
+  "protein_g": 4.7,
+  "carbs_g": 11,
+  "fat_g": 47,
+  "serving_size_g": 47.5
+ },
+ {
+  "barcode": "8076809523738",
+  "name": "Barilla Lasagne",
+  "kcal_per_100g": 359,
+  "protein_g": 13,
+  "carbs_g": 71,
+  "fat_g": 2,
+  "serving_size_g": 15
+ },
+ {
+  "barcode": "8076809579100",
+  "name": "Pâtes Barilla Risoni Langues d'oiseau",
+  "kcal_per_100g": 359,
+  "protein_g": 12,
+  "carbs_g": 72,
+  "fat_g": 2,
+  "serving_size_g": 500
+ },
+ {
+  "barcode": "8410031996852",
+  "name": "CONAXESS TRADE NORGE AS Fruit Lollipops",
+  "kcal_per_100g": 388,
+  "protein_g": 0,
+  "carbs_g": 96,
+  "fat_g": 0,
+  "serving_size_g": 12
+ },
+ {
+  "barcode": "8410076410115",
+  "name": "Old El Paso Taco Sauce medium",
+  "kcal_per_100g": 43,
+  "protein_g": 1.2,
+  "carbs_g": 8.9,
+  "fat_g": 0.5,
+  "serving_size_g": 15
+ },
+ {
+  "barcode": "8410076420947",
+  "name": "HAUGEN-GRUPPEN AS Thick’n chunky salsa",
+  "kcal_per_100g": 35,
+  "protein_g": 1.3,
+  "carbs_g": 5.5,
+  "fat_g": 0.5,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "8410076472403",
+  "name": "Old El Paso 8 Medium Tortillas Original Siper Soft",
+  "kcal_per_100g": 299,
+  "protein_g": 9.1,
+  "carbs_g": 53.2,
+  "fat_g": 5.2,
+  "serving_size_g": 41
+ },
+ {
+  "barcode": "8410076473318",
+  "name": "Old El Paso 8 Large Tortillas",
+  "kcal_per_100g": 299,
+  "protein_g": 9.1,
+  "carbs_g": 53.2,
+  "fat_g": 5.2,
+  "serving_size_g": 58
+ },
+ {
+  "barcode": "8410076481597",
+  "name": "GENERAL MILLS IBERICA S.A.U. Tortilla Nachos Original",
+  "kcal_per_100g": 483.33,
+  "protein_g": 7.67,
+  "carbs_g": 59,
+  "fat_g": 23.7,
+  "serving_size_g": 30
+ },
+ {
+  "barcode": "8410076482563",
+  "name": "Old El Paso Tortilla Chips Chili",
+  "kcal_per_100g": 486.67,
+  "protein_g": 6.3,
+  "carbs_g": 56.7,
+  "fat_g": 25.2,
+  "serving_size_g": 50
+ },
+ {
+  "barcode": "8410076482594",
+  "name": "Haugen - gruppen as Tortilla Nachips",
+  "kcal_per_100g": 497,
+  "protein_g": 6.1,
+  "carbs_g": 56.1,
+  "fat_g": 26.5,
+  "serving_size_g": 30
+ },
+ {
+  "barcode": "8410076491916",
+  "name": "Old El Paso Spice Mix for Tacos",
+  "kcal_per_100g": 286,
+  "protein_g": 8.9,
+  "carbs_g": 40,
+  "fat_g": 6.9,
+  "serving_size_g": 25
+ },
+ {
+  "barcode": "8410525184833",
+  "name": "Fini Bubble Gum Camel Balls Extra Sour Flüssig Gefüllt.",
+  "kcal_per_100g": 320,
+  "protein_g": 0,
+  "carbs_g": 80,
+  "fat_g": 0,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "8411037800037",
+  "name": "Mr. Brownie Chocolate Brownies",
+  "kcal_per_100g": 474,
+  "protein_g": 5.5,
+  "carbs_g": 55,
+  "fat_g": 25,
+  "serving_size_g": 25
+ },
+ {
+  "barcode": "8411037884402",
+  "name": "Mr. Brownie Brownies Winter Edition",
+  "kcal_per_100g": 472,
+  "protein_g": 5.3,
+  "carbs_g": 57,
+  "fat_g": 24,
+  "serving_size_g": 25
+ },
+ {
+  "barcode": "8412164000222",
+  "name": "Calnort Caldo de pollo",
+  "kcal_per_100g": 199,
+  "protein_g": 6.6,
+  "carbs_g": 28.03,
+  "fat_g": 6.98,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "8445290227805",
+  "name": "Nestlé Coffee Mate",
+  "kcal_per_100g": 543,
+  "protein_g": 1.7,
+  "carbs_g": 57.5,
+  "fat_g": 33.9,
+  "serving_size_g": 5
+ },
+ {
+  "barcode": "8445291523180",
+  "name": "Hälsans Kök Soyafarse",
+  "kcal_per_100g": 128,
+  "protein_g": 21.2,
+  "carbs_g": 1.8,
+  "fat_g": 2.5,
+  "serving_size_g": 75
+ },
+ {
+  "barcode": "8445291633728",
+  "name": "Nesquik Milk Mix Strawberry",
+  "kcal_per_100g": 70,
+  "protein_g": 3.3,
+  "carbs_g": 10,
+  "fat_g": 1.6,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "8585002441324",
+  "name": "Maggi Grønnsaksbuljong",
+  "kcal_per_100g": 278,
+  "protein_g": 2.7,
+  "carbs_g": 41.7,
+  "fat_g": 10.8,
+  "serving_size_g": 4.9
+ },
+ {
+  "barcode": "8691440309123",
+  "name": "Duru Bokhvete",
+  "kcal_per_100g": 353,
+  "protein_g": 11.3,
+  "carbs_g": 62.8,
+  "fat_g": 2.2,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "8691707088495",
+  "name": "Greta Kraker Mediterranean Taste Cracker",
+  "kcal_per_100g": 403.33,
+  "protein_g": 13.33,
+  "carbs_g": 69,
+  "fat_g": 7.33,
+  "serving_size_g": 30
+ },
+ {
+  "barcode": "8710398161987",
+  "name": "DORITOS nacho cheese flavour",
+  "kcal_per_100g": 480,
+  "protein_g": 6.8,
+  "carbs_g": 61,
+  "fat_g": 22,
+  "serving_size_g": 30
+ },
+ {
+  "barcode": "8710398165077",
+  "name": "Lay's Lays bbq",
+  "kcal_per_100g": 504,
+  "protein_g": 6.5,
+  "carbs_g": 55,
+  "fat_g": 27,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "8710398518705",
+  "name": "Quaker Cruesli Solfrokost Granola",
+  "kcal_per_100g": 444.02,
+  "protein_g": 7.1,
+  "carbs_g": 66,
+  "fat_g": 15,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "87108262",
+  "name": "mentos Fruit chewy dragees",
+  "kcal_per_100g": 388,
+  "protein_g": 0,
+  "carbs_g": 92,
+  "fat_g": 1.9,
+  "serving_size_g": 2.7
+ },
+ {
+  "barcode": "8711000476208",
+  "name": "Jde retail norge Natreen Tabletter Borddispenser 500stk",
+  "kcal_per_100g": 25,
+  "protein_g": 0,
+  "carbs_g": 1,
+  "fat_g": 0,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "8711000476345",
+  "name": "Jacobs Douwe Egberts Norge AS Retail Natreen classic",
+  "kcal_per_100g": 353,
+  "protein_g": 0,
+  "carbs_g": 88,
+  "fat_g": 0,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "8711327539396",
+  "name": "Ben & Jerry's Glace en Pot Banane & Caramel Sundae Banoffee Pie 427ml",
+  "kcal_per_100g": 246,
+  "protein_g": 2.6,
+  "carbs_g": 29,
+  "fat_g": 13,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "8711327579576",
+  "name": "Algida Twister fruit zinger 4-pack",
+  "kcal_per_100g": 91,
+  "protein_g": 0.5,
+  "carbs_g": 21,
+  "fat_g": 0.5,
+  "serving_size_g": 72
+ },
+ {
+  "barcode": "8712100536939",
+  "name": "UNILEVER NORGE AS Hellmann's Majones 200g",
+  "kcal_per_100g": 720,
+  "protein_g": 1.1,
+  "carbs_g": 1.4,
+  "fat_g": 79,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "8713305816444",
+  "name": "Becky's Sour amigos Cola imp",
+  "kcal_per_100g": 397,
+  "protein_g": 2.1,
+  "carbs_g": 88,
+  "fat_g": 4.1,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "8715000014026",
+  "name": "Nestlé lait concentré sucré",
+  "kcal_per_100g": 322,
+  "protein_g": 7.5,
+  "carbs_g": 55,
+  "fat_g": 8,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "8715700016504",
+  "name": "Heinz Ketchup",
+  "kcal_per_100g": 102,
+  "protein_g": 1.2,
+  "carbs_g": 23.2,
+  "fat_g": 0.1,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "8715700125992",
+  "name": "Heinz Tomato Ketchup",
+  "kcal_per_100g": 102,
+  "protein_g": 1.2,
+  "carbs_g": 23.2,
+  "fat_g": 0.1,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "8715700415574",
+  "name": "Haugen - gruppen as Barbacue Sauce",
+  "kcal_per_100g": 142,
+  "protein_g": 0.8,
+  "carbs_g": 34,
+  "fat_g": 0.2,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "8715700415604",
+  "name": "HAUGEN-GRUPPEN AS Curry Mango Sauce",
+  "kcal_per_100g": 328,
+  "protein_g": 1.6,
+  "carbs_g": 18,
+  "fat_g": 28,
+  "serving_size_g": 225
+ },
+ {
+  "barcode": "8715700423944",
+  "name": "Heinz Tomatketchup med mindre tilsatt sukker",
+  "kcal_per_100g": 64,
+  "protein_g": 1.4,
+  "carbs_g": 12,
+  "fat_g": 0.1,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "87157239",
+  "name": "Heinz Ketchup",
+  "kcal_per_100g": 102,
+  "protein_g": 1.2,
+  "carbs_g": 23.2,
+  "fat_g": 0.1,
+  "serving_size_g": 15
+ },
+ {
+  "barcode": "8718114782591",
+  "name": "MAIZENA Maisstivelse",
+  "kcal_per_100g": 355,
+  "protein_g": 0.5,
+  "carbs_g": 86,
+  "fat_g": 0.5,
+  "serving_size_g": 8
+ },
+ {
+  "barcode": "8720182754691",
+  "name": "Hellmann's Classic Burger Dressing",
+  "kcal_per_100g": 239,
+  "protein_g": 1,
+  "carbs_g": 10,
+  "fat_g": 22,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "8720608009244",
+  "name": "Lipton Tee",
+  "kcal_per_100g": 4,
+  "protein_g": 0.5,
+  "carbs_g": 0.5,
+  "fat_g": 0.5,
+  "serving_size_g": 2
+ },
+ {
+  "barcode": "8722700001232",
+  "name": "CUVECO AS Lipton Vanilla Caramel Pyramide 20ps",
+  "kcal_per_100g": 4,
+  "protein_g": 0.5,
+  "carbs_g": 0.5,
+  "fat_g": 0,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "8722700085072",
+  "name": "Unilever norge as Tomatsuppe m/Mascarpone 570ml Knorr",
+  "kcal_per_100g": 55,
+  "protein_g": 1.2,
+  "carbs_g": 5.7,
+  "fat_g": 2.9,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "8801043021883",
+  "name": "Nongshim Shin Ramyun Noodle Soup",
+  "kcal_per_100g": 422,
+  "protein_g": 8.2,
+  "carbs_g": 68,
+  "fat_g": 13,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "8801073113312",
+  "name": "Samyang cheese buldak spicy ramen",
+  "kcal_per_100g": 570,
+  "protein_g": 9.29,
+  "carbs_g": 85,
+  "fat_g": 20,
+  "serving_size_g": 140
+ },
+ {
+  "barcode": "8801073113381",
+  "name": "Buldak Stew Type Spicy Chicken Flavor Ramen",
+  "kcal_per_100g": 352,
+  "protein_g": 6.9,
+  "carbs_g": 57.9,
+  "fat_g": 10,
+  "serving_size_g": 145
+ },
+ {
+  "barcode": "8801073113893",
+  "name": "Samyang Carboana Buldak Spicy Ramen",
+  "kcal_per_100g": 423.08,
+  "protein_g": 6.3,
+  "carbs_g": 63.84,
+  "fat_g": 13.84,
+  "serving_size_g": 130
+ },
+ {
+  "barcode": "8801073113947",
+  "name": "Samyang سام يانج نودلز بالدجاج الحار",
+  "kcal_per_100g": 400,
+  "protein_g": 9.29,
+  "carbs_g": 60,
+  "fat_g": 13.57,
+  "serving_size_g": 140
+ },
+ {
+  "barcode": "8801073141780",
+  "name": "Samyang cheese buldak spicy ramen",
+  "kcal_per_100g": 384.28,
+  "protein_g": 9.28,
+  "carbs_g": 57.85,
+  "fat_g": 12.85,
+  "serving_size_g": 140
+ },
+ {
+  "barcode": "8801073144484",
+  "name": "Buldak Carbonara Flavour Hot Chicken Flavour Ramen carbonara flavour",
+  "kcal_per_100g": 427,
+  "protein_g": 7,
+  "carbs_g": 66,
+  "fat_g": 15,
+  "serving_size_g": 130
+ },
+ {
+  "barcode": "8801073144491",
+  "name": "Buldak Hot Chicken Flavour Ramen Noodles Cheese Flavour",
+  "kcal_per_100g": 397,
+  "protein_g": 9,
+  "carbs_g": 61,
+  "fat_g": 13,
+  "serving_size_g": 140
+ },
+ {
+  "barcode": "8801073411388",
+  "name": "Samyang Buldak Hot Chicken Flavor Sauce",
+  "kcal_per_100g": 166.67,
+  "protein_g": 0,
+  "carbs_g": 33.33,
+  "fat_g": 6.67,
+  "serving_size_g": 6
+ },
+ {
+  "barcode": "8801073411395",
+  "name": "רוטב חריף - Buldak Chicken",
+  "kcal_per_100g": 250,
+  "protein_g": 4,
+  "carbs_g": 33.3,
+  "fat_g": 2.5,
+  "serving_size_g": 6
+ },
+ {
+  "barcode": "8850344005146",
+  "name": "Crying Thaiger Sriracha Chilli Sauce",
+  "kcal_per_100g": 88,
+  "protein_g": 0,
+  "carbs_g": 21,
+  "fat_g": 1,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "8853662004020",
+  "name": "Exotic Food Sweet Chili Sauce",
+  "kcal_per_100g": 228,
+  "protein_g": 0.9,
+  "carbs_g": 55,
+  "fat_g": 0,
+  "serving_size_g": 25
+ },
+ {
+  "barcode": "8853662056289",
+  "name": "Flying Goose Brand Hoisin Sauce",
+  "kcal_per_100g": 238,
+  "protein_g": 2.3,
+  "carbs_g": 53,
+  "fat_g": 1.9,
+  "serving_size_g": null
+ },
+ {
+  "barcode": "8855702001815",
+  "name": "Kitchen Joy Thai Cube - Sweet Chilli Chicken Teriyaki",
+  "kcal_per_100g": 144,
+  "protein_g": 5.9,
+  "carbs_g": 28,
+  "fat_g": 0.7,
+  "serving_size_g": 350
+ },
+ {
+  "barcode": "8938507849131",
+  "name": "Coco Xim Coconut Water",
+  "kcal_per_100g": 16,
+  "protein_g": 0,
+  "carbs_g": 4,
+  "fat_g": 0,
+  "serving_size_g": 100
+ },
+ {
+  "barcode": "9006900011529",
+  "name": "Pfanner Ice Tea - Pfirsich",
+  "kcal_per_100g": 25,
+  "protein_g": 0.5,
+  "carbs_g": 6.2,
+  "fat_g": 0.5,
+  "serving_size_g": 2000
+ },
+ {
+  "barcode": "90376825",
+  "name": "Red Bull Blue Edition",
+  "kcal_per_100g": 18.4,
+  "protein_g": 0,
+  "carbs_g": 4.4,
+  "fat_g": 0,
+  "serving_size_g": 250
+ },
+ {
+  "barcode": "90433917",
+  "name": "RED BULL NORWAY AS Red Bull",
+  "kcal_per_100g": 46,
+  "protein_g": 0,
+  "carbs_g": 11,
+  "fat_g": 0,
+  "serving_size_g": 250
+ },
+ {
+  "barcode": "90456282",
+  "name": "Red Bull The Apricot Edition Sugar Free Aprikos- og Jordbærsmak",
+  "kcal_per_100g": 3,
+  "protein_g": 0,
+  "carbs_g": 0,
+  "fat_g": 0,
+  "serving_size_g": 250
+ },
+ {
+  "barcode": "90490620",
+  "name": "Bonaqua Telemark med kullsyre (smak av sitron)",
+  "kcal_per_100g": 0.1,
+  "protein_g": 0,
+  "carbs_g": 0,
+  "fat_g": 0,
+  "serving_size_g": 250
+ }
+]

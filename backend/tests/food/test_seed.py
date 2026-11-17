@@ -1,6 +1,7 @@
 """Matvaretabellen seed (story 3.1): loaded once, only for APP_ENV=local."""
 
 import json
+from pathlib import Path
 from collections.abc import Iterator
 
 import pytest
@@ -20,9 +21,15 @@ def factory(test_engine: Engine) -> Iterator[sessionmaker[Session]]:
     _truncate_tables(test_engine)
 
 
-def _count(factory: sessionmaker[Session]) -> int:
+def _count(factory: sessionmaker[Session], source: str = "matvaretabellen") -> int:
+    """Shared items from one source; the OFF Norway seed (story 3.7) is counted separately."""
     with factory() as db:
-        return db.scalar(select(func.count()).select_from(FoodItem)) or 0
+        return (
+            db.scalar(
+                select(func.count()).select_from(FoodItem).where(FoodItem.source == source)
+            )
+            or 0
+        )
 
 
 def test_seed_file_has_at_least_100_valid_foods() -> None:
@@ -41,6 +48,8 @@ def test_seed_inserts_shared_items_once(
     factory: sessionmaker[Session], monkeypatch: pytest.MonkeyPatch
 ) -> None:
     monkeypatch.setattr(app.core.db, "get_session_factory", lambda: factory)
+    # The OFF Norway seed has its own tests (test_off_import.py); keep this one small.
+    monkeypatch.setattr(seed, "OFF_NORWAY_FILE", Path("/finnes-ikke/off_norway.json"))
     expected = len(json.loads(seed.MATVARETABELLEN_FILE.read_text(encoding="utf-8")))
     settings = get_settings().model_copy(update={"app_env": "local"})
 

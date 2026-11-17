@@ -17,6 +17,11 @@ logger = logging.getLogger(__name__)
 MATVARETABELLEN_FILE = Path(__file__).resolve().parent / "data" / "matvaretabellen.json"
 MATVARETABELLEN_SOURCE = "matvaretabellen"
 
+# Data fra Open Food Facts, ODbL 1.0 (see data/OFF_LICENSE.md).
+# Built by `python -m app.cli import-off-norway` (story 3.7).
+OFF_NORWAY_FILE = Path(__file__).resolve().parent / "data" / "off_norway.json"
+OFF_SOURCE = "off"
+
 # Equipment, muscle groups and exercises (story 4.1, AD-9). Read-only reference data:
 # the API never creates, changes or deletes it. Fields beyond ovelsesliste.md are a draft.
 EXERCISES_FILE = Path(__file__).resolve().parent / "data" / "exercises.json"
@@ -49,6 +54,47 @@ def seed_food_items(db: DbSessionType) -> int:
         )
     db.flush()
     return len(rows)
+
+
+def seed_off_items(db: DbSessionType, path: Path | None = None) -> int:
+    """Insert the Norwegian OFF products as shared items, skipping barcodes already present
+    as shared items (e.g. cached by a barcode lookup). Returns how many were added."""
+    from app.modules.food.models import FoodItem
+
+    path = path or OFF_NORWAY_FILE
+    if not path.exists():
+        return 0
+    rows = json.loads(path.read_text(encoding="utf-8"))
+    existing = set(
+        db.scalars(
+            select(FoodItem.barcode).where(
+                FoodItem.owner_id.is_(None), FoodItem.barcode.is_not(None)
+            )
+        )
+    )
+    added = 0
+    for row in rows:
+        barcode = row["barcode"]
+        if barcode in existing:
+            continue
+        existing.add(barcode)
+        db.add(
+            FoodItem(
+                source=OFF_SOURCE,
+                owner_id=None,
+                external_id=barcode,
+                barcode=barcode,
+                name=row["name"],
+                kcal_per_100g=_decimal(row["kcal_per_100g"]),
+                protein_g=_decimal(row.get("protein_g")),
+                carbs_g=_decimal(row.get("carbs_g")),
+                fat_g=_decimal(row.get("fat_g")),
+                serving_size_g=_decimal(row.get("serving_size_g")),
+            )
+        )
+        added += 1
+    db.flush()
+    return added
 
 
 def seed_exercises(db: DbSessionType, path: Path = EXERCISES_FILE) -> int:
@@ -116,8 +162,10 @@ def seed_if_empty(settings: Settings) -> bool:
 
     with get_session_factory()() as db:
         added = seed_food_items(db)
+        off_added = seed_off_items(db)
         exercises = seed_exercises(db)
         db.commit()
     logger.info("Seed: %d Matvaretabellen food items added", added)
+    logger.info("Seed: %d Open Food Facts items added", off_added)
     logger.info("Seed: %d exercises added", exercises)
     return True

@@ -59,3 +59,6 @@ Thumbs.db
 *.swp
 *.swo
 *~
+
+# Open Food Facts import: pages fetched so far (story 3.7)
+backend/.off_import_cache/
