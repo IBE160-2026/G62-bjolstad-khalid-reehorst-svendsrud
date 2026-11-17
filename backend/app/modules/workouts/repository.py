@@ -1,12 +1,14 @@
 """Database access for workouts. Only the workouts service calls this. Every read and
 write filters by the owner's `user_id` (AD-4)."""
 
+import datetime as dt
 import uuid
+from collections.abc import Collection
 
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session as DbSessionType
 
-from app.modules.workouts.models import Workout
+from app.modules.workouts.models import Set, Workout, WorkoutExercise
 
 # Namespace for the two-argument pg_advisory_xact_lock (exercises uses 4202).
 WORKOUT_LOCK_NAMESPACE = 5101
@@ -40,3 +42,38 @@ def add_workout(db: DbSessionType, workout: Workout) -> Workout:
     db.add(workout)
     db.flush()
     return workout
+
+
+def get_history(
+    db: DbSessionType,
+    user_id: uuid.UUID,
+    exercise_ids: Collection[uuid.UUID],
+    before_date: dt.date,
+) -> list[tuple]:
+    """The user's done sets of these exercises in workouts dated before `before_date`,
+    finished or not, as rows (workout id, date, created_at, exercise id, position, reps,
+    weight_kg, seconds, done) in one query (story 5.3)."""
+    if not exercise_ids:
+        return []
+    query = (
+        select(
+            Workout.id,
+            Workout.date,
+            Workout.created_at,
+            WorkoutExercise.exercise_id,
+            Set.position,
+            Set.reps,
+            Set.weight_kg,
+            Set.seconds,
+            Set.done,
+        )
+        .join(WorkoutExercise, WorkoutExercise.workout_id == Workout.id)
+        .join(Set, Set.workout_exercise_id == WorkoutExercise.id)
+        .where(
+            Workout.user_id == user_id,
+            Workout.date < before_date,
+            WorkoutExercise.exercise_id.in_(list(exercise_ids)),
+            Set.done.is_(True),
+        )
+    )
+    return [tuple(row) for row in db.execute(query)]

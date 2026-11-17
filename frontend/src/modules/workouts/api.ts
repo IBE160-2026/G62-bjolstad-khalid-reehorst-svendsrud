@@ -10,6 +10,8 @@ export type Workout = components["schemas"]["WorkoutResponse"];
 export type WorkoutExercise = components["schemas"]["WorkoutExerciseResponse"];
 export type WorkoutSet = components["schemas"]["SetResponse"];
 export type SetValues = Pick<WorkoutSet, "reps" | "weight_kg" | "seconds" | "done">;
+export type LastTime = components["schemas"]["LastTimeResponse"];
+export type LastTimeSet = components["schemas"]["LastTimeSet"];
 
 /** The Økt page: always the workout in progress. */
 export const WORKOUT_PATH = "/trening/okt";
@@ -290,4 +292,39 @@ export function parseNumber(text: string): number | null | undefined {
 /** 12.5 → "12,5" (Norwegian decimal comma); null → "". */
 export function formatNumber(value: number | null | undefined): string {
   return value === null || value === undefined ? "" : String(value).replace(".", ",");
+}
+
+// --- Last time (story 5.3) ----------------------------------------------------------------
+
+// prettier-ignore
+const SHORT_MONTHS = [
+  "jan", "feb", "mar", "apr", "mai", "jun", "jul", "aug", "sep", "okt", "nov", "des",
+];
+
+/** "8 kg × 10", "10 rep" (no kg = bodyweight), "12,5 kg × 8", "45 s", "10 kg × 45 s" or
+ * "8 kg" (kg only); null when the set has no value at all. */
+export function lastSetText(set: LastTimeSet): string | null {
+  const kg = set.weight_kg !== null ? `${formatNumber(set.weight_kg)} kg` : null;
+  const amount =
+    set.seconds !== null ? `${set.seconds} s` : set.reps !== null ? `${set.reps}` : null;
+  if (amount === null) return kg;
+  if (kg === null) return set.seconds !== null ? amount : `${amount} rep`;
+  return `${kg} × ${amount}`;
+}
+
+/** "3. nov" for a YYYY-MM-DD date; "3. nov 2025" when the year differs from `workoutDate`'s. */
+export function shortDateText(date: string, workoutDate: string): string {
+  const [year, month, day] = date.split("-").map(Number);
+  const text = `${day}. ${SHORT_MONTHS[month - 1]}`;
+  return date.slice(0, 4) === workoutDate.slice(0, 4) ? text : `${text} ${year}`;
+}
+
+/** "Sist: 8 kg × 10, 8 kg × 8 (3. nov)", or "Første gang" when there is nothing to show. */
+export function lastTimeText(lastTime: LastTime | null | undefined, workoutDate: string): string {
+  const sets = (lastTime?.sets ?? [])
+    .map(lastSetText)
+    .filter((text): text is string => text !== null)
+    .join(", ");
+  if (!lastTime || sets === "") return "Første gang";
+  return `Sist: ${sets} (${shortDateText(lastTime.date, workoutDate)})`;
 }
