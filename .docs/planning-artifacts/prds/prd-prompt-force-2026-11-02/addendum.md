@@ -54,11 +54,13 @@ User ─1:N─ Workout ─1:N─ WorkoutExercise >─N:1─ Exercise ─N:M─ E
 |---|---|---|
 | Bodyweight only | 8 | Shoulders, arms |
 | Home: dumbbells | 13 | – |
-| Home: dumbbells + bench | 14 | – |
+| Home: dumbbells + bench | 16 | – |
 | Home: band | 11 | – |
 | Home: kettlebell | 11 | Shoulders, arms |
 | Home: pull-up bar | 10 | Shoulders, arms |
 | Gym (all) | 34 | – |
+
+Note (story 4.3, 2026-11-17): dumbbells + bench was 14; story 4.1 made "Manualer + benk" require both, which adds Manual benkpress, Manual roing and Hevinger på benk, so it is 16.
 
 Candidates to close the gaps: pike push-up, diamond push-up, kettlebell press, negative pull-ups, knee push-ups.
 

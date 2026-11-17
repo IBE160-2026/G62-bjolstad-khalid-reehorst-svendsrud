@@ -1007,6 +1007,69 @@
         }
       }
     },
+    "/api/exercises/suggestions": {
+      "get": {
+        "tags": [
+          "exercises"
+        ],
+        "summary": "Get Suggestions",
+        "description": "Exercises whose required equipment is all in the user's chosen Equipment Profile,\nordered Nybegynner, Middels, Øvet. Another user's profile, or an id that is unknown or\nnot a UUID, is 404 `equipment_profile_not_found`.",
+        "operationId": "get_suggestions",
+        "parameters": [
+          {
+            "name": "profile_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Profile Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuggestionsResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Default Response"
+          },
+          "404": {
+            "description": "equipment_profile_not_found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/exercises/equipment-profiles": {
       "get": {
         "tags": [
@@ -2255,6 +2318,34 @@
           "male"
         ],
         "title": "Sex"
+      },
+      "SuggestionsResponse": {
+        "properties": {
+          "profile_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Profile Id"
+          },
+          "profile_name": {
+            "type": "string",
+            "title": "Profile Name"
+          },
+          "exercises": {
+            "items": {
+              "$ref": "#/components/schemas/ExerciseListItem"
+            },
+            "type": "array",
+            "title": "Exercises"
+          }
+        },
+        "type": "object",
+        "required": [
+          "profile_id",
+          "profile_name",
+          "exercises"
+        ],
+        "title": "SuggestionsResponse",
+        "description": "Exercises that fit one Equipment Profile (story 4.3), ordered Nybegynner, Middels,\nØvet, then muscle group, then name."
       },
       "UserResponse": {
         "properties": {

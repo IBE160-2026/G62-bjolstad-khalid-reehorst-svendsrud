@@ -17,6 +17,7 @@ from app.modules.exercises.schemas import (
     EquipmentResponse,
     ExerciseDetail,
     ExerciseListItem,
+    SuggestionsResponse,
 )
 
 router = APIRouter(prefix="/api/exercises", tags=["exercises"])
@@ -29,6 +30,21 @@ PROFILE_NOT_FOUND = {404: {"model": ErrorResponse, "description": "equipment_pro
 def list_equipment(current_user: CurrentUser, db: DbSession) -> list[EquipmentResponse]:
     """The nine equipment types in seed order."""
     return service.list_equipment(db)
+
+
+@router.get(
+    "/suggestions",
+    response_model=SuggestionsResponse,
+    operation_id="get_suggestions",
+    responses=PROFILE_NOT_FOUND,
+)
+def get_suggestions(
+    profile_id: str, current_user: CurrentUser, db: DbSession
+) -> SuggestionsResponse:
+    """Exercises whose required equipment is all in the user's chosen Equipment Profile,
+    ordered Nybegynner, Middels, Øvet. Another user's profile, or an id that is unknown or
+    not a UUID, is 404 `equipment_profile_not_found`."""
+    return service.get_suggestions(db, current_user.id, profile_id)
 
 
 @router.get(

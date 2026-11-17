@@ -1106,6 +1106,33 @@ Det viktigste funnet: Dekningsanalysen er regnet ut fra øvelseslista og viser a
 
 ---
 
+## 2026-11-17 – Story 4.3 (øvelser som passer utstyret)
+
+**Verktøy:** Claude Code (BMAD `bmad-build`)
+**Hvem:** Osman Khalid
+**Bakgrunn:** Nybegynnere med lite utstyr skal bare se øvelser de faktisk kan gjøre.
+
+### Hva vi ba KI om
+
+1. Lage forslagsregelen som en testet funksjon og profilvelgeren på Trening-siden.
+
+### Hva KI produserte
+
+- Spec, forslagsfunksjon, endepunkt, profilvelger, gruppert forslagsliste og nye tester.
+
+### Hva vi selv vurderte og kontrollerte
+
+- Osman godkjente spec-en før koding.
+- KI fant at dekningstabellen i PRD-tillegget (14 øvelser for manualer + benk) ikke stemte med dataene (16); tabellen var eldre enn regelen fra 4.1 og ble rettet.
+- Tre KI-kontrollører fant 15 punkter: 7 rettet, 8 avvist med begrunnelse.
+
+### Status
+
+- [x] Story 4.3 bygget og testet
+- [ ] Review av PR fra gruppen
+
+---
+
 ## Mal for nye oppføringer
 
 ```markdown
