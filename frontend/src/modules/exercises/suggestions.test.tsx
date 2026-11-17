@@ -57,6 +57,7 @@ function mockApi(
         return { data: { id: USER_ID, email: "ola@eksempel.no" }, error: undefined };
       }
       if (path === "/api/workouts/active") return { data: { workout: null }, error: undefined };
+      if (path === "/api/workouts") return { data: [], error: undefined };
       if (path === "/api/exercises/equipment-profiles") {
         return { data: typeof profiles === "function" ? profiles() : profiles, error: undefined };
       }

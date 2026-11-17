@@ -1,4 +1,4 @@
-"""Request and response bodies for /api/workouts (stories 5.1, 5.2, 5.3)."""
+"""Request and response bodies for /api/workouts (stories 5.1-5.4)."""
 
 import datetime as dt
 import uuid
@@ -13,6 +13,9 @@ from app.core.errors import FIELD_MESSAGE_ERROR
 from app.modules.exercises.schemas import ExerciseType, Level
 
 MAX_EXERCISES = 20
+# "Tidligere økter" (story 5.4): this many by default, at most LIST_MAX.
+LIST_DEFAULT = 10
+LIST_MAX = 50
 # Each exercise starts with this many empty sets (FR23) and can have at most MAX_SETS.
 DEFAULT_SETS = 3
 MAX_SETS = 20
@@ -168,6 +171,8 @@ class WorkoutExerciseResponse(BaseModel):
 class WorkoutResponse(BaseModel):
     id: uuid.UUID
     date: dt.date
+    # When the workout was finished, or null while it is in progress (story 5.4).
+    finished_at: dt.datetime | None
     # In the user's order.
     exercises: list[WorkoutExerciseResponse]
 
@@ -176,3 +181,14 @@ class ActiveWorkoutResponse(BaseModel):
     """The workout in progress, or null when there is none."""
 
     workout: WorkoutResponse | None
+
+
+class WorkoutSummary(BaseModel):
+    """One finished workout in "Tidligere økter" (story 5.4)."""
+
+    id: uuid.UUID
+    date: dt.date
+    finished_at: dt.datetime
+    exercise_count: int
+    # Sets ticked as done, across all exercises.
+    done_set_count: int

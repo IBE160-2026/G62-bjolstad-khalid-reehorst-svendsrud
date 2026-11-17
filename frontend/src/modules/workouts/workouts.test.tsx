@@ -1,7 +1,8 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import type { ReactNode } from "react";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { act } from "react";
+import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 const apiMock = vi.hoisted(() => ({
   GET: vi.fn(),
@@ -12,10 +13,14 @@ const apiMock = vi.hoisted(() => ({
 }));
 vi.mock("@/lib/api/client", () => ({ api: apiMock }));
 const pushMock = vi.hoisted(() => vi.fn());
-vi.mock("next/navigation", () => ({ useRouter: () => ({ push: pushMock }) }));
+const replaceMock = vi.hoisted(() => vi.fn());
+vi.mock("next/navigation", () => ({
+  useRouter: () => ({ push: pushMock, replace: replaceMock }),
+}));
 vi.mock("@/modules/food/meals", () => ({ osloToday: () => "2026-11-17" }));
 
 import { AddToWorkout } from "./add-to-workout";
+import { RecentWorkouts } from "./recent-workouts";
 import {
   exerciseCountText,
   formatNumber,
@@ -24,13 +29,15 @@ import {
   moveId,
   shortDateText,
   parseNumber,
+  recentWorkoutText,
   workoutDateText,
+  type WorkoutSummary,
   type LastTime,
   type Workout,
   type WorkoutSet,
 } from "./api";
 import { StartWorkout } from "./start-workout";
-import { WorkoutPage } from "./workout-page";
+import { WorkoutByIdPage, WorkoutPage } from "./workout-page";
 
 const PUSH_UP = {
   exercise_id: "e-push-up",
@@ -69,6 +76,9 @@ type Answer = { data?: unknown; error?: unknown };
 /** A tiny in-memory backend with the rules of /api/workouts. */
 class FakeServer {
   workout: Workout | null = null;
+  /** "Tidligere økter" (story 5.4). */
+  finished: WorkoutSummary[] = [];
+  deleted: string[] = [];
   patches: Partial<WorkoutSet>[] = [];
   private next = 1;
 
@@ -96,12 +106,23 @@ class FakeServer {
   }
 
   install() {
-    apiMock.GET.mockImplementation(async (path: string): Promise<Answer> => {
+    apiMock.GET.mockImplementation(
+      async (path: string, init?: { params?: { path?: { workout_id: string } } }): Promise<Answer> => {
       if (path === "/api/workouts/active") {
-        return { data: { workout: structuredClone(this.workout) }, error: undefined };
+        const active = this.workout?.finished_at ? null : this.workout;
+        return { data: { workout: structuredClone(active) }, error: undefined };
+      }
+      if (path === "/api/workouts") return { data: structuredClone(this.finished), error: undefined };
+      if (path === "/api/workouts/{workout_id}") {
+        if (this.workout?.id !== init?.params?.path?.workout_id) {
+          const message = "Fant ikke økta. Gå tilbake til Trening og prøv igjen.";
+          return { error: { error: { code: "workout_not_found", message } } };
+        }
+        return this.copy();
       }
       throw new Error(`unexpected GET ${path}`);
-    });
+      },
+    );
     apiMock.POST.mockImplementation(
       async (
         path: string,
@@ -111,7 +132,11 @@ class FakeServer {
         },
       ): Promise<Answer> => {
         if (path === "/api/workouts") {
-          this.workout ??= { id: `w-new-${this.next++}`, date: init.body.date, exercises: [] };
+          this.workout ??= { id: `w-new-${this.next++}`, date: init.body.date, finished_at: null, exercises: [] };
+          return this.copy();
+        }
+        if (path === "/api/workouts/{workout_id}/finish") {
+          this.workout!.finished_at = "2026-11-17T18:00:00Z";
           return this.copy();
         }
         if (path === "/api/workouts/{workout_id}/exercises") {
@@ -184,8 +209,19 @@ class FakeServer {
     apiMock.DELETE.mockImplementation(
       async (
         path: string,
-        init: { params: { path: { workout_exercise_id: string; set_id: string } } },
+        init: {
+          params: { path: { workout_id: string; workout_exercise_id: string; set_id: string } };
+        },
       ) => {
+        if (path === "/api/workouts/{workout_id}") {
+          if (this.workout?.id !== init.params.path.workout_id) {
+            const message = "Fant ikke økta. Gå tilbake til Trening og prøv igjen.";
+            return { error: { error: { code: "workout_not_found", message } } };
+          }
+          this.deleted.push(init.params.path.workout_id);
+          this.workout = null;
+          return { data: undefined, error: undefined };
+        }
         if (path === "/api/workouts/{workout_id}/sets/{set_id}") {
           const { exercise } = this.findSet(init.params.path.set_id);
           exercise.sets = exercise.sets
@@ -278,7 +314,7 @@ describe("StartWorkout", () => {
   });
 
   it("shows Fortsett økt with the count when one is in progress", async () => {
-    server.workout = { id: "w-1", date: "2026-11-17", exercises: [{ id: "we-1", ...PLANK }] };
+    server.workout = { id: "w-1", date: "2026-11-17", finished_at: null, exercises: [{ id: "we-1", ...PLANK }] };
     renderWith(<StartWorkout />);
     expect(await screen.findByRole("link", { name: "Fortsett økt · 1 øvelse" })).toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Start økt" })).not.toBeInTheDocument();
@@ -301,7 +337,7 @@ describe("StartWorkout errors", () => {
 
 describe("AddToWorkout", () => {
   it("on 409 shows the message, then Allerede i økta", async () => {
-    server.workout = { id: "w-1", date: "2026-11-17", exercises: [] };
+    server.workout = { id: "w-1", date: "2026-11-17", finished_at: null, exercises: [] };
     renderWith(<AddToWorkout exerciseId={PUSH_UP.exercise_id} />);
     const button = await screen.findByRole("button", { name: "Legg til i økt" });
     await waitFor(() => expect(button).toBeEnabled());
@@ -315,7 +351,7 @@ describe("AddToWorkout", () => {
   });
 
   it("starts a new workout and retries once when the known one is gone", async () => {
-    server.workout = { id: "w-old", date: "2026-11-16", exercises: [] };
+    server.workout = { id: "w-old", date: "2026-11-16", finished_at: null, exercises: [] };
     renderWith(<AddToWorkout exerciseId={PUSH_UP.exercise_id} />);
     const button = await screen.findByRole("button", { name: "Legg til i økt" });
     await waitFor(() => expect(button).toBeEnabled());
@@ -345,7 +381,7 @@ describe("AddToWorkout", () => {
   });
 
   it("adds to the workout in progress without starting another", async () => {
-    server.workout = { id: "w-1", date: "2026-11-16", exercises: [] };
+    server.workout = { id: "w-1", date: "2026-11-16", finished_at: null, exercises: [] };
     renderWith(<AddToWorkout exerciseId={PUSH_UP.exercise_id} />);
     await clickAddWhenReady();
 
@@ -356,7 +392,7 @@ describe("AddToWorkout", () => {
   });
 
   it("shows a disabled Allerede i økta when the exercise is already added", async () => {
-    server.workout = { id: "w-1", date: "2026-11-17", exercises: [{ id: "we-1", ...PUSH_UP }] };
+    server.workout = { id: "w-1", date: "2026-11-17", finished_at: null, exercises: [{ id: "we-1", ...PUSH_UP }] };
     renderWith(<AddToWorkout exerciseId={PUSH_UP.exercise_id} />);
 
     expect(await screen.findByRole("button", { name: "Allerede i økta" })).toBeDisabled();
@@ -369,6 +405,7 @@ describe("WorkoutPage", () => {
     server.workout = {
       id: "w-1",
       date: "2026-11-17",
+      finished_at: null,
       exercises: [
         { id: "we-1", ...PUSH_UP },
         { id: "we-2", ...SQUAT },
@@ -437,7 +474,7 @@ describe("WorkoutPage", () => {
   });
 
   it("after removing the only row, focus goes to the heading", async () => {
-    server.workout = { id: "w-1", date: "2026-11-17", exercises: [{ id: "we-1", ...PUSH_UP }] };
+    server.workout = { id: "w-1", date: "2026-11-17", finished_at: null, exercises: [{ id: "we-1", ...PUSH_UP }] };
     renderWith(<WorkoutPage />);
     fireEvent.click(await screen.findByRole("button", { name: `Fjern ${PUSH_UP.name}` }));
 
@@ -466,7 +503,7 @@ describe("WorkoutPage", () => {
   });
 
   it("invites the next step when the workout is empty", async () => {
-    server.workout = { id: "w-1", date: "2026-11-17", exercises: [] };
+    server.workout = { id: "w-1", date: "2026-11-17", finished_at: null, exercises: [] };
     renderWith(<WorkoutPage />);
 
     expect(
@@ -506,6 +543,7 @@ describe("sets (story 5.2)", () => {
     return {
       id: "w-1",
       date: "2026-11-17",
+      finished_at: null,
       exercises: exercises.map((exercise) => ({
         ...exercise,
         id: `we-${exercise.exercise_id}`,
@@ -862,6 +900,7 @@ describe("last time (story 5.3)", () => {
     server.workout = {
       id: "w-1",
       date: "2026-11-17",
+      finished_at: null,
       exercises: [
         {
           id: "we-1",
@@ -884,5 +923,197 @@ describe("last time (story 5.3)", () => {
       "Sist: 10 rep, 10 rep (3. nov)",
       "Første gang",
     ]);
+  });
+});
+
+describe("finish, edit or delete (story 5.4)", () => {
+  // jsdom has no modal dialog; mimic the parts the browser gives us (open state, close event).
+  beforeAll(() => {
+    HTMLDialogElement.prototype.showModal = function showModal(this: HTMLDialogElement) {
+      this.open = true;
+    };
+    HTMLDialogElement.prototype.close = function close(this: HTMLDialogElement) {
+      if (!this.open) return;
+      this.open = false;
+      this.dispatchEvent(new Event("close"));
+    };
+  });
+
+  beforeEach(() => {
+    server.workout = {
+      id: "w-1",
+      date: "2026-11-03",
+      finished_at: null,
+      exercises: [{ id: "we-1", ...PUSH_UP, sets: [server.newSet(0), server.newSet(1)] }],
+    };
+  });
+
+  it("Fullfør økt finishes the workout and goes to I dag", async () => {
+    renderWith(<WorkoutPage />);
+    fireEvent.click(await screen.findByRole("button", { name: "Fullfør økt" }));
+
+    await waitFor(() => expect(pushMock).toHaveBeenCalledWith("/"));
+    expect(apiMock.POST).toHaveBeenCalledWith("/api/workouts/{workout_id}/finish", {
+      params: { path: { workout_id: "w-1" } },
+    });
+    expect(client.getQueryData(["workouts", "active"])).toBeNull();
+  });
+
+  it("shows an alert and stays when finishing fails", async () => {
+    renderWith(<WorkoutPage />);
+    const button = await screen.findByRole("button", { name: "Fullfør økt" });
+    apiMock.POST.mockResolvedValueOnce({
+      error: { error: { code: "internal_error", message: "Noe gikk galt. Prøv igjen om litt." } },
+    });
+    fireEvent.click(button);
+
+    expect(await screen.findByRole("alert")).toHaveTextContent("Noe gikk galt. Prøv igjen om litt.");
+    expect(pushMock).not.toHaveBeenCalled();
+  });
+
+  it("a finished workout says Fullført, has no Fullfør or Legg til øvelse, and saves edits", async () => {
+    server.workout!.finished_at = "2026-11-03T18:00:00Z";
+    renderWith(<WorkoutByIdPage id="w-1" />);
+
+    expect(
+      await screen.findByRole("heading", { name: "tirsdag 3. november · Fullført" }),
+    ).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Fullfør økt" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: "Legg til øvelse" })).not.toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Slett økt" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Tilbake til Trening" })).toBeInTheDocument();
+
+    const reps = screen.getAllByRole("textbox", { name: /Repetisjoner/ })[0];
+    fireEvent.change(reps, { target: { value: "12" } });
+    fireEvent.blur(reps);
+    await waitFor(() => expect(server.workout!.exercises[0].sets[0].reps).toBe(12));
+    // The edit lands in this workout's own cache, never in the active-workout cache.
+    expect(client.getQueryData(["workouts", "active"])).toBeUndefined();
+  });
+
+  it("Slett økt asks first; Avbryt keeps the workout", async () => {
+    renderWith(<WorkoutPage />);
+    const trigger = await screen.findByRole("button", { name: "Slett økt" });
+    fireEvent.click(trigger);
+
+    const dialog = screen.getByRole("dialog", { name: "Slette økta tirsdag 3. november?" });
+    expect(dialog).toHaveTextContent("Øvelser og sett i økta blir slettet. Dette kan ikke angres.");
+    expect(within(dialog).getByRole("button", { name: "Avbryt" })).toHaveFocus();
+    fireEvent.click(within(dialog).getByRole("button", { name: "Avbryt" }));
+
+    expect(dialog).not.toHaveAttribute("open");
+    expect(trigger).toHaveFocus();
+    expect(server.deleted).toEqual([]);
+  });
+
+  it("Esc closes the dialog without deleting", async () => {
+    renderWith(<WorkoutPage />);
+    fireEvent.click(await screen.findByRole("button", { name: "Slett økt" }));
+    const dialog = screen.getByRole("dialog");
+    act(() => {
+      const cancel = new Event("cancel", { cancelable: true });
+      if (dialog.dispatchEvent(cancel)) (dialog as HTMLDialogElement).close();
+    });
+
+    expect(dialog).not.toHaveAttribute("open");
+    expect(server.deleted).toEqual([]);
+  });
+
+  it("Ja, slett deletes the workout and goes to Trening", async () => {
+    server.workout!.finished_at = "2026-11-03T18:00:00Z";
+    renderWith(<WorkoutByIdPage id="w-1" />);
+    fireEvent.click(await screen.findByRole("button", { name: "Slett økt" }));
+    fireEvent.click(screen.getByRole("button", { name: "Ja, slett" }));
+
+    await waitFor(() => expect(pushMock).toHaveBeenCalledWith("/trening"));
+    expect(server.deleted).toEqual(["w-1"]);
+  });
+
+  it("deleting the active workout goes to Trening and clears it", async () => {
+    renderWith(<WorkoutPage />);
+    fireEvent.click(await screen.findByRole("button", { name: "Slett økt" }));
+    fireEvent.click(screen.getByRole("button", { name: "Ja, slett" }));
+
+    await waitFor(() => expect(pushMock).toHaveBeenCalledWith("/trening"));
+    expect(server.deleted).toEqual(["w-1"]);
+    expect(client.getQueryData(["workouts", "active"])).toBeNull();
+  });
+
+  it("a missing workout says so and links back to Trening", async () => {
+    renderWith(<WorkoutByIdPage id="w-gone" />);
+
+    expect(await screen.findByText("Fant ikke økta.")).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Tilbake til Trening" })).toHaveAttribute(
+      "href",
+      "/trening",
+    );
+    expect(screen.queryByRole("button", { name: "Prøv igjen" })).not.toBeInTheDocument();
+  });
+
+  it("the active workout's id redirects to the Økt page", async () => {
+    renderWith(<WorkoutByIdPage id="w-1" />);
+
+    await waitFor(() => expect(replaceMock).toHaveBeenCalledWith("/trening/okt"));
+  });
+
+  it("a late write answer after finishing is not stored as the active workout", async () => {
+    renderWith(<WorkoutPage />);
+    await screen.findByRole("button", { name: "Fullfør økt" });
+    server.workout!.finished_at = "2026-11-17T18:00:00Z";
+    const reps = screen.getAllByRole("textbox", { name: /Repetisjoner/ })[0];
+    fireEvent.change(reps, { target: { value: "12" } });
+    fireEvent.blur(reps);
+
+    await waitFor(() => expect(client.getQueryData(["workouts", "detail", "w-1"])).toBeTruthy());
+    await waitFor(() => expect(client.getQueryData(["workouts", "active"])).toBeNull());
+  });
+
+  it("a failed delete shows an alert in the dialog and stays", async () => {
+    renderWith(<WorkoutPage />);
+    fireEvent.click(await screen.findByRole("button", { name: "Slett økt" }));
+    apiMock.DELETE.mockResolvedValueOnce({
+      error: { error: { code: "internal_error", message: "Noe gikk galt. Prøv igjen om litt." } },
+    });
+    fireEvent.click(screen.getByRole("button", { name: "Ja, slett" }));
+
+    const dialog = screen.getByRole("dialog");
+    const alert = await within(dialog).findByRole("alert");
+    expect(alert).toHaveTextContent("Noe gikk galt.");
+    await waitFor(() => expect(alert).toHaveFocus());
+    expect(pushMock).not.toHaveBeenCalled();
+  });
+});
+
+describe("Tidligere økter (story 5.4)", () => {
+  const SUMMARY: WorkoutSummary = {
+    id: "w-9",
+    date: "2026-11-03",
+    finished_at: "2026-11-03T18:00:00Z",
+    exercise_count: 2,
+    done_set_count: 6,
+  };
+
+  it("formats a finished workout", () => {
+    expect(recentWorkoutText(SUMMARY)).toBe("tirsdag 3. nov · 2 øvelser · 6 sett");
+    expect(recentWorkoutText({ ...SUMMARY, exercise_count: 1, done_set_count: 1 })).toBe(
+      "tirsdag 3. nov · 1 øvelse · 1 sett",
+    );
+  });
+
+  it("lists finished workouts as links to their pages", async () => {
+    server.finished = [SUMMARY];
+    renderWith(<RecentWorkouts />);
+
+    expect(await screen.findByRole("heading", { name: "Tidligere økter" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("link", { name: "tirsdag 3. nov · 2 øvelser · 6 sett" }),
+    ).toHaveAttribute("href", "/trening/okt/w-9");
+    expect(apiMock.GET).toHaveBeenCalledWith("/api/workouts", { params: { query: { limit: 10 } } });
+  });
+
+  it("is hidden when there are none", async () => {
+    renderWith(<RecentWorkouts />);
+    await waitFor(() => expect(apiMock.GET).toHaveBeenCalledWith("/api/workouts", expect.anything()));
+    expect(screen.queryByRole("heading", { name: "Tidligere økter" })).not.toBeInTheDocument();
   });
 });

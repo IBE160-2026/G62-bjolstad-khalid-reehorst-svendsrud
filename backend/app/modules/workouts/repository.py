@@ -77,3 +77,34 @@ def get_history(
         )
     )
     return [tuple(row) for row in db.execute(query)]
+
+
+def delete_workout(db: DbSessionType, workout: Workout) -> None:
+    """Delete the workout; its exercises and sets go with it (CASCADE)."""
+    db.delete(workout)
+    db.flush()
+
+
+def list_finished(db: DbSessionType, user_id: uuid.UUID, limit: int) -> list[tuple]:
+    """The user's finished workouts, newest date first (then newest created), as rows
+    (id, date, finished_at, exercise count, done-set count) in one query (story 5.4)."""
+    exercise_count = (
+        select(func.count(WorkoutExercise.id))
+        .where(WorkoutExercise.workout_id == Workout.id)
+        .correlate(Workout)
+        .scalar_subquery()
+    )
+    done_set_count = (
+        select(func.count(Set.id))
+        .join(WorkoutExercise, WorkoutExercise.id == Set.workout_exercise_id)
+        .where(WorkoutExercise.workout_id == Workout.id, Set.done.is_(True))
+        .correlate(Workout)
+        .scalar_subquery()
+    )
+    query = (
+        select(Workout.id, Workout.date, Workout.finished_at, exercise_count, done_set_count)
+        .where(Workout.user_id == user_id, Workout.finished_at.is_not(None))
+        .order_by(Workout.date.desc(), Workout.created_at.desc(), Workout.id.desc())
+        .limit(limit)
+    )
+    return [tuple(row) for row in db.execute(query)]

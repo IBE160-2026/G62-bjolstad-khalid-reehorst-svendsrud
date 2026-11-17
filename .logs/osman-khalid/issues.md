@@ -75,3 +75,8 @@
 - [x] 2026-11-17 [story-5-1-start-okt](951-2026-11-17-19-00-00-story-5-1-start-okt.md) — pushe og lage PR for story 5.1 (løst 2026-11-17 — PR #42)
 - [x] 2026-11-17 [story-5-2-sett](950-2026-11-17-20-30-00-story-5-2-sett.md) — pushe og lage PR for story 5.2 (løst 2026-11-17 — PR #43, bygger på #42)
 - [x] 2026-11-17 [story-5-3-sist](949-2026-11-17-21-30-00-story-5-3-sist.md) — pushe og lage PR for story 5.3 (løst 2026-11-17 — PR #44, bygger på #43)
+
+- [x] 2026-11-17 [story-5-4] — story 5.4 stoppet midt i byggingen (bruksgrense 87 %). Branch `story/5-4-finish-workout` har uferdige, ikke-committede endringer; fortsett med subagent/ny bygging neste økt (løst 2026-11-17 — fullført)
+
+- [x] 2026-11-17 — #42, #43 flettet; #44 havnet i 5.2-branchen, ny PR #45 tok 5.3 inn i main (flettet av Karianne)
+- [x] 2026-11-17 [story-5-4-fullfor](948-2026-11-17-22-30-00-story-5-4-fullfor.md) — pushe og lage PR for story 5.4 (løst 2026-11-17 — PR #46)

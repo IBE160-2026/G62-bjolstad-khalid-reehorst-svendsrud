@@ -1,7 +1,9 @@
-"""Endpoints under /api/workouts (stories 5.1, 5.2). All require consent; every write returns the
+"""Endpoints under /api/workouts (stories 5.1-5.4). All require consent; every write returns the
 whole workout. Another user's or a missing workout is 404 `workout_not_found` (FR3)."""
 
-from fastapi import APIRouter, Response, status
+from typing import Annotated
+
+from fastapi import APIRouter, Query, Response, status
 
 from app.core.clock import Now
 from app.core.db import DbSession
@@ -9,6 +11,8 @@ from app.core.errors import ErrorResponse
 from app.modules.identity.consent import ConsentedUser
 from app.modules.workouts import service
 from app.modules.workouts.schemas import (
+    LIST_DEFAULT,
+    LIST_MAX,
     ActiveWorkoutResponse,
     SetCreate,
     SetUpdate,
@@ -16,6 +20,7 @@ from app.modules.workouts.schemas import (
     WorkoutExerciseAdd,
     WorkoutExerciseOrder,
     WorkoutResponse,
+    WorkoutSummary,
 )
 
 router = APIRouter(prefix="/api/workouts", tags=["workouts"])
@@ -27,6 +32,16 @@ WORKOUT_NOT_FOUND = {404: {"model": ErrorResponse, "description": "workout_not_f
 def get_active_workout(current_user: ConsentedUser, db: DbSession) -> ActiveWorkoutResponse:
     """The user's workout in progress, or `{"workout": null}`."""
     return ActiveWorkoutResponse(workout=service.get_active(db, current_user.id))
+
+
+@router.get("", response_model=list[WorkoutSummary], operation_id="list_finished_workouts")
+def list_finished_workouts(
+    current_user: ConsentedUser,
+    db: DbSession,
+    limit: Annotated[int, Query(ge=1, le=LIST_MAX)] = LIST_DEFAULT,
+) -> list[WorkoutSummary]:
+    """The user's finished workouts, newest date first (then newest created)."""
+    return service.list_finished(db, current_user.id, limit)
 
 
 @router.post(
@@ -59,6 +74,34 @@ def get_workout(workout_id: str, current_user: ConsentedUser, db: DbSession) -> 
 
 
 @router.post(
+    "/{workout_id}/finish",
+    response_model=WorkoutResponse,
+    operation_id="finish_workout",
+    responses={
+        **WORKOUT_NOT_FOUND,
+        409: {"model": ErrorResponse, "description": "workout_already_finished"},
+    },
+)
+def finish_workout(
+    workout_id: str, current_user: ConsentedUser, db: DbSession, now: Now
+) -> WorkoutResponse:
+    """Mark the workout finished. Already finished is 409."""
+    return service.finish_workout(db, current_user.id, workout_id, now)
+
+
+@router.delete(
+    "/{workout_id}",
+    status_code=status.HTTP_204_NO_CONTENT,
+    operation_id="delete_workout",
+    responses=WORKOUT_NOT_FOUND,
+)
+def delete_workout(workout_id: str, current_user: ConsentedUser, db: DbSession) -> Response:
+    """Delete a workout (finished or not) with its exercises and sets. Cannot be undone."""
+    service.delete_workout(db, current_user.id, workout_id)
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
+
+
+@router.post(
     "/{workout_id}/exercises",
     response_model=WorkoutResponse,
     operation_id="add_workout_exercise",
@@ -75,7 +118,7 @@ def add_workout_exercise(
     now: Now,
 ) -> WorkoutResponse:
     """Add an exercise last with three empty sets. Each exercise once (409), at most 20
-    (422)."""
+    (422). Only into an unfinished workout (finished is 404)."""
     return service.add_exercise(db, current_user.id, workout_id, body.exercise_id, now)
 
 

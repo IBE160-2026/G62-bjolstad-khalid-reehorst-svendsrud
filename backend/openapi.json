@@ -1529,6 +1529,64 @@
       }
     },
     "/api/workouts": {
+      "get": {
+        "tags": [
+          "workouts"
+        ],
+        "summary": "List Finished Workouts",
+        "description": "The user's finished workouts, newest date first (then newest created).",
+        "operationId": "list_finished_workouts",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 50,
+              "minimum": 1,
+              "default": 10,
+              "title": "Limit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WorkoutSummary"
+                  },
+                  "title": "Response List Finished Workouts"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Default Response"
+          }
+        }
+      },
       "post": {
         "tags": [
           "workouts"
@@ -1537,14 +1595,14 @@
         "description": "Start an empty workout for `date` (201), or return the one already in progress\nunchanged, date included (200).",
         "operationId": "start_workout",
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/WorkoutCreate"
               }
             }
-          },
-          "required": true
+          }
         },
         "responses": {
           "201": {
@@ -1568,14 +1626,14 @@
             }
           },
           "default": {
-            "description": "Default Response",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
-            }
+            },
+            "description": "Default Response"
           },
           "200": {
             "description": "The workout in progress",
@@ -1651,6 +1709,133 @@
             }
           }
         }
+      },
+      "delete": {
+        "tags": [
+          "workouts"
+        ],
+        "summary": "Delete Workout",
+        "description": "Delete a workout (finished or not) with its exercises and sets. Cannot be undone.",
+        "operationId": "delete_workout",
+        "parameters": [
+          {
+            "name": "workout_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Workout Id"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Default Response"
+          },
+          "404": {
+            "description": "workout_not_found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/workouts/{workout_id}/finish": {
+      "post": {
+        "tags": [
+          "workouts"
+        ],
+        "summary": "Finish Workout",
+        "description": "Mark the workout finished. Already finished is 409.",
+        "operationId": "finish_workout",
+        "parameters": [
+          {
+            "name": "workout_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Workout Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkoutResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Default Response"
+          },
+          "404": {
+            "description": "workout_not_found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "workout_already_finished",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/api/workouts/{workout_id}/exercises": {
@@ -1659,7 +1844,7 @@
           "workouts"
         ],
         "summary": "Add Workout Exercise",
-        "description": "Add an exercise last with three empty sets. Each exercise once (409), at most 20\n(422).",
+        "description": "Add an exercise last with three empty sets. Each exercise once (409), at most 20\n(422). Only into an unfinished workout (finished is 404).",
         "operationId": "add_workout_exercise",
         "parameters": [
           {
@@ -3559,6 +3744,18 @@
             "format": "date",
             "title": "Date"
           },
+          "finished_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Finished At"
+          },
           "exercises": {
             "items": {
               "$ref": "#/components/schemas/WorkoutExerciseResponse"
@@ -3571,9 +3768,47 @@
         "required": [
           "id",
           "date",
+          "finished_at",
           "exercises"
         ],
         "title": "WorkoutResponse"
+      },
+      "WorkoutSummary": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "date": {
+            "type": "string",
+            "format": "date",
+            "title": "Date"
+          },
+          "finished_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Finished At"
+          },
+          "exercise_count": {
+            "type": "integer",
+            "title": "Exercise Count"
+          },
+          "done_set_count": {
+            "type": "integer",
+            "title": "Done Set Count"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "date",
+          "finished_at",
+          "exercise_count",
+          "done_set_count"
+        ],
+        "title": "WorkoutSummary",
+        "description": "One finished workout in \"Tidligere økter\" (story 5.4)."
       }
     }
   }

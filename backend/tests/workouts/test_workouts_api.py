@@ -381,7 +381,7 @@ def _finish(db: Session, workout_id: str) -> None:
 
 
 @pytest.mark.usefixtures("seeded")
-def test_a_finished_workout_cannot_be_changed(
+def test_a_finished_workout_can_be_reordered_and_trimmed_but_not_added_to(
     consented_client: Callable[..., TestClient], db_session: Session
 ) -> None:
     client = consented_client()
@@ -390,16 +390,17 @@ def test_a_finished_workout_cannot_be_changed(
     _finish(db_session, workout["id"])
     base = f"{URL}/{workout['id']}"
 
-    responses = [
-        _add(client, workout["id"], _ex(db_session, PLANK)),
-        client.put(f"{base}/exercises/order", json={"ids": ids[::-1]}),
-        client.delete(f"{base}/exercises/{ids[0]}"),
-    ]
+    added = _add(client, workout["id"], _ex(db_session, PLANK))
+    assert added.status_code == 404
+    assert added.json()["error"]["code"] == "workout_not_found"
 
-    for response in responses:
-        assert response.status_code == 404
-        assert response.json()["error"]["code"] == "workout_not_found"
-    assert client.get(base).json() == workout
+    reordered = client.put(f"{base}/exercises/order", json={"ids": ids[::-1]})
+    assert reordered.status_code == 200
+    assert [item["id"] for item in reordered.json()["exercises"]] == ids[::-1]
+    removed = client.delete(f"{base}/exercises/{ids[0]}")
+    assert removed.status_code == 200
+    assert [item["id"] for item in removed.json()["exercises"]] == [ids[1]]
+    assert removed.json()["finished_at"] is not None
 
 
 @pytest.mark.usefixtures("seeded")
@@ -411,7 +412,9 @@ def test_active_ignores_a_finished_workout_but_get_still_returns_it(
     _finish(db_session, workout["id"])
 
     assert client.get(ACTIVE_URL).json() == {"workout": None}
-    assert client.get(f"{URL}/{workout['id']}").json() == workout
+    finished = client.get(f"{URL}/{workout['id']}").json()
+    assert finished["finished_at"] is not None
+    assert {**finished, "finished_at": None} == workout
     # A new start creates a new workout (201), not the finished one.
     started = _start(client)
     assert started.status_code == 201

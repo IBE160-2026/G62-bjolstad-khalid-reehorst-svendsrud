@@ -6,6 +6,7 @@ import { useMemo, useState } from "react";
 import { useDebounced } from "@/lib/use-debounced";
 import { useMe } from "@/modules/identity/api";
 import { LINK_CLASS } from "@/modules/identity/styles";
+import { RecentWorkouts } from "@/modules/workouts/recent-workouts";
 import { StartWorkout } from "@/modules/workouts/start-workout";
 
 import {
@@ -174,6 +175,7 @@ export function Suggestions() {
   return (
     <div className="flex flex-col gap-6">
       <StartWorkout />
+      <RecentWorkouts />
       <p className="text-body text-foreground">
         Velg utstyret du har. Trykk på en øvelse for å se hvordan du gjør den.
       </p>

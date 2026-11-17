@@ -1,6 +1,7 @@
-"""Workout rules (stories 5.1-5.3): start or resume the one workout in progress, add exercises
-last, remove them and change their order, log the sets of each exercise and show what the
-user did last time. Exercises are looked up through the exercises service, never its
+"""Workout rules (stories 5.1-5.4): start or resume the one workout in progress, add exercises
+last, remove them and change their order, log the sets of each exercise, show what the
+user did last time, and finish, list, edit or delete workouts. A finished workout can still
+be edited (sets, remove, reorder), but new exercises only go into the unfinished one. Exercises are looked up through the exercises service, never its
 repository."""
 
 import datetime as dt
@@ -29,6 +30,7 @@ from app.modules.workouts.schemas import (
     SetUpdate,
     WorkoutExerciseResponse,
     WorkoutResponse,
+    WorkoutSummary,
 )
 
 WORKOUT_NOT_FOUND_CODE = "workout_not_found"
@@ -39,6 +41,8 @@ ALREADY_IN_WORKOUT_CODE = "exercise_already_in_workout"
 ALREADY_IN_WORKOUT_MESSAGE = "Øvelsen er allerede i økta."
 EXERCISE_LIMIT_CODE = "workout_exercise_limit"
 EXERCISE_LIMIT_MESSAGE = "Du kan ha opptil 20 øvelser i én økt."
+ALREADY_FINISHED_CODE = "workout_already_finished"
+ALREADY_FINISHED_MESSAGE = "Økta er allerede fullført."
 INVALID_ORDER_CODE = "invalid_workout_order"
 INVALID_ORDER_MESSAGE = "Rekkefølgen stemmer ikke med økta. Last inn siden på nytt."
 SET_NOT_FOUND_CODE = "set_not_found"
@@ -77,7 +81,8 @@ def _get_workout(
 
 
 def _get_unfinished(db: DbSessionType, user_id: uuid.UUID, workout_id: str) -> Workout:
-    """The user's workout, locked for a change; a finished one is 404 like a missing one."""
+    """The user's workout, locked for a change; a finished one is 404 like a missing one
+    (only adding an exercise needs this since story 5.4)."""
     workout = _get_workout(db, user_id, workout_id, for_update=True)
     if workout.finished_at is not None:
         raise _workout_not_found()
@@ -168,7 +173,9 @@ def _response(db: DbSessionType, workout: Workout) -> WorkoutResponse:
                 last_time=last_time(history, we.exercise_id, workout.date),
             )
         )
-    return WorkoutResponse(id=workout.id, date=workout.date, exercises=exercises)
+    return WorkoutResponse(
+        id=workout.id, date=workout.date, finished_at=workout.finished_at, exercises=exercises
+    )
 
 
 def _renumber(workout: Workout, ordered: list[WorkoutExercise]) -> None:
@@ -201,6 +208,39 @@ def get_workout(db: DbSessionType, user_id: uuid.UUID, workout_id: str) -> Worko
     return _response(db, _get_workout(db, user_id, workout_id))
 
 
+def finish_workout(
+    db: DbSessionType, user_id: uuid.UUID, workout_id: str, now: datetime
+) -> WorkoutResponse:
+    """Mark the workout finished (FR25). Already finished is 409."""
+    workout = _get_workout(db, user_id, workout_id, for_update=True)
+    if workout.finished_at is not None:
+        raise AppError(409, ALREADY_FINISHED_CODE, ALREADY_FINISHED_MESSAGE)
+    workout.finished_at = now
+    db.flush()
+    return _response(db, workout)
+
+
+def delete_workout(db: DbSessionType, user_id: uuid.UUID, workout_id: str) -> None:
+    """Delete a workout, finished or not, with its exercises and sets for good (FR4: the
+    UI asks first instead of offering undo)."""
+    workout = _get_workout(db, user_id, workout_id, for_update=True)
+    repository.delete_workout(db, workout)
+
+
+def list_finished(db: DbSessionType, user_id: uuid.UUID, limit: int) -> list[WorkoutSummary]:
+    """The user's latest finished workouts for "Tidligere økter"."""
+    return [
+        WorkoutSummary(
+            id=row[0],
+            date=row[1],
+            finished_at=row[2],
+            exercise_count=row[3],
+            done_set_count=row[4],
+        )
+        for row in repository.list_finished(db, user_id, limit)
+    ]
+
+
 def add_exercise(
     db: DbSessionType, user_id: uuid.UUID, workout_id: str, exercise_id: str, now: datetime
 ) -> WorkoutResponse:
@@ -231,7 +271,7 @@ def remove_exercise(
     db: DbSessionType, user_id: uuid.UUID, workout_id: str, workout_exercise_id: str
 ) -> WorkoutResponse:
     """Remove one exercise; the others keep their order."""
-    workout = _get_unfinished(db, user_id, workout_id)
+    workout = _get_workout(db, user_id, workout_id, for_update=True)
     parsed = _parse_id(workout_exercise_id)
     remaining = [we for we in workout.exercises if we.id != parsed]
     if parsed is None or len(remaining) == len(workout.exercises):
@@ -246,7 +286,7 @@ def reorder_exercises(
 ) -> WorkoutResponse:
     """Save a new order. `ids` must be exactly the workout's own workout exercise ids,
     each once; anything missing, extra, repeated or foreign is 422."""
-    workout = _get_unfinished(db, user_id, workout_id)
+    workout = _get_workout(db, user_id, workout_id, for_update=True)
     by_id = {we.id: we for we in workout.exercises}
     if len(ids) != len(by_id) or set(ids) != set(by_id):
         raise AppError(422, INVALID_ORDER_CODE, INVALID_ORDER_MESSAGE)
@@ -323,7 +363,7 @@ def add_set(
     """Add a set at `position` (0-based; clamped to the end), or last. At most 20 sets per
     exercise (422). The workout row stays locked (FOR UPDATE) until commit, so parallel
     adds run one at a time and cannot pass the limit or break the positions."""
-    workout = _get_unfinished(db, user_id, workout_id)
+    workout = _get_workout(db, user_id, workout_id, for_update=True)
     parsed = _parse_id(workout_exercise_id)
     we = next((item for item in workout.exercises if item.id == parsed), None)
     if parsed is None or we is None:
@@ -351,7 +391,7 @@ def update_set(
     db: DbSessionType, user_id: uuid.UUID, workout_id: str, set_id: str, body: SetUpdate
 ) -> WorkoutResponse:
     """Change the fields that were sent; null clears a value."""
-    workout = _get_unfinished(db, user_id, workout_id)
+    workout = _get_workout(db, user_id, workout_id, for_update=True)
     we, set_ = _find_set(workout, set_id)
     sent = body.model_dump(include=body.model_fields_set & {"reps", "weight_kg", "seconds"})
     reps = body.reps if "reps" in body.model_fields_set else set_.reps
@@ -371,7 +411,7 @@ def delete_set(
     db: DbSessionType, user_id: uuid.UUID, workout_id: str, set_id: str
 ) -> WorkoutResponse:
     """Delete a set for good; the others are renumbered and keep their order."""
-    workout = _get_unfinished(db, user_id, workout_id)
+    workout = _get_workout(db, user_id, workout_id, for_update=True)
     we, set_ = _find_set(workout, set_id)
     _renumber_sets(we, [item for item in we.sets if item is not set_])
     db.flush()

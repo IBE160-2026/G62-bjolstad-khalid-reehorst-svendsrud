@@ -387,7 +387,7 @@ def test_another_users_set_is_404_and_unchanged(
 
 
 @pytest.mark.usefixtures("seeded")
-def test_sets_of_a_finished_workout_cannot_be_changed(
+def test_sets_of_a_finished_workout_can_be_changed(
     consented_client: Callable[..., TestClient], db_session: Session
 ) -> None:
     client = consented_client()
@@ -395,14 +395,15 @@ def test_sets_of_a_finished_workout_cannot_be_changed(
     set_id = _sets(workout)[0]["id"]
     _finish(db_session, workout["id"])
 
-    for response in (
-        _patch(client, workout, set_id, reps=5),
-        client.delete(f"{URL}/{workout['id']}/sets/{set_id}"),
-        _post_set(client, workout),
-    ):
-        assert response.status_code == 404
-        assert response.json()["error"]["code"] == "workout_not_found"
-    assert client.get(f"{URL}/{workout['id']}").json() == workout
+    patched = _patch(client, workout, set_id, reps=5)
+    assert patched.status_code == 200
+    assert _sets(patched.json())[0]["reps"] == 5
+    added = _post_set(client, workout)
+    assert added.status_code == 200
+    assert len(_sets(added.json())) == 4
+    deleted = client.delete(f"{URL}/{workout['id']}/sets/{set_id}")
+    assert deleted.status_code == 200
+    assert len(_sets(deleted.json())) == 3
 
 
 @pytest.mark.usefixtures("seeded")
