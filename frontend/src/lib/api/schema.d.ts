@@ -485,7 +485,11 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get?: never;
+        /**
+         * List Finished Workouts
+         * @description The user's finished workouts, newest date first (then newest created).
+         */
+        get: operations["list_finished_workouts"];
         put?: never;
         /**
          * Start Workout
@@ -513,6 +517,30 @@ export interface paths {
         get: operations["get_workout"];
         put?: never;
         post?: never;
+        /**
+         * Delete Workout
+         * @description Delete a workout (finished or not) with its exercises and sets. Cannot be undone.
+         */
+        delete: operations["delete_workout"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/workouts/{workout_id}/finish": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Finish Workout
+         * @description Mark the workout finished. Already finished is 409.
+         */
+        post: operations["finish_workout"];
         delete?: never;
         options?: never;
         head?: never;
@@ -531,7 +559,7 @@ export interface paths {
         /**
          * Add Workout Exercise
          * @description Add an exercise last with three empty sets. Each exercise once (409), at most 20
-         *     (422).
+         *     (422). Only into an unfinished workout (finished is 404).
          */
         post: operations["add_workout_exercise"];
         delete?: never;
@@ -1192,8 +1220,35 @@ export interface components {
              * Format: date
              */
             date: string;
+            /** Finished At */
+            finished_at: string | null;
             /** Exercises */
             exercises: components["schemas"]["WorkoutExerciseResponse"][];
+        };
+        /**
+         * WorkoutSummary
+         * @description One finished workout in "Tidligere økter" (story 5.4).
+         */
+        WorkoutSummary: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Date
+             * Format: date
+             */
+            date: string;
+            /**
+             * Finished At
+             * Format: date-time
+             */
+            finished_at: string;
+            /** Exercise Count */
+            exercise_count: number;
+            /** Done Set Count */
+            done_set_count: number;
         };
     };
     responses: never;
@@ -2452,6 +2507,46 @@ export interface operations {
             };
         };
     };
+    list_finished_workouts: {
+        parameters: {
+            query?: {
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WorkoutSummary"][];
+                };
+            };
+            /** @description Validation error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Default Response */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
     start_workout: {
         parameters: {
             query?: never;
@@ -2525,6 +2620,111 @@ export interface operations {
             };
             /** @description workout_not_found */
             404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Validation error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Default Response */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    delete_workout: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                workout_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description workout_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Validation error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Default Response */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    finish_workout: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                workout_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WorkoutResponse"];
+                };
+            };
+            /** @description workout_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description workout_already_finished */
+            409: {
                 headers: {
                     [name: string]: unknown;
                 };

@@ -1239,6 +1239,33 @@ Det viktigste funnet: Dekningsanalysen er regnet ut fra øvelseslista og viser a
 
 ---
 
+## 2026-11-17 – Story 5.1–5.4 (treningsloggen)
+
+**Verktøy:** Claude Code (BMAD `bmad-build`, lettere prosess med én kontrollør)
+**Hvem:** Osman Khalid
+**Bakgrunn:** Epic 5 gjør at brukeren kan logge en hel treningsøkt.
+
+### Hva vi ba KI om
+
+1. Story 5.4: fullføre, endre og slette økter (5.1–5.3 er logget over).
+
+### Hva KI produserte
+
+- Spec, endepunkter for fullfør/slett/liste, bekreftelsesdialog, «Tidligere økter» og side for gamle økter, med tester.
+
+### Hva vi selv vurderte og kontrollerte
+
+- Osman godkjente spec-en før koding, og stoppet byggingen ved 87 % bruksgrense for å fortsette senere.
+- Én KI-kontrollør fant 11 punkter: 6 grupper rettet, 2 avvist med begrunnelse.
+- #44 ble flettet inn i feil branch (5.2 i stedet for main) fordi den var stablet; ny PR #45 rettet det.
+
+### Status
+
+- [x] Epic 5 bygget og testet
+- [ ] Review av PR for 5.4 fra gruppen
+
+---
+
 ## Mal for nye oppføringer
 
 ```markdown

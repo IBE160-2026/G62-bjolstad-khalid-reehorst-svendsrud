@@ -1,10 +1,11 @@
 "use client";
 
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient, type QueryKey } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 
 import { api } from "@/lib/api/client";
 import type { components } from "@/lib/api/schema";
-import { ApiError, call } from "@/modules/identity/api";
+import { ApiError, call, callNoContent } from "@/modules/identity/api";
 
 export type Workout = components["schemas"]["WorkoutResponse"];
 export type WorkoutExercise = components["schemas"]["WorkoutExerciseResponse"];
@@ -12,9 +13,15 @@ export type WorkoutSet = components["schemas"]["SetResponse"];
 export type SetValues = Pick<WorkoutSet, "reps" | "weight_kg" | "seconds" | "done">;
 export type LastTime = components["schemas"]["LastTimeResponse"];
 export type LastTimeSet = components["schemas"]["LastTimeSet"];
+export type WorkoutSummary = components["schemas"]["WorkoutSummary"];
 
 /** The Økt page: always the workout in progress. */
 export const WORKOUT_PATH = "/trening/okt";
+
+/** One of the user's workouts, finished or not (story 5.4). */
+export function workoutPath(id: string): string {
+  return `${WORKOUT_PATH}/${id}`;
+}
 
 /** The server refuses more than this (422). */
 export const MAX_WORKOUT_EXERCISES = 20;
@@ -24,6 +31,16 @@ export const MAX_SETS = 20;
 export const SUGGESTED_REPS = 10;
 
 export const ACTIVE_WORKOUT_KEY = ["workouts", "active"] as const;
+/** "Tidligere økter" on Trening (story 5.4). */
+export const FINISHED_WORKOUTS_KEY = ["workouts", "finished"] as const;
+/** How many finished workouts Trening lists. */
+export const RECENT_WORKOUTS_LIMIT = 10;
+
+/** One workout by id, for `/trening/okt/{id}`. Its own key, so it never replaces the
+ * active-workout cache. */
+export function workoutKey(id: string) {
+  return ["workouts", "detail", id] as const;
+}
 
 export const ALREADY_IN_WORKOUT_CODE = "exercise_already_in_workout";
 export const WORKOUT_NOT_FOUND_CODE = "workout_not_found";
@@ -66,13 +83,23 @@ function serial<T>(run: () => Promise<T>): Promise<T> {
  * an earlier write's answer that lands later never brings a deleted row back. */
 const pendingDeletes = new Set<string>();
 
-/** Every write returns the whole workout; it is the one in progress, so cache it as such. */
-function useStoreWorkout() {
+/** Every write returns the whole workout; cache it under the key of the page that made
+ * the write (the active workout by default). A finished workout is never stored as the
+ * active one (a late answer after "Fullfør økt"); its change may alter the counts in
+ * "Tidligere økter" and "Sist" on the active workout, so both are refetched. */
+function useStoreWorkout(queryKey: QueryKey = ACTIVE_WORKOUT_KEY) {
   const queryClient = useQueryClient();
   return (workout: Workout) => {
     let shown = workout;
     for (const setId of pendingDeletes) shown = withoutSet(shown, setId);
-    queryClient.setQueryData(ACTIVE_WORKOUT_KEY, shown);
+    if (!workout.finished_at) {
+      queryClient.setQueryData(queryKey, shown);
+      return;
+    }
+    const isActiveKey = JSON.stringify(queryKey) === JSON.stringify(ACTIVE_WORKOUT_KEY);
+    queryClient.setQueryData(isActiveKey ? workoutKey(workout.id) : queryKey, shown);
+    void queryClient.invalidateQueries({ queryKey: FINISHED_WORKOUTS_KEY });
+    void queryClient.invalidateQueries({ queryKey: ACTIVE_WORKOUT_KEY });
   };
 }
 
@@ -128,9 +155,9 @@ export function useAddToWorkout() {
   });
 }
 
-export function useRemoveWorkoutExercise() {
+export function useRemoveWorkoutExercise(queryKey: QueryKey = ACTIVE_WORKOUT_KEY) {
   const queryClient = useQueryClient();
-  const store = useStoreWorkout();
+  const store = useStoreWorkout(queryKey);
   return useMutation({
     mutationFn: ({ workoutId, id }: { workoutId: string; id: string }) =>
       serial(() =>
@@ -141,13 +168,13 @@ export function useRemoveWorkoutExercise() {
         ),
       ),
     onSuccess: store,
-    onError: () => queryClient.invalidateQueries({ queryKey: ACTIVE_WORKOUT_KEY }),
+    onError: () => queryClient.invalidateQueries({ queryKey }),
   });
 }
 
-export function useReorderWorkoutExercises() {
+export function useReorderWorkoutExercises(queryKey: QueryKey = ACTIVE_WORKOUT_KEY) {
   const queryClient = useQueryClient();
-  const store = useStoreWorkout();
+  const store = useStoreWorkout(queryKey);
   return useMutation({
     mutationFn: ({ workoutId, ids }: { workoutId: string; ids: string[] }) =>
       serial(() =>
@@ -159,7 +186,7 @@ export function useReorderWorkoutExercises() {
         ),
       ),
     onSuccess: store,
-    onError: () => queryClient.invalidateQueries({ queryKey: ACTIVE_WORKOUT_KEY }),
+    onError: () => queryClient.invalidateQueries({ queryKey }),
   });
 }
 
@@ -176,17 +203,17 @@ export function moveId(ids: string[], index: number, direction: -1 | 1): string[
 
 
 /** Refetch after an error, except for field errors: the server state did not change. */
-function useRefetchOnError() {
+function useRefetchOnError(queryKey: QueryKey) {
   const queryClient = useQueryClient();
   return (error: Error) => {
     if (error instanceof ApiError && error.code === "validation_error") return;
-    return queryClient.invalidateQueries({ queryKey: ACTIVE_WORKOUT_KEY });
+    return queryClient.invalidateQueries({ queryKey });
   };
 }
 
-export function useAddSet() {
-  const store = useStoreWorkout();
-  const onError = useRefetchOnError();
+export function useAddSet(queryKey: QueryKey = ACTIVE_WORKOUT_KEY) {
+  const store = useStoreWorkout(queryKey);
+  const onError = useRefetchOnError(queryKey);
   return useMutation({
     mutationFn: ({
       workoutId,
@@ -211,9 +238,9 @@ export function useAddSet() {
   });
 }
 
-export function useUpdateSet() {
-  const store = useStoreWorkout();
-  const onError = useRefetchOnError();
+export function useUpdateSet(queryKey: QueryKey = ACTIVE_WORKOUT_KEY) {
+  const store = useStoreWorkout(queryKey);
+  const onError = useRefetchOnError(queryKey);
   return useMutation({
     mutationFn: ({
       workoutId,
@@ -251,9 +278,9 @@ export function withoutSet(workout: Workout, setId: string): Workout {
 }
 
 /** Delete is immediate: the row disappears before the server answers (UX-DR11). */
-export function useDeleteSet() {
+export function useDeleteSet(queryKey: QueryKey = ACTIVE_WORKOUT_KEY) {
   const queryClient = useQueryClient();
-  const store = useStoreWorkout();
+  const store = useStoreWorkout(queryKey);
   return useMutation({
     mutationFn: ({ workoutId, setId }: { workoutId: string; setId: string }) =>
       serial(() =>
@@ -266,14 +293,14 @@ export function useDeleteSet() {
     onMutate: async ({ setId }) => {
       pendingDeletes.add(setId);
       // A refetch in flight must not bring the row back either.
-      await queryClient.cancelQueries({ queryKey: ACTIVE_WORKOUT_KEY });
-      const current = queryClient.getQueryData<Workout | null>(ACTIVE_WORKOUT_KEY);
-      if (current) queryClient.setQueryData(ACTIVE_WORKOUT_KEY, withoutSet(current, setId));
+      await queryClient.cancelQueries({ queryKey });
+      const current = queryClient.getQueryData<Workout | null>(queryKey);
+      if (current) queryClient.setQueryData(queryKey, withoutSet(current, setId));
     },
     onSuccess: store,
     onError: (_error, { setId }) => {
       pendingDeletes.delete(setId);
-      return queryClient.invalidateQueries({ queryKey: ACTIVE_WORKOUT_KEY });
+      return queryClient.invalidateQueries({ queryKey });
     },
     onSettled: (_data, _error, { setId }) => {
       pendingDeletes.delete(setId);
@@ -327,4 +354,89 @@ export function lastTimeText(lastTime: LastTime | null | undefined, workoutDate:
     .join(", ");
   if (!lastTime || sets === "") return "Første gang";
   return `Sist: ${sets} (${shortDateText(lastTime.date, workoutDate)})`;
+}
+
+// --- Finish, list and delete (story 5.4) --------------------------------------------------
+
+/** One workout by id, finished or not; 404 `workout_not_found` for a missing one. */
+export function useWorkout(id: string) {
+  return useQuery({
+    queryKey: workoutKey(id),
+    // A missing workout stays missing; show it at once instead of retrying.
+    retry: (count, error) =>
+      !(error instanceof ApiError && error.code === WORKOUT_NOT_FOUND_CODE) && count < 3,
+    queryFn: () =>
+      call(() => api.GET("/api/workouts/{workout_id}", { params: { path: { workout_id: id } } })),
+  });
+}
+
+/** The latest finished workouts, newest first, for "Tidligere økter". */
+export function useFinishedWorkouts() {
+  return useQuery({
+    queryKey: FINISHED_WORKOUTS_KEY,
+    queryFn: () =>
+      call(() =>
+        api.GET("/api/workouts", { params: { query: { limit: RECENT_WORKOUTS_LIMIT } } }),
+      ),
+  });
+}
+
+/** "Fullfør økt". Runs after any save still in the queue, so the last blur save lands first.
+ * Goes to I dag before the active cache is cleared, since clearing it unmounts the page. */
+export function useFinishWorkout() {
+  const queryClient = useQueryClient();
+  const router = useRouter();
+  return useMutation({
+    mutationFn: (workoutId: string) =>
+      serial(() =>
+        call(() =>
+          api.POST("/api/workouts/{workout_id}/finish", {
+            params: { path: { workout_id: workoutId } },
+          }),
+        ),
+      ),
+    onSuccess: (workout) => {
+      router.push("/");
+      // Only the unfinished workout can be finished, so none is in progress now.
+      queryClient.setQueryData(ACTIVE_WORKOUT_KEY, null);
+      queryClient.setQueryData(workoutKey(workout.id), workout);
+      return queryClient.invalidateQueries({ queryKey: FINISHED_WORKOUTS_KEY });
+    },
+  });
+}
+
+/** "Slett økt" (after the confirmation dialog): the workout, its exercises and sets. Goes
+ * to Trening before the caches are cleared, since clearing them unmounts the page. */
+export function useDeleteWorkout() {
+  const queryClient = useQueryClient();
+  const router = useRouter();
+  return useMutation({
+    mutationFn: (workoutId: string) =>
+      serial(() =>
+        callNoContent(() =>
+          api.DELETE("/api/workouts/{workout_id}", {
+            params: { path: { workout_id: workoutId } },
+          }),
+        ),
+      ),
+    onSuccess: (_data, workoutId) => {
+      router.push("/trening");
+      queryClient.removeQueries({ queryKey: workoutKey(workoutId) });
+      const active = queryClient.getQueryData<Workout | null>(ACTIVE_WORKOUT_KEY);
+      if (active?.id === workoutId) queryClient.setQueryData(ACTIVE_WORKOUT_KEY, null);
+      return queryClient.invalidateQueries({ queryKey: FINISHED_WORKOUTS_KEY });
+    },
+  });
+}
+
+/** "tirsdag 3. nov · 2 øvelser · 6 sett" (done sets) for "Tidligere økter". */
+export function recentWorkoutText(workout: WorkoutSummary): string {
+  const weekday = new Intl.DateTimeFormat("nb-NO", { weekday: "long", timeZone: "UTC" }).format(
+    new Date(`${workout.date}T00:00:00Z`),
+  );
+  return [
+    `${weekday} ${shortDateText(workout.date, workout.date)}`,
+    exerciseCountText(workout.exercise_count),
+    `${workout.done_set_count} sett`,
+  ].join(" · ");
 }

@@ -1,30 +1,44 @@
 "use client";
 
 import { ArrowDown, ArrowUp, X } from "lucide-react";
+import type { QueryKey } from "@tanstack/react-query";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
 import { UndoToast, type UndoToastState } from "@/components/undo-toast";
 import { exercisePath } from "@/modules/exercises/api";
 import { ListSkeleton, LoadError } from "@/modules/exercises/list-parts";
-import { LINK_CLASS, SECONDARY_BUTTON_CLASS } from "@/modules/identity/styles";
+import { ApiError } from "@/modules/identity/api";
+import {
+  LINK_CLASS,
+  PRIMARY_BUTTON_CLASS,
+  SECONDARY_BUTTON_CLASS,
+} from "@/modules/identity/styles";
 
 import {
+  ACTIVE_WORKOUT_KEY,
   lastTimeText,
   MAX_SETS,
   moveId,
   useActiveWorkout,
   useAddSet,
   useDeleteSet,
+  useFinishWorkout,
   useRemoveWorkoutExercise,
   useReorderWorkoutExercises,
   useUpdateSet,
+  useWorkout,
+  WORKOUT_NOT_FOUND_CODE,
+  WORKOUT_PATH,
   workoutDateText,
+  workoutKey,
   type SetValues,
   type Workout,
   type WorkoutExercise,
   type WorkoutSet,
 } from "./api";
+import { DeleteWorkout } from "./delete-workout-dialog";
 import { ICON_BUTTON_CLASS, SetRow } from "./set-row";
 
 type Action = "up" | "down" | "remove";
@@ -193,9 +207,36 @@ function SetList({
 
 type SetToast = UndoToastState & { set: WorkoutSet; workoutExerciseId: string };
 
-function WorkoutView({ workout }: { workout: Workout }) {
-  const reorder = useReorderWorkoutExercises();
-  const remove = useRemoveWorkoutExercise();
+/** "Fullfør økt" (story 5.4): finish, then go to I dag. Errors stay here. */
+function FinishWorkout({ workout }: { workout: Workout }) {
+  const finish = useFinishWorkout();
+  return (
+    <div className="flex flex-col items-start gap-2">
+      <button
+        type="button"
+        className={PRIMARY_BUTTON_CLASS}
+        disabled={finish.isPending}
+        aria-busy={finish.isPending}
+        onClick={() => finish.mutate(workout.id)}
+      >
+        {finish.isPending ? "Fullfører …" : "Fullfør økt"}
+      </button>
+      {finish.isError ? (
+        <p role="alert" className="text-body text-destructive">
+          {finish.error.message}
+        </p>
+      ) : null}
+    </div>
+  );
+}
+
+/** One workout with its exercises and sets. `queryKey` is the cache the page reads (the
+ * active workout, or one workout by id), so writes update that cache only. A finished
+ * workout can still be edited, but gets no "Fullfør økt" and no "Legg til øvelse". */
+function WorkoutView({ workout, queryKey }: { workout: Workout; queryKey: QueryKey }) {
+  const finished = workout.finished_at !== null && workout.finished_at !== undefined;
+  const reorder = useReorderWorkoutExercises(queryKey);
+  const remove = useRemoveWorkoutExercise(queryKey);
   const buttons = useRef(new Map<string, HTMLButtonElement>());
   const heading = useRef<HTMLHeadingElement>(null);
   // A ref, not state: set when the server answers, used once that answer has rendered.
@@ -209,10 +250,10 @@ function WorkoutView({ workout }: { workout: Workout }) {
   const [announcement, setAnnouncement] = useState("");
 
   // --- Sets (story 5.2) ---
-  const addSet = useAddSet();
-  const updateSet = useUpdateSet();
-  const deleteSet = useDeleteSet();
-  const restoreSet = useAddSet();
+  const addSet = useAddSet(queryKey);
+  const updateSet = useUpdateSet(queryKey);
+  const deleteSet = useDeleteSet(queryKey);
+  const restoreSet = useAddSet(queryKey);
   const [setError, setSetError] = useState<string | null>(null);
   const [toast, setToast] = useState<SetToast | null>(null);
   const toastKey = useRef(0);
@@ -415,10 +456,18 @@ function WorkoutView({ workout }: { workout: Workout }) {
         className="text-title font-medium text-foreground first-letter:uppercase focus:outline-none"
       >
         {workoutDateText(workout.date)}
+        {finished ? (
+          <>
+            {" "}
+            <span className="text-muted-foreground">· Fullført</span>
+          </>
+        ) : null}
       </h2>
 
       {workout.exercises.length === 0 ? (
-        <p className="text-body text-foreground">Økta er tom. Legg til øvelser fra Trening.</p>
+        <p className="text-body text-foreground">
+          {finished ? "Økta er tom." : "Økta er tom. Legg til øvelser fra Trening."}
+        </p>
       ) : (
         <ol
           ref={list}
@@ -462,7 +511,9 @@ function WorkoutView({ workout }: { workout: Workout }) {
         {announcement}
       </p>
 
-      <AddExerciseLink />
+      {finished ? null : <AddExerciseLink />}
+      {finished ? null : <FinishWorkout workout={workout} />}
+      <DeleteWorkout workout={workout} />
 
       <UndoToast
         toast={toast}
@@ -478,8 +529,48 @@ function WorkoutView({ workout }: { workout: Workout }) {
   );
 }
 
-/** Økt (stories 5.1-5.3): the workout in progress with its exercises, their sets and what
- * the user did last time. */
+/** One of the user's workouts by id, finished or not (`/trening/okt/{id}`, story 5.4). */
+function BackToTraining() {
+  return (
+    <Link href="/trening" className={`inline-flex min-h-11 items-center self-start ${LINK_CLASS}`}>
+      Tilbake til Trening
+    </Link>
+  );
+}
+
+/** One of the user's workouts by id (`/trening/okt/{id}`, story 5.4). The workout in
+ * progress has its own page, so its id redirects there. */
+export function WorkoutByIdPage({ id }: { id: string }) {
+  const router = useRouter();
+  const workout = useWorkout(id);
+  const unfinished = workout.data !== undefined && !workout.data.finished_at;
+
+  useEffect(() => {
+    if (unfinished) router.replace(WORKOUT_PATH);
+  }, [unfinished, router]);
+
+  if (workout.isPending || unfinished) return <ListSkeleton testId="workout-skeleton" />;
+  if (workout.isError) {
+    if (workout.error instanceof ApiError && workout.error.code === WORKOUT_NOT_FOUND_CODE) {
+      return (
+        <div className="flex flex-col items-start gap-3">
+          <p className="text-body text-foreground">Fant ikke økta.</p>
+          <BackToTraining />
+        </div>
+      );
+    }
+    return <LoadError message={workout.error.message} onRetry={() => workout.refetch()} />;
+  }
+  return (
+    <div className="flex flex-col gap-4">
+      <BackToTraining />
+      <WorkoutView key={id} workout={workout.data} queryKey={workoutKey(id)} />
+    </div>
+  );
+}
+
+/** Økt (stories 5.1-5.4): the workout in progress with its exercises, their sets and what
+ * the user did last time, and "Fullfør økt" / "Slett økt". */
 export function WorkoutPage() {
   const active = useActiveWorkout();
 
@@ -500,5 +591,5 @@ export function WorkoutPage() {
       </div>
     );
   }
-  return <WorkoutView workout={active.data} />;
+  return <WorkoutView workout={active.data} queryKey={ACTIVE_WORKOUT_KEY} />;
 }
