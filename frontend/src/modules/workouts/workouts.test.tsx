@@ -327,6 +327,18 @@ describe("StartWorkout", () => {
   });
 });
 
+describe("StartWorkout on a chosen date (story 6.3)", () => {
+  it("starts the workout on the week strip's date", async () => {
+    renderWith(<StartWorkout date="2026-11-16" />);
+    const start = await screen.findByRole("button", { name: "Start økt" });
+    expect(screen.getByText("Økta lagres på mandag 16. november.")).toBeInTheDocument();
+    fireEvent.click(start);
+
+    await waitFor(() => expect(pushMock).toHaveBeenCalledWith("/trening/okt"));
+    expect(apiMock.POST).toHaveBeenCalledWith("/api/workouts", { body: { date: "2026-11-16" } });
+  });
+});
+
 describe("StartWorkout errors", () => {
   it("shows the message and stays when starting fails", async () => {
     apiMock.POST.mockResolvedValueOnce({
@@ -966,7 +978,8 @@ describe("finish, edit or delete (story 5.4)", () => {
     renderWith(<WorkoutPage />);
     fireEvent.click(await screen.findByRole("button", { name: "Fullfør økt" }));
 
-    await waitFor(() => expect(pushMock).toHaveBeenCalledWith("/"));
+    // Back to I dag for the workout's date (story 6.3).
+    await waitFor(() => expect(pushMock).toHaveBeenCalledWith("/?dato=2026-11-03"));
     expect(apiMock.POST).toHaveBeenCalledWith("/api/workouts/{workout_id}/finish", {
       params: { path: { workout_id: "w-1" } },
     });

@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 
+import { WeekStrip } from "@/components/week-strip";
+import { useSelectedDate } from "@/lib/selected-date";
 import { useDebounced } from "@/lib/use-debounced";
 import { useMe } from "@/modules/identity/api";
 import { LINK_CLASS } from "@/modules/identity/styles";
@@ -154,9 +156,10 @@ function ProfilLink() {
  * A name search (story 4.4) replaces the list with results from the whole exercise list
  * while it has at least 2 characters. Muscle group and level filters (story 4.5) narrow
  * the suggestions; they stay when the profile changes, are hidden while searching and are
- * not remembered across reloads.
+ * not remembered across reloads. The week strip (story 6.3) picks the date "Start økt" uses.
  */
 export function Suggestions() {
+  const { date, today, isToday, futureRequested } = useSelectedDate();
   const me = useMe();
   const profiles = useEquipmentProfiles();
   const userId = me.data?.id;
@@ -217,7 +220,10 @@ export function Suggestions() {
 
   return (
     <div className="flex flex-col gap-6">
-      <StartWorkout />
+      {date !== null && today !== null && (
+        <WeekStrip date={date} today={today} futureRequested={futureRequested} />
+      )}
+      <StartWorkout date={isToday ? null : date} />
       <RecentWorkouts />
       <p className="text-body text-foreground">
         Velg utstyret du har. Trykk på en øvelse for å se hvordan du gjør den.

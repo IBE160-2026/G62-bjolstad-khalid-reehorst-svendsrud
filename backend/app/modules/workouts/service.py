@@ -214,6 +214,14 @@ def day_workouts(db: DbSessionType, user_id: uuid.UUID, day: dt.date) -> list[Wo
     return [_response(db, workout) for workout in repository.list_for_date(db, user_id, day)]
 
 
+def dates_with_workouts(
+    db: DbSessionType, user_id: uuid.UUID, start: dt.date, end: dt.date
+) -> set[dt.date]:
+    """The user's dates from `start` to `end` (inclusive) with a workout that has at least
+    one done set (story 6.3, the week strip)."""
+    return repository.dates_with_done_sets(db, user_id, start, end)
+
+
 def finish_workout(
     db: DbSessionType, user_id: uuid.UUID, workout_id: str, now: datetime
 ) -> WorkoutResponse:

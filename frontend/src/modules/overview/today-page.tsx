@@ -1,13 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
 
-import { useOsloToday } from "@/modules/food/food-day";
+import { WeekStrip } from "@/components/week-strip";
+import { datedHref, dayText, useSelectedDate } from "@/lib/selected-date";
 import { PRIMARY_BUTTON_CLASS, SECONDARY_BUTTON_CLASS } from "@/modules/identity/styles";
-import { WORKOUT_PATH, useActiveWorkout, workoutDateText } from "@/modules/workouts/api";
+import { WORKOUT_PATH, useActiveWorkout } from "@/modules/workouts/api";
 
-import { DATE_PARAM, parseDateParam, useOverview, type Overview } from "./api";
+import { useOverview, type Overview } from "./api";
 import { DayNote, NOTE_CLASS } from "./day-note";
 import { FoodCard } from "./food-card";
 import { TrainingCard } from "./training-card";
@@ -17,11 +17,11 @@ const ACTION_CLASS = `inline-flex items-center justify-center ${PRIMARY_BUTTON_C
 
 /** "Logg mat" and "Start økt" ("Fortsett økt" while one is in progress): the only two
  * primary actions on I dag. */
-function Actions() {
+function Actions({ href }: { href: (path: string) => string }) {
   const active = useActiveWorkout();
   return (
     <div className="flex flex-wrap gap-3">
-      <Link href="/mat" className={ACTION_CLASS}>
+      <Link href={href("/mat")} className={ACTION_CLASS}>
         Logg mat
       </Link>
       {active.data ? (
@@ -29,7 +29,7 @@ function Actions() {
           Fortsett økt
         </Link>
       ) : (
-        <Link href="/trening" className={ACTION_CLASS}>
+        <Link href={href("/trening")} className={ACTION_CLASS}>
           Start økt
         </Link>
       )}
@@ -44,21 +44,23 @@ function isEmptyDay(overview: Overview): boolean {
 }
 
 /**
- * I dag (stories 6.1 and 6.2): the day note, the two actions, and the Mat and Trening cards
- * for `?dato=` (default today in Europe/Oslo). Read-only; logging happens on Mat and Trening.
+ * I dag (stories 6.1 to 6.3): the week strip, the day note, the two actions, and the Mat and
+ * Trening cards for `?dato=` (default today in Europe/Oslo). Read-only; logging happens on
+ * Mat and Trening, and every link there keeps the chosen date.
  */
 export function TodayPage() {
-  const today = useOsloToday();
-  const param = parseDateParam(useSearchParams().get(DATE_PARAM), today);
-  const date = param ?? today;
-  const isToday = date !== null && date === today;
+  const { today, date, isToday, futureRequested } = useSelectedDate();
   const overview = useOverview(date);
+  const href = (path: string) => datedHref(path, date, today);
 
   return (
     <div className="flex flex-col gap-6">
+      {date !== null && today !== null && (
+        <WeekStrip date={date} today={today} futureRequested={futureRequested} />
+      )}
       {/* The top bar already says "I dag"; only an earlier date needs its own heading. */}
       {date !== null && !isToday && (
-        <h2 className="text-title font-light text-foreground">{workoutDateText(date)}</h2>
+        <h2 className="text-title font-light text-foreground">{dayText(date, today ?? undefined)}</h2>
       )}
 
       {overview.isError && (
@@ -89,13 +91,13 @@ export function TodayPage() {
               <div aria-hidden="true" className={`${NOTE_CLASS} h-40 animate-pulse`} />
             )
           )}
-          <Actions />
+          <Actions href={href} />
         </div>
         <div className="flex flex-col gap-4">
           {overview.data ? (
             <>
-              <FoodCard overview={overview.data} isToday={isToday} />
-              <TrainingCard overview={overview.data} isToday={isToday} />
+              <FoodCard overview={overview.data} isToday={isToday} href={href} />
+              <TrainingCard overview={overview.data} href={href} />
             </>
           ) : (
             !overview.isError && (

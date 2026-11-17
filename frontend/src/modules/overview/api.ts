@@ -4,11 +4,15 @@ import { useQuery } from "@tanstack/react-query";
 
 import { api } from "@/lib/api/client";
 import type { components } from "@/lib/api/schema";
+import { mondayOf } from "@/lib/selected-date";
 import { call } from "@/modules/identity/api";
+
+export { DATE_PARAM, parseDateParam } from "@/lib/selected-date";
 
 export type Overview = components["schemas"]["OverviewResponse"];
 export type OverviewWorkout = Overview["workouts"][number];
 export type OverviewSet = OverviewWorkout["exercises"][number]["sets"][number];
+export type WeekDay = components["schemas"]["WeekDayResponse"];
 
 /** Every Daily Overview; invalidate this to refresh all dates. */
 export const OVERVIEW_KEY = ["overview"] as const;
@@ -18,8 +22,28 @@ export function overviewKey(date: string) {
   return ["overview", date] as const;
 }
 
-/** The I dag page reads its date from `?dato=YYYY-MM-DD`. */
-export const DATE_PARAM = "dato";
+/** Every week summary; invalidate this when the date of a change is unknown. */
+export const OVERVIEW_WEEK_KEY = ["overview-week"] as const;
+
+/** The week strip's marks for the week starting on Monday `start` (story 6.3). */
+export function overviewWeekKey(start: string) {
+  return ["overview-week", start] as const;
+}
+
+/** The week key for the week that holds `date`. */
+export function overviewWeekKeyFor(date: string) {
+  return overviewWeekKey(mondayOf(date));
+}
+
+/** "mat logget"/"trening logget" and "future" for Monday `start` to Sunday. */
+export function useOverviewWeek(start: string | null) {
+  return useQuery({
+    queryKey: overviewWeekKey(start ?? ""),
+    queryFn: () =>
+      call(() => api.GET("/api/overview/week", { params: { query: { start: start ?? "" } } })),
+    enabled: start !== null,
+  });
+}
 
 /** Target, kcal eaten and remaining, the Meals and the done workouts, all from the API. */
 export function useOverview(date: string | null) {
@@ -29,17 +53,6 @@ export function useOverview(date: string | null) {
       call(() => api.GET("/api/overview", { params: { query: { date: date ?? "" } } })),
     enabled: date !== null,
   });
-}
-
-/** A real YYYY-MM-DD calendar date not after `today`, or null (a bad or future `?dato=`
- * falls back to today). */
-export function parseDateParam(value: string | null, today: string | null): string | null {
-  if (!value || !/^\d{4}-\d{2}-\d{2}$/.test(value)) return null;
-  if (today !== null && value > today) return null;
-  const parsed = new Date(`${value}T00:00:00Z`);
-  return !Number.isNaN(parsed.getTime()) && parsed.toISOString().slice(0, 10) === value
-    ? value
-    : null;
 }
 
 /** Whole kcal, rounding half up (220.5 → 221, −120.5 → −120). */

@@ -110,6 +110,23 @@ def list_entries(
     return [(entry, item) for entry, item in db.execute(statement)]
 
 
+def dates_with_entries(
+    db: DbSessionType, user_id: uuid.UUID, start: date, end: date
+) -> set[date]:
+    """The dates from `start` to `end` (inclusive) with at least one live entry."""
+    statement = (
+        select(FoodLogEntry.date)
+        .where(
+            FoodLogEntry.user_id == user_id,
+            FoodLogEntry.date >= start,
+            FoodLogEntry.date <= end,
+            FoodLogEntry.deleted_at.is_(None),
+        )
+        .distinct()
+    )
+    return set(db.scalars(statement))
+
+
 def list_recent_items(
     db: DbSessionType, user_id: uuid.UUID, limit: int = RECENT_LIMIT
 ) -> list[tuple[FoodItem, FoodLogEntry]]:

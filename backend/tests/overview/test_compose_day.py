@@ -4,7 +4,7 @@ import datetime as dt
 import uuid
 
 from app.modules.food.schemas import FoodDayResponse, Meal, MealSummary
-from app.modules.overview.service import compose_day
+from app.modules.overview.service import compose_day, compose_week
 from app.modules.workouts.schemas import SetResponse, WorkoutExerciseResponse, WorkoutResponse
 
 DAY = dt.date(2026, 11, 16)
@@ -80,3 +80,20 @@ def test_only_done_sets_and_workouts_with_any() -> None:
     assert all(s.done for s in exercises[0].sets)
     # The input is not changed.
     assert len(kept.exercises) == 2
+
+
+def test_compose_week_marks_and_future() -> None:
+    days = compose_week(
+        DAY,
+        dt.date(2026, 11, 18),
+        {dt.date(2026, 11, 16)},
+        {dt.date(2026, 11, 16), dt.date(2026, 11, 18)},
+    )
+
+    assert [d.date for d in days] == [DAY + dt.timedelta(days=i) for i in range(7)]
+    assert [(d.has_food, d.has_workout) for d in days[:3]] == [
+        (True, True),
+        (False, False),
+        (False, True),
+    ]
+    assert [d.future for d in days] == [False, False, False, True, True, True, True]

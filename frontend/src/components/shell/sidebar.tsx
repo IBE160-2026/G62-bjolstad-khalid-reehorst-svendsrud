@@ -1,8 +1,8 @@
 "use client";
 
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+import { NavLink } from "./nav-link";
 import { APP_NAME, NAV_ITEMS, isActive } from "./nav-items";
 
 /** Sidebar with labels at >= 1024 px, icon rail at 768–1023 px, hidden below. */
@@ -27,7 +27,7 @@ export function Sidebar() {
           const active = isActive(pathname, href);
           return (
             <li key={href}>
-              <Link
+              <NavLink
                 href={href}
                 title={label}
                 aria-current={active ? "page" : undefined}
@@ -39,7 +39,7 @@ export function Sidebar() {
               >
                 <Icon aria-hidden="true" className="size-6 shrink-0" strokeWidth={2} />
                 <span className="sr-only lg:not-sr-only">{label}</span>
-              </Link>
+              </NavLink>
             </li>
           );
         })}

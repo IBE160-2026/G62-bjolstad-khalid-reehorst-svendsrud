@@ -22,3 +22,15 @@ class OverviewResponse(BaseModel):
     # The date's workouts (finished or not) with at least one done set, oldest first; each
     # has only its exercises with done sets, and only the done sets.
     workouts: list[WorkoutResponse]
+
+
+class WeekDayResponse(BaseModel):
+    """One day in the week strip (story 6.3)."""
+
+    date: dt.date
+    # At least one live food entry on the date.
+    has_food: bool
+    # At least one workout on the date with a done set.
+    has_workout: bool
+    # After today in Europe/Oslo; the strip disables it.
+    future: bool

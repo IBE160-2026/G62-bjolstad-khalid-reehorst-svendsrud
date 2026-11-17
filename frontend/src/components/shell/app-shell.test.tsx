@@ -2,12 +2,13 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { render, screen, waitFor } from "@testing-library/react";
 import { afterEach, beforeAll, describe, expect, it, vi } from "vitest";
 
-const navigation = vi.hoisted(() => ({ pathname: "/" }));
+const navigation = vi.hoisted(() => ({ pathname: "/", search: "" }));
 const getMock = vi.hoisted(() => vi.fn());
 const replaceMock = vi.hoisted(() => vi.fn());
 vi.mock("@/lib/api/client", () => ({ api: { GET: getMock } }));
 vi.mock("next/navigation", () => ({
   usePathname: () => navigation.pathname,
+  useSearchParams: () => new URLSearchParams(navigation.search),
   useRouter: () => ({ replace: replaceMock }),
 }));
 

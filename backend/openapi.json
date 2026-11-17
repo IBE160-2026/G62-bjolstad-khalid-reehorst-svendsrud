@@ -2392,6 +2392,64 @@
           }
         }
       }
+    },
+    "/api/overview/week": {
+      "get": {
+        "tags": [
+          "overview"
+        ],
+        "summary": "Get Overview Week",
+        "description": "Monday to Sunday from `start` (a Monday, YYYY-MM-DD): whether food and a workout with\na done set were logged each day, and whether the day is after today (Europe/Oslo).",
+        "operationId": "get_overview_week",
+        "parameters": [
+          {
+            "name": "start",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date",
+              "title": "Start"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WeekDayResponse"
+                  },
+                  "title": "Response Get Overview Week"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "week_start_not_monday, week_out_of_range, validation_error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Default Response"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -3775,6 +3833,36 @@
           "intro_dismissed_at"
         ],
         "title": "UserResponse"
+      },
+      "WeekDayResponse": {
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date",
+            "title": "Date"
+          },
+          "has_food": {
+            "type": "boolean",
+            "title": "Has Food"
+          },
+          "has_workout": {
+            "type": "boolean",
+            "title": "Has Workout"
+          },
+          "future": {
+            "type": "boolean",
+            "title": "Future"
+          }
+        },
+        "type": "object",
+        "required": [
+          "date",
+          "has_food",
+          "has_workout",
+          "future"
+        ],
+        "title": "WeekDayResponse",
+        "description": "One day in the week strip (story 6.3)."
       },
       "WorkoutCreate": {
         "properties": {

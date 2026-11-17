@@ -1,12 +1,14 @@
 "use client";
 
 import { Apple, Coffee, Sandwich, Soup, type LucideIcon } from "lucide-react";
-import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import {
   PRIMARY_BUTTON_CLASS,
   SECONDARY_BUTTON_CLASS,
 } from "@/modules/identity/styles";
+import { WeekStrip } from "@/components/week-strip";
+import { dayText, useSelectedDate } from "@/lib/selected-date";
 import { formatKcal } from "@/modules/profile/target-result";
 
 import {
@@ -21,8 +23,6 @@ import {
   defaultMeal,
   formatGrams,
   mealLabel,
-  msToNextOsloMidnight,
-  osloToday,
   type Meal,
 } from "./meals";
 import { UndoToast, type UndoToastState } from "@/components/undo-toast";
@@ -134,43 +134,10 @@ function DaySkeleton() {
   );
 }
 
-/** Longest wait between checks, so DST days and sleeping laptops still catch up. */
-const MAX_DATE_CHECK_MS = 60 * 60 * 1000;
-
-/** Re-read the date when the tab comes back and at the next Oslo midnight. */
-function subscribeToOsloDate(onChange: () => void) {
-  let timer: ReturnType<typeof setTimeout>;
-  const schedule = () => {
-    timer = setTimeout(
-      () => {
-        onChange();
-        schedule();
-      },
-      Math.min(msToNextOsloMidnight() + 1000, MAX_DATE_CHECK_MS),
-    );
-  };
-  schedule();
-  document.addEventListener("visibilitychange", onChange);
-  window.addEventListener("focus", onChange);
-  return () => {
-    clearTimeout(timer);
-    document.removeEventListener("visibilitychange", onChange);
-    window.removeEventListener("focus", onChange);
-  };
-}
-
-/** Today in Oslo, read in the browser only (the clock is not known while prerendering). */
-export function useOsloToday(): string | null {
-  return useSyncExternalStore(
-    subscribeToOsloDate,
-    () => osloToday(),
-    () => null,
-  );
-}
-
-/** Mat: today's four Meals (Europe/Oslo) with entries, Meal totals and the day total. */
+/** Mat: the chosen date's four Meals (`?dato=`, default today in Europe/Oslo) with entries,
+ * Meal totals and the day total. New entries are logged to that date (story 6.3). */
 export function FoodDay() {
-  const date = useOsloToday();
+  const { date, today, isToday, futureRequested } = useSelectedDate();
   const day = useFoodDay(date);
   const [sheet, setSheet] = useState<{
     open: boolean;
@@ -284,10 +251,13 @@ export function FoodDay() {
 
   return (
     <div className="flex flex-col gap-6">
+      {date !== null && today !== null && (
+        <WeekStrip date={date} today={today} futureRequested={futureRequested} />
+      )}
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div className="flex flex-col gap-1">
           <h2 className="text-small font-medium text-muted-foreground">
-            I dag
+            {date === null || isToday ? "I dag" : dayText(date, today ?? undefined)}
           </h2>
           <p
             className="text-title font-light text-foreground tabular-nums"
@@ -327,7 +297,9 @@ export function FoodDay() {
         <>
           {isEmpty && (
             <p className="text-body text-foreground">
-              Du har ikke logget noe i dag ennå. Legg til et måltid.
+              {isToday
+                ? "Du har ikke logget noe i dag ennå. Legg til et måltid."
+                : "Du har ikke logget noe denne dagen. Legg til et måltid."}
             </p>
           )}
           {day.data.meals.map((summary) => (
