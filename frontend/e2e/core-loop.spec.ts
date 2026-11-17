@@ -403,3 +403,42 @@ test("sheets: focus moves in, Esc closes and focus returns to the opener", async
   await expect(helpSheet).toBeHidden();
   await expect(help).toBeFocused();
 });
+
+test("week strip (story 6.3): pick yesterday, log food, today unchanged", async ({ page }) => {
+  const { target } = await registerAndGoHome(page);
+  expect((await readDayNote(page)).remaining).toBe(target);
+  const yesterday = osloDate(1);
+
+  // ← moves one day, across weeks when today is a Monday.
+  const strip = page.getByRole("toolbar", { name: "Velg dag" });
+  await strip.getByRole("button", { pressed: true }).press("ArrowLeft");
+  await expect(page).toHaveURL(new RegExp(`/\\?dato=${yesterday}$`));
+  await expect(page.getByText("Ingenting logget denne dagen.")).toBeVisible();
+
+  await page.getByRole("link", { name: "Logg mat" }).click();
+  await expect(page).toHaveURL(new RegExp(`/mat\\?dato=${yesterday}$`));
+  const havregryn = await logHavregrynToFrokost(page);
+  const frokost = page.getByRole("region", { name: /^Frokost/ });
+  await expect(
+    frokost.getByRole("button", { name: new RegExp(`^Endre ${escapeRegExp(havregryn)}`) }),
+  ).toBeVisible();
+
+  // The nav link to Trening keeps the date; "I dag" in the nav always means today.
+  const nav = page.getByRole("navigation", { name: "Hovedmeny" }).first();
+  await expect(nav.getByRole("link", { name: "Trening" })).toHaveAttribute(
+    "href",
+    `/trening?dato=${yesterday}`,
+  );
+  await nav.getByRole("link", { name: "I dag" }).click();
+  await expect(page).toHaveURL(/\/$/);
+  await expect.poll(async () => (await readDayNote(page)).remaining).toBe(target);
+
+  // Yesterday on I dag shows the entry, and the strip marks the day.
+  await page.goto(`/?dato=${yesterday}`);
+  await expect(
+    foodCard(page).getByText(new RegExp(`^${escapeRegExp(havregryn)} 100 g$`)),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("toolbar", { name: "Velg dag" }).getByRole("button", { name: /, mat logget$/ }),
+  ).toHaveCount(1);
+});

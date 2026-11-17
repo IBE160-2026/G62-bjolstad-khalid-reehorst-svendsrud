@@ -48,6 +48,25 @@ def list_for_date(db: DbSessionType, user_id: uuid.UUID, day: dt.date) -> list[W
     return list(db.scalars(query))
 
 
+def dates_with_done_sets(
+    db: DbSessionType, user_id: uuid.UUID, start: dt.date, end: dt.date
+) -> set[dt.date]:
+    """The dates from `start` to `end` (inclusive) with a workout that has a done set."""
+    query = (
+        select(Workout.date)
+        .join(WorkoutExercise, WorkoutExercise.workout_id == Workout.id)
+        .join(Set, Set.workout_exercise_id == WorkoutExercise.id)
+        .where(
+            Workout.user_id == user_id,
+            Workout.date >= start,
+            Workout.date <= end,
+            Set.done.is_(True),
+        )
+        .distinct()
+    )
+    return set(db.scalars(query))
+
+
 def add_workout(db: DbSessionType, workout: Workout) -> Workout:
     db.add(workout)
     db.flush()

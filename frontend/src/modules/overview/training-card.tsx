@@ -43,10 +43,16 @@ export function setsText(sets: OverviewSet[]): string {
 
 /**
  * Trening on I dag: the date's workouts with their done sets and "Sist" (read-only), each
- * linking to its page. No workout today invites one (story 6.2); Trening starts today's
- * workout, so earlier dates get no link.
+ * linking to its page. No workout invites one (story 6.2); the link keeps the chosen date
+ * (`href`), so Trening starts the workout on it (story 6.3).
  */
-export function TrainingCard({ overview, isToday }: { overview: Overview; isToday: boolean }) {
+export function TrainingCard({
+  overview,
+  href,
+}: {
+  overview: Overview;
+  href: (path: string) => string;
+}) {
   const several = overview.workouts.length > 1;
   return (
     <section
@@ -54,16 +60,14 @@ export function TrainingCard({ overview, isToday }: { overview: Overview; isToda
       className={CARD_CLASS}
       data-testid="training-card"
     >
-      <CardHeader id="training-card-title" href="/trening" title="Trening" />
+      <CardHeader id="training-card-title" href={href("/trening")} title="Trening" />
       {overview.workouts.length === 0 ? (
-        isToday && (
-          <Link
-            href="/trening"
-            className="min-h-11 self-start rounded-full px-2 py-2 text-body font-medium text-mark-text hover:bg-mark-tint"
-          >
-            Start en økt
-          </Link>
-        )
+        <Link
+          href={href("/trening")}
+          className="min-h-11 self-start rounded-full px-2 py-2 text-body font-medium text-mark-text hover:bg-mark-tint"
+        >
+          Start en økt
+        </Link>
       ) : (
         <ul className="flex flex-col divide-y divide-border">
           {overview.workouts.map((workout, index) => (

@@ -4,9 +4,16 @@ import { useMutation, useQuery, useQueryClient, type QueryKey } from "@tanstack/
 import { useRouter } from "next/navigation";
 
 import { api } from "@/lib/api/client";
+import { datedHref } from "@/lib/selected-date";
+import { osloToday } from "@/modules/food/meals";
 import type { components } from "@/lib/api/schema";
 import { ApiError, call, callNoContent } from "@/modules/identity/api";
-import { OVERVIEW_KEY, overviewKey } from "@/modules/overview/api";
+import {
+  OVERVIEW_KEY,
+  OVERVIEW_WEEK_KEY,
+  overviewKey,
+  overviewWeekKeyFor,
+} from "@/modules/overview/api";
 
 export type Workout = components["schemas"]["WorkoutResponse"];
 export type WorkoutExercise = components["schemas"]["WorkoutExerciseResponse"];
@@ -91,8 +98,9 @@ const pendingDeletes = new Set<string>();
 function useStoreWorkout(queryKey: QueryKey = ACTIVE_WORKOUT_KEY) {
   const queryClient = useQueryClient();
   return (workout: Workout) => {
-    // I dag shows the date's done sets (AD-15).
+    // I dag and the week strip show the date's done sets (AD-15).
     void queryClient.invalidateQueries({ queryKey: overviewKey(workout.date) });
+    void queryClient.invalidateQueries({ queryKey: overviewWeekKeyFor(workout.date) });
     let shown = workout;
     for (const setId of pendingDeletes) shown = withoutSet(shown, setId);
     if (!workout.finished_at) {
@@ -399,11 +407,13 @@ export function useFinishWorkout() {
         ),
       ),
     onSuccess: (workout) => {
-      router.push("/");
+      // Back to I dag for the workout's date (story 6.3).
+      router.push(datedHref("/", workout.date, osloToday()));
       // Only the unfinished workout can be finished, so none is in progress now.
       queryClient.setQueryData(ACTIVE_WORKOUT_KEY, null);
       queryClient.setQueryData(workoutKey(workout.id), workout);
       void queryClient.invalidateQueries({ queryKey: overviewKey(workout.date) });
+      void queryClient.invalidateQueries({ queryKey: overviewWeekKeyFor(workout.date) });
       return queryClient.invalidateQueries({ queryKey: FINISHED_WORKOUTS_KEY });
     },
   });
@@ -430,6 +440,7 @@ export function useDeleteWorkout() {
       if (active?.id === workoutId) queryClient.setQueryData(ACTIVE_WORKOUT_KEY, null);
       // Only the id is known here, so every date's overview is refetched.
       void queryClient.invalidateQueries({ queryKey: OVERVIEW_KEY });
+      void queryClient.invalidateQueries({ queryKey: OVERVIEW_WEEK_KEY });
       return queryClient.invalidateQueries({ queryKey: FINISHED_WORKOUTS_KEY });
     },
   });

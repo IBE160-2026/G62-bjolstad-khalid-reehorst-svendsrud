@@ -19,7 +19,7 @@ Siden viser 404 til den første versjonen av appen er pushet til `main`. Vercel-
 
 ## Status
 
-Planleggingen (BMAD) er ferdig, og koden bygges én story om gangen, med én branch og pull request per story. Se [sprint-status.yaml](.docs/implementation-artifacts/sprint-status.yaml) for status per story.
+Alle Must-krav er ferdige. Koden er bygget én story om gangen, med én branch og pull request per story. Se [sprint-status.yaml](.docs/implementation-artifacts/sprint-status.yaml) for status per story.
 
 | Del | Status |
 |---|---|
@@ -27,8 +27,10 @@ Planleggingen (BMAD) er ferdig, og koden bygges én story om gangen, med én bra
 | Konto (epic 1) | Opprett konto, logg inn/ut, samtykke, slett konto |
 | Profil (epic 2) | Profiloppsett med daglig kaloribehov, endre profil |
 | Mat (epic 3) | Søk (Matvaretabellen + 941 norske merkevarer fra Open Food Facts), strekkode, egne matvarer, porsjoner, endre/slette med angre |
-| Trening (epic 4) | 34 øvelser med video, utstyrsprofiler, forslag som passer utstyret, søk på navn (filter og muskelfigur gjenstår) |
-| Gjenstår | Logge treningsøkt (epic 5), dagsoversikt og historikk (epic 6); bildeestimat av kalorier (epic 7) er fase 2 |
+| Trening (epic 4) | 34 øvelser med video, utstyrsprofiler, forslag som passer utstyret, søk på navn, filtre på muskelgruppe og nivå |
+| Treningslogg (epic 5) | Starte økt, logge sett (repetisjoner/kg eller sekunder), «Sist» fra forrige gang, fullføre, endre og slette økter |
+| I dag (epic 6) | Kalorier igjen, dagens mat og trening, tomme tilstander, «?»-hjelp, demobrukere og Playwright-tester |
+| Gjenstår (Should) | Ukestripe for å bytte dag, glemt passord, deaktivere konto, kamera-skanning, muskelfigur; bildeestimat av kalorier (epic 7) er fase 2 |
 
 Oppgaver og åpne spørsmål følges opp i [GitHub Issues](https://github.com/IBE160-2026/G62-bjolstad-khalid-reehorst-svendsrud/issues).
 

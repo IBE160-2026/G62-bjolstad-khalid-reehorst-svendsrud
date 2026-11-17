@@ -12,8 +12,10 @@ const apiMock = vi.hoisted(() => ({
 }));
 vi.mock("@/lib/api/client", () => ({ api: apiMock }));
 const searchMock = vi.hoisted(() => ({ value: "" }));
+const routerMock = vi.hoisted(() => ({ push: vi.fn(), replace: vi.fn() }));
 vi.mock("next/navigation", () => ({
-  useRouter: () => ({ push: vi.fn(), replace: vi.fn() }),
+  usePathname: () => "/",
+  useRouter: () => routerMock,
   useSearchParams: () => new URLSearchParams(searchMock.value),
 }));
 vi.mock("@/modules/food/meals", async (importOriginal) => ({
@@ -115,6 +117,7 @@ beforeEach(() => {
   apiMock.GET.mockImplementation(async (path: string) => {
     if (path === "/api/overview") return "error" in current ? { error: current } : { data: current };
     if (path === "/api/workouts/active") return { data: { workout: active } };
+    if (path === "/api/overview/week") return { data: [] };
     throw new Error(`unexpected GET ${path}`);
   });
 });
@@ -247,7 +250,7 @@ describe("actions", () => {
 });
 
 describe("dates", () => {
-  it("an earlier date with nothing logged says so, with the actions but no add links", async () => {
+  it("an earlier date with nothing logged says so, and every link keeps the date", async () => {
     searchMock.value = "dato=2026-11-16";
     current = overview({ date: "2026-11-16" });
     renderPage();
@@ -258,11 +261,37 @@ describe("dates", () => {
       params: { query: { date: "2026-11-16" } },
     });
     expect(await note()).toHaveTextContent("1 640 kcal igjen av målet på 1 640");
-    expect(screen.getByRole("link", { name: "Logg mat" })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Start økt" })).toBeInTheDocument();
-    expect(screen.queryByRole("link", { name: "Start en økt" })).not.toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Logg mat" })).toHaveAttribute(
+      "href",
+      "/mat?dato=2026-11-16",
+    );
+    expect(screen.getByRole("link", { name: "Start økt" })).toHaveAttribute(
+      "href",
+      "/trening?dato=2026-11-16",
+    );
+    // The 6.2 prompts show on earlier dates too and act on that date (story 6.3).
+    expect(screen.getByRole("link", { name: "Start en økt" })).toHaveAttribute(
+      "href",
+      "/trening?dato=2026-11-16",
+    );
+    expect(screen.getByRole("link", { name: "Logg et måltid denne dagen" })).toHaveAttribute(
+      "href",
+      "/mat?dato=2026-11-16",
+    );
+    expect(screen.getByRole("link", { name: "Mat" })).toHaveAttribute("href", "/mat?dato=2026-11-16");
     expect(screen.queryByRole("link", { name: /^Logg ditt første/ })).not.toBeInTheDocument();
-    expect(screen.queryAllByRole("link", { name: /^Legg til i / })).toHaveLength(0);
+  });
+
+  it("an earlier date's empty Meal links to Mat for that date", async () => {
+    searchMock.value = "dato=2026-11-16";
+    current = overview({ date: "2026-11-16" }, [entry("Yoghurt", 140, "breakfast")]);
+    renderPage();
+
+    const food = await screen.findByTestId("food-card");
+    expect(within(food).getByRole("link", { name: "Legg til i lunsj" })).toHaveAttribute(
+      "href",
+      "/mat?dato=2026-11-16",
+    );
   });
 
   it("an earlier date over the target does not talk about today", async () => {
@@ -276,10 +305,16 @@ describe("dates", () => {
     expect(dayNote).not.toHaveTextContent(/i dag|i morgen/);
   });
 
-  it("a future dato falls back to today", async () => {
+  it("a future dato falls back to today and says so once", async () => {
     searchMock.value = "dato=2026-11-18";
     renderPage();
     await note();
+
+    expect(await screen.findByText("Du kan ikke velge en dag fram i tid.")).toHaveAttribute(
+      "role",
+      "status",
+    );
+    expect(routerMock.replace).toHaveBeenCalledWith("/");
 
     expect(apiMock.GET).toHaveBeenCalledWith("/api/overview", {
       params: { query: { date: TODAY } },
@@ -304,7 +339,7 @@ describe("loading and errors", () => {
     apiMock.GET.mockImplementation(() => new Promise(() => {}));
     renderPage();
 
-    const skeleton = screen.getByRole("status");
+    const skeleton = screen.getByTestId("overview-skeleton");
     expect(skeleton).toHaveAttribute("aria-busy", "true");
     expect(skeleton).toHaveTextContent("Laster dagen …");
   });
@@ -343,6 +378,26 @@ describe("refresh (AD-15)", () => {
     await waitFor(async () =>
       expect(await note()).toHaveTextContent("1 500 kcal igjen av dagens mål på 1 640"),
     );
+  });
+});
+
+describe("week strip refresh (story 6.3)", () => {
+  it("a food entry change refetches its week's marks", async () => {
+    const saved = { ...entry("Yoghurt", 140, "breakfast"), date: "2026-11-12" };
+    apiMock.POST.mockResolvedValue({ data: saved });
+    const invalidate = vi.spyOn(client, "invalidateQueries");
+    const { result } = renderHook(() => useAddFoodEntry(), { wrapper });
+    await act(() =>
+      result.current.mutateAsync({
+        food_item_id: saved.food_item_id,
+        date: "2026-11-12",
+        meal: "breakfast",
+        grams: 150,
+      }),
+    );
+
+    // 12 November 2026 is a Thursday; its week starts on Monday the 9th.
+    expect(invalidate).toHaveBeenCalledWith({ queryKey: ["overview-week", "2026-11-09"] });
   });
 });
 
