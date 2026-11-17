@@ -56,9 +56,10 @@ export function TodayPage() {
 
   return (
     <div className="flex flex-col gap-6">
-      <h2 className="text-title font-light text-foreground">
-        {date === null || isToday ? "I dag" : workoutDateText(date)}
-      </h2>
+      {/* The top bar already says "I dag"; only an earlier date needs its own heading. */}
+      {date !== null && !isToday && (
+        <h2 className="text-title font-light text-foreground">{workoutDateText(date)}</h2>
+      )}
 
       {overview.isError && (
         <div className="flex flex-col items-start gap-3">

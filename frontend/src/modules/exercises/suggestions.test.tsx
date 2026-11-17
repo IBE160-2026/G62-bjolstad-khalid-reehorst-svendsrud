@@ -8,7 +8,7 @@ vi.mock("@/lib/api/client", () => ({ api: { GET: getMock } }));
 vi.mock("next/navigation", () => ({ useRouter: () => ({ push: vi.fn() }) }));
 
 import { profileStorageKey } from "./api";
-import { Suggestions, countText, groupByLevel } from "./suggestions";
+import { Suggestions, countText, emptyFilteredText, groupByLevel } from "./suggestions";
 
 const USER_ID = "u-ola";
 const STORAGE_KEY = profileStorageKey(USER_ID);
@@ -16,20 +16,33 @@ const HOME = { id: "p-home", name: "Hjemme", equipment: [] };
 const GYM = { id: "p-gym", name: "Treningssenter", equipment: [] };
 const EMPTY = { id: "p-empty", name: "Hytta", equipment: [] };
 
-function exercise(n: number, level: string, muscle = "Ben", equipment = ["Kroppsvekt"]) {
+function exercise(
+  n: number,
+  level: string,
+  muscle = "Ben",
+  equipment = ["Kroppsvekt"],
+  // Test-only: lets the mock filter on secondary muscle groups like the backend.
+  secondary: string[] = [],
+) {
   return {
     id: `00000000-0000-4000-8000-${String(n).padStart(12, "0")}`,
     name: `Øvelse ${n}`,
     level,
     primary_muscle_group: muscle,
     equipment,
+    secondary,
   };
+}
+
+/** "Mage/kjerne" → "mage-kjerne". */
+function slug(name: string): string {
+  return name.toLowerCase().replace("/", "-");
 }
 
 // The backend's order: Nybegynner, Middels, Øvet.
 const HOME_EXERCISES = [
   ...Array.from({ length: 6 }, (_, i) => exercise(i + 1, "beginner")),
-  exercise(7, "intermediate", "Bryst"),
+  exercise(7, "intermediate", "Bryst", ["Kroppsvekt"], ["Armer"]),
   exercise(8, "intermediate", "Mage/kjerne"),
 ];
 const GYM_EXERCISES = [
@@ -52,7 +65,10 @@ function mockApi(
   delay: Record<string, Promise<void>> = {},
 ) {
   getMock.mockImplementation(
-    async (path: string, init?: { params: { query: { profile_id: string } } }): Promise<Answer> => {
+    async (
+      path: string,
+      init?: { params: { query: { profile_id: string; muscle_group?: string; level?: string } } },
+    ): Promise<Answer> => {
       if (path === "/api/identity/me") {
         return { data: { id: USER_ID, email: "ola@eksempel.no" }, error: undefined };
       }
@@ -69,8 +85,16 @@ function mockApi(
           const message = "Fant ikke utstyrsprofilen. Last inn siden på nytt.";
           return { error: { error: { code: "equipment_profile_not_found", message } } };
         }
+        // A stand-in for the backend filter (primary or secondary muscle, exact level).
+        const { muscle_group: muscle, level } = init!.params.query;
+        const exercises = (result.exercises as ReturnType<typeof exercise>[]).filter(
+          (item) =>
+            (!level || item.level === level) &&
+            (!muscle ||
+              [item.primary_muscle_group, ...item.secondary].map(slug).includes(muscle)),
+        );
         return {
-          data: { profile_id: id, profile_name: result.name, exercises: result.exercises },
+          data: { profile_id: id, profile_name: result.name, exercises },
           error: undefined,
         };
       }
@@ -86,6 +110,12 @@ function renderPage() {
       <Suggestions />
     </QueryClientProvider>,
   );
+}
+
+function suggestionQueries(): Record<string, string>[] {
+  return getMock.mock.calls
+    .filter(([path]) => path === "/api/exercises/suggestions")
+    .map(([, init]) => init.params.query);
 }
 
 function suggestionCalls(): string[] {
@@ -278,6 +308,168 @@ describe("Suggestions", () => {
   });
 });
 
+describe("Filters", () => {
+  it("shows the muscle groups as toggle buttons in order and three level chips", async () => {
+    mockApi();
+    renderPage();
+    await screen.findByText("8 øvelser passer med Hjemme");
+
+    const muscles = screen.getByRole("group", { name: "Muskelgruppe" });
+    expect(within(muscles).getAllByRole("button").map((b) => b.textContent)).toEqual([
+      "Skuldre",
+      "Bryst",
+      "Mage/kjerne",
+      "Armer",
+      "Ben",
+      "Rygg",
+    ]);
+    const levels = screen.getByRole("group", { name: "Nivå" });
+    expect(within(levels).getAllByRole("button").map((b) => b.textContent)).toEqual([
+      "Nybegynner",
+      "Middels",
+      "Øvet",
+    ]);
+    for (const button of screen.getAllByRole("button", { pressed: false })) {
+      expect(button).toHaveClass("min-h-11");
+    }
+    expect(screen.queryAllByRole("button", { pressed: true })).toHaveLength(0);
+  });
+
+  it("filters at once and names the filters in the count line", async () => {
+    mockApi();
+    renderPage();
+    await screen.findByText("8 øvelser passer med Hjemme");
+    fireEvent.click(screen.getByRole("radio", { name: "Treningssenter" }));
+    await screen.findByText("34 øvelser passer med Treningssenter");
+
+    fireEvent.click(screen.getByRole("button", { name: "Bryst" }));
+    fireEvent.click(screen.getByRole("button", { name: "Øvet" }));
+
+    expect(
+      await screen.findByText("6 øvelser passer med Treningssenter · Bryst · Øvet"),
+    ).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Bryst" })).toHaveAttribute("aria-pressed", "true");
+    expect(screen.getByRole("button", { name: "Øvet" })).toHaveAttribute("aria-pressed", "true");
+    expect(suggestionQueries()).toContainEqual({
+      profile_id: "p-gym",
+      muscle_group: "bryst",
+      level: "advanced",
+    });
+  });
+
+  it("keeps one of each at a time and clears on a second press", async () => {
+    mockApi();
+    renderPage();
+    await screen.findByText("8 øvelser passer med Hjemme");
+
+    fireEvent.click(screen.getByRole("button", { name: "Bryst" }));
+    fireEvent.click(screen.getByRole("button", { name: "Ben" }));
+    expect(await screen.findByText("6 øvelser passer med Hjemme · Ben")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Bryst" })).toHaveAttribute("aria-pressed", "false");
+
+    fireEvent.click(screen.getByRole("button", { name: "Ben" }));
+    expect(await screen.findByText("8 øvelser passer med Hjemme")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Ben" })).toHaveAttribute("aria-pressed", "false");
+    expect(suggestionQueries().at(-1)).toEqual({ profile_id: "p-home" });
+  });
+
+  it("matches a secondary muscle group", async () => {
+    mockApi();
+    renderPage();
+    await screen.findByText("8 øvelser passer med Hjemme");
+
+    fireEvent.click(screen.getByRole("button", { name: "Armer" }));
+
+    expect(await screen.findByText("1 øvelse passer med Hjemme · Armer")).toBeInTheDocument();
+  });
+
+  it("names the profile and level when nothing matches (Hjemme + Øvet is empty in the seed)", async () => {
+    mockApi();
+    renderPage();
+    await screen.findByText("8 øvelser passer med Hjemme");
+
+    fireEvent.click(screen.getByRole("button", { name: "Øvet" }));
+
+    const message = await screen.findByText(/Ingen øvelser passer med Hjemme og Øvet/);
+    expect(message).toHaveAttribute("role", "status");
+    expect(message).toHaveTextContent(
+      "Ingen øvelser passer med Hjemme og Øvet. Prøv et annet nivå eller legg til utstyr. Utstyret ditt finner du under Profil → Utstyr.",
+    );
+    expect(within(message).getByRole("link", { name: "Profil → Utstyr" })).toHaveAttribute(
+      "href",
+      "/profil",
+    );
+    expect(screen.queryByRole("heading", { level: 2 })).not.toBeInTheDocument();
+  });
+
+  it("names every filter and suggests changing them when a stubbed empty answer comes back", async () => {
+    mockApi();
+    const base = getMock.getMockImplementation()!;
+    getMock.mockImplementation(async (path: string, init?: { params: { query: object } }) => {
+      if (path === "/api/exercises/suggestions" && "muscle_group" in init!.params.query) {
+        return {
+          data: { profile_id: "p-home", profile_name: "Hjemme", exercises: [] },
+          error: undefined,
+        };
+      }
+      return base(path, init as never);
+    });
+    renderPage();
+    await screen.findByText("8 øvelser passer med Hjemme");
+
+    fireEvent.click(screen.getByRole("button", { name: "Skuldre" }));
+    const muscleOnly = await screen.findByText(/Ingen øvelser passer med Hjemme og Skuldre\./);
+    expect(muscleOnly).toHaveAttribute("role", "status");
+    expect(muscleOnly).toHaveTextContent("Prøv en annen muskelgruppe eller legg til utstyr.");
+
+    fireEvent.click(screen.getByRole("button", { name: "Middels" }));
+    expect(
+      await screen.findByText(/Ingen øvelser passer med Hjemme, Skuldre og Middels\./),
+    ).toHaveTextContent("Prøv en annen muskelgruppe eller et annet nivå.");
+  });
+
+  it("keeps the filters when the profile changes", async () => {
+    mockApi();
+    renderPage();
+    await screen.findByText("8 øvelser passer med Hjemme");
+    fireEvent.click(screen.getByRole("button", { name: "Nybegynner" }));
+    await screen.findByText("6 øvelser passer med Hjemme · Nybegynner");
+
+    fireEvent.click(screen.getByRole("radio", { name: "Treningssenter" }));
+
+    expect(
+      await screen.findByText("15 øvelser passer med Treningssenter · Nybegynner"),
+    ).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Nybegynner" })).toHaveAttribute(
+      "aria-pressed",
+      "true",
+    );
+  });
+
+  it("hides the filters while a name search is active", async () => {
+    mockApi();
+    renderPage();
+    await screen.findByText("8 øvelser passer med Hjemme");
+    const base = getMock.getMockImplementation()!;
+    getMock.mockImplementation(async (path: string, init?: never) => {
+      if (path === "/api/exercises/search") {
+        return {
+          data: { profile_id: "p-home", profile_name: "Hjemme", exercises: [] },
+          error: undefined,
+        };
+      }
+      return base(path, init);
+    });
+
+    fireEvent.change(screen.getByLabelText("Søk etter øvelse"), { target: { value: "knebøy" } });
+
+    await waitFor(() =>
+      expect(screen.queryByRole("group", { name: "Muskelgruppe" })).not.toBeInTheDocument(),
+    );
+    expect(screen.queryByRole("group", { name: "Nivå" })).not.toBeInTheDocument();
+  });
+});
+
 describe("helpers", () => {
   it("groups by level in Nybegynner, Middels, Øvet order and hides empty groups", () => {
     const groups = groupByLevel([
@@ -292,5 +484,20 @@ describe("helpers", () => {
   it("writes the count line", () => {
     expect(countText(8, "Hjemme")).toBe("8 øvelser passer med Hjemme");
     expect(countText(1, "Hytta")).toBe("1 øvelse passer med Hytta");
+    expect(countText(3, "Hjemme", ["Bryst", "Nybegynner"])).toBe(
+      "3 øvelser passer med Hjemme · Bryst · Nybegynner",
+    );
+  });
+
+  it("writes the filtered empty message", () => {
+    expect(emptyFilteredText("Hjemme", { muscleGroup: "skuldre", level: null })).toBe(
+      "Ingen øvelser passer med Hjemme og Skuldre. Prøv en annen muskelgruppe eller legg til utstyr.",
+    );
+    expect(emptyFilteredText("Hjemme", { muscleGroup: null, level: "advanced" })).toBe(
+      "Ingen øvelser passer med Hjemme og Øvet. Prøv et annet nivå eller legg til utstyr.",
+    );
+    expect(emptyFilteredText("Hjemme", { muscleGroup: "skuldre", level: "advanced" })).toBe(
+      "Ingen øvelser passer med Hjemme, Skuldre og Øvet. Prøv en annen muskelgruppe eller et annet nivå.",
+    );
   });
 });

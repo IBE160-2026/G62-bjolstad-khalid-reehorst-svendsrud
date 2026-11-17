@@ -1013,7 +1013,7 @@
           "exercises"
         ],
         "summary": "Get Suggestions",
-        "description": "Exercises whose required equipment is all in the user's chosen Equipment Profile,\nordered Nybegynner, Middels, Øvet. Another user's profile, or an id that is unknown or\nnot a UUID, is 404 `equipment_profile_not_found`.",
+        "description": "Exercises whose required equipment is all in the user's chosen Equipment Profile,\nordered Nybegynner, Middels, Øvet. Optional filters: `muscle_group` (primary or\nsecondary) and `level`; an unknown value is a 422 field error. Another user's profile,\nor an id that is unknown or not a UUID, is 404 `equipment_profile_not_found`.",
         "operationId": "get_suggestions",
         "parameters": [
           {
@@ -1023,6 +1023,38 @@
             "schema": {
               "type": "string",
               "title": "Profile Id"
+            }
+          },
+          {
+            "name": "muscle_group",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/MuscleGroupSlug"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Muscle Group"
+            }
+          },
+          {
+            "name": "level",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/Level"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Level"
             }
           }
         ],
@@ -3221,6 +3253,19 @@
           "total_kcal"
         ],
         "title": "MealSummary"
+      },
+      "MuscleGroupSlug": {
+        "type": "string",
+        "enum": [
+          "ben",
+          "rygg",
+          "bryst",
+          "skuldre",
+          "armer",
+          "mage-kjerne"
+        ],
+        "title": "MuscleGroupSlug",
+        "description": "The six muscle groups of the seed (story 4.1), used to filter suggestions (4.5)."
       },
       "OverviewResponse": {
         "properties": {

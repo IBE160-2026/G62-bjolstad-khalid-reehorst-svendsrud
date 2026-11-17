@@ -25,6 +25,17 @@ class Level(StrEnum):
     ADVANCED = "advanced"
 
 
+class MuscleGroupSlug(StrEnum):
+    """The six muscle groups of the seed (story 4.1), used to filter suggestions (4.5)."""
+
+    BEN = "ben"
+    RYGG = "rygg"
+    BRYST = "bryst"
+    SKULDRE = "skuldre"
+    ARMER = "armer"
+    MAGE_KJERNE = "mage-kjerne"
+
+
 class ExerciseType(StrEnum):
     REPS = "reps"
     TIME = "time"

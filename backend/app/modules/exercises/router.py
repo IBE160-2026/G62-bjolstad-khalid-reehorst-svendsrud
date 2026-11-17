@@ -18,6 +18,8 @@ from app.modules.exercises.schemas import (
     ExerciseDetail,
     ExerciseListItem,
     ExerciseSearchResponse,
+    Level,
+    MuscleGroupSlug,
     SuggestionsResponse,
 )
 
@@ -40,12 +42,17 @@ def list_equipment(current_user: CurrentUser, db: DbSession) -> list[EquipmentRe
     responses=PROFILE_NOT_FOUND,
 )
 def get_suggestions(
-    profile_id: str, current_user: CurrentUser, db: DbSession
+    profile_id: str,
+    current_user: CurrentUser,
+    db: DbSession,
+    muscle_group: MuscleGroupSlug | None = None,
+    level: Level | None = None,
 ) -> SuggestionsResponse:
     """Exercises whose required equipment is all in the user's chosen Equipment Profile,
-    ordered Nybegynner, Middels, Øvet. Another user's profile, or an id that is unknown or
-    not a UUID, is 404 `equipment_profile_not_found`."""
-    return service.get_suggestions(db, current_user.id, profile_id)
+    ordered Nybegynner, Middels, Øvet. Optional filters: `muscle_group` (primary or
+    secondary) and `level`; an unknown value is a 422 field error. Another user's profile,
+    or an id that is unknown or not a UUID, is 404 `equipment_profile_not_found`."""
+    return service.get_suggestions(db, current_user.id, profile_id, muscle_group, level)
 
 
 @router.get(
