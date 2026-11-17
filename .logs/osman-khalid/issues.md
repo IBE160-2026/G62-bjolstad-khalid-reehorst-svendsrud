@@ -89,4 +89,4 @@
 - [x] 2026-11-18 [story-4-5-filtre](944-2026-11-18-01-00-00-story-4-5-filtre.md) — pushe og lage PR for 4.5 (løst 2026-11-18 — PR #50)
 
 - [x] 2026-11-18 — I dag viste «I dag» to ganger (toppfelt + sideoverskrift, meldt av Karianne); sideoverskriften vises nå bare for tidligere datoer
-- [ ] 2026-11-18 [story-6-4b-playwright](943-2026-11-18-02-00-00-story-6-4b-playwright.md) — pushe og lage PR for 6.4 del 2 (etter #50)
+- [x] 2026-11-18 [story-6-4b-playwright](943-2026-11-18-02-00-00-story-6-4b-playwright.md) — pushe og lage PR for 6.4 del 2 (løst 2026-11-18 — PR #51)
