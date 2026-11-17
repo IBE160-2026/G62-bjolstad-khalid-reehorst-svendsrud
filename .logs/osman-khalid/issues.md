@@ -87,3 +87,5 @@
 
 - [x] 2026-11-18 — #48 og #49 flettet av Karianne (6.4 del 1 og 3 i main)
 - [ ] 2026-11-18 [story-4-5-filtre](944-2026-11-18-01-00-00-story-4-5-filtre.md) — pushe og lage PR for 4.5
+
+- [x] 2026-11-18 — I dag viste «I dag» to ganger (toppfelt + sideoverskrift, meldt av Karianne); sideoverskriften vises nå bare for tidligere datoer

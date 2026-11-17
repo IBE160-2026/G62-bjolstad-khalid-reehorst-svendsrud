@@ -136,7 +136,8 @@ describe("acceptance", () => {
     renderPage();
 
     expect(await note()).toHaveTextContent("220 kcal igjen av dagens mål på 1 640");
-    expect(screen.getByRole("heading", { level: 2, name: "I dag" })).toBeInTheDocument();
+    // The top bar says "I dag"; the page adds no second "I dag" heading.
+    expect(screen.queryByRole("heading", { level: 2, name: "I dag" })).not.toBeInTheDocument();
     const food = screen.getByTestId("food-card");
     expect(within(food).getByText("Frokost")).toBeInTheDocument();
     expect(within(food).getByText("Yoghurt")).toBeInTheDocument();
@@ -283,7 +284,8 @@ describe("dates", () => {
     expect(apiMock.GET).toHaveBeenCalledWith("/api/overview", {
       params: { query: { date: TODAY } },
     });
-    expect(screen.getByRole("heading", { level: 2, name: "I dag" })).toBeInTheDocument();
+    // The top bar says "I dag"; the page adds no second "I dag" heading.
+    expect(screen.queryByRole("heading", { level: 2, name: "I dag" })).not.toBeInTheDocument();
   });
 
   it("a bad dato falls back to today", async () => {
