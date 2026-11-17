@@ -29,7 +29,7 @@
 # - Dev moves story to 'review', then runs code-review (fresh context, different LLM recommended)
 # - Retrospective appends its action items to action_items; the status view surfaces open ones
 generated: 11-15-2026 12:32
-last_updated: 11-17-2026 16:00
+last_updated: 11-17-2026 19:00
 project: Prompt Force
 project_key: NOKEY
 tracking_system: file-system
@@ -72,8 +72,8 @@ development_status:
   4-6-see-which-muscles-an-exercise-works-should: backlog
   epic-4-retrospective: optional
 
-  epic-5: backlog
-  5-1-start-a-workout-and-add-exercises: backlog
+  epic-5: in-progress
+  5-1-start-a-workout-and-add-exercises: review
   5-2-log-my-sets: backlog
   5-3-see-what-i-did-last-time: backlog
   5-4-finish-edit-or-delete-a-workout: backlog

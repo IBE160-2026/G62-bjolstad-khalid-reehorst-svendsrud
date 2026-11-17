@@ -76,6 +76,15 @@ def list_exercises(db: DbSessionType) -> list[ExerciseListItem]:
     return [_list_item(exercise, primary) for exercise, primary in rows]
 
 
+def get_list_items(
+    db: DbSessionType, exercise_ids: Iterable[uuid.UUID]
+) -> dict[uuid.UUID, ExerciseListItem]:
+    """List items (name, level, primary muscle, equipment) by exercise id; unknown ids are
+    left out. Used by other modules, e.g. workouts, which never read the repository."""
+    exercises = repository.get_exercises(db, list(set(exercise_ids)))
+    return {exercise.id: _list_item(exercise, _primary(exercise)) for exercise in exercises}
+
+
 def get_exercise(db: DbSessionType, exercise_id: str) -> ExerciseDetail:
     """One exercise; an unknown id or one that is not a UUID is 404 `exercise_not_found`."""
     try:

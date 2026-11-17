@@ -1160,6 +1160,32 @@ Det viktigste funnet: Dekningsanalysen er regnet ut fra øvelseslista og viser a
 
 ---
 
+## 2026-11-17 – Story 5.1 (starte økt og legge til øvelser)
+
+**Verktøy:** Claude Code (BMAD `bmad-build`, lettere prosess med én kontrollør)
+**Hvem:** Osman Khalid
+**Bakgrunn:** Første del av treningsloggen: brukeren skal kunne sette opp dagens økt.
+
+### Hva vi ba KI om
+
+1. Lage økt-modulen med start/fortsett, legge til, sortere og fjerne øvelser.
+
+### Hva KI produserte
+
+- Spec, ny backend-modul med migrering, Økt-side, «Legg til i økt» og nye tester.
+
+### Hva vi selv vurderte og kontrollerte
+
+- Osman godkjente spec-en før koding.
+- For å spare bruksgrensen valgte Osman én kontrollør i stedet for tre. Den fant 10 punkter: 6 grupper rettet, 2 avvist med begrunnelse.
+
+### Status
+
+- [x] Story 5.1 bygget og testet
+- [ ] Review av PR fra gruppen
+
+---
+
 ## Mal for nye oppføringer
 
 ```markdown

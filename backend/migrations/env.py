@@ -11,6 +11,7 @@ from app.modules.exercises import models as exercises_models  # noqa: F401
 from app.modules.food import models as food_models  # noqa: F401
 from app.modules.identity import models as identity_models  # noqa: F401
 from app.modules.profile import models as profile_models  # noqa: F401
+from app.modules.workouts import models as workouts_models  # noqa: F401
 
 config = context.config
 

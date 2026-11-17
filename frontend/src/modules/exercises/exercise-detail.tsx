@@ -4,6 +4,7 @@ import Link from "next/link";
 
 import { ApiError } from "@/modules/identity/api";
 import { LINK_CLASS, SECONDARY_BUTTON_CLASS } from "@/modules/identity/styles";
+import { AddToWorkout } from "@/modules/workouts/add-to-workout";
 
 import { levelLabel, useExercise, type ExerciseDetail as Exercise } from "./api";
 import { VideoEmbed } from "./video-embed";
@@ -63,6 +64,7 @@ export function ExerciseDetail({ id }: { id: string }) {
     <article className="flex flex-col gap-6">
       <BackLink />
       <h2 className="text-title font-medium text-foreground">{exercise.name}</h2>
+      <AddToWorkout key={exercise.id} exerciseId={exercise.id} />
       <VideoEmbed videoId={exercise.video_id} title={`Video: ${exercise.name}`} />
 
       <section aria-labelledby="steps-heading" className="flex flex-col gap-2">

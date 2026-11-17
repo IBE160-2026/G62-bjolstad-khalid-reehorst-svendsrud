@@ -4,6 +4,8 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 const getMock = vi.hoisted(() => vi.fn());
 vi.mock("@/lib/api/client", () => ({ api: { GET: getMock } }));
+// Trening also shows "Start økt" (story 5.1), which navigates with the router.
+vi.mock("next/navigation", () => ({ useRouter: () => ({ push: vi.fn() }) }));
 
 import type { ExerciseSearchItem } from "./api";
 import { NO_MATCH_TEXT, missingText } from "./exercise-search";
@@ -61,6 +63,7 @@ function mockApi() {
     if (path === "/api/identity/me") {
       return { data: { id: "u-ola", email: "ola@eksempel.no" }, error: undefined };
     }
+    if (path === "/api/workouts/active") return { data: { workout: null }, error: undefined };
     if (path === "/api/exercises/equipment-profiles") {
       return { data: state.profiles, error: undefined };
     }

@@ -72,3 +72,4 @@
 - [x] 2026-11-17 [story-4-3-forslag](954-2026-11-17-14-30-00-story-4-3-forslag.md) — pushe og lage PR for story 4.3 (løst 2026-11-17 — PR #39, bygger på #38)
 - [x] 2026-11-17 [story-4-4-sok](953-2026-11-17-16-00-00-story-4-4-sok.md) — pushe og lage PR for story 4.4 (løst 2026-11-17 — PR 40; #38 og #39 flettet)
 - [x] 2026-11-17 [readme-og-rydding](952-2026-11-17-16-30-00-readme-og-rydding.md) — pushe og lage PR for README-oppdateringen (løst 2026-11-17 — PR #41)
+- [x] 2026-11-17 [story-5-1-start-okt](951-2026-11-17-19-00-00-story-5-1-start-okt.md) — pushe og lage PR for story 5.1 (løst 2026-11-17 — PR #42)

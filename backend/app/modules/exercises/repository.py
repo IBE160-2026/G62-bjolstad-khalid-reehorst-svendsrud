@@ -34,6 +34,13 @@ def get_exercise(db: DbSessionType, exercise_id: uuid.UUID) -> Exercise | None:
     return db.get(Exercise, exercise_id)
 
 
+def get_exercises(db: DbSessionType, exercise_ids: list[uuid.UUID]) -> list[Exercise]:
+    """The exercises with these ids (unordered); unknown ids are left out."""
+    if not exercise_ids:
+        return []
+    return list(db.scalars(select(Exercise).where(Exercise.id.in_(exercise_ids))))
+
+
 def list_equipment(db: DbSessionType) -> list[Equipment]:
     """The equipment types in seed order."""
     return list(db.scalars(select(Equipment).order_by(Equipment.position)))
