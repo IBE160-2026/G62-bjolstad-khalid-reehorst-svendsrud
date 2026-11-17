@@ -165,7 +165,12 @@ def seed_if_empty(settings: Settings) -> bool:
         off_added = seed_off_items(db)
         exercises = seed_exercises(db)
         db.commit()
-    logger.info("Seed: %d Matvaretabellen food items added", added)
-    logger.info("Seed: %d Open Food Facts items added", off_added)
-    logger.info("Seed: %d exercises added", exercises)
+        logger.info("Seed: %d Matvaretabellen food items added", added)
+        logger.info("Seed: %d Open Food Facts items added", off_added)
+        logger.info("Seed: %d exercises added", exercises)
+        # Demo users for the examiner (story 6.4), after the reference data they use.
+        from app.seed.demo import seed_demo_users
+
+        seed_demo_users(db)
+        db.commit()
     return True

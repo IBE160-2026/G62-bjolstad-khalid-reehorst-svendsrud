@@ -54,6 +54,17 @@ docker compose up --build
 5. **Trening:** bytt mellom «Hjemme» og «Treningssenter» og se at forslagene endrer seg. Søk «knebøy», og åpne en øvelse for steg, video og muskler.
 6. **Profil → Utstyr:** lag en egen utstyrsprofil, for eksempel «Hytta» med manualer, og se den på Trening.
 
+### Demobrukere
+
+Vil du se appen med data med en gang, kan du logge inn med en av disse to oppdiktede brukerne. De har samtykket og fylt inn profilen, og har mat på de fleste av de siste 14 dagene og fullførte økter.
+
+| E-post | Passord | Hva de viser |
+|---|---|---|
+| `sara@demo.test` | `Demo-passord-1` | Trener hjemme (Hjemme med manualer): armhevinger, knebøy og manualøvelse tre ganger i uka. Har logget frokost i dag, og én dag over målet. Start en økt med Armhevinger og se «Sist: …». |
+| `jonas@demo.test` | `Demo-passord-2` | Trener på treningssenter: benkpress, knebøy med stang og markløft tre ganger i uka, med litt tyngre vekter hver uke. |
+
+Demobrukerne lages bare når `APP_ENV=local`, aldri i produksjon. De lages én gang, ved første lokale oppstart, og datoene regnes fra den dagen. Sletter du en demokonto i appen, er den borte til du kjører `docker compose down -v` og starter på nytt, som også gir ferske data.
+
 Matdata og øvelser lastes inn automatisk ved første oppstart. Appen trenger ikke nett, bortsett fra strekkodeoppslag mot Open Food Facts og YouTube-videoene.
 
 - `db` (PostgreSQL), `backend` (FastAPI) og `frontend` (Next.js) starter med én kommando. Bare port 3000 er åpen; nettleseren når backenden via `/api` på samme adresse.

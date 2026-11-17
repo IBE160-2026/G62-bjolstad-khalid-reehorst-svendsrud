@@ -1292,6 +1292,32 @@ Det viktigste funnet: Dekningsanalysen er regnet ut fra øvelseslista og viser a
 
 ---
 
+## 2026-11-17 – Story 6.4 del 1 (demodata for sensor)
+
+**Verktøy:** Claude Code (BMAD `bmad-build`, lettere prosess med én kontrollør)
+**Hvem:** Osman Khalid
+**Bakgrunn:** Sensor skal kunne se alle funksjonene med en gang, uten å logge uker med data selv.
+
+### Hva vi ba KI om
+
+1. Dele 6.4 i tre mindre deler, og først lage to oppdiktede demobrukere med 14 dagers data.
+
+### Hva KI produserte
+
+- Spec, demo-seed gjennom modulenes tjenester, tester og en «Demobrukere»-tabell i README.
+
+### Hva vi selv vurderte og kontrollerte
+
+- Osman godkjente oppdelingen og spec-en, og valgte 3 økter i uka da spec-en motsa seg selv.
+- Én KI-kontrollør fant 11 punkter: 5 grupper rettet, 4 avvist med begrunnelse.
+
+### Status
+
+- [x] Demodata bygget og testet
+- [ ] 6.4 del 2 og 3
+
+---
+
 ## Mal for nye oppføringer
 
 ```markdown

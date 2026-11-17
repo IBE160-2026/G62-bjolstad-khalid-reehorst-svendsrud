@@ -48,4 +48,7 @@
 - source_spec: `.docs/implementation-artifacts/spec-4-2-save-my-equipment.md`
   summary: Seed read-only reference data (equipment, muscle groups, exercises) outside `APP_ENV=local` before any deployment.
   evidence: `seed_if_empty` only runs locally; without equipment, default profiles start empty (repaired on read once seeded).
+- source_spec: `.docs/implementation-artifacts/spec-6-4a-demo-data-for-the-examiner.md`
+  summary: The "Sist" demo API test uses a fixed date (2026-11-17); it fails once the real date is more than a year later (workout date window).
+  evidence: Workout dates must be within 366 days of the real server date.
 
