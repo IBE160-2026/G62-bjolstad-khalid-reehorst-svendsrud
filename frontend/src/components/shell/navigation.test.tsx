@@ -34,6 +34,7 @@ describe("nav items", () => {
 
   it("titles the exercise detail while Trening stays active", () => {
     expect(pageTitle("/trening/ovelser/abc")).toBe("Øvelse");
+    expect(pageTitle("/trening/okt")).toBe("Økt");
     expect(isActive("/trening/ovelser/abc", "/trening")).toBe(true);
   });
 

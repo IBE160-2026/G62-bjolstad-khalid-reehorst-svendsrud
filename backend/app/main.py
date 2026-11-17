@@ -12,6 +12,7 @@ from app.modules.food.router import router as food_router
 from app.modules.health.router import router as health_router
 from app.modules.identity.router import router as identity_router
 from app.modules.profile.router import router as profile_router
+from app.modules.workouts.router import router as workouts_router
 
 # 422 is listed so OpenAPI documents the error envelope, not FastAPI's HTTPValidationError.
 ERROR_RESPONSES: dict[int | str, dict] = {
@@ -39,6 +40,7 @@ def create_app() -> FastAPI:
     app.include_router(profile_router, responses=ERROR_RESPONSES)
     app.include_router(food_router, responses=ERROR_RESPONSES)
     app.include_router(exercises_router, responses=ERROR_RESPONSES)
+    app.include_router(workouts_router, responses=ERROR_RESPONSES)
     return app
 
 

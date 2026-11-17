@@ -25,9 +25,10 @@ export function isActive(pathname: string, href: string): boolean {
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
-/** Titles for routes that are not in the navigation (account pages, exercise detail). */
+/** Titles for routes that are not in the navigation (account pages, exercise detail, Økt). */
 const OTHER_TITLES: Readonly<Record<string, string>> = {
   "/trening/ovelser": "Øvelse",
+  "/trening/okt": "Økt",
   "/logg-inn": "Logg inn",
   "/opprett-konto": "Opprett konto",
   "/samtykke": "Samtykke",
