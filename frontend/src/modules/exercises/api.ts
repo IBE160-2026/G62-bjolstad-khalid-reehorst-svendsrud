@@ -148,24 +148,70 @@ export function storeProfileId(userId: string, id: string): void {
 
 const PROFILE_NOT_FOUND_CODE = "equipment_profile_not_found";
 
+export type MuscleGroupSlug = components["schemas"]["MuscleGroupSlug"];
+
+/** Optional suggestion filters (story 4.5); at most one muscle group and one level. */
+export type SuggestionFilters = { muscleGroup: MuscleGroupSlug | null; level: Level | null };
+
+export const NO_FILTERS: SuggestionFilters = { muscleGroup: null, level: null };
+
+/** The six muscle groups as shown on Trening, with their Norwegian names. */
+export const MUSCLE_GROUPS: readonly { slug: MuscleGroupSlug; name: string }[] = [
+  { slug: "skuldre", name: "Skuldre" },
+  { slug: "bryst", name: "Bryst" },
+  { slug: "mage-kjerne", name: "Mage/kjerne" },
+  { slug: "armer", name: "Armer" },
+  { slug: "ben", name: "Ben" },
+  { slug: "rygg", name: "Rygg" },
+];
+
+export function muscleGroupName(slug: MuscleGroupSlug): string {
+  return MUSCLE_GROUPS.find((group) => group.slug === slug)?.name ?? slug;
+}
+
+/** The labels of the active filters, muscle group first ("Bryst", "Nybegynner"). */
+export function filterLabels(filters: SuggestionFilters): string[] {
+  const labels: string[] = [];
+  if (filters.muscleGroup) labels.push(muscleGroupName(filters.muscleGroup));
+  if (filters.level) labels.push(levelLabel(filters.level));
+  return labels;
+}
+
+/** Suggestions plus the filters they were asked for, so a list kept while the next
+ * one loads is described by its own filters. */
+export type SuggestionsResult = Suggestions & { filters: SuggestionFilters };
+
 /**
- * Exercises that fit the profile, ordered by level by the backend (AD-5: the rule lives
- * only there). Keyed under the profiles key, so editing a profile refreshes these too.
- * The previous list stays while a newly chosen profile loads. If the profile was deleted
- * elsewhere (404), the profile list is refetched so the choice falls back to the first.
+ * Exercises that fit the profile and the optional filters, ordered by level by the
+ * backend (AD-5: the rule, filters included, lives only there). Keyed under the profiles
+ * key, so editing a profile refreshes these too. The previous list stays while a newly
+ * chosen profile or filter loads. If the profile was deleted elsewhere (404), the profile
+ * list is refetched so the choice falls back to the first.
  */
-export function useSuggestions(profileId: string | undefined) {
+export function useSuggestions(
+  profileId: string | undefined,
+  filters: SuggestionFilters = NO_FILTERS,
+) {
   const refetchProfilesOnNotFound = useRefetchProfilesOnNotFound();
+  const { muscleGroup, level } = filters;
   return useQuery({
-    queryKey: [...EQUIPMENT_PROFILES_KEY, "suggestions", profileId],
-    queryFn: () =>
-      refetchProfilesOnNotFound(() =>
+    queryKey: [...EQUIPMENT_PROFILES_KEY, "suggestions", profileId, muscleGroup, level],
+    queryFn: async (): Promise<SuggestionsResult> => {
+      const data = await refetchProfilesOnNotFound(() =>
         call(() =>
           api.GET("/api/exercises/suggestions", {
-            params: { query: { profile_id: profileId as string } },
+            params: {
+              query: {
+                profile_id: profileId as string,
+                ...(muscleGroup ? { muscle_group: muscleGroup } : {}),
+                ...(level ? { level } : {}),
+              },
+            },
           }),
         ),
-      ),
+      );
+      return { ...data, filters: { muscleGroup, level } };
+    },
     enabled: profileId !== undefined,
     placeholderData: keepPreviousData,
   });

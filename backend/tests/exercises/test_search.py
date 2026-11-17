@@ -28,7 +28,7 @@ DB_RDL = "Rumensk markløft med manualer (Dumbbell Romanian deadlift)"
 
 
 def _candidate(name: str, level: str, muscle: int, *slugs: str) -> SuggestionCandidate[str]:
-    return SuggestionCandidate(name, level, muscle, frozenset(slugs), name)
+    return SuggestionCandidate(name, level, muscle, frozenset(slugs), name, frozenset())
 
 
 def test_fitting_first_then_suggestion_order() -> None:

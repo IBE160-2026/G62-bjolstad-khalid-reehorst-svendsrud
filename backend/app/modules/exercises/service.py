@@ -30,6 +30,8 @@ from app.modules.exercises.schemas import (
     ExerciseSearchItem,
     ExerciseSearchResponse,
     ExerciseType,
+    Level,
+    MuscleGroupSlug,
     SEARCH_MAX_LENGTH,
     SEARCH_MIN_LENGTH,
     SuggestionsResponse,
@@ -137,6 +139,8 @@ class SuggestionCandidate(Generic[T]):
     # Slugs of every equipment type the exercise requires; all are needed.
     equipment_slugs: frozenset[str]
     item: T
+    # Slugs of the primary and secondary muscle groups (story 4.5 filter).
+    muscle_slugs: frozenset[str]
 
 
 def missing_equipment(
@@ -152,15 +156,26 @@ def _suggestion_order(exercise: SuggestionCandidate[T]) -> tuple[int, int, str]:
 
 
 def suggest_exercises(
-    exercises: Iterable[SuggestionCandidate[T]], equipment_slugs: Iterable[str]
+    exercises: Iterable[SuggestionCandidate[T]],
+    equipment_slugs: Iterable[str],
+    muscle_group: str | None = None,
+    level: str | None = None,
 ) -> list[SuggestionCandidate[T]]:
     """The exercises whose required equipment is all in `equipment_slugs`, ordered
     Nybegynner, Middels, Øvet, then primary muscle group (seed order), then name.
+    Optional filters (story 4.5): `muscle_group` matches a primary or secondary muscle
+    group slug; `level` must match exactly.
 
     Pure: reads no database, so it is unit-tested over the seed file (AD-5).
     """
     available = frozenset(equipment_slugs)
-    fitting = [e for e in exercises if not missing_equipment(e, available)]
+    fitting = [
+        e
+        for e in exercises
+        if not missing_equipment(e, available)
+        and (muscle_group is None or muscle_group in e.muscle_slugs)
+        and (level is None or e.level == level)
+    ]
     return sorted(fitting, key=_suggestion_order)
 
 
@@ -377,17 +392,28 @@ def _candidate(exercise: Exercise) -> SuggestionCandidate[Exercise]:
         muscle_position=primary.position,
         equipment_slugs=frozenset(link.equipment.slug for link in exercise.equipment_links),
         item=exercise,
+        muscle_slugs=frozenset(link.muscle_group.slug for link in exercise.muscle_links),
     )
 
 
 def get_suggestions(
-    db: DbSessionType, user_id: uuid.UUID, profile_id: str
+    db: DbSessionType,
+    user_id: uuid.UUID,
+    profile_id: str,
+    muscle_group: MuscleGroupSlug | None = None,
+    level: Level | None = None,
 ) -> SuggestionsResponse:
-    """Exercises that fit the user's profile, ordered by `suggest_exercises`. Another
-    user's, a missing or a non-UUID profile id is 404 `equipment_profile_not_found`."""
+    """Exercises that fit the user's profile, optionally filtered by muscle group
+    (primary or secondary) and level, ordered by `suggest_exercises`. Another user's, a
+    missing or a non-UUID profile id is 404 `equipment_profile_not_found`."""
     profile = _owned_profile(db, user_id, profile_id)
     candidates = [_candidate(exercise) for exercise in repository.list_exercises(db)]
-    suggested = suggest_exercises(candidates, _profile_slugs(profile))
+    suggested = suggest_exercises(
+        candidates,
+        _profile_slugs(profile),
+        muscle_group=muscle_group.value if muscle_group else None,
+        level=level.value if level else None,
+    )
     return SuggestionsResponse(
         profile_id=profile.id,
         profile_name=profile.name,

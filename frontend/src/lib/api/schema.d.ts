@@ -333,8 +333,9 @@ export interface paths {
         /**
          * Get Suggestions
          * @description Exercises whose required equipment is all in the user's chosen Equipment Profile,
-         *     ordered Nybegynner, Middels, Øvet. Another user's profile, or an id that is unknown or
-         *     not a UUID, is 404 `equipment_profile_not_found`.
+         *     ordered Nybegynner, Middels, Øvet. Optional filters: `muscle_group` (primary or
+         *     secondary) and `level`; an unknown value is a 422 field error. Another user's profile,
+         *     or an id that is unknown or not a UUID, is 404 `equipment_profile_not_found`.
          */
         get: operations["get_suggestions"];
         put?: never;
@@ -1021,6 +1022,12 @@ export interface components {
             /** Total Kcal */
             total_kcal: number;
         };
+        /**
+         * MuscleGroupSlug
+         * @description The six muscle groups of the seed (story 4.1), used to filter suggestions (4.5).
+         * @enum {string}
+         */
+        MuscleGroupSlug: "ben" | "rygg" | "bryst" | "skuldre" | "armer" | "mage-kjerne";
         /** OverviewResponse */
         OverviewResponse: {
             /**
@@ -2137,6 +2144,8 @@ export interface operations {
         parameters: {
             query: {
                 profile_id: string;
+                muscle_group?: components["schemas"]["MuscleGroupSlug"] | null;
+                level?: components["schemas"]["Level"] | null;
             };
             header?: never;
             path?: never;
