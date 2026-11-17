@@ -80,8 +80,8 @@ development_status:
   epic-5-retrospective: optional
 
   epic-6: in-progress
-  6-1-see-my-day-at-a-glance: review
-  6-2-clear-prompts-when-nothing-is-logged: review
+  6-1-see-my-day-at-a-glance: done
+  6-2-clear-prompts-when-nothing-is-logged: done
   6-3-move-between-days-with-the-week-strip-should: backlog
   6-4-the-examiner-can-test-the-whole-core-loop: in-progress
   epic-6-retrospective: optional
