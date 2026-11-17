@@ -90,6 +90,17 @@ Finner ikke backend-testene `promptforce_test`, ble databasevolumet laget før s
 
 Alternativ uten Docker for frontend (krever Node.js 24): `cd frontend && npm install && npm run test -- --run && npm run lint`.
 
+### Ende-til-ende-tester (Playwright)
+
+Playwright kjører hovedflyten i appen i en ekte Chromium mot appen på `http://localhost:3000`: registrering, samtykke og profil (UJ-1), mat via søk og strekkode (UJ-2), en økt hjemme og «Sist» for Sara (UJ-3), I dag med måltider og økt (UJ-4), ingen sidelengs scrolling på 360 px og fokus/Esc i arkene. Testene kjører på maskinen din (krever Node.js 24), ikke i containeren. Start appen først:
+
+```bash
+docker compose up --build -d
+cd frontend && npm ci && npx playwright install chromium && npm run test:e2e
+```
+
+`npx playwright install chromium` laster ned nettleseren én gang. Hver test lager sin egen bruker (`e2e-…@demo.test`), så testene kan kjøres flere ganger på samme database. En annen adresse settes med `E2E_BASE_URL`. Resultater og spor fra feilede tester havner i `frontend/e2e/test-results/` (ignorert av git). `npm run test` (Vitest) og `npm run build` kjører ikke disse testene.
+
 ## Utvikling
 
 API-typene i frontend genereres fra backendens OpenAPI-skjema og committes. Når API-et endres:
