@@ -311,8 +311,12 @@ export function EquipmentProfileSheet({
   useEffect(() => {
     const dialog = dialogRef.current;
     if (!dialog) return;
-    if (open && !dialog.open) dialog.showModal();
-    else if (!open && dialog.open) dialog.close();
+    if (open && !dialog.open) {
+      dialog.showModal();
+      // The form's own focus ran before the dialog was open (child effects run first),
+      // when the field could not take focus yet; move focus in now.
+      document.getElementById(NAME_ID)?.focus();
+    } else if (!open && dialog.open) dialog.close();
   }, [open]);
 
   function close() {

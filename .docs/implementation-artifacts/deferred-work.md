@@ -51,4 +51,7 @@
 - source_spec: `.docs/implementation-artifacts/spec-6-4a-demo-data-for-the-examiner.md`
   summary: The "Sist" demo API test uses a fixed date (2026-11-17); it fails once the real date is more than a year later (workout date window).
   evidence: Workout dates must be within 366 days of the real server date.
+- source_spec: `.docs/implementation-artifacts/spec-6-4c-help-button-and-sheet-focus.md`
+  summary: Check sheet focus, Esc (including a second Esc) and return focus in a real browser with Playwright (6.4 part 2); the jsdom dialog polyfill cannot prove native behaviour.
+  evidence: Polyfilled showModal only sets `open`; Esc helper fires `cancel` itself.
 

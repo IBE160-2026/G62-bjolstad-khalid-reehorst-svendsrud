@@ -36,6 +36,12 @@ import {
   type Workout,
   type WorkoutSet,
 } from "./api";
+import {
+  expectInPoliteLiveRegion,
+  expectOpenerSheetFocusCycle,
+  installDialogPolyfill,
+} from "@/test/sheet-a11y";
+
 import { StartWorkout } from "./start-workout";
 import { WorkoutByIdPage, WorkoutPage } from "./workout-page";
 
@@ -843,6 +849,14 @@ describe("sets (story 5.2)", () => {
     expect(formatNumber(12.5)).toBe("12,5");
     expect(formatNumber(null)).toBe("");
   });
+
+  it("puts the set undo toast in a polite live region (story 6.4)", async () => {
+    server.workout = withSets(PUSH_UP);
+    renderWith(<WorkoutPage />);
+    fireEvent.click(await screen.findByRole("button", { name: `Slett sett 3, ${PUSH_UP.name}` }));
+
+    expectInPoliteLiveRegion(await screen.findByTestId("undo-toast"));
+  });
 });
 
 describe("last time (story 5.3)", () => {
@@ -1115,5 +1129,27 @@ describe("Tidligere økter (story 5.4)", () => {
     renderWith(<RecentWorkouts />);
     await waitFor(() => expect(apiMock.GET).toHaveBeenCalledWith("/api/workouts", expect.anything()));
     expect(screen.queryByRole("heading", { name: "Tidligere økter" })).not.toBeInTheDocument();
+  });
+});
+
+describe("sheet accessibility (story 6.4)", () => {
+  beforeAll(installDialogPolyfill);
+
+  beforeEach(() => {
+    server.workout = {
+      id: "w-1",
+      date: "2026-11-03",
+      finished_at: null,
+      exercises: [{ id: "we-1", ...PUSH_UP, sets: [server.newSet(0), server.newSet(1)] }],
+    };
+  });
+
+  it("Slett økt: focus moves in, Esc closes, focus back on the opener", async () => {
+    renderWith(<WorkoutPage />);
+
+    await expectOpenerSheetFocusCycle(
+      await screen.findByRole("button", { name: "Slett økt" }),
+      () => screen.getByRole("dialog", { name: "Slette økta tirsdag 3. november?" }),
+    );
   });
 });

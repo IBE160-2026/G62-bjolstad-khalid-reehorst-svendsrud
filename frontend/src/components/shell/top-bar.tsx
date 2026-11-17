@@ -2,6 +2,7 @@
 
 import { usePathname } from "next/navigation";
 
+import { HelpButton } from "./help-button";
 import { pageTitle } from "./nav-items";
 import { ThemeToggle } from "./theme-toggle";
 
@@ -13,7 +14,10 @@ export function TopBar() {
       <h1 className="truncate text-heading font-medium text-foreground md:text-title md:font-light">
         {pageTitle(pathname)}
       </h1>
-      <ThemeToggle />
+      <div className="flex shrink-0 items-center gap-2">
+        <HelpButton />
+        <ThemeToggle />
+      </div>
     </header>
   );
 }

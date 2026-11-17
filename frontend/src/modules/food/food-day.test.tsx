@@ -25,6 +25,12 @@ vi.mock("@/lib/api/client", () => ({
   api: { GET: getMock, POST: postMock, PATCH: patchMock, DELETE: deleteMock },
 }));
 
+import {
+  expectInPoliteLiveRegion,
+  expectOpenerSheetFocusCycle,
+  expectOpenerSheetFocusCycleWithoutFocus,
+} from "@/test/sheet-a11y";
+
 import { FoodDay } from "./food-day";
 
 // jsdom has no modal dialog; mimic the parts the browser gives us (open state, close event).
@@ -1972,5 +1978,48 @@ describe("edit or delete an entry (story 3.6)", () => {
       "Vi fikk ikke kontakt med serveren. Prøv igjen.",
     );
     expect(screen.queryByTestId("undo-toast")).toBeNull();
+  });
+
+  it("puts the undo toast in a polite live region (story 6.4)", async () => {
+    const dialog = await openEntry("Helmelk");
+    fireEvent.click(within(dialog).getByRole("button", { name: "Slett" }));
+
+    expectInPoliteLiveRegion(await screen.findByTestId("undo-toast"));
+  });
+});
+
+describe("sheet and loading accessibility (story 6.4)", () => {
+  it("Legg til mat: focus moves in, Esc closes, focus back on the opener", async () => {
+    renderDay();
+    const opener = await screen.findByRole("button", { name: "Legg til i Lunsj" });
+
+    await expectOpenerSheetFocusCycle(opener, () =>
+      screen.getByRole("dialog", { name: "Legg til mat" }),
+    );
+  });
+
+  it("Legg til mat gives focus back even when the click did not focus the opener", async () => {
+    renderDay();
+    const opener = await screen.findByRole("button", { name: "Legg til i Middag" });
+
+    await expectOpenerSheetFocusCycleWithoutFocus(opener, () =>
+      screen.getByRole("dialog", { name: "Legg til mat" }),
+    );
+  });
+
+  it("shows skeleton rows, not a spinner, while the day loads", () => {
+    getMock.mockReturnValue(new Promise(() => {}));
+    const client = new QueryClient();
+    render(
+      <QueryClientProvider client={client}>
+        <FoodDay />
+      </QueryClientProvider>,
+    );
+
+    const skeleton = screen.getByTestId("food-day-skeleton");
+    expect(skeleton).toHaveAttribute("role", "status");
+    expect(skeleton).toHaveAttribute("aria-busy", "true");
+    expect(skeleton).toHaveTextContent("Laster dagen …");
+    expect(screen.queryByRole("progressbar")).not.toBeInTheDocument();
   });
 });

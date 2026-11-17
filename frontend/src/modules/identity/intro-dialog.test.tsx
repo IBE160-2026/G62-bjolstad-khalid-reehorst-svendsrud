@@ -12,6 +12,8 @@ vi.mock("next/navigation", () => ({
   useRouter: () => ({ push: pushMock, replace: vi.fn() }),
 }));
 
+import { expectSheetFocusCycle } from "@/test/sheet-a11y";
+
 import { ME_QUERY_KEY } from "./api";
 import { IntroDialog, resetIntroSession } from "./intro-dialog";
 
@@ -246,5 +248,24 @@ describe("IntroDialog", () => {
 
     expect(client.getQueryData<User>(ME_QUERY_KEY)?.intro_dismissed_at).toBeNull();
     expect(dialog.open).toBe(false);
+  });
+});
+
+describe("sheet accessibility (story 6.4)", () => {
+  // Opened by the app, not a button: focus goes back to the page's main region.
+  it("Kom i gang: focus moves in, Esc closes, focus back on the page", async () => {
+    postMock.mockResolvedValue({ data: user({ intro_dismissed_at: DISMISSED }), error: undefined });
+
+    await expectSheetFocusCycle({
+      open: () => {
+        renderIntro("/", user());
+      },
+      dialog: async () => {
+        const dialog = findDialog();
+        await waitFor(() => expect(dialog.open).toBe(true));
+        return dialog;
+      },
+      returnsTo: () => document.getElementById("innhold"),
+    });
   });
 });

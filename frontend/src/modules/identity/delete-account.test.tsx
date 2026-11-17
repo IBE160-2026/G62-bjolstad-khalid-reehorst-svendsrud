@@ -7,6 +7,8 @@ const replaceMock = vi.hoisted(() => vi.fn());
 vi.mock("@/lib/api/client", () => ({ api: { DELETE: deleteMock } }));
 vi.mock("next/navigation", () => ({ useRouter: () => ({ replace: replaceMock }) }));
 
+import { expectOpenerSheetFocusCycle } from "@/test/sheet-a11y";
+
 import { ME_QUERY_KEY } from "./api";
 import { DeleteAccount } from "./delete-account";
 
@@ -190,5 +192,15 @@ describe("DeleteAccount", () => {
     openDialog(trigger);
 
     await waitFor(() => expect(screen.queryByRole("alert")).toBeNull());
+  });
+});
+
+describe("sheet accessibility (story 6.4)", () => {
+  it("Slett konto: focus moves in, Esc closes, focus back on the opener", async () => {
+    const { trigger } = renderDeleteAccount();
+
+    await expectOpenerSheetFocusCycle(trigger, () =>
+      screen.getByRole("dialog", { name: "Slette kontoen?" }),
+    );
   });
 });

@@ -117,12 +117,18 @@ function MealSection({
 function DaySkeleton() {
   return (
     <div
-      aria-hidden="true"
+      role="status"
+      aria-busy="true"
       className="flex flex-col gap-4"
       data-testid="food-day-skeleton"
     >
+      <span className="sr-only">Laster dagen …</span>
       {[0, 1, 2, 3].map((row) => (
-        <div key={row} className="h-24 animate-pulse rounded-lg bg-muted" />
+        <div
+          key={row}
+          aria-hidden="true"
+          className="h-24 animate-pulse rounded-lg bg-muted"
+        />
       ))}
     </div>
   );
