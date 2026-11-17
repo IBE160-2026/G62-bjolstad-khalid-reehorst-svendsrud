@@ -69,4 +69,4 @@
 - [x] 2026-11-16 [story-3-7] — kjøre `cd backend && uv run python -m app.cli import-off-norway` når Open Food Facts svarer (503 hele ettermiddagen 16.11), så review, commit av datafila og PR for story 3.7 (løst 2026-11-17 — 941 produkter importert)
 - [x] 2026-11-17 [story-3-7-norske-merkevarer](956-2026-11-17-10-30-00-story-3-7-norske-merkevarer.md) — pushe og lage PR for story 3.7 (løst 2026-11-17 — PR #37)
 - [x] 2026-11-17 [story-4-2-utstyr](955-2026-11-17-12-30-00-story-4-2-utstyr.md) — pushe og lage PR for story 4.2 (løst 2026-11-17 — PR #38)
-- [ ] 2026-11-17 [story-4-3-forslag](954-2026-11-17-14-30-00-story-4-3-forslag.md) — pushe og lage PR for story 4.3 (etter PR #38)
+- [x] 2026-11-17 [story-4-3-forslag](954-2026-11-17-14-30-00-story-4-3-forslag.md) — pushe og lage PR for story 4.3 (løst 2026-11-17 — PR #39, bygger på #38)
