@@ -11,6 +11,7 @@ from app.modules.exercises.router import router as exercises_router
 from app.modules.food.router import router as food_router
 from app.modules.health.router import router as health_router
 from app.modules.identity.router import router as identity_router
+from app.modules.overview.router import router as overview_router
 from app.modules.profile.router import router as profile_router
 from app.modules.workouts.router import router as workouts_router
 
@@ -41,6 +42,7 @@ def create_app() -> FastAPI:
     app.include_router(food_router, responses=ERROR_RESPONSES)
     app.include_router(exercises_router, responses=ERROR_RESPONSES)
     app.include_router(workouts_router, responses=ERROR_RESPONSES)
+    app.include_router(overview_router, responses=ERROR_RESPONSES)
     return app
 
 

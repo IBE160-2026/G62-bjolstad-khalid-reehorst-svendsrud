@@ -10,6 +10,7 @@ import {
 import { api } from "@/lib/api/client";
 import type { components } from "@/lib/api/schema";
 import { call, callNoContent } from "@/modules/identity/api";
+import { overviewKey } from "@/modules/overview/api";
 
 export type FoodItem = components["schemas"]["FoodItemResponse"];
 export type FoodDay = components["schemas"]["FoodDayResponse"];
@@ -63,8 +64,19 @@ export function useFoodSearch(query: string) {
   });
 }
 
+/** Refetch the date's totals, its Daily Overview and the recent list after an entry
+ * changes (AD-15, NFR9). */
+function invalidateEntry(
+  queryClient: ReturnType<typeof useQueryClient>,
+  date: string,
+) {
+  void queryClient.invalidateQueries({ queryKey: RECENT_FOODS_KEY });
+  void queryClient.invalidateQueries({ queryKey: overviewKey(date) });
+  return queryClient.invalidateQueries({ queryKey: foodDayKey(date) });
+}
+
 /**
- * Log an entry; the date's totals are refetched so Mat updates without a reload (AD-15),
+ * Log an entry; the date's totals and I dag are refetched so Mat updates without a reload (AD-15),
  * and so is the recent list ("Nylig brukt").
  */
 export function useAddFoodEntry() {
@@ -72,12 +84,7 @@ export function useAddFoodEntry() {
   return useMutation({
     mutationFn: (body: FoodEntryRequest) =>
       call(() => api.POST("/api/food/entries", { body })),
-    onSuccess: (entry) => {
-      void queryClient.invalidateQueries({ queryKey: RECENT_FOODS_KEY });
-      return queryClient.invalidateQueries({
-        queryKey: foodDayKey(entry.date),
-      });
-    },
+    onSuccess: (entry) => invalidateEntry(queryClient, entry.date),
   });
 }
 
@@ -113,14 +120,6 @@ export function useLookupBarcode() {
 /** Shared by edit and delete, so the sheet can tell when one is still in flight. */
 export const ENTRY_CHANGE_KEY = ["food-entry-change"] as const;
 
-/** Refetch the date's totals and the recent list after an entry changes (AD-15, NFR9). */
-function invalidateEntry(
-  queryClient: ReturnType<typeof useQueryClient>,
-  date: string,
-) {
-  void queryClient.invalidateQueries({ queryKey: RECENT_FOODS_KEY });
-  return queryClient.invalidateQueries({ queryKey: foodDayKey(date) });
-}
 
 /** Change grams and/or Meal of an entry (3.6); the date and kcal snapshot never change. */
 export function useUpdateFoodEntry() {

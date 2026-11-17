@@ -38,6 +38,16 @@ def get_workout(
     return db.scalars(query).one_or_none()
 
 
+def list_for_date(db: DbSessionType, user_id: uuid.UUID, day: dt.date) -> list[Workout]:
+    """The user's workouts on one date, finished or not, oldest created first (story 6.1)."""
+    query = (
+        select(Workout)
+        .where(Workout.user_id == user_id, Workout.date == day)
+        .order_by(Workout.created_at, Workout.id)
+    )
+    return list(db.scalars(query))
+
+
 def add_workout(db: DbSessionType, workout: Workout) -> Workout:
     db.add(workout)
     db.flush()

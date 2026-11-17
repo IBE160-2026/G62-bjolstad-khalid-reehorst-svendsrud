@@ -1266,6 +1266,32 @@ Det viktigste funnet: Dekningsanalysen er regnet ut fra øvelseslista og viser a
 
 ---
 
+## 2026-11-17 – Story 6.1 + 6.2 (I dag-siden)
+
+**Verktøy:** Claude Code (BMAD `bmad-build`, lettere prosess med én kontrollør)
+**Hvem:** Osman Khalid
+**Bakgrunn:** Brukeren skal se på ett sted hvordan dagen går: kalorier igjen, måltider og trening.
+
+### Hva vi ba KI om
+
+1. Lage dagsoversikten og de tomme tilstandene i én story (6.1 og 6.2 slått sammen for å spare bruksgrensen).
+
+### Hva KI produserte
+
+- Spec, ny `overview`-modul i backend, I dag-siden med dagsnotat, Mat- og Trenings-kort, og tester.
+
+### Hva vi selv vurderte og kontrollerte
+
+- Osman godkjente sammenslåingen og spec-en før koding.
+- Én KI-kontrollør fant 12 punkter: 6 grupper rettet (blant annet feil tekst på tidligere dager og UTC i stedet for norsk dato), 4 avvist med begrunnelse.
+
+### Status
+
+- [x] Story 6.1 og 6.2 bygget og testet
+- [ ] Review av PR fra gruppen
+
+---
+
 ## Mal for nye oppføringer
 
 ```markdown

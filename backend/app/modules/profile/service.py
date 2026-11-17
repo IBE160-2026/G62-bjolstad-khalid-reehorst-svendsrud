@@ -15,8 +15,13 @@ from app.modules.profile.schemas import ProfileRequest
 PROFILE_NOT_FOUND_MESSAGE = "Du har ikke satt opp profilen ennå."
 
 
+def find_profile(db: DbSessionType, user_id: uuid.UUID) -> Profile | None:
+    """The user's profile, or None before setup (overview, Epic 6)."""
+    return repository.get_profile(db, user_id)
+
+
 def get_profile(db: DbSessionType, user_id: uuid.UUID) -> Profile:
-    profile = repository.get_profile(db, user_id)
+    profile = find_profile(db, user_id)
     if profile is None:
         raise AppError(404, "profile_not_found", PROFILE_NOT_FOUND_MESSAGE)
     return profile

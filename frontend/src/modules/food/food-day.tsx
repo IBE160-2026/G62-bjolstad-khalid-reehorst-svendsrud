@@ -154,7 +154,7 @@ function subscribeToOsloDate(onChange: () => void) {
 }
 
 /** Today in Oslo, read in the browser only (the clock is not known while prerendering). */
-function useOsloToday(): string | null {
+export function useOsloToday(): string | null {
   return useSyncExternalStore(
     subscribeToOsloDate,
     () => osloToday(),
