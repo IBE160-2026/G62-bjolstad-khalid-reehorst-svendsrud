@@ -155,25 +155,76 @@ const PROFILE_NOT_FOUND_CODE = "equipment_profile_not_found";
  * elsewhere (404), the profile list is refetched so the choice falls back to the first.
  */
 export function useSuggestions(profileId: string | undefined) {
-  const queryClient = useQueryClient();
+  const refetchProfilesOnNotFound = useRefetchProfilesOnNotFound();
   return useQuery({
     queryKey: [...EQUIPMENT_PROFILES_KEY, "suggestions", profileId],
-    queryFn: async () => {
-      try {
-        return await call(() =>
+    queryFn: () =>
+      refetchProfilesOnNotFound(() =>
+        call(() =>
           api.GET("/api/exercises/suggestions", {
             params: { query: { profile_id: profileId as string } },
           }),
-        );
-      } catch (error) {
-        if (error instanceof ApiError && error.code === PROFILE_NOT_FOUND_CODE) {
-          // Exact: only the list, not this failing query again.
-          void queryClient.invalidateQueries({ queryKey: EQUIPMENT_PROFILES_KEY, exact: true });
-        }
-        throw error;
-      }
-    },
+        ),
+      ),
     enabled: profileId !== undefined,
+    placeholderData: keepPreviousData,
+  });
+}
+
+/** Runs a profile-scoped request; on 404 `equipment_profile_not_found` (the profile was
+ * deleted elsewhere) the profile list is refetched, so the choice falls back to the first. */
+function useRefetchProfilesOnNotFound() {
+  const queryClient = useQueryClient();
+  return async <T,>(request: () => Promise<T>): Promise<T> => {
+    try {
+      return await request();
+    } catch (error) {
+      if (error instanceof ApiError && error.code === PROFILE_NOT_FOUND_CODE) {
+        // Exact: only the list, not the failing query again.
+        void queryClient.invalidateQueries({ queryKey: EQUIPMENT_PROFILES_KEY, exact: true });
+      }
+      throw error;
+    }
+  };
+}
+
+// --- Search by name (story 4.4) ---
+
+export type ExerciseSearchItem = components["schemas"]["ExerciseSearchItem"];
+
+/** The server answers 422 outside 2–50 characters, so nothing is asked for then. */
+export const EXERCISE_SEARCH_MIN_LENGTH = 2;
+export const EXERCISE_SEARCH_MAX_LENGTH = 50;
+
+/**
+ * Every exercise whose name contains `query`, each marked with whether it fits the
+ * profile (the fit rule lives only in the backend, AD-5). Keyed under the profiles key,
+ * so editing a profile refreshes the marks; the previous results stay while the next load.
+ */
+/** Length in characters as the server counts them (an emoji is one, not two). */
+export function searchLength(query: string): number {
+  return [...query.trim()].length;
+}
+
+export function useExerciseSearch(profileId: string | undefined, query: string) {
+  const q = query.trim();
+  const length = searchLength(q);
+  const refetchProfilesOnNotFound = useRefetchProfilesOnNotFound();
+  return useQuery({
+    // Keyed on the query exactly as sent.
+    queryKey: [...EQUIPMENT_PROFILES_KEY, "search", profileId, q],
+    queryFn: () =>
+      refetchProfilesOnNotFound(() =>
+        call(() =>
+          api.GET("/api/exercises/search", {
+            params: { query: { profile_id: profileId as string, q } },
+          }),
+        ),
+      ),
+    enabled:
+      profileId !== undefined &&
+      length >= EXERCISE_SEARCH_MIN_LENGTH &&
+      length <= EXERCISE_SEARCH_MAX_LENGTH,
     placeholderData: keepPreviousData,
   });
 }

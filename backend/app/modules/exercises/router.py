@@ -17,6 +17,7 @@ from app.modules.exercises.schemas import (
     EquipmentResponse,
     ExerciseDetail,
     ExerciseListItem,
+    ExerciseSearchResponse,
     SuggestionsResponse,
 )
 
@@ -45,6 +46,22 @@ def get_suggestions(
     ordered Nybegynner, Middels, Øvet. Another user's profile, or an id that is unknown or
     not a UUID, is 404 `equipment_profile_not_found`."""
     return service.get_suggestions(db, current_user.id, profile_id)
+
+
+@router.get(
+    "/search",
+    response_model=ExerciseSearchResponse,
+    operation_id="search_exercises",
+    responses=PROFILE_NOT_FOUND,
+)
+def search_exercises(
+    profile_id: str, q: str, current_user: CurrentUser, db: DbSession
+) -> ExerciseSearchResponse:
+    """Every exercise whose name contains `q` (case-insensitive; `q` trimmed, 2–50
+    characters, else 422 on `q`), each with whether it fits the user's chosen Equipment
+    Profile and which equipment is missing. Fitting first, then level, muscle group, name.
+    Another user's profile, or an unknown or non-UUID id, is 404."""
+    return service.search_exercises(db, current_user.id, profile_id, q)
 
 
 @router.get(

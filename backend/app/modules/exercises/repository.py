@@ -5,12 +5,29 @@ import uuid
 
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session as DbSessionType
+from sqlalchemy.orm import selectinload
 
 from app.modules.exercises.models import Equipment, EquipmentProfile, Exercise
 
 
 def list_exercises(db: DbSessionType) -> list[Exercise]:
     return list(db.scalars(select(Exercise)))
+
+
+def _escape_like(value: str) -> str:
+    return value.replace("\\", "\\\\").replace("%", "\\%").replace("_", "\\_")
+
+
+def search_exercises(db: DbSessionType, query: str) -> list[Exercise]:
+    """Exercises whose name contains `query`, ignoring case (story 4.4). Unordered; the
+    service orders them. `%`, `_` and `\\` in the query match themselves."""
+    needle = _escape_like(query)
+    statement = (
+        select(Exercise)
+        .where(Exercise.name.ilike(f"%{needle}%", escape="\\"))
+        .options(selectinload(Exercise.equipment_links), selectinload(Exercise.muscle_links))
+    )
+    return list(db.scalars(statement))
 
 
 def get_exercise(db: DbSessionType, exercise_id: uuid.UUID) -> Exercise | None:

@@ -345,6 +345,29 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/exercises/search": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Search Exercises
+         * @description Every exercise whose name contains `q` (case-insensitive; `q` trimmed, 2–50
+         *     characters, else 422 on `q`), each with whether it fits the user's chosen Equipment
+         *     Profile and which equipment is missing. Fitting first, then level, muscle group, name.
+         *     Another user's profile, or an unknown or non-UUID id, is 404.
+         */
+        get: operations["search_exercises"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/exercises/equipment-profiles": {
         parameters: {
             query?: never;
@@ -536,6 +559,45 @@ export interface components {
             primary_muscle_group: string;
             /** Equipment */
             equipment: string[];
+        };
+        /**
+         * ExerciseSearchItem
+         * @description A search result (story 4.4): the list item plus whether it fits the chosen profile
+         *     and, if not, the missing equipment (Norwegian names, seed order).
+         */
+        ExerciseSearchItem: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Name */
+            name: string;
+            level: components["schemas"]["Level"];
+            /** Primary Muscle Group */
+            primary_muscle_group: string;
+            /** Equipment */
+            equipment: string[];
+            /** Fits */
+            fits: boolean;
+            /** Missing Equipment */
+            missing_equipment: string[];
+        };
+        /**
+         * ExerciseSearchResponse
+         * @description Exercises whose name contains the query, fitting ones first, then Nybegynner,
+         *     Middels, Øvet, muscle group and name.
+         */
+        ExerciseSearchResponse: {
+            /**
+             * Profile Id
+             * Format: uuid
+             */
+            profile_id: string;
+            /** Profile Name */
+            profile_name: string;
+            /** Exercises */
+            exercises: components["schemas"]["ExerciseSearchItem"][];
         };
         /**
          * ExerciseType
@@ -1678,6 +1740,56 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["SuggestionsResponse"];
+                };
+            };
+            /** @description equipment_profile_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Validation error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Default Response */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    search_exercises: {
+        parameters: {
+            query: {
+                profile_id: string;
+                q: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExerciseSearchResponse"];
                 };
             };
             /** @description equipment_profile_not_found */

@@ -1,6 +1,7 @@
 """Exercise rules: map reference rows to responses and order the list; Equipment Profiles
 (story 4.2) with their defaults, limits and the always-included bodyweight."""
 
+import unicodedata
 import uuid
 from collections.abc import Iterable
 from dataclasses import dataclass
@@ -26,6 +27,10 @@ from app.modules.exercises.schemas import (
     EquipmentResponse,
     ExerciseDetail,
     ExerciseListItem,
+    ExerciseSearchItem,
+    ExerciseSearchResponse,
+    SEARCH_MAX_LENGTH,
+    SEARCH_MIN_LENGTH,
     SuggestionsResponse,
 )
 
@@ -115,6 +120,18 @@ class SuggestionCandidate(Generic[T]):
     item: T
 
 
+def missing_equipment(
+    exercise: SuggestionCandidate[T], available: frozenset[str]
+) -> frozenset[str]:
+    """The required equipment slugs not in `available`; empty means the exercise fits.
+    The one fit check (AD-5), used by both suggestions and search."""
+    return exercise.equipment_slugs - available
+
+
+def _suggestion_order(exercise: SuggestionCandidate[T]) -> tuple[int, int, str]:
+    return (LEVEL_ORDER[exercise.level], exercise.muscle_position, exercise.name.lower())
+
+
 def suggest_exercises(
     exercises: Iterable[SuggestionCandidate[T]], equipment_slugs: Iterable[str]
 ) -> list[SuggestionCandidate[T]]:
@@ -124,10 +141,30 @@ def suggest_exercises(
     Pure: reads no database, so it is unit-tested over the seed file (AD-5).
     """
     available = frozenset(equipment_slugs)
-    fitting = [e for e in exercises if e.equipment_slugs <= available]
-    return sorted(
-        fitting, key=lambda e: (LEVEL_ORDER[e.level], e.muscle_position, e.name.lower())
-    )
+    fitting = [e for e in exercises if not missing_equipment(e, available)]
+    return sorted(fitting, key=_suggestion_order)
+
+
+@dataclass(frozen=True)
+class SearchMatch(Generic[T]):
+    candidate: SuggestionCandidate[T]
+    # Required equipment slugs the profile lacks; empty when the exercise fits.
+    missing: frozenset[str]
+
+    @property
+    def fits(self) -> bool:
+        return not self.missing
+
+
+def rank_search_matches(
+    exercises: Iterable[SuggestionCandidate[T]], equipment_slugs: Iterable[str]
+) -> list[SearchMatch[T]]:
+    """Every given exercise with its fit against `equipment_slugs` (story 4.4): fitting
+    first, then the suggestion order. Pure, like `suggest_exercises`, and uses the same
+    fit check."""
+    available = frozenset(equipment_slugs)
+    matches = [SearchMatch(e, missing_equipment(e, available)) for e in exercises]
+    return sorted(matches, key=lambda m: (not m.fits, *_suggestion_order(m.candidate)))
 
 
 # --- Equipment Profiles (story 4.2) ---
@@ -295,34 +332,83 @@ def delete_profile(db: DbSessionType, user_id: uuid.UUID, profile_id: uuid.UUID)
 # --- Suggestions endpoint (story 4.3) ---
 
 
-def get_suggestions(
+def _owned_profile(
     db: DbSessionType, user_id: uuid.UUID, profile_id: str
-) -> SuggestionsResponse:
-    """Exercises that fit the user's profile, ordered by `suggest_exercises`. Another
-    user's, a missing or a non-UUID profile id is 404 `equipment_profile_not_found`."""
+) -> EquipmentProfile:
+    """The user's profile with Kroppsvekt ensured. Another user's, a missing or a
+    non-UUID profile id is 404 `equipment_profile_not_found`."""
     try:
         parsed = uuid.UUID(profile_id)
     except ValueError:
         raise AppError(404, PROFILE_NOT_FOUND_CODE, PROFILE_NOT_FOUND_MESSAGE) from None
     profile = _get_profile(db, user_id, parsed)
     _ensure_bodyweight(db, [profile])
-    candidates: list[SuggestionCandidate[ExerciseListItem]] = []
-    for exercise in repository.list_exercises(db):
-        primary = _primary(exercise)
-        required = frozenset(link.equipment.slug for link in exercise.equipment_links)
-        candidates.append(
-            SuggestionCandidate(
-                name=exercise.name,
-                level=exercise.level,
-                muscle_position=primary.position,
-                equipment_slugs=required,
-                item=_list_item(exercise, primary),
-            )
-        )
-    slugs = [item.equipment.slug for item in profile.items]
-    suggested = suggest_exercises(candidates, slugs)
+    return profile
+
+
+def _profile_slugs(profile: EquipmentProfile) -> list[str]:
+    return [item.equipment.slug for item in profile.items]
+
+
+def _candidate(exercise: Exercise) -> SuggestionCandidate[Exercise]:
+    primary = _primary(exercise)
+    return SuggestionCandidate(
+        name=exercise.name,
+        level=exercise.level,
+        muscle_position=primary.position,
+        equipment_slugs=frozenset(link.equipment.slug for link in exercise.equipment_links),
+        item=exercise,
+    )
+
+
+def get_suggestions(
+    db: DbSessionType, user_id: uuid.UUID, profile_id: str
+) -> SuggestionsResponse:
+    """Exercises that fit the user's profile, ordered by `suggest_exercises`. Another
+    user's, a missing or a non-UUID profile id is 404 `equipment_profile_not_found`."""
+    profile = _owned_profile(db, user_id, profile_id)
+    candidates = [_candidate(exercise) for exercise in repository.list_exercises(db)]
+    suggested = suggest_exercises(candidates, _profile_slugs(profile))
     return SuggestionsResponse(
         profile_id=profile.id,
         profile_name=profile.name,
-        exercises=[candidate.item for candidate in suggested],
+        exercises=[_list_item(c.item, _primary(c.item)) for c in suggested],
+    )
+
+
+# --- Search by name (story 4.4) ---
+
+SEARCH_LENGTH_MESSAGE = "Skriv mellom 2 og 50 tegn."
+
+
+def _search_item(match: SearchMatch[Exercise]) -> ExerciseSearchItem:
+    exercise = match.candidate.item
+    required = (link.equipment for link in exercise.equipment_links)
+    missing = sorted((e for e in required if e.slug in match.missing), key=lambda e: e.position)
+    return ExerciseSearchItem(
+        **_list_item(exercise, _primary(exercise)).model_dump(),
+        fits=match.fits,
+        missing_equipment=[e.name for e in missing],
+    )
+
+
+def search_exercises(
+    db: DbSessionType, user_id: uuid.UUID, profile_id: str, query: str
+) -> ExerciseSearchResponse:
+    """Every exercise whose name contains `query` (NFC-normalised, trimmed, 2–50
+    characters, else a 422 field error on `q`), ignoring case, each marked with whether
+    it fits the profile. Fitting ones first, then the suggestion order. Profile rules as
+    `get_suggestions`, checked before the query (404 wins over 422)."""
+    # Ownership first: another user's profile is 404 whatever the query.
+    profile = _owned_profile(db, user_id, profile_id)
+    # NFC, so "ø" typed as "o" + combining stroke matches and counts as one character.
+    query = unicodedata.normalize("NFC", query).strip()
+    if not SEARCH_MIN_LENGTH <= len(query) <= SEARCH_MAX_LENGTH:
+        raise _field_error("q", SEARCH_LENGTH_MESSAGE)
+    candidates = [_candidate(e) for e in repository.search_exercises(db, query)]
+    matches = rank_search_matches(candidates, _profile_slugs(profile))
+    return ExerciseSearchResponse(
+        profile_id=profile.id,
+        profile_name=profile.name,
+        exercises=[_search_item(match) for match in matches],
     )

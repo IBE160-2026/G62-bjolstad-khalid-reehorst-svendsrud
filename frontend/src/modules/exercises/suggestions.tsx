@@ -3,12 +3,14 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 
+import { useDebounced } from "@/lib/use-debounced";
 import { useMe } from "@/modules/identity/api";
-import { LINK_CLASS, SECONDARY_BUTTON_CLASS } from "@/modules/identity/styles";
+import { LINK_CLASS } from "@/modules/identity/styles";
 
 import {
-  exercisePath,
+  EXERCISE_SEARCH_MIN_LENGTH,
   levelLabel,
+  searchLength,
   readStoredProfileId,
   storeProfileId,
   useEquipmentProfiles,
@@ -16,6 +18,12 @@ import {
   type ExerciseListItem,
   type Level,
 } from "./api";
+import {
+  EXERCISE_SEARCH_DELAY_MS,
+  ExerciseSearchField,
+  ExerciseSearchResults,
+} from "./exercise-search";
+import { ExerciseRow, ListSkeleton, LoadError } from "./list-parts";
 import { ProfileSwitch } from "./profile-switch";
 
 const LEVELS: Level[] = ["beginner", "intermediate", "advanced"];
@@ -32,29 +40,6 @@ export function groupByLevel(exercises: ExerciseListItem[]): Group[] {
 
 export function countText(count: number, profileName: string): string {
   return `${count} ${count === 1 ? "øvelse passer" : "øvelser passer"} med ${profileName}`;
-}
-
-function ListSkeleton() {
-  return (
-    <div aria-hidden="true" className="flex flex-col gap-3" data-testid="exercise-list-skeleton">
-      {[0, 1, 2, 3, 4].map((row) => (
-        <div key={row} className="h-14 animate-pulse rounded-lg bg-muted" />
-      ))}
-    </div>
-  );
-}
-
-function LoadError({ message, onRetry }: { message: string; onRetry: () => void }) {
-  return (
-    <div className="flex flex-col items-start gap-3">
-      <p role="alert" className="text-body text-destructive">
-        {message}
-      </p>
-      <button type="button" onClick={onRetry} className={SECONDARY_BUTTON_CLASS}>
-        Prøv igjen
-      </button>
-    </div>
-  );
 }
 
 function SuggestionList({ profileId }: { profileId: string }) {
@@ -92,17 +77,7 @@ function SuggestionList({ profileId }: { profileId: string }) {
             </h2>
             <ul className="-mx-2 flex flex-col divide-y divide-border">
               {group.exercises.map((exercise) => (
-                <li key={exercise.id}>
-                  <Link
-                    href={exercisePath(exercise.id)}
-                    className="flex min-h-11 flex-col gap-0.5 rounded-sm px-2 py-2 hover:bg-muted"
-                  >
-                    <span className="text-body text-foreground">{exercise.name}</span>
-                    <span className="text-small text-muted-foreground">
-                      {exercise.primary_muscle_group} · {exercise.equipment.join(", ")}
-                    </span>
-                  </Link>
-                </li>
+                <ExerciseRow key={exercise.id} exercise={exercise} />
               ))}
             </ul>
           </section>
@@ -135,6 +110,8 @@ function ProfilLink() {
 /**
  * Trening (story 4.3): an Equipment Profile switch and the exercises that fit it,
  * grouped by level. The choice is remembered per browser and user; else the first profile.
+ * A name search (story 4.4) replaces the list with results from the whole exercise list
+ * while it has at least 2 characters.
  */
 export function Suggestions() {
   const me = useMe();
@@ -143,6 +120,16 @@ export function Suggestions() {
   // Chosen on this page; until then the stored choice (null if none or storage blocked).
   const [chosenId, setChosenId] = useState<string | null>(null);
   const storedId = useMemo(() => (userId ? readStoredProfileId(userId) : null), [userId]);
+  const [query, setQuery] = useState("");
+  const debounced = useDebounced(query, EXERCISE_SEARCH_DELAY_MS);
+  // Under 2 characters (also at once when cleared) the suggestions show. Otherwise the
+  // view only changes once the debounced query has caught up with the typed one; until
+  // then the current view stays, so results for an old query never flash back.
+  const [searching, setSearching] = useState(false);
+  const longEnough = searchLength(query) >= EXERCISE_SEARCH_MIN_LENGTH;
+  const settled = debounced.trim() === query.trim();
+  const nextSearching = !longEnough ? false : settled ? true : searching;
+  if (nextSearching !== searching) setSearching(nextSearching);
 
   function choose(id: string) {
     setChosenId(id);
@@ -170,8 +157,15 @@ export function Suggestions() {
     content = (
       <>
         <ProfileSwitch profiles={profiles.data} selectedId={selected.id} onChange={choose} />
-        <CountLine profileId={selected.id} />
-        <SuggestionList profileId={selected.id} />
+        <ExerciseSearchField value={query} onChange={setQuery} />
+        {nextSearching ? (
+          <ExerciseSearchResults profileId={selected.id} query={debounced} />
+        ) : (
+          <>
+            <CountLine profileId={selected.id} />
+            <SuggestionList profileId={selected.id} />
+          </>
+        )}
       </>
     );
   }
