@@ -208,6 +208,12 @@ def get_workout(db: DbSessionType, user_id: uuid.UUID, workout_id: str) -> Worko
     return _response(db, _get_workout(db, user_id, workout_id))
 
 
+def day_workouts(db: DbSessionType, user_id: uuid.UUID, day: dt.date) -> list[WorkoutResponse]:
+    """The user's workouts on `day`, finished or not, oldest first, with all their sets
+    (overview filters to done sets, story 6.1)."""
+    return [_response(db, workout) for workout in repository.list_for_date(db, user_id, day)]
+
+
 def finish_workout(
     db: DbSessionType, user_id: uuid.UUID, workout_id: str, now: datetime
 ) -> WorkoutResponse:

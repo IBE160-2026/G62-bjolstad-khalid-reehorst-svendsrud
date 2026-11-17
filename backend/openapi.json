@@ -2306,6 +2306,60 @@
           }
         }
       }
+    },
+    "/api/overview": {
+      "get": {
+        "tags": [
+          "overview"
+        ],
+        "summary": "Get Overview",
+        "description": "Target, kcal eaten and remaining, the Meals and the done workouts for one date\n(YYYY-MM-DD). Read-only; a date more than one day after today is 422.",
+        "operationId": "get_overview",
+        "parameters": [
+          {
+            "name": "date",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date",
+              "title": "Date"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OverviewResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "date_in_future, validation_error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Default Response"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -3167,6 +3221,65 @@
           "total_kcal"
         ],
         "title": "MealSummary"
+      },
+      "OverviewResponse": {
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date",
+            "title": "Date"
+          },
+          "calorie_target": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Calorie Target"
+          },
+          "kcal_eaten": {
+            "type": "number",
+            "title": "Kcal Eaten"
+          },
+          "kcal_remaining": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Kcal Remaining"
+          },
+          "meals": {
+            "items": {
+              "$ref": "#/components/schemas/MealSummary"
+            },
+            "type": "array",
+            "title": "Meals"
+          },
+          "workouts": {
+            "items": {
+              "$ref": "#/components/schemas/WorkoutResponse"
+            },
+            "type": "array",
+            "title": "Workouts"
+          }
+        },
+        "type": "object",
+        "required": [
+          "date",
+          "calorie_target",
+          "kcal_eaten",
+          "kcal_remaining",
+          "meals",
+          "workouts"
+        ],
+        "title": "OverviewResponse"
       },
       "ProfileRequest": {
         "properties": {

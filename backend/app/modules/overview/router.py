@@ -1,0 +1,32 @@
+"""GET /api/overview (story 6.1): the Daily Overview for one date. Requires consent."""
+
+from datetime import date
+from typing import Annotated
+
+from fastapi import APIRouter, Query
+
+from app.core.clock import Now
+from app.core.db import DbSession
+from app.core.errors import ErrorResponse
+from app.modules.identity.consent import ConsentedUser
+from app.modules.overview import service
+from app.modules.overview.schemas import OverviewResponse
+
+router = APIRouter(prefix="/api/overview", tags=["overview"])
+
+
+@router.get(
+    "",
+    response_model=OverviewResponse,
+    operation_id="get_overview",
+    responses={422: {"model": ErrorResponse, "description": "date_in_future, validation_error"}},
+)
+def get_overview(
+    current_user: ConsentedUser,
+    db: DbSession,
+    now: Now,
+    day: Annotated[date, Query(alias="date")],
+) -> OverviewResponse:
+    """Target, kcal eaten and remaining, the Meals and the done workouts for one date
+    (YYYY-MM-DD). Read-only; a date more than one day after today is 422."""
+    return service.get_day(db, current_user.id, day, now)

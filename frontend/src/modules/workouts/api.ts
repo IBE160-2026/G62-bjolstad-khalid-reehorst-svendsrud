@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { api } from "@/lib/api/client";
 import type { components } from "@/lib/api/schema";
 import { ApiError, call, callNoContent } from "@/modules/identity/api";
+import { OVERVIEW_KEY, overviewKey } from "@/modules/overview/api";
 
 export type Workout = components["schemas"]["WorkoutResponse"];
 export type WorkoutExercise = components["schemas"]["WorkoutExerciseResponse"];
@@ -90,6 +91,8 @@ const pendingDeletes = new Set<string>();
 function useStoreWorkout(queryKey: QueryKey = ACTIVE_WORKOUT_KEY) {
   const queryClient = useQueryClient();
   return (workout: Workout) => {
+    // I dag shows the date's done sets (AD-15).
+    void queryClient.invalidateQueries({ queryKey: overviewKey(workout.date) });
     let shown = workout;
     for (const setId of pendingDeletes) shown = withoutSet(shown, setId);
     if (!workout.finished_at) {
@@ -400,6 +403,7 @@ export function useFinishWorkout() {
       // Only the unfinished workout can be finished, so none is in progress now.
       queryClient.setQueryData(ACTIVE_WORKOUT_KEY, null);
       queryClient.setQueryData(workoutKey(workout.id), workout);
+      void queryClient.invalidateQueries({ queryKey: overviewKey(workout.date) });
       return queryClient.invalidateQueries({ queryKey: FINISHED_WORKOUTS_KEY });
     },
   });
@@ -424,6 +428,8 @@ export function useDeleteWorkout() {
       queryClient.removeQueries({ queryKey: workoutKey(workoutId) });
       const active = queryClient.getQueryData<Workout | null>(ACTIVE_WORKOUT_KEY);
       if (active?.id === workoutId) queryClient.setQueryData(ACTIVE_WORKOUT_KEY, null);
+      // Only the id is known here, so every date's overview is refetched.
+      void queryClient.invalidateQueries({ queryKey: OVERVIEW_KEY });
       return queryClient.invalidateQueries({ queryKey: FINISHED_WORKOUTS_KEY });
     },
   });

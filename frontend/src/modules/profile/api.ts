@@ -5,6 +5,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { api } from "@/lib/api/client";
 import type { components } from "@/lib/api/schema";
 import { ApiError, call } from "@/modules/identity/api";
+import { OVERVIEW_KEY } from "@/modules/overview/api";
 
 export type Profile = components["schemas"]["ProfileResponse"];
 export type ProfileRequest = components["schemas"]["ProfileRequest"];
@@ -38,6 +39,8 @@ export function useSaveProfile() {
     mutationFn: (body: ProfileRequest) => call(() => api.PUT("/api/profile", { body })),
     onSuccess: async (profile) => {
       queryClient.setQueryData(PROFILE_QUERY_KEY, profile);
+      // The day note shows the stored target.
+      void queryClient.invalidateQueries({ queryKey: OVERVIEW_KEY });
       await queryClient.invalidateQueries({ queryKey: PROFILE_QUERY_KEY });
     },
   });
