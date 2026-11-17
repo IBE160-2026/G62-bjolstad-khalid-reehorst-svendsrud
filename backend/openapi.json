@@ -1070,6 +1070,78 @@
         }
       }
     },
+    "/api/exercises/search": {
+      "get": {
+        "tags": [
+          "exercises"
+        ],
+        "summary": "Search Exercises",
+        "description": "Every exercise whose name contains `q` (case-insensitive; `q` trimmed, 2–50\ncharacters, else 422 on `q`), each with whether it fits the user's chosen Equipment\nProfile and which equipment is missing. Fitting first, then level, muscle group, name.\nAnother user's profile, or an unknown or non-UUID id, is 404.",
+        "operationId": "search_exercises",
+        "parameters": [
+          {
+            "name": "profile_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Profile Id"
+            }
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Q"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExerciseSearchResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Default Response"
+          },
+          "404": {
+            "description": "equipment_profile_not_found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/exercises/equipment-profiles": {
       "get": {
         "tags": [
@@ -1669,6 +1741,84 @@
           "equipment"
         ],
         "title": "ExerciseListItem"
+      },
+      "ExerciseSearchItem": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "level": {
+            "$ref": "#/components/schemas/Level"
+          },
+          "primary_muscle_group": {
+            "type": "string",
+            "title": "Primary Muscle Group"
+          },
+          "equipment": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Equipment"
+          },
+          "fits": {
+            "type": "boolean",
+            "title": "Fits"
+          },
+          "missing_equipment": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Missing Equipment"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "level",
+          "primary_muscle_group",
+          "equipment",
+          "fits",
+          "missing_equipment"
+        ],
+        "title": "ExerciseSearchItem",
+        "description": "A search result (story 4.4): the list item plus whether it fits the chosen profile\nand, if not, the missing equipment (Norwegian names, seed order)."
+      },
+      "ExerciseSearchResponse": {
+        "properties": {
+          "profile_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Profile Id"
+          },
+          "profile_name": {
+            "type": "string",
+            "title": "Profile Name"
+          },
+          "exercises": {
+            "items": {
+              "$ref": "#/components/schemas/ExerciseSearchItem"
+            },
+            "type": "array",
+            "title": "Exercises"
+          }
+        },
+        "type": "object",
+        "required": [
+          "profile_id",
+          "profile_name",
+          "exercises"
+        ],
+        "title": "ExerciseSearchResponse",
+        "description": "Exercises whose name contains the query, fitting ones first, then Nybegynner,\nMiddels, Øvet, muscle group and name."
       },
       "ExerciseType": {
         "type": "string",

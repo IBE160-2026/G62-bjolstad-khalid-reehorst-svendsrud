@@ -10,6 +10,8 @@ from pydantic_core import PydanticCustomError
 
 from app.core.errors import FIELD_MESSAGE_ERROR
 
+SEARCH_MIN_LENGTH = 2
+SEARCH_MAX_LENGTH = 50
 PROFILE_NAME_MAX = 40
 PROFILE_NAME_MESSAGE = "Skriv et navn på profilen."
 PROFILE_NAME_LENGTH_MESSAGE = "Skriv et navn på høyst 40 tegn."
@@ -94,3 +96,20 @@ class SuggestionsResponse(BaseModel):
     profile_id: uuid.UUID
     profile_name: str
     exercises: list[ExerciseListItem]
+
+
+class ExerciseSearchItem(ExerciseListItem):
+    """A search result (story 4.4): the list item plus whether it fits the chosen profile
+    and, if not, the missing equipment (Norwegian names, seed order)."""
+
+    fits: bool
+    missing_equipment: list[str]
+
+
+class ExerciseSearchResponse(BaseModel):
+    """Exercises whose name contains the query, fitting ones first, then Nybegynner,
+    Middels, Øvet, muscle group and name."""
+
+    profile_id: uuid.UUID
+    profile_name: str
+    exercises: list[ExerciseSearchItem]
