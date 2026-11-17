@@ -303,6 +303,75 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/exercises/equipment": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Equipment
+         * @description The nine equipment types in seed order.
+         */
+        get: operations["list_equipment"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/exercises/equipment-profiles": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Equipment Profiles
+         * @description The user's Equipment Profiles in creation order. A user with none (registered before
+         *     profiles existed) gets "Hjemme" and "Treningssenter" first.
+         */
+        get: operations["list_equipment_profiles"];
+        put?: never;
+        /**
+         * Create Equipment Profile
+         * @description New profile; Kroppsvekt is always included. At most 10 profiles, names unique.
+         */
+        post: operations["create_equipment_profile"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/exercises/equipment-profiles/{profile_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Delete Equipment Profile
+         * @description Delete the user's profile; the last one cannot be deleted.
+         */
+        delete: operations["delete_equipment_profile"];
+        options?: never;
+        head?: never;
+        /**
+         * Update Equipment Profile
+         * @description Rename and/or replace the equipment of the user's profile; Kroppsvekt is kept.
+         */
+        patch: operations["update_equipment_profile"];
+        trace?: never;
+    };
     "/api/exercises": {
         parameters: {
             query?: never;
@@ -353,6 +422,49 @@ export interface components {
          * @enum {string}
          */
         ActivityLevel: "sedentary" | "light" | "moderate" | "very_active" | "extremely_active";
+        /**
+         * EquipmentProfileCreate
+         * @description A new profile. `kroppsvekt` is always added by the server, whatever is sent.
+         */
+        EquipmentProfileCreate: {
+            /** Name */
+            name: string;
+            /**
+             * Equipment
+             * @default []
+             */
+            equipment: string[];
+        };
+        /** EquipmentProfileResponse */
+        EquipmentProfileResponse: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Name */
+            name: string;
+            /** Equipment */
+            equipment: components["schemas"]["EquipmentResponse"][];
+        };
+        /**
+         * EquipmentProfileUpdate
+         * @description Rename and/or replace the equipment. Left out or null means unchanged; `kroppsvekt`
+         *     is always kept.
+         */
+        EquipmentProfileUpdate: {
+            /** Name */
+            name?: string | null;
+            /** Equipment */
+            equipment?: string[] | null;
+        };
+        /** EquipmentResponse */
+        EquipmentResponse: {
+            /** Slug */
+            slug: string;
+            /** Name */
+            name: string;
+        };
         /** ErrorBody */
         ErrorBody: {
             /** Code */
@@ -1444,6 +1556,233 @@ export interface operations {
                 };
             };
             /** @description food_entry_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Validation error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Default Response */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    list_equipment: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EquipmentResponse"][];
+                };
+            };
+            /** @description Validation error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Default Response */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    list_equipment_profiles: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EquipmentProfileResponse"][];
+                };
+            };
+            /** @description Validation error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Default Response */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    create_equipment_profile: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EquipmentProfileCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EquipmentProfileResponse"];
+                };
+            };
+            /** @description Validation error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Default Response */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    delete_equipment_profile: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                profile_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description equipment_profile_not_found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description last_equipment_profile */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Validation error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Default Response */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    update_equipment_profile: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                profile_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EquipmentProfileUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EquipmentProfileResponse"];
+                };
+            };
+            /** @description equipment_profile_not_found */
             404: {
                 headers: {
                     [name: string]: unknown;

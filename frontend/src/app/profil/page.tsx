@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 
+import { EquipmentProfiles } from "@/modules/exercises/equipment-profiles";
 import { DeleteAccount } from "@/modules/identity/delete-account";
 import { LogoutButton } from "@/modules/identity/logout-button";
 import { ProfileEditor } from "@/modules/profile/profile-editor";
@@ -10,6 +11,7 @@ export default function ProfilePage() {
   return (
     <div className="flex flex-col gap-10">
       <ProfileEditor />
+      <EquipmentProfiles />
       <section aria-labelledby="account-heading" className="flex flex-col gap-4">
         <h2 id="account-heading" className="text-heading font-medium text-foreground">
           Konto

@@ -1,8 +1,20 @@
-"""Exercise reference tables (AD-9): read-only, filled only by the seed in app/seed/."""
+"""Exercise reference tables (AD-9): read-only, filled only by the seed in app/seed/.
+Equipment Profiles (story 4.2) are user-owned and live here too."""
 
+import datetime as dt
 import uuid
 
-from sqlalchemy import JSON, CheckConstraint, ForeignKey, Index, Integer, String, Uuid, text
+from sqlalchemy import (
+    JSON,
+    CheckConstraint,
+    DateTime,
+    ForeignKey,
+    Index,
+    Integer,
+    String,
+    Uuid,
+    text,
+)
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.core.db import Base
@@ -90,4 +102,37 @@ class Exercise(Base):
     )
     muscle_links: Mapped[list[ExerciseMuscleGroup]] = relationship(
         lazy="selectin", cascade="all, delete-orphan"
+    )
+
+
+class EquipmentProfileItem(Base):
+    """One equipment type in a profile. RESTRICT: equipment is reference data and must
+    never silently disappear from a user's profile."""
+
+    __tablename__ = "equipment_profile_items"
+    profile_id: Mapped[uuid.UUID] = mapped_column(
+        Uuid, ForeignKey("equipment_profiles.id", ondelete="CASCADE"), primary_key=True
+    )
+    equipment_id: Mapped[uuid.UUID] = mapped_column(
+        Uuid, ForeignKey("equipment.id", ondelete="RESTRICT"), primary_key=True
+    )
+    equipment: Mapped[Equipment] = relationship(lazy="joined")
+
+
+class EquipmentProfile(Base):
+    """A named set of equipment a user has ("Hjemme", "Treningssenter", ...). Owned by one
+    user; every query filters by `user_id` (AD-4). Names are unique per user ignoring case."""
+
+    __tablename__ = "equipment_profiles"
+    __table_args__ = (
+        Index("uq_equipment_profiles_user_name", "user_id", text("lower(name)"), unique=True),
+    )
+    id: Mapped[uuid.UUID] = mapped_column(Uuid, primary_key=True, default=uuid.uuid4)
+    user_id: Mapped[uuid.UUID] = mapped_column(
+        Uuid, ForeignKey("users.id", ondelete="CASCADE"), index=True
+    )
+    name: Mapped[str] = mapped_column(String(40))
+    created_at: Mapped[dt.datetime] = mapped_column(DateTime(timezone=True))
+    items: Mapped[list[EquipmentProfileItem]] = relationship(
+        lazy="selectin", cascade="all, delete-orphan", passive_deletes=True
     )

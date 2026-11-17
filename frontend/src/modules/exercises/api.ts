@@ -1,10 +1,10 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { api } from "@/lib/api/client";
 import type { components } from "@/lib/api/schema";
-import { call } from "@/modules/identity/api";
+import { call, callNoContent } from "@/modules/identity/api";
 
 export type ExerciseListItem = components["schemas"]["ExerciseListItem"];
 export type ExerciseDetail = components["schemas"]["ExerciseDetail"];
@@ -48,5 +48,80 @@ export function useExercise(id: string) {
         }),
       ),
     staleTime: REFERENCE_STALE_MS,
+  });
+}
+
+// --- Equipment Profiles ("Utstyr", story 4.2) ---
+
+export type Equipment = components["schemas"]["EquipmentResponse"];
+export type EquipmentProfile = components["schemas"]["EquipmentProfileResponse"];
+export type EquipmentProfileCreate = components["schemas"]["EquipmentProfileCreate"];
+export type EquipmentProfileUpdate = components["schemas"]["EquipmentProfileUpdate"];
+
+/** Always in every profile; the server adds it whatever the client sends. */
+export const BODYWEIGHT_SLUG = "kroppsvekt";
+
+/** The server refuses more than this (422 `equipment_profile_limit`). */
+export const MAX_EQUIPMENT_PROFILES = 10;
+
+export const EQUIPMENT_PROFILES_KEY = ["equipment-profiles"] as const;
+
+/** The nine equipment types in seed order (reference data). */
+export function useEquipment() {
+  return useQuery({
+    queryKey: ["equipment"],
+    queryFn: () => call(() => api.GET("/api/exercises/equipment")),
+    staleTime: REFERENCE_STALE_MS,
+  });
+}
+
+/** The user's Equipment Profiles in creation order. */
+export function useEquipmentProfiles() {
+  return useQuery({
+    queryKey: EQUIPMENT_PROFILES_KEY,
+    queryFn: () => call(() => api.GET("/api/exercises/equipment-profiles")),
+  });
+}
+
+function useInvalidateProfiles() {
+  const queryClient = useQueryClient();
+  return () => queryClient.invalidateQueries({ queryKey: EQUIPMENT_PROFILES_KEY });
+}
+
+export function useCreateEquipmentProfile() {
+  const invalidate = useInvalidateProfiles();
+  return useMutation({
+    mutationFn: (body: EquipmentProfileCreate) =>
+      call(() => api.POST("/api/exercises/equipment-profiles", { body })),
+    onSuccess: invalidate,
+  });
+}
+
+export function useUpdateEquipmentProfile() {
+  const invalidate = useInvalidateProfiles();
+  return useMutation({
+    mutationFn: ({ id, body }: { id: string; body: EquipmentProfileUpdate }) =>
+      call(() =>
+        api.PATCH("/api/exercises/equipment-profiles/{profile_id}", {
+          params: { path: { profile_id: id } },
+          body,
+        }),
+      ),
+    // On settle, not success: a 404 (deleted elsewhere) must drop the stale row too.
+    onSettled: invalidate,
+  });
+}
+
+export function useDeleteEquipmentProfile() {
+  const invalidate = useInvalidateProfiles();
+  return useMutation({
+    mutationFn: (id: string) =>
+      callNoContent(() =>
+        api.DELETE("/api/exercises/equipment-profiles/{profile_id}", {
+          params: { path: { profile_id: id } },
+        }),
+      ),
+    // On settle, not success: a 404 (deleted elsewhere) must drop the stale row too.
+    onSettled: invalidate,
   });
 }

@@ -29,7 +29,7 @@
 # - Dev moves story to 'review', then runs code-review (fresh context, different LLM recommended)
 # - Retrospective appends its action items to action_items; the status view surfaces open ones
 generated: 11-15-2026 12:32
-last_updated: 11-17-2026 10:30
+last_updated: 11-17-2026 12:30
 project: Prompt Force
 project_key: NOKEY
 tracking_system: file-system
@@ -59,13 +59,13 @@ development_status:
   3-4-log-a-recent-food-with-one-tap: done
   3-5-choose-servings-instead-of-grams: done
   3-6-edit-or-delete-a-food-entry: done
-  3-7-find-norwegian-brand-products-in-search: review
+  3-7-find-norwegian-brand-products-in-search: done
   3-8-scan-a-barcode-with-the-camera-should: backlog
   epic-3-retrospective: optional
 
   epic-4: in-progress
   4-1-see-an-exercise-and-how-to-do-it: done
-  4-2-save-my-equipment: backlog
+  4-2-save-my-equipment: review
   4-3-get-exercises-that-fit-my-equipment: backlog
   4-4-search-exercises-by-name: backlog
   4-5-choose-exercises-by-muscle-group-and-level-should: backlog

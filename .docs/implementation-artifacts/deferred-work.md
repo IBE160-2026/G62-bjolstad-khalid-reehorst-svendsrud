@@ -42,4 +42,10 @@
 - source_spec: `.docs/implementation-artifacts/spec-3-4-log-a-recent-food-with-one-tap.md`
   summary: Story 3.6 edit/delete mutations must also invalidate `["food-recent"]`.
   evidence: Only `useAddFoodEntry` invalidates the recent list; editing or deleting an entry changes `last_grams`, `last_meal` and membership.
+- source_spec: `.docs/implementation-artifacts/spec-4-2-save-my-equipment.md`
+  summary: Add a concurrency test for the per-user advisory lock (two simultaneous deletes of a two-profile user).
+  evidence: Removing `lock_user_profiles` passes every sequential test; a user could end with zero or 11 profiles.
+- source_spec: `.docs/implementation-artifacts/spec-4-2-save-my-equipment.md`
+  summary: Seed read-only reference data (equipment, muscle groups, exercises) outside `APP_ENV=local` before any deployment.
+  evidence: `seed_if_empty` only runs locally; without equipment, default profiles start empty (repaired on read once seeded).
 
