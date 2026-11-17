@@ -493,7 +493,7 @@ def test_a_concurrent_duplicate_add_is_409_not_500(
             )
             other.commit()
         with pytest.raises(AppError) as raised:
-            service.add_exercise(request_db, user_id, workout_id, push_up)
+            service.add_exercise(request_db, user_id, workout_id, push_up, datetime.now(UTC))
         request_db.rollback()
 
     assert raised.value.status_code == 409

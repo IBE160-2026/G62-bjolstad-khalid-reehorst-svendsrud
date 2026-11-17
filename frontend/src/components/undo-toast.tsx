@@ -12,10 +12,10 @@ export type UndoToastState = {
 };
 
 /**
- * "{Navn} er slettet." with "Angre" (story 3.6), at the bottom above the tab bar and away
- * from the "Logg mat" button. The live region is always rendered so screen readers pick up
- * each new message. It goes away after 5 s or once "Angre" has restored the entry; a failed
- * undo shows `error`.
+ * "{Navn} er slettet." with "Angre" (stories 3.6, 5.2), at the bottom above the tab bar and
+ * away from the page's primary button. The live region is always rendered so screen
+ * readers pick up each new message. It goes away after 5 s or once "Angre" has restored
+ * what was deleted; a failed undo shows `error`.
  *
  * The 5 s only run while the toast can be used (WCAG 2.2.1): they pause while it is
  * hovered or focused, while `paused` (e.g. a sheet makes the page inert) and while
@@ -117,6 +117,9 @@ export function UndoToast({
       {error && (
         <div
           role="alert"
+          data-undo-error
+          // Focusable, so a page can move focus here after a failed "Angre".
+          tabIndex={-1}
           className="pointer-events-auto flex w-full max-w-md items-center justify-between gap-3 rounded-lg border border-border bg-card py-1 pr-1 pl-4 text-body text-destructive shadow-sheet"
         >
           <p>{error}</p>

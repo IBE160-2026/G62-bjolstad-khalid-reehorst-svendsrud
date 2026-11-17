@@ -25,7 +25,7 @@ import {
   osloToday,
   type Meal,
 } from "./meals";
-import { UndoToast, type UndoToastState } from "./undo-toast";
+import { UndoToast, type UndoToastState } from "@/components/undo-toast";
 
 const MEAL_ICONS: Record<Meal, LucideIcon> = {
   breakfast: Coffee,
