@@ -1345,6 +1345,35 @@ Det viktigste funnet: Dekningsanalysen er regnet ut fra øvelseslista og viser a
 
 ---
 
+## 2026-11-18 – Story 4.5 og 6.4 del 2 (filtre og Playwright)
+
+**Verktøy:** Claude Code (BMAD `bmad-build`)
+**Hvem:** Osman Khalid
+**Bakgrunn:** 4.5 gir filtre på Trening (Should); 6.4 del 2 er siste Must: ende-til-ende-tester sensor kan kjøre med én kommando.
+
+### Hva vi ba KI om
+
+1. Filtre på muskelgruppe og nivå.
+2. Playwright-tester for hele løkka i en ekte nettleser.
+
+### Hva KI produserte
+
+- Filterregel og -knapper med tester; Playwright-oppsett og 8 ende-til-ende-tester; README-kommando.
+
+### Hva vi selv vurderte og kontrollerte
+
+- Osman godkjente begge spec-ene og nedlastingen av Playwright og Chromium.
+- 4.5: Osman valgte at hjelpemuskler skal telle (spec-eksempelet var feil). Én KI-kontrollør, 4 grupper rettet.
+- 6.4 del 2: testen som skrev til demobrukeren ble skrevet om, og testene kjøres én om gangen etter ustabilitet. Ingen feil i appen funnet.
+- Karianne meldte at «I dag» sto to ganger; rettet.
+
+### Status
+
+- [x] Alle Must-stories bygget og testet
+- [ ] Review av PR fra gruppen
+
+---
+
 ## Mal for nye oppføringer
 
 ```markdown

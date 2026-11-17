@@ -82,10 +82,11 @@
 - [x] 2026-11-17 [story-5-4-fullfor](948-2026-11-17-22-30-00-story-5-4-fullfor.md) — pushe og lage PR for story 5.4 (løst 2026-11-17 — PR #46)
 - [x] 2026-11-17 [story-6-1-i-dag](947-2026-11-17-23-45-00-story-6-1-i-dag.md) — pushe og lage PR for 6.1 + 6.2 (løst 2026-11-17 — PR #47, bygger på #46; flytt til main etter #46)
 - [x] 2026-11-17 [story-6-4a-demodata](946-2026-11-17-23-55-00-story-6-4a-demodata.md) — pushe og lage PR for 6.4 del 1 (løst 2026-11-17 — PR #48)
-- [ ] 2026-11-17 [story-6-4a-demodata](946-2026-11-17-23-55-00-story-6-4a-demodata.md) — 6.4 del 2 (Playwright, krever nedlasting) og del 3 (hjelpeknapp)
+- [x] 2026-11-17 [story-6-4a-demodata](946-2026-11-17-23-55-00-story-6-4a-demodata.md) — 6.4 del 2 (Playwright, krever nedlasting) og del 3 (hjelpeknapp) (løst 2026-11-18 — del 3 i #49, del 2 bygget)
 - [x] 2026-11-18 [story-6-4c-hjelp](945-2026-11-18-00-30-00-story-6-4c-hjelp.md) — pushe og lage PR for 6.4 del 3 (løst 2026-11-18 — PR #49, bygger på #48; flytt til main etter #48)
 
 - [x] 2026-11-18 — #48 og #49 flettet av Karianne (6.4 del 1 og 3 i main)
 - [x] 2026-11-18 [story-4-5-filtre](944-2026-11-18-01-00-00-story-4-5-filtre.md) — pushe og lage PR for 4.5 (løst 2026-11-18 — PR #50)
 
 - [x] 2026-11-18 — I dag viste «I dag» to ganger (toppfelt + sideoverskrift, meldt av Karianne); sideoverskriften vises nå bare for tidligere datoer
+- [x] 2026-11-18 [story-6-4b-playwright](943-2026-11-18-02-00-00-story-6-4b-playwright.md) — pushe og lage PR for 6.4 del 2 (løst 2026-11-18 — PR #51)

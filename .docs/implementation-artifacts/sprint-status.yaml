@@ -68,7 +68,7 @@ development_status:
   4-2-save-my-equipment: done
   4-3-get-exercises-that-fit-my-equipment: done
   4-4-search-exercises-by-name: done
-  4-5-choose-exercises-by-muscle-group-and-level-should: review
+  4-5-choose-exercises-by-muscle-group-and-level-should: done
   4-6-see-which-muscles-an-exercise-works-should: backlog
   epic-4-retrospective: optional
 
@@ -83,7 +83,7 @@ development_status:
   6-1-see-my-day-at-a-glance: done
   6-2-clear-prompts-when-nothing-is-logged: done
   6-3-move-between-days-with-the-week-strip-should: backlog
-  6-4-the-examiner-can-test-the-whole-core-loop: in-progress
+  6-4-the-examiner-can-test-the-whole-core-loop: review
   epic-6-retrospective: optional
 
   epic-7: backlog
