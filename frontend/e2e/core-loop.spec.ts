@@ -9,8 +9,17 @@ import { expect, test, type Locator, type Page } from "@playwright/test";
 
 const PASSWORD = "E2e-passord-1";
 const SARA = { email: "sara@demo.test", password: "Demo-passord-1" };
-/** A barcode the mock Open Food Facts adapter knows: "TINE Lettmelk", 42 kcal/100 g. */
+/**
+ * A barcode the mock Open Food Facts adapter knows (lettmelk, 42 kcal/100 g). The seeded
+ * Norwegian brands (story 3.7) also hold it as "Tine Lettmelk 1,0 % fett", and a stored item
+ * wins over the adapter, so the test reads the name from the sheet instead of assuming one.
+ */
 const MOCK_BARCODE = "7038010000980";
+
+/** Text → a RegExp that matches it literally. */
+function escapeRegExp(text: string): string {
+  return text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
 /** The bodyweight exercise UJ-3 uses, as named in the exercise list. */
 const PUSH_UP = "Armhevinger (Push-up)";
 
@@ -120,19 +129,25 @@ async function logHavregrynToFrokost(page: Page): Promise<string> {
   return name;
 }
 
-/** On Mat: "Logg mat" → Skriv strekkode with the mock barcode → Frokost. */
-async function logBarcodeToFrokost(page: Page) {
+/**
+ * On Mat: "Logg mat" → Skriv strekkode with the mock barcode → Frokost. Returns the found
+ * item's name as the sheet shows it (seeded or from the adapter, see MOCK_BARCODE).
+ */
+async function logBarcodeToFrokost(page: Page): Promise<string> {
   await page.getByRole("button", { name: "Logg mat" }).click();
   const sheet = addFoodSheet(page);
   await expect(sheet).toBeVisible();
   await sheet.getByRole("tab", { name: "Skriv strekkode" }).click();
   await sheet.getByRole("textbox", { name: "Strekkode" }).fill(MOCK_BARCODE);
   await sheet.getByRole("button", { name: "Finn varen" }).click();
-  await expect(sheet.getByRole("heading", { name: "TINE Lettmelk" })).toBeVisible();
+  const heading = sheet.getByRole("heading", { name: /lettmelk/i });
+  await expect(heading).toBeVisible();
+  const name = ((await heading.textContent()) ?? "").trim();
   await sheet.getByLabel("Mengde (g)").fill("200");
   await sheet.getByLabel("Måltid").selectOption("breakfast");
   await sheet.getByRole("button", { name: "Lagre", exact: true }).click();
   await expect(sheet).toBeHidden();
+  return name;
 }
 
 /** The row link for an exercise in Trening's list or search results. */
@@ -209,11 +224,13 @@ test("UJ-2: food by search and by barcode lowers the remaining kcal", async ({ p
   await page.getByRole("link", { name: "Logg mat" }).click();
   await expect(page).toHaveURL(/\/mat$/);
   const havregryn = await logHavregrynToFrokost(page);
-  await logBarcodeToFrokost(page);
+  const melk = await logBarcodeToFrokost(page);
 
   const frokost = page.getByRole("region", { name: /^Frokost/ });
   await expect(frokost.getByRole("button", { name: new RegExp(`^Endre ${havregryn}`) })).toBeVisible();
-  await expect(frokost.getByRole("button", { name: /^Endre TINE Lettmelk, 200 g/ })).toBeVisible();
+  await expect(
+    frokost.getByRole("button", { name: new RegExp(`^Endre ${escapeRegExp(melk)}, 200 g`) }),
+  ).toBeVisible();
   const total = kcalNumber((await page.getByTestId("day-total").textContent()) ?? "");
   expect(total).toBeGreaterThan(0);
 
