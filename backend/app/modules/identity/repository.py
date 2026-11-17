@@ -27,6 +27,11 @@ def get_user_by_email(db: DbSessionType, email: str) -> User | None:
     return db.scalars(_active_users().where(User.email == email)).one_or_none()
 
 
+def email_exists(db: DbSessionType, email: str) -> bool:
+    """Whether any account, soft-deleted or not, holds this email (the unique index does)."""
+    return db.scalar(select(User.id).where(User.email == email).limit(1)) is not None
+
+
 def get_user_by_email_for_update(db: DbSessionType, email: str) -> User | None:
     """Lock the user row so concurrent logins cannot lose a failure count."""
     return db.scalars(_active_users().where(User.email == email).with_for_update()).one_or_none()

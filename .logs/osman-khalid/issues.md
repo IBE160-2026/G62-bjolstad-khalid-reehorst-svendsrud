@@ -81,3 +81,5 @@
 - [x] 2026-11-17 — #42, #43 flettet; #44 havnet i 5.2-branchen, ny PR #45 tok 5.3 inn i main (flettet av Karianne)
 - [x] 2026-11-17 [story-5-4-fullfor](948-2026-11-17-22-30-00-story-5-4-fullfor.md) — pushe og lage PR for story 5.4 (løst 2026-11-17 — PR #46)
 - [x] 2026-11-17 [story-6-1-i-dag](947-2026-11-17-23-45-00-story-6-1-i-dag.md) — pushe og lage PR for 6.1 + 6.2 (løst 2026-11-17 — PR #47, bygger på #46; flytt til main etter #46)
+- [x] 2026-11-17 [story-6-4a-demodata](946-2026-11-17-23-55-00-story-6-4a-demodata.md) — pushe og lage PR for 6.4 del 1 (løst 2026-11-17 — PR #48)
+- [ ] 2026-11-17 [story-6-4a-demodata](946-2026-11-17-23-55-00-story-6-4a-demodata.md) — 6.4 del 2 (Playwright, krever nedlasting) og del 3 (hjelpeknapp)

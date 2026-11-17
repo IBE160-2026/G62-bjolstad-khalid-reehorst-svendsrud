@@ -61,6 +61,12 @@ def normalize_email(email: str) -> str:
     return email.strip().lower()
 
 
+def email_in_use(db: DbSessionType, email: str) -> bool:
+    """Whether any account, including a soft-deleted one, holds this email (the demo
+    seed's idempotency check: such an email cannot be registered again)."""
+    return repository.email_exists(db, normalize_email(email))
+
+
 @dataclass(frozen=True)
 class Registration:
     user: User
@@ -193,6 +199,11 @@ def resolve_session(db: DbSessionType, token: str, now: datetime) -> SessionUser
         consent_at=user.consent_at,
         intro_dismissed_at=user.intro_dismissed_at,
     )
+
+
+def end_all_sessions(db: DbSessionType, user_id: uuid.UUID) -> None:
+    """Delete every session of the user (the demo seed drops the one `register` made)."""
+    repository.delete_all_sessions(db, user_id)
 
 
 def logout(db: DbSessionType, session_id: uuid.UUID) -> None:
