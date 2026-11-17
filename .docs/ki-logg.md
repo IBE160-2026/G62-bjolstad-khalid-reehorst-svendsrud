@@ -999,7 +999,7 @@ Det viktigste funnet: Dekningsanalysen er regnet ut fra øvelseslista og viser a
 ## 2026-11-16 – Muskelfigur i planen (FR-33)
 
 **Verktøy:** Claude Code
-**Hvem:** Osman Khalid, etter forslag fra ungefernando og Karianne i Discord
+**Hvem:** Osman Khalid, etter forslag fra Fernando Svendsrud (ungefernando) og Karianne i Discord
 **Bakgrunn:** Gruppa ville at øvelsessiden viser hvilke muskler som jobber på en kroppsfigur.
 
 ### Hva vi ba KI om
@@ -1019,6 +1019,35 @@ Det viktigste funnet: Dekningsanalysen er regnet ut fra øvelseslista og viser a
 
 - [x] Lagt inn i planen
 - [ ] Story 4.6 bygget
+
+---
+
+## 2026-11-16 – Story 4.1 (øvelser med video)
+
+**Verktøy:** Claude Code (BMAD `bmad-build`)
+**Hvem:** Osman Khalid
+**Bakgrunn:** Nybegynnere må kunne se hva en øvelse er og hvordan den gjøres trygt.
+
+### Hva vi ba KI om
+
+1. Lage øvelsesdataene fra øvelseslista og sidene for liste og øvelse med video.
+
+### Hva KI produserte
+
+- Spec, `exercises`-modul, startdata for 34 øvelser, Trening-siden, øvelsessiden og nye tester.
+- KI skrev type, hjelpemuskler og tre steg per øvelse – merket som utkast.
+
+### Hva vi selv vurderte og kontrollerte
+
+- Osman godkjente spec-en før koding.
+- Navn, utstyr, nivå og video-ID-er kommer fra gruppas egen øvelsesliste; en test sjekker alle 34 video-ID-er.
+- Tre KI-kontrollører fant 14 punkter: 8 grupper rettet, 6 avvist med begrunnelse.
+- Gruppa må lese KI-utkastet og se gjennom videoene (issue #6).
+
+### Status
+
+- [x] Story 4.1 bygget og testet
+- [ ] Review av PR fra gruppen
 
 ---
 

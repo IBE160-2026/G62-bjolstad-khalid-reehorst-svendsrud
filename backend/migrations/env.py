@@ -7,6 +7,7 @@ from sqlalchemy import create_engine, pool
 
 from app.core.db import Base
 from app.core.settings import get_settings
+from app.modules.exercises import models as exercises_models  # noqa: F401
 from app.modules.food import models as food_models  # noqa: F401
 from app.modules.identity import models as identity_models  # noqa: F401
 from app.modules.profile import models as profile_models  # noqa: F401
