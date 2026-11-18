@@ -313,7 +313,18 @@ function WorkoutView({ workout, queryKey }: { workout: Workout; queryKey: QueryK
     setSetError(null);
     addSet.mutate(
       { workoutId: workout.id, workoutExerciseId: exercise.id },
-      { onError: showSetError },
+      {
+        onError: showSetError,
+        // "Legg til sett" is disabled while adding, so focus would drop to <body>:
+        // move it to the new set's first field once it has rendered.
+        onSuccess: (saved) => {
+          const sets = saved.exercises.find((e) => e.id === exercise.id)?.sets ?? [];
+          const added = sets[sets.length - 1];
+          if (!added) return;
+          setFocus.current = { exerciseId: exercise.id, index: sets.length - 1, setId: added.id };
+          setFocusTick((tick) => tick + 1);
+        },
+      },
     );
   }
 

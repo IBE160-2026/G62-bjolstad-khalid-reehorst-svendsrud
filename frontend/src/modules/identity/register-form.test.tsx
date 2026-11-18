@@ -7,10 +7,10 @@ const pushMock = vi.hoisted(() => vi.fn());
 vi.mock("@/lib/api/client", () => ({ api: { POST: postMock } }));
 vi.mock("next/navigation", () => ({ useRouter: () => ({ push: pushMock }) }));
 
+import { REACTIVATED_QUERY_KEY } from "./api";
 import { RegisterForm } from "./register-form";
 
-function renderForm() {
-  const client = new QueryClient({ defaultOptions: { mutations: { retry: false } } });
+function renderForm(client = new QueryClient({ defaultOptions: { mutations: { retry: false } } })) {
   render(
     <QueryClientProvider client={client}>
       <RegisterForm />
@@ -82,6 +82,19 @@ describe("RegisterForm", () => {
     expect(postMock).toHaveBeenCalledWith("/api/identity/register", {
       body: { email: "Ola@Eksempel.no", password: "hemmelig1" },
     });
+  });
+
+  it("never marks a new account as reactivated (no welcome-back message)", async () => {
+    postMock.mockResolvedValue({ data: { id: "1", email: "ola@eksempel.no" }, error: undefined });
+    const client = new QueryClient({ defaultOptions: { mutations: { retry: false } } });
+    const { email, password, submit } = renderForm(client);
+    fill(email, "ola@eksempel.no");
+    fill(password, "hemmelig1");
+
+    fireEvent.click(submit);
+
+    await waitFor(() => expect(pushMock).toHaveBeenCalledWith("/samtykke"));
+    expect(client.getQueryData(REACTIVATED_QUERY_KEY)).not.toBe(true);
   });
 
   it("shows server field errors the same way", async () => {

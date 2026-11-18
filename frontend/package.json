@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint",
+    "lint": "eslint && tsc --noEmit",
     "test": "vitest",
     "gen:api": "openapi-typescript ../backend/openapi.json -o src/lib/api/schema.d.ts",
     "test:e2e": "playwright test"
