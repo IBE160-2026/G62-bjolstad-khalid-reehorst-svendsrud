@@ -1374,6 +1374,34 @@ Det viktigste funnet: Dekningsanalysen er regnet ut fra øvelseslista og viser a
 
 ---
 
+## 2026-11-18 – Story 6.3 og 1.8 (ukestripe og deaktivere konto)
+
+**Verktøy:** Claude Code (BMAD `bmad-build`, lettere prosess med én kontrollør)
+**Hvem:** Osman Khalid
+**Bakgrunn:** Should-stories etter at alle Must-krav var ferdige.
+
+### Hva vi ba KI om
+
+1. Ukestripe for å bla mellom dager og rette tidligere dager (6.3).
+2. Deaktivere konto uten å slette data (1.8).
+
+### Hva KI produserte
+
+- Spec-er, ny uke-oversikt i backend, ukestripe på tre sider, deaktivering med reaktivering ved innlogging, og tester (også Playwright).
+
+### Hva vi selv vurderte og kontrollerte
+
+- Osman godkjente spec-ene før koding.
+- 6.3: én KI-kontrollør, 9 grupper rettet. Kariannes retting av e2e-testen (#53) ble tatt med.
+- 1.8: kontrolløren fant at en deaktivert konto kunne beholde en innlogging i sjeldne tilfeller; rettet. En Playwright-test som avhang av datoen demodataen ble laget, ble gjort robust.
+
+### Status
+
+- [x] 6.3 flettet (#54); 1.8 bygget og testet
+- [ ] Review av PR for 1.8 fra gruppen
+
+---
+
 ## Mal for nye oppføringer
 
 ```markdown

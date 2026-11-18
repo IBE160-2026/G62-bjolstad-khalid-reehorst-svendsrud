@@ -56,6 +56,8 @@ export interface paths {
         /**
          * Login
          * @description Public: no authentication required. Starts a new session for the account.
+         *
+         *     The right password on a deactivated account reactivates it (`reactivated: true`).
          */
         post: operations["login"];
         delete?: never;
@@ -139,6 +141,28 @@ export interface paths {
          * @description Records that the first-run introduction was closed. Requires login, not consent.
          */
         post: operations["dismiss_intro"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/identity/deactivate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Deactivate Account
+         * @description Deactivates the account (no data deleted) and logs out every device.
+         *
+         *     Requires login, not consent. Logging in again with the right password reactivates it.
+         */
+        post: operations["deactivate_account"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1030,6 +1054,22 @@ export interface components {
             /** Password */
             password: string;
         };
+        /** LoginResponse */
+        LoginResponse: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Email */
+            email: string;
+            /** Consent At */
+            consent_at: string | null;
+            /** Intro Dismissed At */
+            intro_dismissed_at: string | null;
+            /** Reactivated */
+            reactivated: boolean;
+        };
         /**
          * Meal
          * @enum {string}
@@ -1442,7 +1482,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["UserResponse"];
+                    "application/json": components["schemas"]["LoginResponse"];
                 };
             };
             /** @description Validation error */
@@ -1630,6 +1670,42 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["UserResponse"];
                 };
+            };
+            /** @description Validation error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Default Response */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    deactivate_account: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
             /** @description Validation error */
             422: {

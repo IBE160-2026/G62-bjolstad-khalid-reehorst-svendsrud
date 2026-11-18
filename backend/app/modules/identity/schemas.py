@@ -76,3 +76,8 @@ class UserResponse(BaseModel):
     consent_at: datetime | None
     # Null until the user has closed the first-run introduction (story 2.3).
     intro_dismissed_at: datetime | None
+
+
+class LoginResponse(UserResponse):
+    # True when this login reactivated a deactivated account (story 1.8).
+    reactivated: bool
