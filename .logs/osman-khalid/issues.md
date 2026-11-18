@@ -98,4 +98,4 @@
 - [x] 2026-11-18 — #54 (ukestripe 6.3) flettet av Fernando
 - [x] 2026-11-18 [story-1-8-deaktiver](941-2026-11-18-12-00-00-story-1-8-deaktiver.md) — pushe og lage PR for 1.8 (løst 2026-11-18 — PR #55)
 
-- [ ] 2026-11-18 [rapport-metodevalg](939-2026-11-18-23-00-00-rapport-metodevalg.md) — pushe og lage PR for rapportutkastet om metodevalg
+- [x] 2026-11-18 [rapport-metodevalg](939-2026-11-18-23-00-00-rapport-metodevalg.md) — pushe og lage PR for rapportutkastet om metodevalg (løst 2026-11-18 — PR #58)
