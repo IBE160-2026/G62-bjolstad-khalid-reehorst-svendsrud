@@ -102,3 +102,5 @@
 - [x] 2026-11-18 — sjekk i Safari at innlogging virker (Secure-cookie på localhost) (løst 2026-11-18 — testet av Karianne i Safari og Chrome)
 - [x] 2026-11-18 — #54 (ukestripe 6.3) flettet av Fernando
 - [x] 2026-11-18 [story-1-8-deaktiver](941-2026-11-18-12-00-00-story-1-8-deaktiver.md) — pushe og lage PR for 1.8 (løst 2026-11-18 — PR #55)
+
+- [ ] 2026-11-18 — liten PR: fokus etter «Legg til sett» og etter «Lukk» på velkomstmeldingen, og docstring i overview/router.py (funn fra Karianne)

@@ -15,7 +15,7 @@ Samlet retrospektiv for hele prosjektet i stedet for én per epic (Osmans valg, 
 - **Ikke levert (Should):** 1.7 glemt passord, 3.8 kamera-skanning, 4.6 muskelfigur (`sprint-status.yaml`). Epic 7 (fase 2) er ikke startet.
 - **Tester ved siste kjøring:** 578 backend, 477 frontend, Playwright 10/10 (`.logs/osman-khalid/941-2026-11-18-12-00-00-story-1-8-deaktiver.md`).
 - **Review:** 402 funn registrert i spec-enes Review Triage Log: 173 rettet, 17 utsatt, resten avvist med begrunnelse (opptelling over alle `spec-*.md`).
-- **Historikk:** 230 commits på `main`, 38 flettede PR-er (`git log`, `gh pr list --state merged`).
+- **Historikk:** 235 commits på `main` og 38 flettede PR-er da retroen ble skrevet (`git log`, `gh pr list --state merged`).
 
 ## Hva gikk bra
 
@@ -48,6 +48,7 @@ Samlet retrospektiv for hele prosjektet i stedet for én per epic (Osmans valg, 
 ## KI-bruk og kontroll
 
 - KI skrev spec-utkast, kode, tester og review. Mennesker godkjente hver spec, tok alle avgjørelser der dokumentene var uenige, og godkjente hver push og fletting (`.docs/ki-logg.md`).
+- Hver PR fra #42 til #55 ble testet av gruppa før fletting: automatiske tester, egen testing i nettleseren, API-sjekker (isolasjon, grenser, låsing) og fra #51 Playwright mot en egen stack med fersk database (kommentar fra Karianne på #57).
 - Gruppen fanget feil KI ikke så:
   - «I dag» stod to ganger (Karianne).
   - Strekkodetesten (Karianne, #53).
@@ -62,13 +63,13 @@ Samlet retrospektiv for hele prosjektet i stedet for én per epic (Osmans valg, 
 | 3 | Referansedata (utstyr, øvelser) lastes bare lokalt | `deferred-work.md` (4.2) | Ikke nødvendig for lokal innlevering; nevn som kjent begrensning | Gruppen |
 | 4 | KI-skrevne øvelsestekster er merket «utkast» | `backend/app/seed/data/exercises.json` (`review_status`) | Gruppen leser og godkjenner, eller sier det i rapporten | Gustav |
 | 5 | Kilde for kaloribehov-gulvet 1200/1500 kcal mangler | `.logs/osman-khalid/issues.md` | Finn kilde eller beskriv som antakelse | Gustav |
-| 6 | Shorts vises liggende (16:9) | PR #52, `video-embed.tsx` | Stående spiller når #52 er flettet | Osman |
+| 6 | Shorts vises liggende (16:9). #52 er flettet, og startdataene oppdaterer nå video-ID-ene i eksisterende databaser | PR #52, `video-embed.tsx`, `backend/app/seed/seed.py` | Lage stående spiller | Osman |
 | 7 | Gjenværende Should: 1.7, 3.8, 4.6 | `sprint-status.yaml` | Valgfritt; 3.8 og 4.6 trenger tegninger fra Karianne | Gruppen |
 
 **Prosesslærdom til neste prosjekt**
 - Flytt stablede PR-er til `main` før de godkjennes.
 - Lag felles tester for tilgjengelighet tidlig.
-- Kjør ende-til-ende-tester mot en fersk database før hver PR.
+- Kjør ende-til-ende-tester mot en fersk database før hver PR. Strekkodefeilen (#53) var usynlig i koden og i testene mot en gammel database, og ble bare funnet i en ekte kjøring mot fersk database.
 
 ## Akseptvurdering
 
@@ -78,5 +79,5 @@ Samlet retrospektiv for hele prosjektet i stedet for én per epic (Osmans valg, 
 
 - Samlet retrospektiv for epic 1–6 etter ønske fra Osman, ikke én per epic.
 - `bmad-review` ble ikke kjørt på nytt over hele diffen. Hver story hadde allerede egen review (Review Triage Log). Det gjør at funn i grensene mellom stories bare er dekket av Playwright-testene.
-- Ingen manuell gjennomkjøring i nettleser i denne retroen; atferd er sjekket med Playwright (10/10).
+- Denne retroen kjørte ingen egen gjennomgang i nettleser; atferd er sjekket med Playwright (10/10), og gruppa testet hver PR i nettleseren før fletting.
 - Tallene for review-funn er telt automatisk fra triage-tabellene. Rader med flere funn telles som én.
