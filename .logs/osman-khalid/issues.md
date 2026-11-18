@@ -99,6 +99,6 @@
 - [ ] 2026-11-18 [retrospektiv](940-2026-11-18-13-00-00-retrospektiv.md) — gå gjennom deferred-work.md før innlevering
 
 - [x] 2026-11-18 [retrospektiv](940-2026-11-18-13-00-00-retrospektiv.md) — deferred-work.md gjennomgått: 8 løst, 1 delvis, 9 åpne (Safari-cookie bør sjekkes før innlevering)
-- [ ] 2026-11-18 — sjekk i Safari at innlogging virker (Secure-cookie på localhost)
+- [x] 2026-11-18 — sjekk i Safari at innlogging virker (Secure-cookie på localhost) (løst 2026-11-18 — testet av Karianne i Safari og Chrome)
 - [x] 2026-11-18 — #54 (ukestripe 6.3) flettet av Fernando
 - [x] 2026-11-18 [story-1-8-deaktiver](941-2026-11-18-12-00-00-story-1-8-deaktiver.md) — pushe og lage PR for 1.8 (løst 2026-11-18 — PR #55)

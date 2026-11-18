@@ -48,7 +48,7 @@
 - source_spec: `.docs/implementation-artifacts/spec-1-3-create-an-account.md`
   summary: Check that Safari keeps the `Secure` session cookie on `http://localhost` (unverified, medium if true).
   evidence: Verified in Chrome only; if Safari drops it, registration succeeds but the user is not logged in. Settle by registering in current Safari; fix by tying `secure` to the `APP_URL` scheme.
-  status: open — still unverified; check by registering in Safari before delivery (the examiner may use a Mac).
+  status: resolved 2026-11-18 — Karianne logged in on Safari and Chrome on Mac; it works.
 
 - source_spec: `.docs/implementation-artifacts/spec-1-6-delete-my-account.md`
   summary: Add page-level render tests for `/logg-inn` (deleted-account status line) and Profil (delete button), or cover them in the first Playwright smoke test.
