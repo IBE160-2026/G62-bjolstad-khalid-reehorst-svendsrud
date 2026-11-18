@@ -44,13 +44,13 @@ development_status:
   1-6-delete-my-account: done
   1-7-reset-a-forgotten-password: backlog
   1-8-deactivate-my-account: backlog
-  epic-1-retrospective: optional
+  epic-1-retrospective: done
 
   epic-2: done
   2-1-get-my-calorie-target: done
   2-2-edit-my-profile: done
   2-3-first-run-introduction: done
-  epic-2-retrospective: optional
+  epic-2-retrospective: done
 
   epic-3: in-progress
   3-1-search-for-a-basic-food-and-log-it: done
@@ -61,7 +61,7 @@ development_status:
   3-6-edit-or-delete-a-food-entry: done
   3-7-find-norwegian-brand-products-in-search: done
   3-8-scan-a-barcode-with-the-camera-should: backlog
-  epic-3-retrospective: optional
+  epic-3-retrospective: done
 
   epic-4: in-progress
   4-1-see-an-exercise-and-how-to-do-it: done
@@ -70,21 +70,21 @@ development_status:
   4-4-search-exercises-by-name: done
   4-5-choose-exercises-by-muscle-group-and-level-should: done
   4-6-see-which-muscles-an-exercise-works-should: backlog
-  epic-4-retrospective: optional
+  epic-4-retrospective: done
 
   epic-5: done
   5-1-start-a-workout-and-add-exercises: done
   5-2-log-my-sets: done
   5-3-see-what-i-did-last-time: done
   5-4-finish-edit-or-delete-a-workout: done
-  epic-5-retrospective: optional
+  epic-5-retrospective: done
 
   epic-6: in-progress
   6-1-see-my-day-at-a-glance: done
   6-2-clear-prompts-when-nothing-is-logged: done
   6-3-move-between-days-with-the-week-strip-should: review
   6-4-the-examiner-can-test-the-whole-core-loop: done
-  epic-6-retrospective: optional
+  epic-6-retrospective: done
 
   epic-7: backlog
   7-1-pro-flag: backlog
