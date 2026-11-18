@@ -96,3 +96,4 @@
 - [ ] 2026-11-18 [story-6-3-ukestripe](942-2026-11-18-03-00-00-story-6-3-ukestripe.md) — stående videospiller for YouTube Shorts
 
 - [x] 2026-11-18 — #54 (ukestripe 6.3) flettet av Fernando
+- [ ] 2026-11-18 [story-1-8-deaktiver](941-2026-11-18-12-00-00-story-1-8-deaktiver.md) — pushe og lage PR for 1.8

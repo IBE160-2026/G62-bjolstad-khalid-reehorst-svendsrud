@@ -1,4 +1,5 @@
-"""Account rules: password hashing, sessions, registration, login, lockout, consent, deletion."""
+"""Account rules: password hashing, sessions, registration, login, lockout, consent,
+deactivation and deletion."""
 
 import hashlib
 import hmac
@@ -111,6 +112,8 @@ class SessionUser:
 class Login:
     user: User
     session_token: str
+    # The account was deactivated and this login made it active again (story 1.8).
+    reactivated: bool = False
 
 
 class LoginRejected(AppError):
@@ -171,11 +174,14 @@ def login(
         raise _invalid_credentials()
 
     _reset_failures(user)
+    # The only way back from deactivation: the right password (story 1.8).
+    reactivated = user.deactivated_at is not None
+    user.deactivated_at = None
     if replaced_token:
         repository.delete_session_by_token_hash(db, hash_session_token(replaced_token))
     token = new_session_token()
     repository.add_session(db, user, hash_session_token(token), now + SESSION_LIFETIME)
-    return Login(user=user, session_token=token)
+    return Login(user=user, session_token=token, reactivated=reactivated)
 
 
 def resolve_session(db: DbSessionType, token: str, now: datetime) -> SessionUser | None:
@@ -190,7 +196,9 @@ def resolve_session(db: DbSessionType, token: str, now: datetime) -> SessionUser
         repository.delete_session(db, session.id)
         return None
     user = repository.get_user(db, session.user_id)
-    if user is None:
+    # A deactivated account has no valid sessions (story 1.8), even one that slipped
+    # past `deactivate_account` in a race with a login.
+    if user is None or user.deactivated_at is not None:
         return None
     return SessionUser(
         id=user.id,
@@ -237,6 +245,19 @@ def dismiss_intro(db: DbSessionType, user_id: uuid.UUID, now: datetime) -> User:
     return user
 
 
+def deactivate_account(db: DbSessionType, user_id: uuid.UUID, now: datetime) -> None:
+    """Deactivate the account at `now` and end every session it has (story 1.8).
+
+    No data is deleted; the account stays visible to login, which reactivates it on the
+    right password. Deactivating again keeps the first time.
+    """
+    user = _locked_user(db, user_id)
+    if user.deactivated_at is None:
+        user.deactivated_at = now
+    repository.delete_all_sessions(db, user.id)
+    db.flush()
+
+
 def delete_account(db: DbSessionType, user_id: uuid.UUID, now: datetime) -> None:
     """Soft-delete the account at `now` and end every session it has (AD-14).
 
@@ -249,5 +270,8 @@ def delete_account(db: DbSessionType, user_id: uuid.UUID, now: datetime) -> None
 
 
 def purge_deleted(db: DbSessionType, now: datetime) -> int:
-    """Hard-delete accounts soft-deleted at least `PURGE_AFTER` ago; returns how many."""
+    """Hard-delete accounts soft-deleted at least `PURGE_AFTER` ago; returns how many.
+
+    Deactivated accounts (story 1.8) are never purged: only `deleted_at` counts.
+    """
     return repository.purge_deleted_users(db, now - PURGE_AFTER)

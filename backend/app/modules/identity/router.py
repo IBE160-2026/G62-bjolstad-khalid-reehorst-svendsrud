@@ -14,7 +14,12 @@ from app.core.clock import Now
 from app.core.db import DbSession
 from app.modules.identity import service
 from app.modules.identity.models import User
-from app.modules.identity.schemas import LoginRequest, RegisterRequest, UserResponse
+from app.modules.identity.schemas import (
+    LoginRequest,
+    LoginResponse,
+    RegisterRequest,
+    UserResponse,
+)
 
 router = APIRouter(prefix="/api/identity", tags=["identity"])
 
@@ -41,7 +46,7 @@ def register(body: RegisterRequest, response: Response, db: DbSession, now: Now)
     return _user_response(registration.user)
 
 
-@router.post("/login", response_model=UserResponse, operation_id="login")
+@router.post("/login", response_model=LoginResponse, operation_id="login")
 def login(
     body: LoginRequest,
     response: Response,
@@ -50,8 +55,11 @@ def login(
     current_token: Annotated[
         str | None, Cookie(alias=SESSION_COOKIE, include_in_schema=False)
     ] = None,
-) -> UserResponse:
-    """Public: no authentication required. Starts a new session for the account."""
+) -> LoginResponse:
+    """Public: no authentication required. Starts a new session for the account.
+
+    The right password on a deactivated account reactivates it (`reactivated: true`).
+    """
     try:
         result = service.login(db, body.email, body.password, now, current_token)
     except service.LoginRejected:
@@ -59,7 +67,9 @@ def login(
         db.commit()
         raise
     set_session_cookie(response, result.session_token)
-    return _user_response(result.user)
+    return LoginResponse(
+        **_user_response(result.user).model_dump(), reactivated=result.reactivated
+    )
 
 
 @router.post(
@@ -96,6 +106,23 @@ def give_consent(current_user: CurrentUser, db: DbSession, now: Now) -> UserResp
 def dismiss_intro(current_user: CurrentUser, db: DbSession, now: Now) -> UserResponse:
     """Records that the first-run introduction was closed. Requires login, not consent."""
     return _user_response(service.dismiss_intro(db, current_user.id, now))
+
+
+@router.post(
+    "/deactivate",
+    status_code=status.HTTP_204_NO_CONTENT,
+    response_class=Response,
+    operation_id="deactivate_account",
+)
+def deactivate_account(current_user: CurrentUser, db: DbSession, now: Now) -> Response:
+    """Deactivates the account (no data deleted) and logs out every device.
+
+    Requires login, not consent. Logging in again with the right password reactivates it.
+    """
+    service.deactivate_account(db, current_user.id, now)
+    response = Response(status_code=status.HTTP_204_NO_CONTENT)
+    clear_session_cookie(response)
+    return response
 
 
 @router.delete(
