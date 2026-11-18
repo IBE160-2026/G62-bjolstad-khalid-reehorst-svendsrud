@@ -1336,7 +1336,7 @@ Det viktigste funnet: Dekningsanalysen er regnet ut fra øvelseslista og viser a
 
 - Fernando valgte og så alle de 11 videoene selv. De er ikke sjekket med oEmbed.
 - Fernando sjekket stegene og musklene i `exercises.json` mot de nye videoene.
-- Lenkene i `ovelsesliste.md` står som `watch?v=`, fordi testen leser ID-ene derfra. Filtestene passerer; databasetestene er ikke kjørt (krever Docker).
+- Lenkene i `ovelsesliste.md` står som `watch?v=`, fordi testen leser ID-ene derfra. Alle 579 backend-tester er kjørt i Docker og passerer. Seed oppdaterer nå også video_id for eksisterende databaser.
 
 ### Status
 
