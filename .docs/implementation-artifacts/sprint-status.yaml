@@ -29,7 +29,7 @@
 # - Dev moves story to 'review', then runs code-review (fresh context, different LLM recommended)
 # - Retrospective appends its action items to action_items; the status view surfaces open ones
 generated: 11-15-2026 12:32
-last_updated: 11-18-2026 00:00
+last_updated: 11-18-2026 12:00
 project: Prompt Force
 project_key: NOKEY
 tracking_system: file-system
@@ -43,7 +43,7 @@ development_status:
   1-5-give-consent-before-health-data: done
   1-6-delete-my-account: done
   1-7-reset-a-forgotten-password: backlog
-  1-8-deactivate-my-account: backlog
+  1-8-deactivate-my-account: review
   epic-1-retrospective: optional
 
   epic-2: done
@@ -82,8 +82,8 @@ development_status:
   epic-6: in-progress
   6-1-see-my-day-at-a-glance: done
   6-2-clear-prompts-when-nothing-is-logged: done
-  6-3-move-between-days-with-the-week-strip-should: backlog
-  6-4-the-examiner-can-test-the-whole-core-loop: review
+  6-3-move-between-days-with-the-week-strip-should: done
+  6-4-the-examiner-can-test-the-whole-core-loop: done
   epic-6-retrospective: optional
 
   epic-7: backlog

@@ -3,16 +3,23 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
+import { dayText } from "@/lib/selected-date";
 import { osloToday } from "@/modules/food/meals";
 import { PRIMARY_BUTTON_CLASS } from "@/modules/identity/styles";
 
-import { WORKOUT_PATH, exerciseCountText, useActiveWorkout, useStartWorkout } from "./api";
+import {
+  WORKOUT_PATH,
+  exerciseCountText,
+  useActiveWorkout,
+  useStartWorkout,
+} from "./api";
 
 /**
- * Trening: "Start økt" creates a workout for today (Europe/Oslo) and opens Økt, or
- * "Fortsett økt · N øvelser" when one is in progress. Both go to the Økt page.
+ * Trening: "Start økt" creates a workout for `date` (the week strip's day, story 6.3; null
+ * is today in Europe/Oslo) and opens Økt, or "Fortsett økt · N øvelser" when one is in
+ * progress (one unfinished workout at a time). Both go to the Økt page.
  */
-export function StartWorkout() {
+export function StartWorkout({ date = null }: { date?: string | null }) {
   const router = useRouter();
   const active = useActiveWorkout();
   const start = useStartWorkout();
@@ -41,11 +48,14 @@ export function StartWorkout() {
         className={PRIMARY_BUTTON_CLASS}
         disabled={start.isPending}
         onClick={() =>
-          start.mutate(osloToday(), { onSuccess: () => router.push(WORKOUT_PATH) })
+          start.mutate(date ?? osloToday(), { onSuccess: () => router.push(WORKOUT_PATH) })
         }
       >
         Start økt
       </button>
+      {date !== null && (
+        <p className="text-small text-muted-foreground">Økta lagres på {dayText(date)}.</p>
+      )}
       {start.isError ? (
         <p role="alert" className="text-body text-destructive">
           {start.error.message}

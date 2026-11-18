@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 
 import { IntroDialog } from "@/modules/identity/intro-dialog";
+import { ReactivatedStatus } from "@/modules/identity/reactivated-status";
 import { isAuthPath, isGatePath } from "@/modules/identity/routes";
 import { SessionGuard } from "@/modules/identity/session-guard";
 
@@ -20,8 +21,9 @@ const SKIP_LINK_CLASS =
 export function AppShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   if (isAuthPath(pathname)) return <AuthLayout title={pageTitle(pathname)}>{children}</AuthLayout>;
-  // The first-run intro is a dialog over logged-in pages, not a route of its own. It sits at
-  // one position after either layout, so moving between them does not remount (reopen) it.
+  // The first-run intro is a dialog over logged-in pages, not a route of its own. It and the
+  // welcome-back status (story 1.8) sit at one position after either layout, so moving
+  // between them does not remount them.
   return (
     <>
       {isGatePath(pathname) ? (
@@ -30,6 +32,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         <FullShell>{children}</FullShell>
       )}
       <IntroDialog />
+      <ReactivatedStatus />
     </>
   );
 }

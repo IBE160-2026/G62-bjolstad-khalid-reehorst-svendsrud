@@ -90,3 +90,10 @@
 
 - [x] 2026-11-18 — I dag viste «I dag» to ganger (toppfelt + sideoverskrift, meldt av Karianne); sideoverskriften vises nå bare for tidligere datoer
 - [x] 2026-11-18 [story-6-4b-playwright](943-2026-11-18-02-00-00-story-6-4b-playwright.md) — pushe og lage PR for 6.4 del 2 (løst 2026-11-18 — PR #51)
+
+- [x] 2026-11-18 — #51 (Playwright) flettet av Fernando; alle Must-stories i main
+- [x] 2026-11-18 [story-6-3-ukestripe](942-2026-11-18-03-00-00-story-6-3-ukestripe.md) — pushe og lage PR for 6.3 (løst 2026-11-18 — PR #54)
+- [ ] 2026-11-18 [story-6-3-ukestripe](942-2026-11-18-03-00-00-story-6-3-ukestripe.md) — stående videospiller for YouTube Shorts
+
+- [x] 2026-11-18 — #54 (ukestripe 6.3) flettet av Fernando
+- [x] 2026-11-18 [story-1-8-deaktiver](941-2026-11-18-12-00-00-story-1-8-deaktiver.md) — pushe og lage PR for 1.8 (løst 2026-11-18 — PR #55)

@@ -1,8 +1,8 @@
 "use client";
 
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+import { NavLink } from "./nav-link";
 import { TAB_BAR_ITEMS, isActive } from "./nav-items";
 
 /** Bottom tab bar below 768 px: I dag, Mat, Trening, Profil. */
@@ -19,7 +19,7 @@ export function TabBar() {
           const active = isActive(pathname, href);
           return (
             <li key={href} className="flex items-center justify-center">
-              <Link
+              <NavLink
                 href={href}
                 aria-current={active ? "page" : undefined}
                 className={`flex min-h-14 w-full max-w-24 flex-col items-center justify-center gap-1 rounded-full px-2 text-label font-medium transition-colors ${
@@ -28,7 +28,7 @@ export function TabBar() {
               >
                 <Icon aria-hidden="true" className="size-6 shrink-0" strokeWidth={2} />
                 <span>{label}</span>
-              </Link>
+              </NavLink>
             </li>
           );
         })}

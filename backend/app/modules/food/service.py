@@ -194,6 +194,11 @@ def day_kcal(db: DbSessionType, user_id: uuid.UUID, day: date) -> Decimal:
     )
 
 
+def dates_with_food(db: DbSessionType, user_id: uuid.UUID, start: date, end: date) -> set[date]:
+    """The user's dates from `start` to `end` (inclusive) with food logged (story 6.3)."""
+    return repository.dates_with_entries(db, user_id, start, end)
+
+
 def get_day(db: DbSessionType, user_id: uuid.UUID, day: date) -> FoodDayResponse:
     """The date's entries grouped by Meal, with Meal totals and the day total."""
     rows = repository.list_entries(db, user_id, day)

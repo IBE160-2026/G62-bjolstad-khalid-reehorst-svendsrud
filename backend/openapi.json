@@ -105,7 +105,7 @@
           "identity"
         ],
         "summary": "Login",
-        "description": "Public: no authentication required. Starts a new session for the account.",
+        "description": "Public: no authentication required. Starts a new session for the account.\n\nThe right password on a deactivated account reactivates it (`reactivated: true`).",
         "operationId": "login",
         "requestBody": {
           "content": {
@@ -123,7 +123,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserResponse"
+                  "$ref": "#/components/schemas/LoginResponse"
                 }
               }
             }
@@ -320,6 +320,41 @@
                 }
               }
             }
+          },
+          "422": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/identity/deactivate": {
+      "post": {
+        "tags": [
+          "identity"
+        ],
+        "summary": "Deactivate Account",
+        "description": "Deactivates the account (no data deleted) and logs out every device.\n\nRequires login, not consent. Logging in again with the right password reactivates it.",
+        "operationId": "deactivate_account",
+        "responses": {
+          "204": {
+            "description": "Successful Response"
           },
           "422": {
             "description": "Validation error",
@@ -2392,6 +2427,64 @@
           }
         }
       }
+    },
+    "/api/overview/week": {
+      "get": {
+        "tags": [
+          "overview"
+        ],
+        "summary": "Get Overview Week",
+        "description": "Monday to Sunday from `start` (a Monday, YYYY-MM-DD): whether food and a workout with\na done set were logged each day, and whether the day is after today (Europe/Oslo).",
+        "operationId": "get_overview_week",
+        "parameters": [
+          {
+            "name": "start",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date",
+              "title": "Start"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WeekDayResponse"
+                  },
+                  "title": "Response Get Overview Week"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "week_start_not_monday, week_out_of_range, validation_error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Default Response"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -3219,6 +3312,56 @@
         ],
         "title": "LoginRequest"
       },
+      "LoginResponse": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "email": {
+            "type": "string",
+            "title": "Email"
+          },
+          "consent_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Consent At"
+          },
+          "intro_dismissed_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Intro Dismissed At"
+          },
+          "reactivated": {
+            "type": "boolean",
+            "title": "Reactivated"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "email",
+          "consent_at",
+          "intro_dismissed_at",
+          "reactivated"
+        ],
+        "title": "LoginResponse"
+      },
       "Meal": {
         "type": "string",
         "enum": [
@@ -3775,6 +3918,36 @@
           "intro_dismissed_at"
         ],
         "title": "UserResponse"
+      },
+      "WeekDayResponse": {
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date",
+            "title": "Date"
+          },
+          "has_food": {
+            "type": "boolean",
+            "title": "Has Food"
+          },
+          "has_workout": {
+            "type": "boolean",
+            "title": "Has Workout"
+          },
+          "future": {
+            "type": "boolean",
+            "title": "Future"
+          }
+        },
+        "type": "object",
+        "required": [
+          "date",
+          "has_food",
+          "has_workout",
+          "future"
+        ],
+        "title": "WeekDayResponse",
+        "description": "One day in the week strip (story 6.3)."
       },
       "WorkoutCreate": {
         "properties": {

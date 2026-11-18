@@ -40,7 +40,7 @@ def test_login_with_any_email_case_creates_session_and_cookie(
     response = client.post(LOGIN_URL, json={"email": email, "password": PASSWORD})
 
     assert response.status_code == 200
-    assert response.json() == registered
+    assert response.json() == {**registered, "reactivated": False}
     assert PASSWORD not in response.text
     set_cookie = response.headers["set-cookie"]
     assert set_cookie.startswith(f"{COOKIE}=")

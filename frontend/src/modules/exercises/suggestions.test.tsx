@@ -3,9 +3,20 @@ import { fireEvent, render, screen, waitFor, within } from "@testing-library/rea
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 const getMock = vi.hoisted(() => vi.fn());
-vi.mock("@/lib/api/client", () => ({ api: { GET: getMock } }));
+const postMock = vi.hoisted(() => vi.fn());
+vi.mock("@/lib/api/client", () => ({ api: { GET: getMock, POST: postMock } }));
 // Trening also shows "Start økt" (story 5.1), which navigates with the router.
-vi.mock("next/navigation", () => ({ useRouter: () => ({ push: vi.fn() }) }));
+const searchMock = vi.hoisted(() => ({ value: "" }));
+const pushMock = vi.hoisted(() => vi.fn());
+vi.mock("next/navigation", () => ({
+  usePathname: () => "/trening",
+  useRouter: () => ({ push: pushMock, replace: vi.fn() }),
+  useSearchParams: () => new URLSearchParams(searchMock.value),
+}));
+vi.mock("@/modules/food/meals", async (importOriginal) => ({
+  ...(await importOriginal<typeof import("@/modules/food/meals")>()),
+  osloToday: () => "2026-11-17",
+}));
 
 import { profileStorageKey } from "./api";
 import { Suggestions, countText, emptyFilteredText, groupByLevel } from "./suggestions";
@@ -329,10 +340,14 @@ describe("Filters", () => {
       "Middels",
       "Øvet",
     ]);
-    for (const button of screen.getAllByRole("button", { pressed: false })) {
-      expect(button).toHaveClass("min-h-11");
+    // Only the filter chips (the week strip's days are toggle buttons too).
+    const chips = [muscles, levels];
+    for (const group of chips) {
+      for (const button of within(group).getAllByRole("button", { pressed: false })) {
+        expect(button).toHaveClass("min-h-11");
+      }
+      expect(within(group).queryAllByRole("button", { pressed: true })).toHaveLength(0);
     }
-    expect(screen.queryAllByRole("button", { pressed: true })).toHaveLength(0);
   });
 
   it("filters at once and names the filters in the count line", async () => {
@@ -499,5 +514,28 @@ describe("helpers", () => {
     expect(emptyFilteredText("Hjemme", { muscleGroup: "skuldre", level: "advanced" })).toBe(
       "Ingen øvelser passer med Hjemme, Skuldre og Øvet. Prøv en annen muskelgruppe eller et annet nivå.",
     );
+  });
+});
+
+describe("chosen date (story 6.3)", () => {
+  afterEach(() => {
+    searchMock.value = "";
+  });
+
+  it("with ?dato= says where the workout goes and starts it on that date", async () => {
+    searchMock.value = "dato=2026-11-16";
+    mockApi();
+    postMock.mockResolvedValue({
+      data: { id: "w-1", date: "2026-11-16", finished_at: null, exercises: [] },
+      error: undefined,
+    });
+    renderPage();
+
+    const start = await screen.findByRole("button", { name: "Start økt" });
+    expect(screen.getByText("Økta lagres på mandag 16. november.")).toBeInTheDocument();
+    fireEvent.click(start);
+
+    await waitFor(() => expect(pushMock).toHaveBeenCalledWith("/trening/okt"));
+    expect(postMock).toHaveBeenCalledWith("/api/workouts", { body: { date: "2026-11-16" } });
   });
 });

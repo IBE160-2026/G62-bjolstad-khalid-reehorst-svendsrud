@@ -198,3 +198,51 @@ def test_seed_adds_only_missing_exercises(
             ("secondary", "armer"),
         ]
         assert [link.equipment.slug for link in added.equipment_links] == ["kroppsvekt"]
+
+
+def test_seed_updates_only_video_id_of_existing_exercises(
+    factory: sessionmaker[Session], tmp_path: Path
+) -> None:
+    with factory() as db:
+        assert seed.seed_exercises(db) == 34
+        db.commit()
+    slug = EXERCISES[0]["slug"]
+    with factory() as db:
+        old = db.scalars(select(Exercise).where(Exercise.slug == slug)).one()
+        old.video_id = "gammelvideo"  # an existing database seeded with the old video
+        db.commit()
+        before = (
+            old.name,
+            old.level,
+            old.type,
+            old.steps,
+            sorted((link.role, link.muscle_group.slug) for link in old.muscle_links),
+            sorted(link.equipment.slug for link in old.equipment_links),
+        )
+
+    with factory() as db:
+        assert seed.seed_exercises(db) == 0
+        db.commit()
+
+    with factory() as db:
+        updated = db.scalars(select(Exercise).where(Exercise.slug == slug)).one()
+        assert updated.video_id == EXERCISES[0]["video_id"]
+        assert (
+            updated.name,
+            updated.level,
+            updated.type,
+            updated.steps,
+            sorted((link.role, link.muscle_group.slug) for link in updated.muscle_links),
+            sorted(link.equipment.slug for link in updated.equipment_links),
+        ) == before
+
+    # Only video_id follows the file: changed steps in the file do not reach the database.
+    changed = [{**EXERCISES[0], "steps": ["Nytt steg."]}, *EXERCISES[1:]]
+    edited = tmp_path / "exercises.json"
+    edited.write_text(json.dumps({**DATA, "exercises": changed}), encoding="utf-8")
+    with factory() as db:
+        assert seed.seed_exercises(db, edited) == 0
+        db.commit()
+    with factory() as db:
+        kept = db.scalars(select(Exercise).where(Exercise.slug == slug)).one()
+        assert kept.steps == before[3]

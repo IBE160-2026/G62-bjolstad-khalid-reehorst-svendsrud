@@ -7,6 +7,8 @@ import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
 import { UndoToast, type UndoToastState } from "@/components/undo-toast";
+import { datedHref } from "@/lib/selected-date";
+import { osloToday } from "@/modules/food/meals";
 import { exercisePath } from "@/modules/exercises/api";
 import { ListSkeleton, LoadError } from "@/modules/exercises/list-parts";
 import { ApiError } from "@/modules/identity/api";
@@ -55,9 +57,14 @@ function orderOf(workout: Workout): string {
   return workout.exercises.map((exercise) => exercise.id).join(",");
 }
 
-function AddExerciseLink() {
+/** "/trening" for the workout's date (`?dato=` unless today, story 6.3). */
+function trainingHref(date: string | undefined): string {
+  return date ? datedHref("/trening", date, osloToday()) : "/trening";
+}
+
+function AddExerciseLink({ date }: { date: string }) {
   return (
-    <Link href="/trening" className={`inline-flex items-center self-start ${SECONDARY_BUTTON_CLASS}`}>
+    <Link href={trainingHref(date)} className={`inline-flex items-center self-start ${SECONDARY_BUTTON_CLASS}`}>
       Legg til øvelse
     </Link>
   );
@@ -511,7 +518,7 @@ function WorkoutView({ workout, queryKey }: { workout: Workout; queryKey: QueryK
         {announcement}
       </p>
 
-      {finished ? null : <AddExerciseLink />}
+      {finished ? null : <AddExerciseLink date={workout.date} />}
       {finished ? null : <FinishWorkout workout={workout} />}
       <DeleteWorkout workout={workout} />
 
@@ -530,9 +537,9 @@ function WorkoutView({ workout, queryKey }: { workout: Workout; queryKey: QueryK
 }
 
 /** One of the user's workouts by id, finished or not (`/trening/okt/{id}`, story 5.4). */
-function BackToTraining() {
+function BackToTraining({ date }: { date?: string }) {
   return (
-    <Link href="/trening" className={`inline-flex min-h-11 items-center self-start ${LINK_CLASS}`}>
+    <Link href={trainingHref(date)} className={`inline-flex min-h-11 items-center self-start ${LINK_CLASS}`}>
       Tilbake til Trening
     </Link>
   );
@@ -563,7 +570,7 @@ export function WorkoutByIdPage({ id }: { id: string }) {
   }
   return (
     <div className="flex flex-col gap-4">
-      <BackToTraining />
+      <BackToTraining date={workout.data.date} />
       <WorkoutView key={id} workout={workout.data} queryKey={workoutKey(id)} />
     </div>
   );

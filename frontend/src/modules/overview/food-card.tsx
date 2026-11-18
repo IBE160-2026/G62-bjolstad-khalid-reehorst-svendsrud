@@ -8,22 +8,30 @@ import { kcalText, type Overview } from "./api";
 import { CardHeader, CARD_CLASS } from "./card";
 
 /**
- * Mat on I dag: each Meal with its total and entries (read-only). Nothing logged today
- * invites the first meal (story 6.2); today, an empty Meal links to Mat with "+ Legg til".
- * Mat logs to today, so earlier dates get no add links.
+ * Mat on I dag: each Meal with its total and entries (read-only). Nothing logged invites the
+ * first meal (story 6.2); an empty Meal links to Mat with "+ Legg til". Every link keeps the
+ * chosen date (`href`), so Mat logs to it (story 6.3).
  */
-export function FoodCard({ overview, isToday }: { overview: Overview; isToday: boolean }) {
+export function FoodCard({
+  overview,
+  isToday,
+  href,
+}: {
+  overview: Overview;
+  isToday: boolean;
+  href: (path: string) => string;
+}) {
   const empty = overview.meals.every((meal) => meal.entries.length === 0);
 
   return (
     <section aria-labelledby="food-card-title" className={CARD_CLASS} data-testid="food-card">
-      <CardHeader id="food-card-title" href="/mat" title="Mat" />
-      {empty && isToday ? (
+      <CardHeader id="food-card-title" href={href("/mat")} title="Mat" />
+      {empty ? (
         <Link
-          href="/mat"
+          href={href("/mat")}
           className="min-h-11 self-start rounded-full px-2 py-2 text-body font-medium text-mark-text hover:bg-mark-tint"
         >
-          Logg ditt første måltid i dag
+          {isToday ? "Logg ditt første måltid i dag" : "Logg et måltid denne dagen"}
         </Link>
       ) : (
         <ul className="flex flex-col divide-y divide-border">
@@ -38,15 +46,13 @@ export function FoodCard({ overview, isToday }: { overview: Overview; isToday: b
                 </span>
               </div>
               {summary.entries.length === 0 ? (
-                isToday && (
-                  <Link
-                    href="/mat"
-                    aria-label={`Legg til i ${mealLabel(summary.meal).toLowerCase()}`}
-                    className="min-h-11 self-start rounded-full px-2 py-2 text-button font-medium text-mark-text hover:bg-mark-tint"
-                  >
-                    + Legg til
-                  </Link>
-                )
+                <Link
+                  href={href("/mat")}
+                  aria-label={`Legg til i ${mealLabel(summary.meal).toLowerCase()}`}
+                  className="min-h-11 self-start rounded-full px-2 py-2 text-button font-medium text-mark-text hover:bg-mark-tint"
+                >
+                  + Legg til
+                </Link>
               ) : (
                 <ul className="flex flex-col">
                   {summary.entries.map((entry) => (

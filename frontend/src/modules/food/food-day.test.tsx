@@ -24,6 +24,15 @@ const deleteMock = vi.hoisted(() => vi.fn());
 vi.mock("@/lib/api/client", () => ({
   api: { GET: getMock, POST: postMock, PATCH: patchMock, DELETE: deleteMock },
 }));
+// The week strip has its own tests; its status region would clash with the toast's here.
+vi.mock("@/components/week-strip", () => ({ WeekStrip: () => null }));
+const searchMock = vi.hoisted(() => ({ value: "" }));
+const pushMock = vi.hoisted(() => vi.fn());
+vi.mock("next/navigation", () => ({
+  usePathname: () => "/mat",
+  useRouter: () => ({ push: pushMock, replace: vi.fn() }),
+  useSearchParams: () => new URLSearchParams(searchMock.value),
+}));
 
 import {
   expectInPoliteLiveRegion,
@@ -164,6 +173,7 @@ async function searchAndPick(dialog: HTMLElement, query: string, name: string) {
 beforeEach(() => {
   vi.useFakeTimers({ shouldAdvanceTime: true, toFake: ["Date"] });
   vi.setSystemTime(new Date("2026-11-16T11:00:00Z")); // 12:00 in Oslo
+  searchMock.value = "";
   currentDay = day();
   searchResults = [HAVREMEL];
   recentFoods = [];
@@ -362,6 +372,38 @@ describe("FoodDay", () => {
     expect(
       screen.getByRole("button", { name: "Legg til i Lunsj" }),
     ).toHaveFocus();
+  });
+
+  it("shows and logs to the date in ?dato= (story 6.3)", async () => {
+    searchMock.value = "dato=2026-11-14";
+    const dialog = await openLunch();
+
+    expect(getMock).toHaveBeenCalledWith("/api/food/entries", {
+      params: { query: { date: "2026-11-14" } },
+    });
+    expect(
+      screen.getByRole("heading", { level: 2, name: "lørdag 14. november" }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText("Du har ikke logget noe denne dagen. Legg til et måltid."),
+    ).toBeInTheDocument();
+    await searchAndPick(dialog, "mel", "Havremel");
+    postMock.mockResolvedValue({
+      data: { ...day([{ name: "Havremel", meal: "lunch", grams: 100, kcal: 369 }]).meals[1].entries[0], date: "2026-11-14" },
+      error: undefined,
+    });
+    fireEvent.click(within(dialog).getByRole("button", { name: "Lagre" }));
+
+    await waitFor(() =>
+      expect(postMock).toHaveBeenCalledWith("/api/food/entries", {
+        body: {
+          food_item_id: HAVREMEL.id,
+          date: "2026-11-14",
+          meal: "lunch",
+          grams: 100,
+        },
+      }),
+    );
   });
 
   it("shows the backend's grams field error", async () => {

@@ -1318,6 +1318,34 @@ Det viktigste funnet: Dekningsanalysen er regnet ut fra øvelseslista og viser a
 
 ---
 
+## 2026-11-17 – 11 øvelsesvideoer byttet til YouTube Shorts (issue #6)
+
+**Verktøy:** Claude Code
+**Hvem:** Fernando Svendsrud
+**Bakgrunn:** Gruppa godkjente å bytte lange øvelsesvideoer til korte YouTube Shorts som passer bedre for nybegynnere.
+
+### Hva vi ba KI om
+
+1. Bytte video-ID for 11 øvelser (#5, 8, 9, 13, 14, 15, 16, 24, 26, 27, 29) i seed-data, testfiksturen, øvelseslista og gjennomgangsskjemaet.
+
+### Hva KI produserte
+
+- Byttet ID-ene i `exercises.json`, `video_ids.json`, `ovelsesliste.md` og `ovelsesliste-gjennomgang-2026-11-11.md`, uten å endre steg eller muskler.
+
+### Hva vi selv vurderte og kontrollerte
+
+- Fernando valgte og så alle de 11 videoene selv. De er ikke sjekket med oEmbed.
+- Fernando sjekket stegene og musklene i `exercises.json` mot de nye videoene.
+- Lenkene i `ovelsesliste.md` står som `watch?v=`, fordi testen leser ID-ene derfra. Filtestene passerer; databasetestene er ikke kjørt (krever Docker).
+
+### Status
+
+- [x] 11 videoer byttet
+- [ ] Finne Shorts til de 23 øvelsene som er igjen
+- [ ] Videospilleren må tilpasses stående video
+
+---
+
 ## 2026-11-18 – Story 6.4 del 3 (hjelpeknapp og fokus i ark)
 
 **Verktøy:** Claude Code (BMAD `bmad-build`, lettere prosess med én kontrollør)
@@ -1374,31 +1402,31 @@ Det viktigste funnet: Dekningsanalysen er regnet ut fra øvelseslista og viser a
 
 ---
 
-## 2026-11-17 – 11 øvelsesvideoer byttet til YouTube Shorts (issue #6)
+## 2026-11-18 – Story 6.3 og 1.8 (ukestripe og deaktivere konto)
 
-**Verktøy:** Claude Code
-**Hvem:** Fernando Svendsrud
-**Bakgrunn:** Gruppa godkjente å bytte lange øvelsesvideoer til korte YouTube Shorts som passer bedre for nybegynnere.
+**Verktøy:** Claude Code (BMAD `bmad-build`, lettere prosess med én kontrollør)
+**Hvem:** Osman Khalid
+**Bakgrunn:** Should-stories etter at alle Must-krav var ferdige.
 
 ### Hva vi ba KI om
 
-1. Bytte video-ID for 11 øvelser (#5, 8, 9, 13, 14, 15, 16, 24, 26, 27, 29) i seed-data, testfiksturen, øvelseslista og gjennomgangsskjemaet.
+1. Ukestripe for å bla mellom dager og rette tidligere dager (6.3).
+2. Deaktivere konto uten å slette data (1.8).
 
 ### Hva KI produserte
 
-- Byttet ID-ene i `exercises.json`, `video_ids.json`, `ovelsesliste.md` og `ovelsesliste-gjennomgang-2026-11-11.md`, uten å endre steg eller muskler.
+- Spec-er, ny uke-oversikt i backend, ukestripe på tre sider, deaktivering med reaktivering ved innlogging, og tester (også Playwright).
 
 ### Hva vi selv vurderte og kontrollerte
 
-- Fernando valgte og så alle de 11 videoene selv. De er ikke sjekket med oEmbed.
-- Fernando sjekket stegene og musklene i `exercises.json` mot de nye videoene.
-- Lenkene i `ovelsesliste.md` står som `watch?v=`, fordi testen leser ID-ene derfra. Filtestene passerer; databasetestene er ikke kjørt (krever Docker).
+- Osman godkjente spec-ene før koding.
+- 6.3: én KI-kontrollør, 9 grupper rettet. Kariannes retting av e2e-testen (#53) ble tatt med.
+- 1.8: kontrolløren fant at en deaktivert konto kunne beholde en innlogging i sjeldne tilfeller; rettet. En Playwright-test som avhang av datoen demodataen ble laget, ble gjort robust.
 
 ### Status
 
-- [x] 11 videoer byttet
-- [ ] Finne Shorts til de 23 øvelsene som er igjen
-- [ ] Videospilleren må tilpasses stående video
+- [x] 6.3 flettet (#54); 1.8 bygget og testet
+- [ ] Review av PR for 1.8 fra gruppen
 
 ---
 

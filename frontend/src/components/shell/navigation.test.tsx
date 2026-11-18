@@ -1,8 +1,13 @@
-import { render, screen, within } from "@testing-library/react";
+import { cleanup, render, screen, within } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-const navigation = vi.hoisted(() => ({ pathname: "/" }));
-vi.mock("next/navigation", () => ({ usePathname: () => navigation.pathname }));
+const navigation = vi.hoisted(() => ({ pathname: "/", search: "" }));
+vi.mock("next/navigation", () => ({ usePathname: () => navigation.pathname,
+  useSearchParams: () => new URLSearchParams(navigation.search) }));
+vi.mock("@/modules/food/meals", async (importOriginal) => ({
+  ...(await importOriginal<typeof import("@/modules/food/meals")>()),
+  osloToday: () => "2026-11-17",
+}));
 
 import { NAV_ITEMS, isActive, pageTitle } from "./nav-items";
 import { Sidebar } from "./sidebar";
@@ -65,6 +70,35 @@ describe("Sidebar", () => {
       "page",
     );
     expect(nav.querySelectorAll('[aria-current="page"]')).toHaveLength(1);
+  });
+});
+
+describe("dated links (story 6.3)", () => {
+  it("Mat and Trening keep a valid ?dato=; I dag and the others do not", () => {
+    navigation.pathname = "/mat";
+    navigation.search = "dato=2026-11-16";
+    render(<Sidebar />);
+    const nav = screen.getByRole("navigation", { name: "Hovedmeny" });
+    const hrefs = within(nav)
+      .getAllByRole("link")
+      .map((link) => link.getAttribute("href"));
+    expect(hrefs).toEqual([
+      "/",
+      "/mat?dato=2026-11-16",
+      "/trening?dato=2026-11-16",
+      "/historikk",
+      "/profil",
+    ]);
+    cleanup();
+    // A future or malformed date is not passed on.
+    for (const search of ["dato=2999-01-01", "dato=2026-02-30"]) {
+      navigation.search = search;
+      render(<Sidebar />);
+      const links = within(screen.getByRole("navigation", { name: "Hovedmeny" })).getAllByRole("link");
+      expect(links.map((link) => link.getAttribute("href"))).toContain("/mat");
+      cleanup();
+    }
+    navigation.search = "";
   });
 });
 

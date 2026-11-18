@@ -10,7 +10,7 @@ import {
 import { api } from "@/lib/api/client";
 import type { components } from "@/lib/api/schema";
 import { call, callNoContent } from "@/modules/identity/api";
-import { overviewKey } from "@/modules/overview/api";
+import { overviewKey, overviewWeekKeyFor } from "@/modules/overview/api";
 
 export type FoodItem = components["schemas"]["FoodItemResponse"];
 export type FoodDay = components["schemas"]["FoodDayResponse"];
@@ -64,7 +64,7 @@ export function useFoodSearch(query: string) {
   });
 }
 
-/** Refetch the date's totals, its Daily Overview and the recent list after an entry
+/** Refetch the date's totals, its Daily Overview, its week strip and the recent list after an entry
  * changes (AD-15, NFR9). */
 function invalidateEntry(
   queryClient: ReturnType<typeof useQueryClient>,
@@ -72,6 +72,7 @@ function invalidateEntry(
 ) {
   void queryClient.invalidateQueries({ queryKey: RECENT_FOODS_KEY });
   void queryClient.invalidateQueries({ queryKey: overviewKey(date) });
+  void queryClient.invalidateQueries({ queryKey: overviewWeekKeyFor(date) });
   return queryClient.invalidateQueries({ queryKey: foodDayKey(date) });
 }
 
