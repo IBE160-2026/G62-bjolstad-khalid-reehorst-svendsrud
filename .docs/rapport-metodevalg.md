@@ -43,6 +43,10 @@ Faglæreren viste at begge måtene kan fungere, og at autonom kjøring sparer ti
 - **Gjentatte flettekonflikter** i loggfilene, fordi hver story oppdaterte de samme filene.
 - **Mer tid per story enn en autonom kjøring.** Til gjengjeld trengte vi lite opprydding i etterkant.
 
+## Sammenligning med faglærerens demo
+
+Faglæreren startet en autonom goal-kjøring av demoprosjektet sitt 17.11 kl. 14. Kvelden etter var 3 av 12 epics ferdige (kunngjøring 18.11). Kjøringen går uten pauser, men resultatet er ikke gjennomgått av et menneske før en egen økt senere i uka. Vi hadde da 6 epics ferdige med alle Must-krav, og hver story var godkjent av gruppa og testet før den ble flettet. Sammenligningen er grov, fordi prosjektene er ulike i størrelse og ble startet til ulik tid. Den viser likevel forskjellen: autonom kjøring flytter kontrollen til etterpå, mens vi kontrollerte underveis.
+
 ## Konklusjon
 
 For et gruppeprosjekt der flere skal forstå og stå inne for koden, og der kravdokumentene ikke alltid var enige, ga story for story med menneskelig godkjenning bedre kontroll enn autonom kjøring. Til et prosjekt med stabile krav og god tid kunne vi vurdert goal-kommandoen, for eksempel for de gjenværende Should-storiene.
