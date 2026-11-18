@@ -95,7 +95,13 @@
 - [x] 2026-11-18 [story-6-3-ukestripe](942-2026-11-18-03-00-00-story-6-3-ukestripe.md) — pushe og lage PR for 6.3 (løst 2026-11-18 — PR #54)
 - [ ] 2026-11-18 [story-6-3-ukestripe](942-2026-11-18-03-00-00-story-6-3-ukestripe.md) — stående videospiller for YouTube Shorts
 
+- [x] 2026-11-18 [retrospektiv](940-2026-11-18-13-00-00-retrospektiv.md) — pushe og lage PR for retrospektiven (løst 2026-11-18 — PR #56)
+- [ ] 2026-11-18 [retrospektiv](940-2026-11-18-13-00-00-retrospektiv.md) — gå gjennom deferred-work.md før innlevering
+
+- [x] 2026-11-18 [retrospektiv](940-2026-11-18-13-00-00-retrospektiv.md) — deferred-work.md gjennomgått: 8 løst, 1 delvis, 9 åpne (Safari-cookie bør sjekkes før innlevering)
+- [x] 2026-11-18 — sjekk i Safari at innlogging virker (Secure-cookie på localhost) (løst 2026-11-18 — testet av Karianne i Safari og Chrome)
 - [x] 2026-11-18 — #54 (ukestripe 6.3) flettet av Fernando
 - [x] 2026-11-18 [story-1-8-deaktiver](941-2026-11-18-12-00-00-story-1-8-deaktiver.md) — pushe og lage PR for 1.8 (løst 2026-11-18 — PR #55)
 
+- [ ] 2026-11-18 — liten PR: fokus etter «Legg til sett» og etter «Lukk» på velkomstmeldingen, og docstring i overview/router.py (funn fra Karianne)
 - [x] 2026-11-18 [rapport-metodevalg](939-2026-11-18-23-00-00-rapport-metodevalg.md) — pushe og lage PR for rapportutkastet om metodevalg (løst 2026-11-18 — PR #58)

@@ -1318,6 +1318,34 @@ Det viktigste funnet: Dekningsanalysen er regnet ut fra øvelseslista og viser a
 
 ---
 
+## 2026-11-17 – 11 øvelsesvideoer byttet til YouTube Shorts (issue #6)
+
+**Verktøy:** Claude Code
+**Hvem:** Fernando Svendsrud
+**Bakgrunn:** Gruppa godkjente å bytte lange øvelsesvideoer til korte YouTube Shorts som passer bedre for nybegynnere.
+
+### Hva vi ba KI om
+
+1. Bytte video-ID for 11 øvelser (#5, 8, 9, 13, 14, 15, 16, 24, 26, 27, 29) i seed-data, testfiksturen, øvelseslista og gjennomgangsskjemaet.
+
+### Hva KI produserte
+
+- Byttet ID-ene i `exercises.json`, `video_ids.json`, `ovelsesliste.md` og `ovelsesliste-gjennomgang-2026-11-11.md`, uten å endre steg eller muskler.
+
+### Hva vi selv vurderte og kontrollerte
+
+- Fernando valgte og så alle de 11 videoene selv. De er ikke sjekket med oEmbed.
+- Fernando sjekket stegene og musklene i `exercises.json` mot de nye videoene.
+- Lenkene i `ovelsesliste.md` står som `watch?v=`, fordi testen leser ID-ene derfra. Alle 579 backend-tester er kjørt i Docker og passerer. Seed oppdaterer nå også video_id for eksisterende databaser.
+
+### Status
+
+- [x] 11 videoer byttet
+- [ ] Finne Shorts til de 23 øvelsene som er igjen
+- [ ] Videospilleren må tilpasses stående video
+
+---
+
 ## 2026-11-18 – Story 6.4 del 3 (hjelpeknapp og fokus i ark)
 
 **Verktøy:** Claude Code (BMAD `bmad-build`, lettere prosess med én kontrollør)
