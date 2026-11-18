@@ -97,3 +97,6 @@
 
 - [x] 2026-11-18 [retrospektiv](940-2026-11-18-13-00-00-retrospektiv.md) — pushe og lage PR for retrospektiven (løst 2026-11-18 — PR #56)
 - [ ] 2026-11-18 [retrospektiv](940-2026-11-18-13-00-00-retrospektiv.md) — gå gjennom deferred-work.md før innlevering
+
+- [x] 2026-11-18 [retrospektiv](940-2026-11-18-13-00-00-retrospektiv.md) — deferred-work.md gjennomgått: 8 løst, 1 delvis, 9 åpne (Safari-cookie bør sjekkes før innlevering)
+- [ ] 2026-11-18 — sjekk i Safari at innlogging virker (Secure-cookie på localhost)
