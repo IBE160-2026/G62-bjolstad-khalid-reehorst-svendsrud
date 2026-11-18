@@ -94,3 +94,5 @@
 - [x] 2026-11-18 — #51 (Playwright) flettet av Fernando; alle Must-stories i main
 - [x] 2026-11-18 [story-6-3-ukestripe](942-2026-11-18-03-00-00-story-6-3-ukestripe.md) — pushe og lage PR for 6.3 (løst 2026-11-18 — PR #54)
 - [ ] 2026-11-18 [story-6-3-ukestripe](942-2026-11-18-03-00-00-story-6-3-ukestripe.md) — stående videospiller for YouTube Shorts
+
+- [x] 2026-11-18 — #54 (ukestripe 6.3) flettet av Fernando
