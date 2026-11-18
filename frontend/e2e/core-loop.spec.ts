@@ -333,14 +333,17 @@ test("UJ-3: «Sist» shows yesterday's Armhevinger in today's workout", async ({
   await expect(row.getByText(/^Sist: 10 rep \(.+\)$/)).toBeVisible();
 });
 
-test("demo user: Sara's I dag shows today's breakfast (read-only)", async ({ page }) => {
+/**
+ * Read-only, and independent of the day the demo data was seeded: today's breakfast is only
+ * "today" on the seed day, but the day note and the finished workouts are always there.
+ */
+test("demo user: Sara sees the day note and earlier workouts (read-only)", async ({ page }) => {
   await login(page, SARA.email, SARA.password);
   await readDayNote(page);
-  const frokost = foodCard(page)
-    .getByRole("listitem")
-    .filter({ has: page.getByRole("heading", { name: "Frokost" }) });
-  await expect(frokost.getByRole("listitem").first()).toBeVisible();
-  await expect(frokost.getByRole("link", { name: "Legg til i frokost" })).toHaveCount(0);
+
+  await page.goto("/trening");
+  const recent = page.getByRole("region", { name: "Tidligere økter" });
+  await expect(recent.getByRole("listitem").first()).toBeVisible();
 });
 
 test("UJ-4: I dag shows the day's meals and workout", async ({ page }) => {
@@ -441,4 +444,23 @@ test("week strip (story 6.3): pick yesterday, log food, today unchanged", async 
   await expect(
     page.getByRole("toolbar", { name: "Velg dag" }).getByRole("button", { name: /, mat logget$/ }),
   ).toHaveCount(1);
+});
+
+test("Story 1.8: deactivate, then log in again to a welcome and the same data", async ({ page }) => {
+  const { email, target } = await registerAndGoHome(page);
+
+  await page.goto("/profil");
+  const trigger = page.getByRole("button", { name: "Deaktiver konto" });
+  await trigger.click();
+  const dialog = page.getByRole("dialog", { name: "Deaktivere kontoen?" });
+  await expect(dialog.getByRole("button", { name: "Avbryt" })).toBeFocused();
+  await dialog.getByRole("button", { name: "Deaktiver", exact: true }).click();
+  await expect(page).toHaveURL(/\/logg-inn$/);
+
+  await login(page, email, PASSWORD);
+  // The status also holds the "Lukk" button, so match the message, not the whole text.
+  await expect(page.getByRole("status").filter({ hasText: "Velkommen tilbake!" })).toContainText(
+    "Velkommen tilbake! Kontoen din er aktiv igjen.",
+  );
+  expect((await readDayNote(page)).target).toBe(target);
 });

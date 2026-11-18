@@ -7,7 +7,7 @@ const replaceMock = vi.hoisted(() => vi.fn());
 vi.mock("@/lib/api/client", () => ({ api: { POST: postMock } }));
 vi.mock("next/navigation", () => ({ useRouter: () => ({ replace: replaceMock }) }));
 
-import { ME_QUERY_KEY } from "./api";
+import { ME_QUERY_KEY, REACTIVATED_QUERY_KEY } from "./api";
 import { LoginForm } from "./login-form";
 
 function renderForm() {
@@ -77,6 +77,21 @@ describe("LoginForm", () => {
       body: { email: "Ola@Eksempel.no", password: "hemmelig1" },
     });
     expect(client.getQueryData(ME_QUERY_KEY)).toEqual(user);
+    expect(client.getQueryData(REACTIVATED_QUERY_KEY)).toBeUndefined();
+  });
+
+  it("remembers a reactivation for the welcome message, but not in the user", async () => {
+    const user = { id: "1", email: "ola@eksempel.no" };
+    postMock.mockResolvedValue({ data: { ...user, reactivated: true }, error: undefined });
+    const { client, email, password, submit } = renderForm();
+    fill(email, "ola@eksempel.no");
+    fill(password, "hemmelig1");
+
+    fireEvent.click(submit);
+
+    await waitFor(() => expect(replaceMock).toHaveBeenCalledWith("/"));
+    expect(client.getQueryData(ME_QUERY_KEY)).toEqual(user);
+    expect(client.getQueryData(REACTIVATED_QUERY_KEY)).toBe(true);
   });
 
   it.each([

@@ -13,8 +13,15 @@ type ErrorBody = components["schemas"]["ErrorBody"];
 type FieldError = components["schemas"]["FieldError"];
 
 export const ME_QUERY_KEY = ["me"] as const;
+/**
+ * Set by a login that reactivated a deactivated account (story 1.8); the first signed-in
+ * page reads it once to say "Velkommen tilbake!" and removes it.
+ */
+export const REACTIVATED_QUERY_KEY = ["reactivated"] as const;
 
 export const NETWORK_ERROR_MESSAGE = "Vi fikk ikke kontakt med serveren. Prøv igjen.";
+export const DEACTIVATE_UNAUTHORIZED_MESSAGE =
+  "Du må logge inn på nytt for å deaktivere kontoen.";
 
 /** An error envelope from the API; the UI shows `message` and branches only on `code`. */
 export class ApiError extends Error {
@@ -63,11 +70,16 @@ export async function callNoContent(request: () => Promise<{ error?: unknown }>)
   if (result.error !== undefined) throw toApiError(result.error);
 }
 
-/** A new session: drop everything cached for the previous user, then store the new one. */
+/**
+ * A new session: drop everything cached for the previous user, then store the new one.
+ * `reactivated` sets the welcome-back flag before the user, so it is there when the
+ * signed-in page renders.
+ */
 function useStartSession() {
   const queryClient = useQueryClient();
-  return (user: components["schemas"]["UserResponse"]) => {
+  return (user: components["schemas"]["UserResponse"], reactivated = false) => {
     queryClient.clear();
+    if (reactivated) queryClient.setQueryData(REACTIVATED_QUERY_KEY, true);
     queryClient.setQueryData(ME_QUERY_KEY, user);
   };
 }
@@ -86,7 +98,7 @@ export function useLogin() {
   return useMutation({
     mutationFn: (values: RegisterValues) =>
       call(() => api.POST("/api/identity/login", { body: values })),
-    onSuccess: startSession,
+    onSuccess: ({ reactivated, ...user }) => startSession(user, reactivated),
   });
 }
 
@@ -184,6 +196,37 @@ export function useDeleteAccount() {
       // Navigate first, so a still-mounted SessionGuard refetching /me cannot win the
       // race to a plain /logg-inn without the status line.
       router.replace(ACCOUNT_DELETED_PATH);
+      queryClient.clear();
+    },
+  });
+}
+
+/**
+ * Deactivate the account (every session ended, no data deleted), then show the login page
+ * (story 1.8). Logging in again with the right password reactivates it.
+ */
+export function useDeactivateAccount() {
+  const queryClient = useQueryClient();
+  const router = useRouter();
+  return useMutation({
+    mutationFn: async () => {
+      let result;
+      try {
+        result = await api.POST("/api/identity/deactivate");
+      } catch {
+        throw new ApiError("network_error", NETWORK_ERROR_MESSAGE);
+      }
+      if (result.error === undefined) return;
+      const error = toApiError(result.error);
+      // The session is gone, so nothing was deactivated: say so instead of leaving.
+      if (error.code === "unauthorized") {
+        throw new ApiError("unauthorized", DEACTIVATE_UNAUTHORIZED_MESSAGE);
+      }
+      throw error;
+    },
+    onSuccess: () => {
+      // Navigate first, like account deletion, so SessionGuard cannot race the redirect.
+      router.replace(LOGIN_PATH);
       queryClient.clear();
     },
   });
