@@ -18,10 +18,10 @@ Videolenkene er sjekket maskinelt (de finnes og har riktig tittel), men ingen ha
 
 | Bolk | Øvelser | Ansvarlig |
 |---|---|---|
-| 1 | #1–9 | |
-| 2 | #10–18 | |
-| 3 | #19–26 | |
-| 4 | #27–34 og de nye i del B | |
+| 1 | #1–9 | Fernando |
+| 2 | #10–18 | Fernando |
+| 3 | #19–26 | Fernando |
+| 4 | #27–34 og de nye i del B | Fernando |
 
 | # | Øvelse | Video | Sett av | Vurdering | Kommentar |
 |---|---|---|---|---|---|
@@ -29,18 +29,18 @@ Videolenkene er sjekket maskinelt (de finnes og har riktig tittel), men ingen ha
 | 2 | Armhevinger | [video](https://www.youtube.com/watch?v=YwFmEsa_lIk) | | | |
 | 3 | Planke | [video](https://www.youtube.com/watch?v=mwlp75MS6Rg) | | | |
 | 4 | Utfall | [video](https://www.youtube.com/watch?v=Pwsn3HR4L90) | | | |
-| 5 | Situps | [video](https://www.youtube.com/watch?v=T3XsCC2Td1g) | | | |
+| 5 | Situps | [video](https://www.youtube.com/shorts/ZKw4t23ERuw) | Fernando | ❌ byttet til Short | Gammel video for lang for nybegynnere. Steg og muskler i exercises.json sjekket mot ny video. |
 | 6 | Burpees | [video](https://www.youtube.com/watch?v=xmTrNUR3BpE) | | | |
 | 7 | Manual benkpress | [video](https://www.youtube.com/watch?v=5Y3VZsLb1Ys) | | | |
-| 8 | Manual skulderpress | [video](https://www.youtube.com/watch?v=vlFGTI5JzjI) | | | |
-| 9 | Manual biceps curl | [video](https://www.youtube.com/watch?v=6DeLZ6cbgWQ) | | | |
+| 8 | Manual skulderpress | [video](https://www.youtube.com/shorts/k6tzKisR3NY) | Fernando | ❌ byttet til Short | Gammel video for lang for nybegynnere. Steg og muskler i exercises.json sjekket mot ny video. |
+| 9 | Manual biceps curl | [video](https://www.youtube.com/shorts/9MhRrYaLYFc) | Fernando | ❌ byttet til Short | Gammel video for lang for nybegynnere. Steg og muskler i exercises.json sjekket mot ny video. |
 | 10 | Manual roing, én arm | [video](https://www.youtube.com/watch?v=fURsHPHgssI) | | | |
 | 11 | Manual utfall | [video](https://www.youtube.com/watch?v=NfASnq6fxzU) | | | |
 | 12 | Hevinger på benk | [video](https://www.youtube.com/watch?v=gol0_aPT28c) | | | |
-| 13 | Markløft | [video](https://www.youtube.com/watch?v=hCDzSR6bW10) | | | |
-| 14 | Knebøy med stang | [video](https://www.youtube.com/watch?v=nEQQle9-0NA) | | | |
-| 15 | Benkpress | [video](https://www.youtube.com/watch?v=vthMCtgVtFw) | | | |
-| 16 | Stående roing | [video](https://www.youtube.com/watch?v=ZtTwgJTBjOQ) | | | |
+| 13 | Markløft | [video](https://www.youtube.com/shorts/ZaTM37cfiDs) | Fernando | ❌ byttet til Short | Gammel video for lang for nybegynnere. Steg og muskler i exercises.json sjekket mot ny video. |
+| 14 | Knebøy med stang | [video](https://www.youtube.com/shorts/PPmvh7gBTi0) | Fernando | ❌ byttet til Short | Gammel video for lang for nybegynnere. Steg og muskler i exercises.json sjekket mot ny video. |
+| 15 | Benkpress | [video](https://www.youtube.com/shorts/hWbUlkb5Ms4) | Fernando | ❌ byttet til Short | Gammel video for lang for nybegynnere. Steg og muskler i exercises.json sjekket mot ny video. |
+| 16 | Stående roing | [video](https://www.youtube.com/shorts/Nqh7q3zDCoQ) | Fernando | ❌ byttet til Short | Gammel video for lang for nybegynnere. Steg og muskler i exercises.json sjekket mot ny video. |
 | 17 | Militærpress | [video](https://www.youtube.com/watch?v=ZXpdJOLNoWw) | | | |
 | 18 | Kettlebell sving | [video](https://www.youtube.com/watch?v=PAhDt_0PjP4) | | | |
 | 19 | Kettlebell goblet squat | [video](https://www.youtube.com/watch?v=XzQ_qk0axb4) | | | |
@@ -48,12 +48,12 @@ Videolenkene er sjekket maskinelt (de finnes og har riktig tittel), men ingen ha
 | 21 | Strikk roing | [video](https://www.youtube.com/watch?v=TE3v7CgXiiI) | | | |
 | 22 | Strikk skulderpress | [video](https://www.youtube.com/watch?v=tQ40C0WD6OY) | | | |
 | 23 | Strikk biceps curl | [video](https://www.youtube.com/watch?v=PXLF19Oqe3M) | | | |
-| 24 | Pull-ups | [video](https://www.youtube.com/watch?v=8XrB3eV3_ZE) | | | |
+| 24 | Pull-ups | [video](https://www.youtube.com/shorts/9rckBLbVe8c) | Fernando | ❌ byttet til Short | Gammel video for lang for nybegynnere. Steg og muskler i exercises.json sjekket mot ny video. |
 | 25 | Hengende beinløft | [video](https://www.youtube.com/watch?v=Pr1ieGZ5atk) | | | |
-| 26 | Kabel nedtrekk | [video](https://www.youtube.com/watch?v=SALxEARiMkw) | | | |
-| 27 | Kabel triceps pushdown | [video](https://www.youtube.com/watch?v=_w-HpW70nSQ) | | | |
+| 26 | Kabel nedtrekk | [video](https://www.youtube.com/shorts/hnSqbBk15tw) | Fernando | ❌ byttet til Short | Gammel video for lang for nybegynnere. Steg og muskler i exercises.json sjekket mot ny video. |
+| 27 | Kabel triceps pushdown | [video](https://www.youtube.com/shorts/7aoSjgVoZxU) | Fernando | ❌ byttet til Short | Gammel video for lang for nybegynnere. Steg og muskler i exercises.json sjekket mot ny video. |
 | 28 | Kabel roing sittende | [video](https://www.youtube.com/watch?v=UCXxvVItLoM) | | | |
-| 29 | Beinpress | [video](https://www.youtube.com/watch?v=cDGOn-yfKJA) | | | |
+| 29 | Beinpress | [video](https://www.youtube.com/shorts/nDh_BlnLCGc) | Fernando | ❌ byttet til Short | Gammel video for lang for nybegynnere. Steg og muskler i exercises.json sjekket mot ny video. |
 | 30 | Beincurl i maskin | [video](https://www.youtube.com/watch?v=t9sTSr-JYSs) | | | |
 | 31 | Foroverbøyd manualroing | [video](https://www.youtube.com/watch?v=6TSP1TRMUzs) | | | |
 | 32 | Superman | [video](https://www.youtube.com/watch?v=HAjQVUp9mS4) | | | |
