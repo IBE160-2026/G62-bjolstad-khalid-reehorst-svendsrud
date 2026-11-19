@@ -108,4 +108,4 @@
 
 - [x] 2026-11-19 — README: egen seksjon «API-nøkler» (faglærer: README må beskrive kjøring og hvilke API-nøkler som trengs)
 
-- [ ] 2026-11-19 [shorts-spiller](937-2026-11-19-10-00-00-shorts-spiller.md) — pushe og lage PR for Shorts-spilleren
+- [x] 2026-11-19 [shorts-spiller](937-2026-11-19-10-00-00-shorts-spiller.md) — pushe og lage PR for Shorts-spilleren (løst 2026-11-19 — PR #61)
