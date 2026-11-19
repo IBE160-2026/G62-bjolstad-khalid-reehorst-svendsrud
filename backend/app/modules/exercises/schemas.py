@@ -59,6 +59,8 @@ class ExerciseDetail(BaseModel):
     equipment: list[str]
     steps: list[str]
     video_id: str
+    # True for a YouTube Short (portrait video), shown in a 9:16 player.
+    video_short: bool
 
 
 def _profile_name(value: str) -> str:

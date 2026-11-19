@@ -65,7 +65,11 @@ export function ExerciseDetail({ id }: { id: string }) {
       <BackLink />
       <h2 className="text-title font-medium text-foreground">{exercise.name}</h2>
       <AddToWorkout key={exercise.id} exerciseId={exercise.id} />
-      <VideoEmbed videoId={exercise.video_id} title={`Video: ${exercise.name}`} />
+      <VideoEmbed
+        videoId={exercise.video_id}
+        title={`Video: ${exercise.name}`}
+        short={exercise.video_short}
+      />
 
       <section aria-labelledby="steps-heading" className="flex flex-col gap-2">
         <h3 id="steps-heading" className="text-heading font-medium text-foreground">

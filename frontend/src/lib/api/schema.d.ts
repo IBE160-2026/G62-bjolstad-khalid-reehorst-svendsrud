@@ -812,6 +812,8 @@ export interface components {
             steps: string[];
             /** Video Id */
             video_id: string;
+            /** Video Short */
+            video_short: boolean;
         };
         /** ExerciseListItem */
         ExerciseListItem: {

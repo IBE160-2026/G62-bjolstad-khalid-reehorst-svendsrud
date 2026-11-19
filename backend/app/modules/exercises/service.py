@@ -117,6 +117,7 @@ def get_exercise(db: DbSessionType, exercise_id: str) -> ExerciseDetail:
         equipment=_equipment(exercise),
         steps=list(exercise.steps),
         video_id=exercise.video_id,
+        video_short=exercise.video_short,
     )
 
 

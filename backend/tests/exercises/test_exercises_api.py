@@ -79,6 +79,7 @@ def test_detail_of_push_up(
     assert body["level"] == "beginner"
     assert body["type"] == "reps"
     assert body["video_id"] == "YwFmEsa_lIk"
+    assert body["video_short"] is False
     assert len(body["steps"]) == 3
 
 
@@ -91,6 +92,7 @@ def test_detail_of_deadlift_maps_to_back_and_legs(
     assert body["primary_muscle_group"] == "Rygg"
     assert body["secondary_muscle_groups"] == ["Ben"]
     assert body["equipment"] == ["Stang og skiver"]
+    assert body["video_short"] is True  # a YouTube Short (#13)
 
 
 @pytest.mark.usefixtures("seeded")
