@@ -29,7 +29,7 @@ def get_overview(
     day: Annotated[date, Query(alias="date")],
 ) -> OverviewResponse:
     """Target, kcal eaten and remaining, the Meals and the done workouts for one date
-    (YYYY-MM-DD). Read-only; a date more than one day after today is 422."""
+    (YYYY-MM-DD). Read-only; any date after today (Europe/Oslo) is 422."""
     return service.get_day(db, current_user.id, day, now)
 
 

@@ -58,4 +58,23 @@ describe("ReactivatedStatus", () => {
 
     expect(screen.getByRole("status")).toBeEmptyDOMElement();
   });
+
+  it("moves focus to the main area after Lukk, not to <body>", () => {
+    vi.useFakeTimers();
+    const main = document.createElement("main");
+    main.id = "innhold";
+    main.tabIndex = -1;
+    document.body.appendChild(main);
+    const client = new QueryClient();
+    client.setQueryData(REACTIVATED_QUERY_KEY, true);
+    renderStatus(client);
+    act(() => {
+      vi.advanceTimersByTime(1);
+    });
+
+    fireEvent.click(screen.getByRole("button", { name: "Lukk" }));
+
+    expect(document.activeElement).toBe(main);
+    main.remove();
+  });
 });

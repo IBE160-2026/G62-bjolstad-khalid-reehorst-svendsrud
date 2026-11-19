@@ -66,6 +66,8 @@ context:
 
 ## Spec Change Log
 
+- 2026-11-18: the "Always" line says "a future date beyond today + 1 day → 422"; the code (after review) rejects any date after today in Europe/Oslo. The code is the rule; the router docstring now says so (found by Karianne).
+
 ## Review Triage Log
 
 | Layer | Finding | Verdict | Evidence | Route |

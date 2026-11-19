@@ -92,7 +92,7 @@
 - source_spec: `.docs/implementation-artifacts/spec-5-2-log-my-sets.md`
   summary: Focus drops to `<body>` after "Legg til sett".
   evidence: Found by Karianne when testing PR #43 (comment on #57).
-  status: open — low; fix in a small accessibility PR.
+  status: resolved 2026-11-18 — fixed in the focus/docstring PR.
 - source_spec: `.docs/implementation-artifacts/spec-5-2-log-my-sets.md`
   summary: Exercises added to a workout before migration 0015 have 0 sets (no backfill).
   evidence: Found by Karianne when testing PR #43 (comment on #57); only affects databases with workouts from before story 5.2.
@@ -100,9 +100,9 @@
 - source_spec: `.docs/implementation-artifacts/spec-6-1-see-my-day-at-a-glance.md`
   summary: The docstring in `backend/app/modules/overview/router.py` and the spec's "Always" line say "more than one day after today", but the code (on purpose) rejects any date after today.
   evidence: Found by Karianne (comment on #57).
-  status: open — low; fix the wording.
+  status: resolved 2026-11-18 — fixed in the focus/docstring PR.
 - source_spec: `.docs/implementation-artifacts/spec-1-8-deactivate-my-account.md`
   summary: Focus drops to `<body>` after "Lukk" on the "Velkommen tilbake!" message.
   evidence: Found by Karianne when testing PR #55 (comment on #57).
-  status: open — low; fix in a small accessibility PR.
+  status: resolved 2026-11-18 — fixed in the focus/docstring PR.
 

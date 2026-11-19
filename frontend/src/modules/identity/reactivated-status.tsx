@@ -37,7 +37,11 @@ export function ReactivatedStatus() {
             <p>{REACTIVATED_MESSAGE}</p>
             <button
               type="button"
-              onClick={() => setVisible(false)}
+              onClick={() => {
+                setVisible(false);
+                // The button unmounts; move focus to the page's main area, not <body>.
+                document.getElementById("innhold")?.focus();
+              }}
               className="min-h-11 shrink-0 rounded-full px-4 text-button font-medium text-accent-foreground hover:bg-muted"
             >
               Lukk
