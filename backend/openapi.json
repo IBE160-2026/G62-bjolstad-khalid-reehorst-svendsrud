@@ -2710,6 +2710,10 @@
           "video_id": {
             "type": "string",
             "title": "Video Id"
+          },
+          "video_short": {
+            "type": "boolean",
+            "title": "Video Short"
           }
         },
         "type": "object",
@@ -2722,7 +2726,8 @@
           "secondary_muscle_groups",
           "equipment",
           "steps",
-          "video_id"
+          "video_id",
+          "video_short"
         ],
         "title": "ExerciseDetail"
       },

@@ -100,8 +100,8 @@ def seed_off_items(db: DbSessionType, path: Path | None = None) -> int:
 def seed_exercises(db: DbSessionType, path: Path = EXERCISES_FILE) -> int:
     """Insert every equipment type, muscle group and exercise whose slug is missing, so
     exercises added to the file later (#35–39) also reach an existing database. For an
-    exercise that already exists, only video_id is updated when the file has a different
-    one (e.g. a video swapped for a YouTube Short); steps, muscles, equipment and every
+    exercise that already exists, only video_id and video_short are updated when the file
+    differs (e.g. a video swapped for a YouTube Short); steps, muscles, equipment and every
     other field are left unchanged. Returns the number of exercises added."""
     from app.modules.exercises.models import (
         Equipment,
@@ -124,8 +124,12 @@ def seed_exercises(db: DbSessionType, path: Path = EXERCISES_FILE) -> int:
     existing = {exercise.slug: exercise for exercise in db.scalars(select(Exercise))}
     for row in data["exercises"]:
         current = existing.get(row["slug"])
-        if current is not None and current.video_id != row["video_id"]:
+        if current is None:
+            continue
+        if current.video_id != row["video_id"]:
             current.video_id = row["video_id"]
+        if current.video_short != row["video_short"]:
+            current.video_short = row["video_short"]
     missing = [row for row in data["exercises"] if row["slug"] not in existing]
     for row in missing:
         exercise = Exercise(
@@ -135,6 +139,7 @@ def seed_exercises(db: DbSessionType, path: Path = EXERCISES_FILE) -> int:
             type=row["type"],
             steps=row["steps"],
             video_id=row["video_id"],
+            video_short=row["video_short"],
         )
         exercise.equipment_links = [
             ExerciseEquipment(equipment_id=equipment[slug].id) for slug in row["equipment"]

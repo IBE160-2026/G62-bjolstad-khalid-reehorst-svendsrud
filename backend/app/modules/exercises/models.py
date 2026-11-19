@@ -6,6 +6,7 @@ import uuid
 
 from sqlalchemy import (
     JSON,
+    Boolean,
     CheckConstraint,
     DateTime,
     ForeignKey,
@@ -13,6 +14,7 @@ from sqlalchemy import (
     Integer,
     String,
     Uuid,
+    false,
     text,
 )
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -97,6 +99,8 @@ class Exercise(Base):
     steps: Mapped[list[str]] = mapped_column(JSON)
     # YouTube video id, embedded from youtube-nocookie.com.
     video_id: Mapped[str] = mapped_column(String(32))
+    # True for a YouTube Short (portrait): the frontend shows it in a 9:16 player.
+    video_short: Mapped[bool] = mapped_column(Boolean, default=False, server_default=false())
     equipment_links: Mapped[list[ExerciseEquipment]] = relationship(
         lazy="selectin", cascade="all, delete-orphan"
     )
