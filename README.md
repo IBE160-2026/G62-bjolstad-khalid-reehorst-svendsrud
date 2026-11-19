@@ -38,6 +38,14 @@ Oppgaver og åpne spørsmål følges opp i [GitHub Issues](https://github.com/IB
 
 Du trenger bare [Docker Desktop](https://www.docker.com/products/docker-desktop/) (Docker 24 eller nyere med Docker Compose v2). Du trenger ingen nøkler, kontoer eller betalte tjenester.
 
+### API-nøkler
+
+**Ingen API-nøkler trengs.**
+
+- **Open Food Facts** (strekkoder) er et åpent API uten nøkkel. Som standard bruker appen en innebygd testversjon (`OFF_MODE=mock` i `.env`), så den virker uten nett. Med `OFF_MODE=live` spør den den ekte tjenesten (krever nett, ingen nøkkel).
+- **Øvelsesvideoene** vises fra YouTube (youtube-nocookie) uten nøkkel. De krever nett.
+- **`SESSION_SECRET`** i `.env` har en trygg standardverdi for lokal kjøring og må bare byttes i produksjon.
+
 ```bash
 git clone https://github.com/IBE160-2026/G62-bjolstad-khalid-reehorst-svendsrud.git
 cd G62-bjolstad-khalid-reehorst-svendsrud
