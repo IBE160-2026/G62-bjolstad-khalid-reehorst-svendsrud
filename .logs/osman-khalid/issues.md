@@ -107,3 +107,5 @@
 - [x] 2026-11-18 [rapport-metodevalg](939-2026-11-18-23-00-00-rapport-metodevalg.md) — pushe og lage PR for rapportutkastet om metodevalg (løst 2026-11-18 — PR #58)
 
 - [x] 2026-11-19 — README: egen seksjon «API-nøkler» (faglærer: README må beskrive kjøring og hvilke API-nøkler som trengs)
+
+- [ ] 2026-11-19 [shorts-spiller](937-2026-11-19-10-00-00-shorts-spiller.md) — pushe og lage PR for Shorts-spilleren

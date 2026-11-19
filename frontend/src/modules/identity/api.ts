@@ -89,7 +89,9 @@ export function useRegister() {
   return useMutation({
     mutationFn: (values: RegisterValues) =>
       call(() => api.POST("/api/identity/register", { body: values })),
-    onSuccess: startSession,
+    // Pass only the user: a new account is never "reactivated" (the mutation's second
+    // argument would otherwise land in startSession's `reactivated` parameter).
+    onSuccess: (user) => startSession(user),
   });
 }
 

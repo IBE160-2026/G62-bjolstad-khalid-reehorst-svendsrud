@@ -81,6 +81,7 @@ def test_every_exercise_is_complete() -> None:
         assert row["level"] in {"beginner", "intermediate", "advanced"}, label
         assert row["type"] in {"reps", "time"}, label
         assert re.fullmatch(r"[A-Za-z0-9_-]{11}", row["video_id"]), label
+        assert isinstance(row.get("video_short"), bool), label
         assert len(row["steps"]) >= 1, label
         assert all(step.strip() for step in row["steps"]), label
 
@@ -105,6 +106,14 @@ def test_fixture_matches_the_source_list_when_available() -> None:
         return
     ids = re.findall(r"^\| (\d+) \|.*watch\?v=([A-Za-z0-9_-]{11})", LIST_FILE.read_text(), re.M)
     assert {int(number): video for number, video in ids} == _fixture_video_ids()
+
+
+# The YouTube Shorts swapped in by PR #52 (list numbers); shown in a 9:16 player.
+SHORTS = {5, 8, 9, 13, 14, 15, 16, 24, 26, 27, 29}
+
+
+def test_shorts_are_flagged() -> None:
+    assert {row["list_no"] for row in EXERCISES if row["video_short"]} == SHORTS
 
 
 def _by_slug(slug: str) -> dict:
@@ -173,6 +182,7 @@ def test_seed_adds_only_missing_exercises(
         "type": "reps",
         "steps": ["Steg en.", "Steg to.", "Steg tre."],
         "video_id": "abcdefghijk",
+        "video_short": True,
     }
     with factory() as db:
         assert seed.seed_exercises(db) == 34
@@ -198,6 +208,29 @@ def test_seed_adds_only_missing_exercises(
             ("secondary", "armer"),
         ]
         assert [link.equipment.slug for link in added.equipment_links] == ["kroppsvekt"]
+        assert added.video_short is True
+
+
+def test_seed_updates_video_short_of_existing_exercises(
+    factory: sessionmaker[Session],
+) -> None:
+    with factory() as db:
+        assert seed.seed_exercises(db) == 34
+        db.commit()
+    with factory() as db:
+        # A database seeded before the flag existed: every exercise defaults to False.
+        for exercise in db.scalars(select(Exercise)):
+            exercise.video_short = False
+        db.commit()
+
+    with factory() as db:
+        assert seed.seed_exercises(db) == 0
+        db.commit()
+
+    with factory() as db:
+        flagged = {e.slug for e in db.scalars(select(Exercise)) if e.video_short}
+    assert flagged == {row["slug"] for row in EXERCISES if row["video_short"]}
+    assert "deadlift" in flagged and "push-up" not in flagged
 
 
 def test_seed_updates_only_video_id_of_existing_exercises(

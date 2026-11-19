@@ -61,6 +61,7 @@ grunnlag: brief.md (30–50 øvelser, utstyrsbasert), tilbakemelding på product
 - **Nivåfordeling:** 23 nybegynner, 9 middels, 2 øvet — vektet mot nybegynnere, i tråd med primærpersonaen i briefen.
 - **Utstyrsfordeling** (matcher forslaget i forberedelsesdokumentet, seksjon 1.4): kroppsvekt (8), manualer (7), stang og skiver (5), benk (1 alene, i tillegg brukt sammen med manualer/stang i 3 andre), kettlebell (3), strikk (3), trekkestang (2), kabelmaskin (3), beinpress/maskiner (2).
 - Alle 34 videolenker returnerte gyldig oEmbed-respons ved kontroll 2026-10-28 — ingen ble inkludert uten verifisering.
+- **YouTube Shorts:** når du legger inn en Short, sett `"video_short": true` på øvelsen i `backend/app/seed/data/exercises.json` (ellers `false`), så vises den i en stående 9:16-spiller.
 
 ## Endringer 2026-10-28 (Osman Khalid, med Claude Code)
 

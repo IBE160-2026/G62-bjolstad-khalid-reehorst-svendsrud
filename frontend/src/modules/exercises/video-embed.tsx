@@ -29,13 +29,28 @@ export function youtubeWatchUrl(videoId: string): string {
   return `https://www.youtube.com/watch?v=${encodeURIComponent(videoId)}`;
 }
 
+// A YouTube Short is portrait: a centred 9:16 box at most 70 % of the viewport tall,
+// its width following the ratio (capped so the height never passes 70vh). Other videos
+// fill the width at 16:9.
+const SHORT_BOX_CLASS = "aspect-[9/16] max-h-[70vh] w-full max-w-[calc(70vh*9/16)] self-center";
+const WIDE_BOX_CLASS = "aspect-video w-full";
+
 /**
- * A 16:9 youtube-nocookie embed, never autoplaying, with a "Se videoen på YouTube" link
+ * A youtube-nocookie embed (9:16 for a Short, else 16:9), never autoplaying, with a "Se videoen på YouTube" link
  * always under it: browsers rarely fire `error` on a cross-origin iframe, so the link is
  * the dependable way out. Offline (or on an iframe error) the player area says the video
  * cannot be shown. The steps on the page stay the text alternative.
  */
-export function VideoEmbed({ videoId, title }: { videoId: string; title: string }) {
+export function VideoEmbed({
+  videoId,
+  title,
+  short = false,
+}: {
+  videoId: string;
+  title: string;
+  short?: boolean;
+}) {
+  const boxClass = short ? SHORT_BOX_CLASS : WIDE_BOX_CLASS;
   const online = useOnline();
   // The error is remembered per video and connection state, so a new id or coming back
   // online tries the player again.
@@ -68,13 +83,13 @@ export function VideoEmbed({ videoId, title }: { videoId: string; title: string 
     <div className="flex flex-col items-start gap-2">
       {!online || failed ? (
         <div
-          className="flex aspect-video w-full items-center justify-center rounded-lg bg-muted p-4 text-center"
+          className={`flex ${boxClass} items-center justify-center rounded-lg bg-muted p-4 text-center`}
           data-testid="video-fallback"
         >
           <p className="text-body text-foreground">Videoen kan ikke vises nå</p>
         </div>
       ) : (
-        <div className="aspect-video w-full overflow-hidden rounded-lg bg-muted">
+        <div className={`${boxClass} overflow-hidden rounded-lg bg-muted`} data-testid="video-box">
           <iframe
             ref={frameRef}
             src={youtubeEmbedUrl(videoId)}

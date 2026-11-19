@@ -20,6 +20,19 @@ const PUSH_UP = {
   equipment: ["Kroppsvekt"],
   steps: ["Sett hendene i gulvet.", "Senk brystet.", "Press deg opp."],
   video_id: "YwFmEsa_lIk",
+  video_short: false,
+};
+
+const DEADLIFT_ID = "00000000-0000-4000-8000-000000000013";
+const DEADLIFT = {
+  ...PUSH_UP,
+  id: DEADLIFT_ID,
+  name: "Markløft (Deadlift)",
+  primary_muscle_group: "Rygg",
+  secondary_muscle_groups: ["Ben"],
+  equipment: ["Stang og skiver"],
+  video_id: "ZaTM37cfiDs",
+  video_short: true,
 };
 
 function renderWithClient(ui: ReactNode) {
@@ -145,6 +158,47 @@ describe("VideoEmbed", () => {
       window.dispatchEvent(new Event("online"));
     });
     expect(screen.getByTitle("Video: Armhevinger")).toBeInTheDocument();
+  });
+
+  it("shows a wide video at 16:9", () => {
+    render(<VideoEmbed videoId="YwFmEsa_lIk" title="Video: Armhevinger" />);
+
+    const box = screen.getByTestId("video-box");
+    expect(box).toHaveClass("aspect-video", "w-full");
+    expect(box).not.toHaveClass("aspect-[9/16]");
+  });
+
+  it("shows a Short in a centred 9:16 box at most 70vh tall", () => {
+    render(<VideoEmbed videoId="ZaTM37cfiDs" title="Video: Markløft" short />);
+
+    const box = screen.getByTestId("video-box");
+    expect(box).toHaveClass("aspect-[9/16]", "max-h-[70vh]", "self-center");
+    expect(box).not.toHaveClass("aspect-video");
+    expect(screen.getByTitle("Video: Markløft")).toHaveAttribute(
+      "src",
+      "https://www.youtube-nocookie.com/embed/ZaTM37cfiDs",
+    );
+    expect(screen.getByRole("link", { name: "Se videoen på YouTube" })).toHaveAttribute(
+      "href",
+      "https://www.youtube.com/watch?v=ZaTM37cfiDs",
+    );
+  });
+
+  it("falls back the same way for a Short when offline", () => {
+    setOnline(false);
+    render(<VideoEmbed videoId="ZaTM37cfiDs" title="Video: Markløft" short />);
+
+    expect(screen.getByTestId("video-fallback")).toHaveClass("aspect-[9/16]");
+    expect(screen.getByText("Videoen kan ikke vises nå")).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Se videoen på YouTube" })).toBeInTheDocument();
+  });
+
+  it("uses the 9:16 player on the detail page of a Short only", async () => {
+    getMock.mockResolvedValue({ data: DEADLIFT, error: undefined });
+    renderWithClient(<ExerciseDetail id={DEADLIFT_ID} />);
+
+    await screen.findByTitle("Video: Markløft (Deadlift)");
+    expect(screen.getByTestId("video-box")).toHaveClass("aspect-[9/16]");
   });
 
   it("keeps the steps on the page when the video fails", async () => {
