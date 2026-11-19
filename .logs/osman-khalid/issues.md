@@ -105,6 +105,8 @@
 
 - [ ] 2026-11-18 — liten PR: fokus etter «Legg til sett» og etter «Lukk» på velkomstmeldingen, og docstring i overview/router.py (funn fra Karianne)
 - [x] 2026-11-18 [rapport-metodevalg](939-2026-11-18-23-00-00-rapport-metodevalg.md) — pushe og lage PR for rapportutkastet om metodevalg (løst 2026-11-18 — PR #58)
+
+- [x] 2026-11-19 — README: egen seksjon «API-nøkler» (faglærer: README må beskrive kjøring og hvilke API-nøkler som trengs)
 - [x] 2026-11-18 — liten PR: fokus etter «Legg til sett» og etter «Lukk» på velkomstmeldingen, og docstring i overview/router.py (funn fra Karianne) (løst 2026-11-19 — branch fix/focus-and-docstring)
 
 - [x] 2026-11-19 [fokus-og-typefeil](938-2026-11-19-00-30-00-fokus-og-typefeil.md) — pushe og lage PR for fokusfeil, docstring og typefeil (løst 2026-11-19 — PR #59)
