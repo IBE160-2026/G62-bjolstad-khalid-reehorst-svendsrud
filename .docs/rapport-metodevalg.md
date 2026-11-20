@@ -20,8 +20,7 @@ Vi bygde Prompt Force én story om gangen med BMAD-skillen `bmad-build`, i stede
 - **Osman Khalid:** styrte byggingen med KI, godkjente spec-ene og laget pull requestene.
 - **Karianne Bjølstad:** design (UX-runde 3 og det felles designet), review og testing av PR-ene i nettleseren.
 - **Fernando Svendsrud:** øvelseslista og videoene (blant annet YouTube Shorts).
-- **CoolMellon:** review og godkjenning av pull requests.
-- **Gustav Reehorst:** [gruppa fyller inn].
+- **Gustav Reehorst:** strekkodetesten med ekte varer (issue #14), justering av PRD-en for nettleserbruk, og review og godkjenning av pull requests.
 
 ## Hvorfor ikke autonom kjøring
 
