@@ -1430,6 +1430,23 @@ Det viktigste funnet: Dekningsanalysen er regnet ut fra øvelseslista og viser a
 
 ---
 
+## 2026-11-22 – README mot sensorveiledningen (skjermbilder og avvik fra planen)
+
+### Hva vi ba KI om
+- Sjekke README mot sensorveiledningen for del 1 og fylle hullene: skjermbilder, hva som ble droppet fra planen, og forklaring av filene i rotmappen.
+
+### Hva KI produserte
+- `frontend/scripts/screenshots.mjs`: logger inn som demobrukeren Sara og tar fem skjermbilder på 390 px med Playwright, uten å endre data.
+- README: seksjonene «Skjermbilder» og «Endret fra planen», oppdatert status (1.8, 4.5, 6.3, Shorts), fjernet den døde Vercel-lenken, flere rader i Mappestruktur og lenker til retro og rapportutkast.
+
+### Hva vi selv vurderte og kontrollerte
+- Første runde med bilder hadde Next.js-utviklermerket synlig og en tom «i dag» (demodataene regnes fra dagen databasen ble laget). Skriptet skjuler nå merket og tar en dato med data som argument.
+- Storynumrene under bildene er sjekket mot `epics.md`. Begrunnelsene for 1.7, 3.8, 4.6 og epic 7 er gruppens egne.
+- Vercel-lenken ga 404. Publisering er ikke et krav i emnet, så den er fjernet.
+
+### Status
+- [x] Ferdig, venter på review i PR.
+
 ## Mal for nye oppføringer
 
 ```markdown
