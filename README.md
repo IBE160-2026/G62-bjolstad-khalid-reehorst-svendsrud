@@ -17,7 +17,7 @@ Appen kjøres lokalt med Docker (se [Kom i gang](#kom-i-gang)). Den er ikke publ
 
 ## Status
 
-Alle Must-krav er ferdige, i tillegg til fire Should-stories: ukestripe (6.3), filtre på muskelgruppe og nivå (4.5), deaktivere konto (1.8) og glemt passord (1.7). Koden er bygget én story om gangen, med én branch og pull request per story. Se [sprint-status.yaml](.docs/implementation-artifacts/sprint-status.yaml) for status per story.
+Alle Must-krav er ferdige, i tillegg til fem Should-stories: ukestripe (6.3), filtre på muskelgruppe og nivå (4.5), muskelfigur (4.6), deaktivere konto (1.8) og glemt passord (1.7). Koden er bygget én story om gangen, med én branch og pull request per story. Se [sprint-status.yaml](.docs/implementation-artifacts/sprint-status.yaml) for status per story.
 
 | Del | Status |
 |---|---|
@@ -25,7 +25,7 @@ Alle Must-krav er ferdige, i tillegg til fire Should-stories: ukestripe (6.3), f
 | Konto (epic 1) | Opprett konto, logg inn/ut, samtykke, glemt passord, slett og deaktivere konto |
 | Profil (epic 2) | Profiloppsett med daglig kaloribehov, endre profil |
 | Mat (epic 3) | Søk (Matvaretabellen + 941 norske merkevarer fra Open Food Facts), strekkode, egne matvarer, porsjoner, endre/slette med angre |
-| Trening (epic 4) | 34 øvelser med video (YouTube Shorts i stående spiller), utstyrsprofiler, forslag som passer utstyret, søk på navn, filtre på muskelgruppe og nivå |
+| Trening (epic 4) | 34 øvelser med video (YouTube Shorts i stående spiller), utstyrsprofiler, forslag som passer utstyret, søk på navn, filtre på muskelgruppe og nivå, muskelfigur forfra og bakfra |
 | Treningslogg (epic 5) | Starte økt, logge sett (repetisjoner/kg eller sekunder), «Sist» fra forrige gang, fullføre, endre og slette økter |
 | I dag (epic 6) | Kalorier igjen, dagens mat og trening, ukestripe for å bytte dag, tomme tilstander, «?»-hjelp, demobrukere og Playwright-tester |
 | Ikke med | Se [Endret fra planen](#endret-fra-planen) |
@@ -46,7 +46,6 @@ Planen hadde 7 epics og 32 stories. Dette ble ikke med, og hvorfor:
 | Story | Hvorfor ikke med |
 |---|---|
 | 3.8 Skanne strekkode med kamera (Should) | Kamera i nettleseren krever HTTPS når appen åpnes fra en mobil på nettverket, og appen kjører bare lokalt. «Skriv strekkode» dekker behovet. |
-| 4.6 Muskelfigur (Should) | Trenger en tegnet kroppsfigur som ikke ble ferdig. Musklene vises som tekst på øvelsessiden. |
 | Epic 7 Kalorier fra bilde | Planlagt som fase 2, bare når kjerneflyten var stabil. Krever en betalt KI-tjeneste med API-nøkkel, og appen skal virke uten nøkler. |
 
 Oppskrifter under Mat ble ønsket av Karianne og tegnet i UX-runde 3, med egne sider for frokost, lunsj, middag og mellommåltid ([skisser](.docs/planning-artifacts/ux/runde-3/mockups/)). Gruppen bestemte 12.11 at oppskrifter og treningsprogram kommer etter v1, slik at kjernen ble ferdig først ([PRD-gjennomgangen](.docs/planning-artifacts/prds/prd-prompt-force-2026-11-02/gjennomgang-torsdag-2026-11-12.md)). Derfor ble det aldri en story, og skissene er beholdt som design for fase 2.

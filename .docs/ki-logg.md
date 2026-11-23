@@ -1482,6 +1482,22 @@ Det viktigste funnet: Dekningsanalysen er regnet ut fra øvelseslista og viser a
 ### Status
 - [x] Ferdig, venter på PR.
 
+## 2026-11-23 – Story 4.6 (muskelfigur, prøveversjon)
+
+### Hva vi ba KI om
+- Lage en enkel kroppsfigur forfra og bakfra på øvelsessiden som prøve, slik at gruppa kan se den før vi bestemmer om den blir med. Karianne hadde prøvd å tegne anatomien selv uten at det ble bra; Fernando foreslo figuren.
+
+### Hva KI produserte
+- SVG-figur tegnet i kode (ingen bilder eller kopiert anatomi), nye fargetokens, kontrastrader, Vitest og en utvidet 360 px-test.
+
+### Hva vi selv vurderte og kontrollerte
+- Osman valgte rødt (som i planen) framfor plomme.
+- Én reviewer fant 7 punkter: 4 rettet. Viktigst: i mørk modus lyste hjelpemusklene mer enn hovedmuskelen; fargene ble byttet og sjekket på skjermbilde. 3 avvist med begrunnelse.
+- 510 Vitest, lint, build og Playwright 11/11 grønne.
+
+### Status
+- [x] Ferdig lokalt; gruppa bestemmer i PR-en om figuren blir med.
+
 ## Mal for nye oppføringer
 
 ```markdown

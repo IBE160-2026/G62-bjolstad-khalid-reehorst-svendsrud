@@ -362,7 +362,7 @@ test("UJ-4: I dag shows the day's meals and workout", async ({ page }) => {
   await expect.poll(async () => (await readDayNote(page)).remaining).toBeLessThan(target);
 });
 
-test("360 px: I dag, Mat and Trening have no horizontal scroll", async ({ page }) => {
+test("360 px: I dag, Mat, Trening and an exercise page have no horizontal scroll", async ({ page }) => {
   await page.setViewportSize({ width: 360, height: 800 });
   await registerAndGoHome(page);
   await page.goto("/mat");
@@ -382,6 +382,16 @@ test("360 px: I dag, Mat and Trening have no horizontal scroll", async ({ page }
     }));
     expect(scrollWidth, `horizontal scroll on ${path}`).toBeLessThanOrEqual(clientWidth);
   }
+
+  // Øvelse with the muscle figure (story 4.6).
+  await page.goto("/trening");
+  await openExercise(page, PUSH_UP);
+  await expect(page.getByTestId("muscle-figure")).toBeVisible();
+  const { scrollWidth, clientWidth } = await page.evaluate(() => ({
+    scrollWidth: document.documentElement.scrollWidth,
+    clientWidth: document.documentElement.clientWidth,
+  }));
+  expect(scrollWidth, "horizontal scroll on the exercise page").toBeLessThanOrEqual(clientWidth);
 });
 
 test("sheets: focus moves in, Esc closes and focus returns to the opener", async ({ page }) => {

@@ -7,6 +7,7 @@ import { LINK_CLASS, SECONDARY_BUTTON_CLASS } from "@/modules/identity/styles";
 import { AddToWorkout } from "@/modules/workouts/add-to-workout";
 
 import { levelLabel, useExercise, type ExerciseDetail as Exercise } from "./api";
+import { MuscleFigure } from "./muscle-figure";
 import { VideoEmbed } from "./video-embed";
 
 export const SAFETY_NOTE =
@@ -86,6 +87,10 @@ export function ExerciseDetail({ id }: { id: string }) {
         <h3 id="muscles-heading" className="text-heading font-medium text-foreground">
           Muskler som jobber
         </h3>
+        <MuscleFigure
+          primary={exercise.primary_muscle_group}
+          secondary={exercise.secondary_muscle_groups}
+        />
         <p className="text-body text-foreground">{musclesText(exercise)}</p>
       </section>
 
