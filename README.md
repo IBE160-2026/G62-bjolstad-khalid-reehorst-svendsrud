@@ -45,7 +45,7 @@ Planen hadde 7 epics og 32 stories. Dette ble ikke med, og hvorfor:
 
 | Story | Hvorfor ikke med |
 |---|---|
-| 3.8 Skanne strekkode med kamera (Should) | Kamera i nettleseren krever HTTPS, og appen kjører lokalt på `http://localhost`. «Skriv strekkode» dekker behovet. |
+| 3.8 Skanne strekkode med kamera (Should) | Kamera i nettleseren krever HTTPS når appen åpnes fra en mobil på nettverket, og appen kjører bare lokalt. «Skriv strekkode» dekker behovet. |
 | 4.6 Muskelfigur (Should) | Trenger en tegnet kroppsfigur som ikke ble ferdig. Musklene vises som tekst på øvelsessiden. |
 | Epic 7 Kalorier fra bilde | Planlagt som fase 2, bare når kjerneflyten var stabil. Krever en betalt KI-tjeneste med API-nøkkel, og appen skal virke uten nøkler. |
 

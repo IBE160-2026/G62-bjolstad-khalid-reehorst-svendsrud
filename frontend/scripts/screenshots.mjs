@@ -3,10 +3,13 @@
 //   docker compose up -d && cd frontend && node scripts/screenshots.mjs [YYYY-MM-DD]
 // Datoen (valgfri) velger en dag med mat og trening for I dag og Mat; demodataene
 // regnes fra dagen databasen ble laget, så «i dag» kan være tom.
+import { fileURLToPath } from "node:url";
+
 import { chromium } from "@playwright/test";
 
 const BASE = process.env.E2E_BASE_URL ?? "http://localhost:3000";
-const OUT = new URL("../../.docs/skjermbilder/", import.meta.url).pathname;
+// fileURLToPath, ikke .pathname: ellers blir mellomrom i stien til %20.
+const OUT = fileURLToPath(new URL("../../.docs/skjermbilder/", import.meta.url));
 
 const DATO = process.argv[2];
 const q = DATO ? `?dato=${DATO}` : "";
