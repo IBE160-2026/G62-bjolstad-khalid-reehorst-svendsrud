@@ -7,11 +7,11 @@ looks at them.
 import uuid
 from datetime import datetime
 
-from sqlalchemy import Select, delete, select
+from sqlalchemy import Select, delete, func, select, update
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session as DbSessionType
 
-from app.modules.identity.models import Session, User
+from app.modules.identity.models import PasswordReset, Session, User
 
 
 class EmailTakenError(Exception):
@@ -106,3 +106,50 @@ def purge_deleted_users(db: DbSessionType, deleted_before: datetime) -> int:
         delete(User).where(User.deleted_at.is_not(None), User.deleted_at <= deleted_before)
     )
     return result.rowcount or 0
+
+
+def count_password_resets_since(db: DbSessionType, user_id: uuid.UUID, since: datetime) -> int:
+    """How many reset links the user was sent after `since` (the hourly limit)."""
+    statement = select(func.count()).where(
+        PasswordReset.user_id == user_id, PasswordReset.created_at > since
+    )
+    return db.scalar(statement) or 0
+
+
+def add_password_reset(
+    db: DbSessionType,
+    user_id: uuid.UUID,
+    token_hash: str,
+    created_at: datetime,
+    expires_at: datetime,
+) -> PasswordReset:
+    reset = PasswordReset(
+        user_id=user_id, token_hash=token_hash, created_at=created_at, expires_at=expires_at
+    )
+    db.add(reset)
+    db.flush()
+    return reset
+
+
+def get_password_reset_for_update(db: DbSessionType, token_hash: str) -> PasswordReset | None:
+    """The reset row for this token, locked so two confirms cannot both use it.
+
+    Rows of soft-deleted users are never returned.
+    """
+    statement = (
+        select(PasswordReset)
+        .join(User, User.id == PasswordReset.user_id)
+        .where(PasswordReset.token_hash == token_hash, User.deleted_at.is_(None))
+        .with_for_update(of=PasswordReset)
+        .execution_options(populate_existing=True)
+    )
+    return db.scalars(statement).one_or_none()
+
+
+def use_all_password_resets(db: DbSessionType, user_id: uuid.UUID, used_at: datetime) -> None:
+    """Mark every unused reset link of the user as used (after the password changed)."""
+    db.execute(
+        update(PasswordReset)
+        .where(PasswordReset.user_id == user_id, PasswordReset.used_at.is_(None))
+        .values(used_at=used_at)
+    )

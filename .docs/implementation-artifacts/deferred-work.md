@@ -106,3 +106,8 @@
   evidence: Found by Karianne when testing PR #55 (comment on #57).
   status: resolved 2026-11-18 — fixed in the focus/docstring PR.
 
+
+- source_spec: `.docs/implementation-artifacts/spec-1-7-reset-a-forgotten-password.md`
+  summary: Used and expired `password_resets` rows are never purged.
+  evidence: No delete path for the table besides user deletion (cascade); growth is at most 3 rows per account per hour, so a cleanup in the purge job can wait.
+  status: open

@@ -1,4 +1,4 @@
-import { expect, test, type Locator, type Page } from "@playwright/test";
+import { expect, test, type APIRequestContext, type Locator, type Page } from "@playwright/test";
 
 /**
  * The core loop in a real browser (story 6.4, part 2): UJ-1 to UJ-4, no horizontal scroll at
@@ -463,4 +463,92 @@ test("Story 1.8: deactivate, then log in again to a welcome and the same data", 
     "Velkommen tilbake! Kontoen din er aktiv igjen.",
   );
   expect((await readDayNote(page)).target).toBe(target);
+});
+
+/** Mailpit's web inbox and API (story 1.7); Compose publishes it on localhost:8025. */
+const MAILPIT_URL = process.env.E2E_MAILPIT_URL ?? "http://localhost:8025";
+
+/** The reset link in the newest mail Mailpit caught for `email`, waiting for it to arrive. */
+async function readResetLink(request: APIRequestContext, email: string): Promise<string> {
+  const search = `${MAILPIT_URL}/api/v1/search?query=${encodeURIComponent(`to:"${email}"`)}`;
+  let id = "";
+  await expect
+    .poll(
+      async () => {
+        const response = await request.get(search);
+        const body = (await response.json()) as { messages?: { ID: string }[] };
+        id = body.messages?.[0]?.ID ?? "";
+        return id;
+      },
+      { message: `no reset mail for ${email} in Mailpit (${MAILPIT_URL})` },
+    )
+    .not.toBe("");
+  const message = (await (await request.get(`${MAILPIT_URL}/api/v1/message/${id}`)).json()) as {
+    Subject: string;
+    Text: string;
+  };
+  expect(message.Subject).toBe("Nytt passord til Prompt Force");
+  const link = message.Text.match(/https?:\/\/\S+\/nytt-passord\?token=\S+/)?.[0];
+  expect(link).toBeTruthy();
+  return link!;
+}
+
+test("Story 1.7: forgot password, read the mail in Mailpit, set a new one", async ({
+  page,
+  request,
+  baseURL,
+}) => {
+  // The account is made through the API, so the browser stays logged out.
+  const email = newEmail();
+  const registered = await request.post("/api/identity/register", {
+    data: { email, password: PASSWORD },
+    headers: { Origin: baseURL ?? "http://localhost:3000" },
+  });
+  expect(registered.status()).toBe(201);
+
+  await page.goto("/logg-inn");
+  await page.getByRole("link", { name: "Glemt passord?" }).click();
+  await expect(page).toHaveURL(/\/glemt-passord$/);
+  await page.getByRole("textbox", { name: "E-post" }).fill(email);
+  await page.getByRole("button", { name: "Send lenke" }).click();
+  await expect(page.getByRole("status")).toHaveText(
+    "Hvis e-posten har en konto, har vi sendt deg en lenke.",
+  );
+
+  // The mail's link is built from APP_URL; open it on the address the test uses.
+  const link = new URL(await readResetLink(request, email));
+  await page.goto(`${link.pathname}${link.search}`);
+  const newPassword = "Nytt-e2e-passord-1";
+  await page.getByLabel("Nytt passord", { exact: true }).fill(newPassword);
+  await page.getByRole("button", { name: "Lagre nytt passord" }).click();
+
+  await expect(page).toHaveURL(/\/logg-inn\?passord=endret$/);
+  await expect(page.getByRole("status")).toHaveText(
+    "Passordet er endret. Logg inn med det nye passordet.",
+  );
+
+  // The old password no longer works, the new one does.
+  await page.getByRole("textbox", { name: "E-post" }).fill(email);
+  await page.getByLabel("Passord", { exact: true }).fill(PASSWORD);
+  await page.getByRole("button", { name: "Logg inn" }).click();
+  // Next's route announcer is an alert too, so match the message.
+  await expect(
+    page.getByRole("alert").filter({ hasText: "E-post eller passord er feil." }),
+  ).toBeVisible();
+  await page.getByLabel("Passord", { exact: true }).fill(newPassword);
+  await page.getByRole("button", { name: "Logg inn" }).click();
+  await expect(page).toHaveURL(/\/samtykke$/);
+
+  // The link was single use.
+  await page.context().clearCookies();
+  await page.goto(`${link.pathname}${link.search}`);
+  await page.getByLabel("Nytt passord", { exact: true }).fill("Enda-et-passord-1");
+  await page.getByRole("button", { name: "Lagre nytt passord" }).click();
+  await expect(
+    page.getByRole("alert").filter({ hasText: "Lenken er utløpt eller allerede brukt." }),
+  ).toContainText("Lenken er utløpt eller allerede brukt. Be om en ny.");
+  await expect(page.getByRole("link", { name: "Be om en ny lenke" })).toHaveAttribute(
+    "href",
+    "/glemt-passord",
+  );
 });

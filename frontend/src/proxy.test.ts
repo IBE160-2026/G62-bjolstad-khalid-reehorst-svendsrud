@@ -16,11 +16,24 @@ describe("authRedirect", () => {
     (path) => expect(authRedirect(path, false)).toBe("/logg-inn"),
   );
 
-  it.each(["/logg-inn", "/opprett-konto"])("lets a visitor without a cookie open %s", (path) =>
+  it.each(["/logg-inn", "/opprett-konto", "/glemt-passord", "/nytt-passord"])(
+    "lets a visitor without a cookie open %s",
+    (path) =>
     expect(authRedirect(path, false)).toBeNull(),
   );
 
-  it.each(["/logg-inn", "/opprett-konto"])("sends a user with a cookie from %s to /", (path) =>
+  it.each([true, false])("never redirects /nytt-passord (cookie: %s)", (hasCookie) =>
+    expect(authRedirect("/nytt-passord", hasCookie)).toBeNull(),
+  );
+
+  it("keeps the reset token on /nytt-passord with a (stale) session cookie", () => {
+    const response = proxy(request("/nytt-passord?token=abc", "pf_session=gammel"));
+    expect(response.headers.get("location")).toBeNull();
+  });
+
+  it.each(["/logg-inn", "/opprett-konto", "/glemt-passord"])(
+    "sends a user with a cookie from %s to /",
+    (path) =>
     expect(authRedirect(path, true)).toBe("/"),
   );
 

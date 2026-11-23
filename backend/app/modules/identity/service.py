@@ -1,5 +1,5 @@
 """Account rules: password hashing, sessions, registration, login, lockout, consent,
-deactivation and deletion."""
+password reset, deactivation and deletion."""
 
 import hashlib
 import hmac
@@ -17,6 +17,7 @@ from app.core.settings import get_settings
 from app.modules.exercises import service as exercises_service
 from app.modules.identity import repository
 from app.modules.identity.models import User
+from app.ports.email import EmailMessage
 
 SESSION_LIFETIME = timedelta(days=30)
 EMAIL_UNAVAILABLE_MESSAGE = "Denne e-posten kan ikke brukes. Prøv å logge inn i stedet."
@@ -30,6 +31,17 @@ PURGE_AFTER = timedelta(days=30)
 LOCKOUT_THRESHOLD = 5
 LOCKOUT_WINDOW = timedelta(minutes=15)
 LOCKOUT_DURATION = timedelta(minutes=15)
+
+# Password reset (story 1.7): links live this long, and an account gets at most this many
+# per rolling window; requests over the limit send nothing and look the same.
+RESET_LINK_LIFETIME = timedelta(minutes=60)
+RESET_LIMIT = 3
+RESET_LIMIT_WINDOW = timedelta(hours=1)
+# Longer tokens than this are never ours (token_urlsafe(32) is 43 characters).
+RESET_TOKEN_MAX_LENGTH = 256
+RESET_PATH = "/nytt-passord"
+RESET_MAIL_SUBJECT = "Nytt passord til Prompt Force"
+RESET_LINK_INVALID_MESSAGE = "Lenken er utløpt eller allerede brukt. Be om en ny."
 
 # argon2-cffi defaults: Argon2id with the RFC 9106 low-memory profile.
 _password_hasher = PasswordHasher()
@@ -182,6 +194,68 @@ def login(
     token = new_session_token()
     repository.add_session(db, user, hash_session_token(token), now + SESSION_LIFETIME)
     return Login(user=user, session_token=token, reactivated=reactivated)
+
+
+def _reset_mail(email: str, token: str) -> EmailMessage:
+    link = f"{get_settings().app_url.strip().rstrip('/')}{RESET_PATH}?token={token}"
+    body = (
+        "Hei!\n\n"
+        "Vi fikk en forespørsel om nytt passord til kontoen din i Prompt Force. "
+        "Åpne lenken for å velge et nytt passord:\n\n"
+        f"{link}\n\n"
+        "Lenken virker i 60 minutter og kan brukes én gang.\n\n"
+        "Ba du ikke om dette, kan du se bort fra e-posten. Passordet ditt er ikke endret.\n\n"
+        "Hilsen Prompt Force\n"
+    )
+    return EmailMessage(to=email, subject=RESET_MAIL_SUBJECT, body=body)
+
+
+def request_password_reset(db: DbSessionType, email: str, now: datetime) -> EmailMessage | None:
+    """Create a reset link for an active (or deactivated) account and return the mail to send.
+
+    Returns None for an unknown or soft-deleted email and when the account already got
+    `RESET_LIMIT` links within `RESET_LIMIT_WINDOW`. The caller answers the same in every
+    case and sends the mail after responding, so neither answer nor timing tells them apart.
+    Older unused links stay valid.
+    """
+    # Same token and lookup work whether or not the account exists.
+    token = new_session_token()
+    token_hash = hash_session_token(token)
+    user = repository.get_user_by_email_for_update(db, normalize_email(email))
+    user_id = user.id if user is not None else uuid.uuid4()
+    recent = repository.count_password_resets_since(db, user_id, now - RESET_LIMIT_WINDOW)
+    if user is None or recent >= RESET_LIMIT:
+        return None
+    repository.add_password_reset(db, user.id, token_hash, now, now + RESET_LINK_LIFETIME)
+    return _reset_mail(user.email, token)
+
+
+def _reset_link_invalid() -> AppError:
+    return AppError(400, "reset_link_invalid", RESET_LINK_INVALID_MESSAGE)
+
+
+def confirm_password_reset(db: DbSessionType, token: str, password: str, now: datetime) -> None:
+    """Set a new password from a reset link (story 1.7).
+
+    The link is used up (with every other unused link of the account), every session is
+    deleted and the login lockout is cleared. No session is created, and `deactivated_at`
+    is left alone: the next login reactivates as in story 1.8. Raises `reset_link_invalid`
+    for an unknown, used or expired token or a soft-deleted account, changing nothing.
+    """
+    if not token or len(token) > RESET_TOKEN_MAX_LENGTH:
+        raise _reset_link_invalid()
+    reset = repository.get_password_reset_for_update(db, hash_session_token(token))
+    if reset is None or reset.used_at is not None or reset.expires_at <= now:
+        raise _reset_link_invalid()
+    user = repository.get_user_for_update(db, reset.user_id)
+    if user is None:
+        raise _reset_link_invalid()
+
+    user.password_hash = hash_password(password)
+    _reset_failures(user)
+    repository.use_all_password_resets(db, user.id, now)
+    repository.delete_all_sessions(db, user.id)
+    db.flush()
 
 
 def resolve_session(db: DbSessionType, token: str, now: datetime) -> SessionUser | None:

@@ -1,5 +1,6 @@
 # One command starts everything: docker compose up --build
-# Only the frontend publishes a port (3000); backend and db stay inside the Docker network.
+# The frontend publishes port 3000 and the Mailpit inbox port 8025 (story 1.7); backend and db
+# stay inside the Docker network.
 
 services:
   db:
@@ -26,9 +27,18 @@ services:
       TEST_DATABASE_URL: ${TEST_DATABASE_URL:-postgresql+psycopg://promptforce:promptforce@db:5432/promptforce_test}
       APP_URL: ${APP_URL:-http://localhost:3000}
       OFF_MODE: ${OFF_MODE:-mock}
+      EMAIL_MODE: ${EMAIL_MODE:-smtp}
+      SMTP_HOST: ${SMTP_HOST:-mailpit}
+      SMTP_PORT: ${SMTP_PORT:-1025}
+      SMTP_USERNAME: ${SMTP_USERNAME:-}
+      SMTP_PASSWORD: ${SMTP_PASSWORD:-}
+      SMTP_STARTTLS: ${SMTP_STARTTLS:-false}
+      EMAIL_FROM: ${EMAIL_FROM:-Prompt Force <ikke-svar@promptforce.local>}
     depends_on:
       db:
         condition: service_healthy
+      mailpit:
+        condition: service_started
     healthcheck:
       test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/health', timeout=3)"]
       interval: 5s
@@ -52,6 +62,13 @@ services:
       timeout: 10s
       retries: 30
       start_period: 30s
+
+  # Local mail catcher (story 1.7): keeps every mail the backend sends, delivers none.
+  # Inbox at http://localhost:8025 (no login). Bound to localhost only.
+  mailpit:
+    image: axllent/mailpit:v1.27.11
+    ports:
+      - "127.0.0.1:8025:8025"
 
 volumes:
   pgdata:

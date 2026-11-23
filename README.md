@@ -24,13 +24,13 @@ Alle Must-krav er ferdige. Koden er bygget én story om gangen, med én branch o
 | Del | Status |
 |---|---|
 | Planlegging | Product brief, research, PRD, UX-design, arkitektur og 7 epics / 32 stories er ferdige |
-| Konto (epic 1) | Opprett konto, logg inn/ut, samtykke, slett konto |
+| Konto (epic 1) | Opprett konto, logg inn/ut, samtykke, glemt passord, slett konto |
 | Profil (epic 2) | Profiloppsett med daglig kaloribehov, endre profil |
 | Mat (epic 3) | Søk (Matvaretabellen + 941 norske merkevarer fra Open Food Facts), strekkode, egne matvarer, porsjoner, endre/slette med angre |
 | Trening (epic 4) | 34 øvelser med video, utstyrsprofiler, forslag som passer utstyret, søk på navn, filtre på muskelgruppe og nivå |
 | Treningslogg (epic 5) | Starte økt, logge sett (repetisjoner/kg eller sekunder), «Sist» fra forrige gang, fullføre, endre og slette økter |
 | I dag (epic 6) | Kalorier igjen, dagens mat og trening, tomme tilstander, «?»-hjelp, demobrukere og Playwright-tester |
-| Gjenstår (Should) | Ukestripe for å bytte dag, glemt passord, deaktivere konto, kamera-skanning, muskelfigur; bildeestimat av kalorier (epic 7) er fase 2 |
+| Gjenstår (Should) | Ukestripe for å bytte dag, deaktivere konto, kamera-skanning, muskelfigur; bildeestimat av kalorier (epic 7) er fase 2 |
 
 Oppgaver og åpne spørsmål følges opp i [GitHub Issues](https://github.com/IBE160-2026/G62-bjolstad-khalid-reehorst-svendsrud/issues).
 
@@ -44,6 +44,7 @@ Du trenger bare [Docker Desktop](https://www.docker.com/products/docker-desktop/
 
 - **Open Food Facts** (strekkoder) er et åpent API uten nøkkel. Som standard bruker appen en innebygd testversjon (`OFF_MODE=mock` i `.env`), så den virker uten nett. Med `OFF_MODE=live` spør den den ekte tjenesten (krever nett, ingen nøkkel).
 - **Øvelsesvideoene** vises fra YouTube (youtube-nocookie) uten nøkkel. De krever nett.
+- **E-post** (lenker for glemt passord) sendes aldri ut. Lokalt fanger [Mailpit](https://mailpit.axllent.org/) opp all e-post i en egen innboks, uten konto eller nøkkel (se «Glemt passord» under).
 - **`SESSION_SECRET`** i `.env` har en trygg standardverdi for lokal kjøring og må bare byttes i produksjon.
 
 ```bash
@@ -53,7 +54,7 @@ cp .env.example .env
 docker compose up --build
 ```
 
-Åpne <http://localhost:3000> når alle tre tjenestene kjører.
+Åpne <http://localhost:3000> når alle fire tjenestene kjører.
 
 ### Prøv appen
 
@@ -63,6 +64,12 @@ docker compose up --build
 4. **Mat:** trykk «Logg mat», søk for eksempel «lettmelk» eller «havregryn», velg mengde og måltid. Trykk på en logget matvare for å endre eller slette den.
 5. **Trening:** bytt mellom «Hjemme» og «Treningssenter» og se at forslagene endrer seg. Søk «knebøy», og åpne en øvelse for steg, video og muskler.
 6. **Profil → Utstyr:** lag en egen utstyrsprofil, for eksempel «Hytta» med manualer, og se den på Trening.
+
+### Glemt passord
+
+Trykk «Glemt passord?» på innloggingssiden og skriv inn e-posten. Appen sender aldri ekte e-post: Compose-tjenesten `mailpit` fanger opp alle e-poster. Åpne innboksen på <http://localhost:8025> (ingen innlogging), åpne e-posten «Nytt passord til Prompt Force» og trykk på lenken. Lenken virker i 60 minutter og kan brukes én gang, og hver konto får høyst tre lenker i timen.
+
+Ekte utsending krever en SMTP-server i `SMTP_*` i `.env`. Med `APP_ENV=production` nekter backenden å starte med `EMAIL_MODE=mock` eller tom `SMTP_HOST`. Testene sender aldri e-post (de bruker `EMAIL_MODE=mock`).
 
 ### Demobrukere
 
@@ -77,7 +84,7 @@ Demobrukerne lages bare når `APP_ENV=local`, aldri i produksjon. De lages én g
 
 Matdata og øvelser lastes inn automatisk ved første oppstart. Appen trenger ikke nett, bortsett fra strekkodeoppslag mot Open Food Facts og YouTube-videoene.
 
-- `db` (PostgreSQL), `backend` (FastAPI) og `frontend` (Next.js) starter med én kommando. Bare port 3000 er åpen; nettleseren når backenden via `/api` på samme adresse.
+- `db` (PostgreSQL), `backend` (FastAPI), `frontend` (Next.js) og `mailpit` (e-postfanger) starter med én kommando. Port 3000 (appen) og 8025 (e-postinnboksen, bare fra din egen maskin) er åpne; nettleseren når backenden via `/api` på samme adresse.
 - Databasemigreringer kjøres automatisk når backenden starter.
 - Første oppstart laster ned images og pakker og tar noen minutter.
 - Stopp med `Ctrl+C` eller `docker compose down`. `docker compose down -v` sletter også databasen.
@@ -102,7 +109,7 @@ Alternativ uten Docker for frontend (krever Node.js 24): `cd frontend && npm ins
 
 ### Ende-til-ende-tester (Playwright)
 
-Playwright kjører hovedflyten i appen i en ekte Chromium mot appen på `http://localhost:3000`: registrering, samtykke og profil (UJ-1), mat via søk og strekkode (UJ-2), en økt hjemme og «Sist» for Sara (UJ-3), I dag med måltider og økt (UJ-4), ingen sidelengs scrolling på 360 px og fokus/Esc i arkene. Testene kjører på maskinen din (krever Node.js 24), ikke i containeren. Start appen først:
+Playwright kjører hovedflyten i appen i en ekte Chromium mot appen på `http://localhost:3000`: registrering, samtykke og profil (UJ-1), mat via søk og strekkode (UJ-2), en økt hjemme og «Sist» for Sara (UJ-3), I dag med måltider og økt (UJ-4), glemt passord med lenken lest fra Mailpit, ingen sidelengs scrolling på 360 px og fokus/Esc i arkene. Testene kjører på maskinen din (krever Node.js 24), ikke i containeren. Start appen først:
 
 ```bash
 docker compose up --build -d

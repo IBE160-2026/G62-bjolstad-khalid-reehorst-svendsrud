@@ -1,6 +1,12 @@
 import { NextResponse, type NextRequest } from "next/server";
 
-import { HOME_PATH, LOGIN_PATH, SESSION_COOKIE, isAuthPath } from "@/modules/identity/routes";
+import {
+  HOME_PATH,
+  LOGIN_PATH,
+  SESSION_COOKIE,
+  isAlwaysOpenPath,
+  isAuthPath,
+} from "@/modules/identity/routes";
 
 /**
  * Optimistic routing on the cookie's presence only (story 1.4). The backend stays the
@@ -10,6 +16,7 @@ import { HOME_PATH, LOGIN_PATH, SESSION_COOKIE, isAuthPath } from "@/modules/ide
  * Returns the path to redirect to, or null to let the request through.
  */
 export function authRedirect(pathname: string, hasSessionCookie: boolean): string | null {
+  if (isAlwaysOpenPath(pathname)) return null;
   const authPage = isAuthPath(pathname);
   if (!hasSessionCookie && !authPage) return LOGIN_PATH;
   if (hasSessionCookie && authPage) return HOME_PATH;
