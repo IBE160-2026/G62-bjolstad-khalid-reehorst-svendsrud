@@ -1,3 +1,5 @@
+import { useId } from "react";
+
 import { MUSCLE_GROUPS, type MuscleGroupSlug } from "./api";
 
 /**
@@ -101,15 +103,47 @@ export function roleOf(
   return "none";
 }
 
+/**
+ * Secondary groups are drawn as diagonal stripes (`--muscle-secondary` over `--muscle-base`),
+ * so primary vs. secondary never relies on the two reds alone (review on PR #66).
+ */
+function StripeDefs({ id }: { id: string }) {
+  return (
+    <svg width="0" height="0" className="absolute" focusable="false">
+      <defs>
+        <pattern
+          id={id}
+          width="6"
+          height="6"
+          patternUnits="userSpaceOnUse"
+          patternTransform="rotate(45)"
+        >
+          <rect width="6" height="6" className="fill-muscle-base" />
+          <rect width="3.5" height="6" className="fill-muscle-secondary" />
+        </pattern>
+      </defs>
+    </svg>
+  );
+}
+
 const FILL_CLASS: Record<MuscleRole, string> = {
   primary: "fill-muscle-primary",
-  secondary: "fill-muscle-secondary",
+  secondary: "",
   none: "fill-muscle-base",
 };
 
-function RegionShape({ region, role }: { region: Region; role: MuscleRole }) {
+function RegionShape({
+  region,
+  role,
+  stripesId,
+}: {
+  region: Region;
+  role: MuscleRole;
+  stripesId: string;
+}) {
   const props = {
-    className: `${FILL_CLASS[role]} stroke-card`,
+    className: `${FILL_CLASS[role]} stroke-card`.trim(),
+    fill: role === "secondary" ? `url(#${stripesId})` : undefined,
     strokeWidth: 1.5,
     "data-region": region.id,
     "data-role": role,
@@ -127,12 +161,14 @@ function BodyView({
   regions,
   primary,
   secondary,
+  stripesId,
 }: {
   label: string;
   view: "front" | "back";
   regions: Region[];
   primary: string;
   secondary: readonly string[];
+  stripesId: string;
 }) {
   return (
     <figure className="m-0 flex w-full max-w-[7.5rem] flex-col items-center gap-1">
@@ -147,6 +183,7 @@ function BodyView({
             key={region.id}
             region={region}
             role={roleOf(region.group, primary, secondary)}
+            stripesId={stripesId}
           />
         ))}
       </svg>
@@ -155,11 +192,27 @@ function BodyView({
   );
 }
 
-function LegendItem({ role, label }: { role: "primary" | "secondary"; label: string }) {
-  const swatch = role === "primary" ? "bg-muscle-primary" : "bg-muscle-secondary";
+function LegendItem({
+  role,
+  label,
+  stripesId,
+}: {
+  role: "primary" | "secondary";
+  label: string;
+  stripesId: string;
+}) {
   return (
     <li className="flex items-center gap-2" data-legend={role}>
-      <span className={`inline-block size-3.5 shrink-0 rounded-full ${swatch}`} />
+      <svg viewBox="0 0 14 14" className="size-3.5 shrink-0" focusable="false">
+        <circle
+          cx="7"
+          cy="7"
+          r="7"
+          data-swatch={role}
+          className={role === "primary" ? "fill-muscle-primary" : undefined}
+          fill={role === "secondary" ? `url(#${stripesId})` : undefined}
+        />
+      </svg>
       {label}
     </li>
   );
@@ -172,6 +225,8 @@ export function MuscleFigure({
   primary: string;
   secondary: readonly string[];
 }) {
+  // useId gives a unique id per figure; strip characters that are awkward inside url(#…).
+  const stripesId = `muscle-stripes-${useId().replace(/[^a-zA-Z0-9_-]/g, "")}`;
   const primarySlug = toMuscleSlug(primary);
   const hasSecondary = secondary.some((value) => {
     const slug = toMuscleSlug(value);
@@ -181,8 +236,9 @@ export function MuscleFigure({
     <div
       aria-hidden="true"
       data-testid="muscle-figure"
-      className="flex flex-col items-center gap-3 rounded-lg border border-border bg-card p-4"
+      className="relative flex flex-col items-center gap-3 rounded-lg border border-border bg-card p-4"
     >
+      <StripeDefs id={stripesId} />
       <div className="flex w-full justify-center gap-6">
         <BodyView
           label="Forfra"
@@ -190,6 +246,7 @@ export function MuscleFigure({
           regions={FRONT_REGIONS}
           primary={primary}
           secondary={secondary}
+          stripesId={stripesId}
         />
         <BodyView
           label="Bakfra"
@@ -197,11 +254,12 @@ export function MuscleFigure({
           regions={BACK_REGIONS}
           primary={primary}
           secondary={secondary}
+          stripesId={stripesId}
         />
       </div>
       <ul className="flex flex-wrap justify-center gap-x-5 gap-y-1 text-small text-foreground">
-        {primarySlug !== null ? <LegendItem role="primary" label="Hovedmuskel" /> : null}
-        {hasSecondary ? <LegendItem role="secondary" label="Hjelper til" /> : null}
+        {primarySlug !== null ? <LegendItem role="primary" label="Hovedmuskel" stripesId={stripesId} /> : null}
+        {hasSecondary ? <LegendItem role="secondary" label="Hjelper til" stripesId={stripesId} /> : null}
       </ul>
     </div>
   );

@@ -36,8 +36,22 @@ describe("MuscleFigure", () => {
     expect(back["upper-back"]).toBe("none");
     expect(back["glutes"]).toBe("none");
     expect(fillOf("front", "chest-left")).toContain("fill-muscle-primary");
-    expect(fillOf("front", "shoulder-left")).toContain("fill-muscle-secondary");
     expect(fillOf("front", "abdomen")).toContain("fill-muscle-base");
+    // Secondary regions are striped (a pattern), primary regions are solid.
+    const figure = screen.getByTestId("muscle-figure");
+    const pattern = figure.querySelector("pattern");
+    expect(pattern?.id).toBeTruthy();
+    const stripes = `url(#${pattern?.id})`;
+    const shape = (view: string, region: string) =>
+      figure.querySelector(`svg[data-view="${view}"] [data-region="${region}"]`);
+    for (const region of ["shoulder-left", "upper-arm-right", "forearm-left"]) {
+      expect(shape("front", region)).toHaveAttribute("fill", stripes);
+      expect(shape("back", region)).toHaveAttribute("fill", stripes);
+    }
+    expect(shape("front", "chest-left")).not.toHaveAttribute("fill");
+    expect(shape("front", "chest-right")).not.toHaveAttribute("fill");
+    expect(figure.querySelector('[data-swatch="secondary"]')).toHaveAttribute("fill", stripes);
+    expect(figure.querySelector('[data-swatch="primary"]')).not.toHaveAttribute("fill");
     expect(screen.getByText("Hovedmuskel")).toBeInTheDocument();
     expect(screen.getByText("Hjelper til")).toBeInTheDocument();
   });
@@ -83,6 +97,21 @@ describe("MuscleFigure", () => {
     expect(figure.querySelectorAll("a, button, [tabindex]")).toHaveLength(0);
     expect(screen.getByText("Forfra")).toBeInTheDocument();
     expect(screen.getByText("Bakfra")).toBeInTheDocument();
+  });
+
+  it("gives each figure its own stripe pattern id", () => {
+    render(
+      <>
+        <MuscleFigure primary="Bryst" secondary={["Armer"]} />
+        <MuscleFigure primary="Ben" secondary={["Rygg"]} />
+      </>,
+    );
+    const ids = screen.getAllByTestId("muscle-figure").map((figure) => {
+      const id = figure.querySelector("pattern")?.id;
+      expect(figure.querySelector('[data-swatch="secondary"]')).toHaveAttribute("fill", `url(#${id})`);
+      return id;
+    });
+    expect(new Set(ids).size).toBe(2);
   });
 
   it("maps both slugs and display names to the six groups", () => {

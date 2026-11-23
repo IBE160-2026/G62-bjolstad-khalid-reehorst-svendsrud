@@ -86,5 +86,7 @@ Values are DESIGN.md revision 3 (`ux/felles-design`, PR #17): `colors` for light
 - `--muscle-primary` / `--muscle-secondary` are the body figure's reds on the exercise page
   (story 4.6) and nothing else; they are kept apart from `--destructive` so a muscle never
   reads as an error. `--muscle-base` is the neutral body fill (decorative, no ratio needed
-  against `--card`). In both modes the primary has the highest contrast against `--card` and `--muscle-base`
-  and the secondary is clearly less prominent (dark: bright red over a dimmer red).
+  against `--card`). The two reds alone differ little
+  (2.33:1 light, 1.57:1 dark), so primary vs. secondary is carried by the shape fill, not the
+  colour: primary is a solid fill, secondary is diagonal stripes of `--muscle-secondary` over
+  `--muscle-base` (in the figure and the legend swatch). The 3:1 rows above still hold.

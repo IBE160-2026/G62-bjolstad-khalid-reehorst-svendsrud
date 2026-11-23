@@ -68,6 +68,11 @@ context:
 
 ## Spec Change Log
 
+- **2026-11-23 — secondary muscles drawn as stripes.**
+  - *Trigger:* Karianne's group review on PR #66: primary and secondary reds differ only 1.57:1 in dark mode (2.33:1 light), so on Planke the abdomen and shoulders look almost the same.
+  - *Amendment:* secondary regions (and the "Hjelper til" legend swatch) are filled with an SVG pattern of diagonal stripes in `--muscle-secondary` over `--muscle-base`; primary stays a solid `--muscle-primary` fill. Pattern ids are unique per figure (`useId`). Decided by Osman 2026-11-23, option B, over a darker secondary red, which would break the 3:1 rule against `--card`/`--muscle-base`.
+  - *KEEP:* the tokens and their CONTRAST.md rows, the region mapping, the legend rule ("Hovedmuskel" only for a known primary, "Hjelper til" only with known secondaries), and `aria-hidden`/not focusable.
+
 ## Review Triage Log
 
 Lighter process: one reviewer (Edge Case Hunter); Blind Hunter and Verification Gap skipped to save the usage limit.
