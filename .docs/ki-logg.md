@@ -1482,6 +1482,28 @@ Det viktigste funnet: Dekningsanalysen er regnet ut fra øvelseslista og viser a
 ### Status
 - [x] Ferdig, venter på PR.
 
+## 2026-11-23 – Fiks: «i dag» i ukestripen og fokus etter nytt passord
+
+**Verktøy:** Claude Code
+**Hvem:** Karianne Bjølstad
+**Bakgrunn:** To småfeil fra testingen av #63 og #64: «i dag» ble brutt over to linjer i ukestripen på mobil (6.3), og fokus havnet på `<body>` på innloggingssiden etter nytt passord (1.7).
+
+### Hva vi ba KI om
+- Rette begge feilene i én liten PR.
+
+### Hva KI produserte
+- Ukestripen: «i dag» trenger ca. 28 px, men en dag er bare ca. 27 px bred på 390 px. Under 640 px vises en prikk under dagen i stedet; fra 640 px står «i dag» på én linje. Skjermlesere får fortsatt «i dag» fra `aria-label`.
+- Innloggingssiden: «Passordet er endret» tar fokus når siden åpnes, så skjermlesere leser den, og Tab går videre til E-post.
+- Nye tester for begge, og nye README-skjermbilder.
+
+### Hva vi selv vurderte og kontrollerte
+- KI valgte prikk på mobil framfor mindre tekst, siden teksten ikke får plass på én linje uansett. Gruppen vurderer valget i PR-en.
+- Vitest 505, lint og typesjekk grønne, Playwright 11/11 på fersk database (også 360 px-testen og 1.7-testen).
+- Sjekket i nettleseren på 360, 390 og 700 px, og fokus og Tab etter «Passordet er endret».
+
+### Status
+- [x] Ferdig, venter på PR.
+
 ## Mal for nye oppføringer
 
 ```markdown

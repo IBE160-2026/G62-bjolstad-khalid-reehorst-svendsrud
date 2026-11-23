@@ -22,6 +22,13 @@ describe("PasswordChangedStatus", () => {
     );
   });
 
+  it("takes focus, so focus does not drop to <body> after the redirect", () => {
+    searchMock.value = "passord=endret";
+    render(<PasswordChangedStatus />);
+
+    expect(document.activeElement).toBe(screen.getByRole("status"));
+  });
+
   it.each(["", "passord=annet", "konto=slettet"])("shows nothing for '%s'", (query) => {
     searchMock.value = query;
     render(<PasswordChangedStatus />);
