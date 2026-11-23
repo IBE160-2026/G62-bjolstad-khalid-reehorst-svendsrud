@@ -16,5 +16,5 @@
 - [ ] 2026-11-13 [felles-design-v2-visuell-mockup](995-2026-11-13-19-58-00-felles-design-v2-visuell-mockup.md) — Oppskrifter-kategorisidene (Frokost/Lunsj/Middag/Mellommåltid) er ikke bygget om til v2-stilen; finnes kun i runde-3-stil
 - [ ] 2026-11-13 [felles-design-v2-visuell-mockup](995-2026-11-13-19-58-00-felles-design-v2-visuell-mockup.md) — Mat og Trening deler nå samme markørfarge (ikke lenger grønn/oransje) — vurder om dette blir utydelig i praksis
 - [ ] 2026-11-23 [readme-oppskrifter](994-2026-11-23-20-56-55-readme-oppskrifter.md) — oppskrifter er utsatt til etter v1 (gruppens beslutning 12.11); krever PRD-oppdatering og egen story hvis de skal bygges
-- [ ] 2026-11-23 [readme-oppskrifter](994-2026-11-23-20-56-55-readme-oppskrifter.md) — fokus havner på `<body>` på innloggingssiden etter «Lagre nytt passord» (1.7)
-- [ ] 2026-11-23 [readme-oppskrifter](994-2026-11-23-20-56-55-readme-oppskrifter.md) — «i dag» i ukestripen brytes over to linjer på mobilbredde (6.3), synes i README-skjermbildene
+- [x] 2026-11-23 [readme-oppskrifter](994-2026-11-23-20-56-55-readme-oppskrifter.md) — fokus havner på `<body>` på innloggingssiden etter «Lagre nytt passord» (1.7) (løst 2026-11-23 — PR fix/fokus-og-i-dag)
+- [x] 2026-11-23 [readme-oppskrifter](994-2026-11-23-20-56-55-readme-oppskrifter.md) — «i dag» i ukestripen brytes over to linjer på mobilbredde (6.3), synes i README-skjermbildene (løst 2026-11-23 — PR fix/fokus-og-i-dag)
