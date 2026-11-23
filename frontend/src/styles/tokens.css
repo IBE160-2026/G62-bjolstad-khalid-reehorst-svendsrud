@@ -51,6 +51,11 @@
   --destructive-foreground: #fffdf7;
   --error-tint: #fbe9e6;
 
+  /* Muscle figure (story 4.6): dedicated reds, never --destructive */
+  --muscle-primary: #8e1116; /* main muscle group */
+  --muscle-secondary: #d4564b; /* groups that help */
+  --muscle-base: #eee7da; /* the rest of the body */
+
   /* Shadows */
   --elevation-card: 0 2px 6px rgba(58, 50, 43, 0.06);
   --elevation-sheet: 0 12px 32px rgba(58, 50, 43, 0.18);
@@ -110,6 +115,10 @@
   --destructive-foreground: #221a1f;
   --error-tint: #3f201c;
 
+  --muscle-primary: #ff6b6b; /* brightest: the main group stands out most */
+  --muscle-secondary: #cc5049; /* dimmer red for groups that help */
+  --muscle-base: #352b32;
+
   --elevation-card: 0 2px 6px rgba(0, 0, 0, 0.35);
   --elevation-sheet: 0 12px 32px rgba(0, 0, 0, 0.55);
   --scrim: rgba(0, 0, 0, 0.55);
@@ -147,6 +156,9 @@
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
   --color-error-tint: var(--error-tint);
+  --color-muscle-primary: var(--muscle-primary);
+  --color-muscle-secondary: var(--muscle-secondary);
+  --color-muscle-base: var(--muscle-base);
 
   --font-sans: var(--font-family);
 

@@ -70,6 +70,10 @@ describe("ExerciseDetail", () => {
     expect(screen.getByRole("region", { name: "Muskler som jobber" })).toHaveTextContent(
       "Hovedmuskel: Bryst · Hjelper til: Skuldre, Armer",
     );
+    const figure = screen.getByTestId("muscle-figure");
+    expect(screen.getByRole("region", { name: "Muskler som jobber" })).toContainElement(figure);
+    expect(figure).toHaveAttribute("aria-hidden", "true");
+    expect(figure.querySelector('[data-region="chest-left"]')).toHaveAttribute("data-role", "primary");
     expect(screen.getByText("Kroppsvekt")).toBeInTheDocument();
     expect(screen.getByText("Nybegynner")).toBeInTheDocument();
     expect(screen.getByTestId("safety-note")).toHaveTextContent(SAFETY_NOTE);

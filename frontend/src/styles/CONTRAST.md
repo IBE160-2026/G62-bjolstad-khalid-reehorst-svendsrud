@@ -34,6 +34,10 @@ Values are DESIGN.md revision 3 (`ux/felles-design`, PR #17): `colors` for light
 | `--muted-foreground` (#6B6056) | `--accent` (#F1E7EE) | text | 5.07:1 | ok |
 | `--destructive-foreground` (#FFFDF7) | `--destructive` (#B42318) | text | 6.46:1 | ok |
 | `--ring` (#3A322B) | `--accent` (#F1E7EE) | non-text | 10.42:1 | ok |
+| `--muscle-primary` (#8E1116) | `--card` (#FFFDF7) | non-text | 9.21:1 | ok |
+| `--muscle-primary` (#8E1116) | `--muscle-base` (#EEE7DA) | non-text | 7.62:1 | ok |
+| `--muscle-secondary` (#D4564B) | `--card` (#FFFDF7) | non-text | 3.95:1 | ok |
+| `--muscle-secondary` (#D4564B) | `--muscle-base` (#EEE7DA) | non-text | 3.26:1 | ok |
 
 ## Dark
 
@@ -64,6 +68,10 @@ Values are DESIGN.md revision 3 (`ux/felles-design`, PR #17): `colors` for light
 | `--muted-foreground` (#B9A3AE) | `--accent` (#352C3A) | text | 5.67:1 | ok |
 | `--destructive-foreground` (#221A1F) | `--destructive` (#F28B7F) | text | 7.10:1 | ok |
 | `--ring` (#F3E9EE) | `--accent` (#352C3A) | non-text | 11.25:1 | ok |
+| `--muscle-primary` (#FF6B6B) | `--card` (#2B2229) | non-text | 5.55:1 | ok |
+| `--muscle-primary` (#FF6B6B) | `--muscle-base` (#352B32) | non-text | 4.90:1 | ok |
+| `--muscle-secondary` (#CC5049) | `--card` (#2B2229) | non-text | 3.53:1 | ok |
+| `--muscle-secondary` (#CC5049) | `--muscle-base` (#352B32) | non-text | 3.12:1 | ok |
 
 ## Notes
 
@@ -75,3 +83,10 @@ Values are DESIGN.md revision 3 (`ux/felles-design`, PR #17): `colors` for light
 - `--border` (rule) is decorative only (notebook lines, hairlines) and is never used for
   text or as the only indicator of a control.
 - `--note` (yellow pin) is decorative and never carries text.
+- `--muscle-primary` / `--muscle-secondary` are the body figure's reds on the exercise page
+  (story 4.6) and nothing else; they are kept apart from `--destructive` so a muscle never
+  reads as an error. `--muscle-base` is the neutral body fill (decorative, no ratio needed
+  against `--card`). The two reds alone differ little
+  (2.33:1 light, 1.57:1 dark), so primary vs. secondary is carried by the shape fill, not the
+  colour: primary is a solid fill, secondary is diagonal stripes of `--muscle-secondary` over
+  `--muscle-base` (in the figure and the legend swatch). The 3:1 rows above still hold.
