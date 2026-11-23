@@ -49,6 +49,8 @@ Planen hadde 7 epics og 32 stories. Dette ble ikke med, og hvorfor:
 | 4.6 Muskelfigur (Should) | Trenger en tegnet kroppsfigur som ikke ble ferdig. Musklene vises som tekst på øvelsessiden. |
 | Epic 7 Kalorier fra bilde | Planlagt som fase 2, bare når kjerneflyten var stabil. Krever en betalt KI-tjeneste med API-nøkkel, og appen skal virke uten nøkler. |
 
+Oppskrifter under Mat ble ønsket av Karianne og tegnet i UX-runde 3, med egne sider for frokost, lunsj, middag og mellommåltid ([skisser](.docs/planning-artifacts/ux/runde-3/mockups/)). Gruppen bestemte 12.11 at oppskrifter og treningsprogram kommer etter v1, slik at kjernen ble ferdig først ([PRD-gjennomgangen](.docs/planning-artifacts/prds/prd-prompt-force-2026-11-02/gjennomgang-torsdag-2026-11-12.md)). Derfor ble det aldri en story, og skissene er beholdt som design for fase 2.
+
 To ting kom i tillegg underveis: YouTube Shorts vises i en stående 9:16-spiller, og stories 6.1 og 6.2 ble slått sammen til én. Hver beslutning står i spec-filene i [`.docs/implementation-artifacts/`](.docs/implementation-artifacts/).
 
 Oppgaver og åpne spørsmål følges opp i [GitHub Issues](https://github.com/IBE160-2026/G62-bjolstad-khalid-reehorst-svendsrud/issues).

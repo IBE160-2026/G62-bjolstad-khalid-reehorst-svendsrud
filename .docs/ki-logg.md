@@ -1462,6 +1462,26 @@ Det viktigste funnet: Dekningsanalysen er regnet ut fra øvelseslista og viser a
 ### Status
 - [x] Ferdig lokalt, venter på PR.
 
+## 2026-11-23 – README: oppskrifter utsatt etter v1
+
+**Verktøy:** Claude Code
+**Hvem:** Karianne Bjølstad
+**Bakgrunn:** Karianne ønsket oppskrifter under Mat, men fant dem ikke i appen. README forklarte ikke hvorfor.
+
+### Hva vi ba KI om
+- Finne ut hvorfor oppskrifter ikke ble bygget, og nevne det i README under «Endret fra planen».
+
+### Hva KI produserte
+- Fant gruppens beslutning 12.11 (oppskrifter og treningsprogram etter v1) i PRD-gjennomgangen og skissene fra UX-runde 3.
+- Ett avsnitt i README med lenker til skissene og beslutningen.
+
+### Hva vi selv vurderte og kontrollerte
+- Karianne valgte å nevne det i README i stedet for å bygge oppskrifter nå, siden det ville endre en felles beslutning.
+- Lenkene peker på filer som finnes i repoet.
+
+### Status
+- [x] Ferdig, venter på PR.
+
 ## Mal for nye oppføringer
 
 ```markdown
