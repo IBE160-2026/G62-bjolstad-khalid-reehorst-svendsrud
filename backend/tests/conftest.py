@@ -18,6 +18,7 @@ from app.core.clock import utc_now
 from app.core.db import get_session_factory
 from app.core.settings import get_settings
 from app.main import create_app
+from app.ports.email import MockEmailAdapter, get_email_port
 from app.ports.off import MockOffAdapter, get_off_port
 
 BACKEND_DIR = Path(__file__).resolve().parent.parent
@@ -88,14 +89,26 @@ def test_session_factory(test_engine: Engine) -> sessionmaker[Session]:
 
 
 @pytest.fixture
-def app(test_engine: Engine, test_session_factory: sessionmaker[Session]) -> Iterator[FastAPI]:
-    """The real app and the real get_db; only the session factory points at the test DB
-    and Open Food Facts is the mock adapter."""
+def mailbox() -> MockEmailAdapter:
+    """The mock e-mail adapter the app sends through; `mailbox.sent` holds every mail."""
+    return MockEmailAdapter()
+
+
+@pytest.fixture
+def app(
+    test_engine: Engine,
+    test_session_factory: sessionmaker[Session],
+    mailbox: MockEmailAdapter,
+) -> Iterator[FastAPI]:
+    """The real app and the real get_db; only the session factory points at the test DB,
+    and Open Food Facts and e-mail are mock adapters."""
     application = create_app()
     application.dependency_overrides[get_session_factory] = lambda: test_session_factory
     # Tests never reach Open Food Facts, whatever OFF_MODE says.
     off = MockOffAdapter()
     application.dependency_overrides[get_off_port] = lambda: off
+    # Tests never send e-mail, whatever EMAIL_MODE says.
+    application.dependency_overrides[get_email_port] = lambda: mailbox
     yield application
     application.dependency_overrides.clear()
     _truncate_tables(test_engine)

@@ -186,6 +186,96 @@
         }
       }
     },
+    "/api/identity/password-reset": {
+      "post": {
+        "tags": [
+          "identity"
+        ],
+        "summary": "Request Password Reset",
+        "description": "Public: no authentication required. Sends a reset link if the account exists.\n\nAlways 204, whether or not the e-mail has an account or the hourly limit is reached.\nThe mail is sent after the response (and after the commit), so the response time does\nnot depend on it.",
+        "operationId": "request_password_reset",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PasswordResetRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/identity/password-reset/confirm": {
+      "post": {
+        "tags": [
+          "identity"
+        ],
+        "summary": "Confirm Password Reset",
+        "description": "Public: no authentication required. Sets a new password from a reset link.\n\nEnds every session of the account and clears the login lockout; does not log in.\nAn expired, used or unknown link answers 400 `reset_link_invalid`.",
+        "operationId": "confirm_password_reset",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PasswordResetConfirm"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/identity/me": {
       "get": {
         "tags": [
@@ -2380,7 +2470,7 @@
           "overview"
         ],
         "summary": "Get Overview",
-        "description": "Target, kcal eaten and remaining, the Meals and the done workouts for one date\n(YYYY-MM-DD). Read-only; a date more than one day after today is 422.",
+        "description": "Target, kcal eaten and remaining, the Meals and the done workouts for one date\n(YYYY-MM-DD). Read-only; any date after today (Europe/Oslo) is 422.",
         "operationId": "get_overview",
         "parameters": [
           {
@@ -3473,6 +3563,37 @@
           "workouts"
         ],
         "title": "OverviewResponse"
+      },
+      "PasswordResetConfirm": {
+        "properties": {
+          "token": {
+            "type": "string",
+            "title": "Token"
+          },
+          "password": {
+            "type": "string",
+            "title": "Password"
+          }
+        },
+        "type": "object",
+        "required": [
+          "token",
+          "password"
+        ],
+        "title": "PasswordResetConfirm"
+      },
+      "PasswordResetRequest": {
+        "properties": {
+          "email": {
+            "type": "string",
+            "title": "Email"
+          }
+        },
+        "type": "object",
+        "required": [
+          "email"
+        ],
+        "title": "PasswordResetRequest"
       },
       "ProfileRequest": {
         "properties": {

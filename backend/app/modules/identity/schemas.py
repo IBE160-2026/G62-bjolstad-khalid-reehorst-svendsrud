@@ -81,3 +81,14 @@ class UserResponse(BaseModel):
 class LoginResponse(UserResponse):
     # True when this login reactivated a deactivated account (story 1.8).
     reactivated: bool
+
+
+class PasswordResetRequest(BaseModel):
+    email: Annotated[str, AfterValidator(_check_email)]
+
+
+class PasswordResetConfirm(BaseModel):
+    # Not validated here: a bad token gets the same 400 as an unknown one.
+    token: str
+    # The same rules as registration.
+    password: Annotated[str, AfterValidator(_check_password)]

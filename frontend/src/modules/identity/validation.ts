@@ -39,17 +39,33 @@ function emailError(value: string): string | undefined {
   return undefined;
 }
 
+function newPasswordError(password: string): string | undefined {
+  // Count characters like the backend (Python len), not UTF-16 code units.
+  const passwordLength = Array.from(password).length;
+  if (passwordLength < PASSWORD_MIN_LENGTH) return MESSAGES.passwordTooShort;
+  if (passwordLength > PASSWORD_MAX_LENGTH) return MESSAGES.passwordTooLong;
+  return undefined;
+}
+
 export function validateRegister(values: RegisterValues): FieldErrors {
   const errors: FieldErrors = {};
   const email = emailError(values.email);
   if (email) errors.email = email;
-
-  // Count characters like the backend (Python len), not UTF-16 code units.
-  const passwordLength = Array.from(values.password).length;
-  if (passwordLength < PASSWORD_MIN_LENGTH) errors.password = MESSAGES.passwordTooShort;
-  else if (passwordLength > PASSWORD_MAX_LENGTH) errors.password = MESSAGES.passwordTooLong;
-
+  const password = newPasswordError(values.password);
+  if (password) errors.password = password;
   return errors;
+}
+
+/** "Glemt passord?" (story 1.7): only the e-mail. */
+export function validateForgotPassword(email: string): FieldErrors {
+  const error = emailError(email);
+  return error ? { email: error } : {};
+}
+
+/** A new password from a reset link (story 1.7): the same rules as registration. */
+export function validateNewPassword(password: string): FieldErrors {
+  const error = newPasswordError(password);
+  return error ? { password: error } : {};
 }
 
 /** Login only checks that both fields are filled in; the password rules are not hinted at. */

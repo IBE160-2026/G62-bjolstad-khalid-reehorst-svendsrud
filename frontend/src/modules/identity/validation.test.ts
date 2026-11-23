@@ -1,6 +1,13 @@
 import { describe, expect, it } from "vitest";
 
-import { MESSAGES, firstInvalidField, isValidEmail, validateRegister } from "./validation";
+import {
+  MESSAGES,
+  firstInvalidField,
+  isValidEmail,
+  validateForgotPassword,
+  validateNewPassword,
+  validateRegister,
+} from "./validation";
 
 describe("isValidEmail", () => {
   it.each(["ola@eksempel.no", "a@b.no", "ola.nordmann+trening@post.eksempel.no"])(
@@ -49,5 +56,21 @@ describe("validateRegister", () => {
     expect(firstInvalidField(validateRegister({ email: "", password: "" }))).toBe("email");
     expect(firstInvalidField({ password: "x" })).toBe("password");
     expect(firstInvalidField({})).toBeUndefined();
+  });
+});
+
+describe("validateForgotPassword", () => {
+  it("needs a valid e-mail", () => {
+    expect(validateForgotPassword("")).toEqual({ email: MESSAGES.emailMissing });
+    expect(validateForgotPassword("ola@")).toEqual({ email: MESSAGES.emailInvalid });
+    expect(validateForgotPassword(" Ola@Eksempel.no ")).toEqual({});
+  });
+});
+
+describe("validateNewPassword", () => {
+  it("uses the registration rules", () => {
+    expect(validateNewPassword("1234567")).toEqual({ password: MESSAGES.passwordTooShort });
+    expect(validateNewPassword("x".repeat(129))).toEqual({ password: MESSAGES.passwordTooLong });
+    expect(validateNewPassword("12345678")).toEqual({});
   });
 });
