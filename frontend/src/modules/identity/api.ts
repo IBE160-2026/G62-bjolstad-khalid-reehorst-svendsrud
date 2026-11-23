@@ -6,7 +6,12 @@ import { useRouter } from "next/navigation";
 import { api } from "@/lib/api/client";
 import type { components } from "@/lib/api/schema";
 
-import { ACCOUNT_DELETED_PATH, LOGIN_PATH, PROFILE_SETUP_PATH } from "./routes";
+import {
+  ACCOUNT_DELETED_PATH,
+  LOGIN_PATH,
+  PASSWORD_CHANGED_PATH,
+  PROFILE_SETUP_PATH,
+} from "./routes";
 import type { RegisterValues } from "./validation";
 
 type ErrorBody = components["schemas"]["ErrorBody"];
@@ -101,6 +106,34 @@ export function useLogin() {
     mutationFn: (values: RegisterValues) =>
       call(() => api.POST("/api/identity/login", { body: values })),
     onSuccess: ({ reactivated, ...user }) => startSession(user, reactivated),
+  });
+}
+
+/**
+ * Ask for a reset link (story 1.7). The backend answers 204 whether or not the e-mail has
+ * an account, so success says nothing about the account.
+ */
+export function useRequestPasswordReset() {
+  return useMutation({
+    mutationFn: (email: string) =>
+      callNoContent(() => api.POST("/api/identity/password-reset", { body: { email } })),
+  });
+}
+
+/**
+ * Set a new password from a reset link (story 1.7). Every session is ended on the server and
+ * nobody is logged in, so drop the cache and show the login page with a status line.
+ */
+export function useConfirmPasswordReset() {
+  const queryClient = useQueryClient();
+  const router = useRouter();
+  return useMutation({
+    mutationFn: (body: { token: string; password: string }) =>
+      callNoContent(() => api.POST("/api/identity/password-reset/confirm", { body })),
+    onSuccess: () => {
+      router.replace(PASSWORD_CHANGED_PATH);
+      queryClient.clear();
+    },
   });
 }
 

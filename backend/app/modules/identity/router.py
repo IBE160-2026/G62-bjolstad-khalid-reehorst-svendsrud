@@ -2,7 +2,7 @@
 
 from typing import Annotated
 
-from fastapi import APIRouter, Cookie, Response, status
+from fastapi import APIRouter, BackgroundTasks, Cookie, Depends, Response, status
 
 from app.core.auth import (
     SESSION_COOKIE,
@@ -17,9 +17,12 @@ from app.modules.identity.models import User
 from app.modules.identity.schemas import (
     LoginRequest,
     LoginResponse,
+    PasswordResetConfirm,
+    PasswordResetRequest,
     RegisterRequest,
     UserResponse,
 )
+from app.ports.email import EmailPort, get_email_port
 
 router = APIRouter(prefix="/api/identity", tags=["identity"])
 
@@ -84,6 +87,47 @@ def logout(current_user: CurrentUser, db: DbSession) -> Response:
     response = Response(status_code=status.HTTP_204_NO_CONTENT)
     clear_session_cookie(response)
     return response
+
+
+@router.post(
+    "/password-reset",
+    status_code=status.HTTP_204_NO_CONTENT,
+    response_class=Response,
+    operation_id="request_password_reset",
+)
+def request_password_reset(
+    body: PasswordResetRequest,
+    db: DbSession,
+    now: Now,
+    email: Annotated[EmailPort, Depends(get_email_port)],
+    background: BackgroundTasks,
+) -> Response:
+    """Public: no authentication required. Sends a reset link if the account exists.
+
+    Always 204, whether or not the e-mail has an account or the hourly limit is reached.
+    The mail is sent after the response (and after the commit), so the response time does
+    not depend on it.
+    """
+    message = service.request_password_reset(db, body.email, now)
+    if message is not None:
+        background.add_task(email.send, message)
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
+
+
+@router.post(
+    "/password-reset/confirm",
+    status_code=status.HTTP_204_NO_CONTENT,
+    response_class=Response,
+    operation_id="confirm_password_reset",
+)
+def confirm_password_reset(body: PasswordResetConfirm, db: DbSession, now: Now) -> Response:
+    """Public: no authentication required. Sets a new password from a reset link.
+
+    Ends every session of the account and clears the login lockout; does not log in.
+    An expired, used or unknown link answers 400 `reset_link_invalid`.
+    """
+    service.confirm_password_reset(db, body.token, body.password, now)
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
 
 
 @router.get("/me", response_model=UserResponse, operation_id="me")

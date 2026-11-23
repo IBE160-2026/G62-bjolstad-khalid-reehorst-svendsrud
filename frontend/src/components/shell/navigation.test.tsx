@@ -48,6 +48,8 @@ describe("nav items", () => {
     expect(pageTitle("/samtykke")).toBe("Samtykke");
     expect(pageTitle("/profiloppsett")).toBe("Profiloppsett");
     expect(pageTitle("/logg-inn")).toBe("Logg inn");
+    expect(pageTitle("/glemt-passord")).toBe("Glemt passord");
+    expect(pageTitle("/nytt-passord")).toBe("Nytt passord");
     expect(NAV_ITEMS.map((item) => item.href)).not.toContain("/opprett-konto");
   });
 });

@@ -31,6 +31,8 @@ const OTHER_TITLES: Readonly<Record<string, string>> = {
   "/trening/okt": "Økt",
   "/logg-inn": "Logg inn",
   "/opprett-konto": "Opprett konto",
+  "/glemt-passord": "Glemt passord",
+  "/nytt-passord": "Nytt passord",
   "/samtykke": "Samtykke",
   "/profiloppsett": "Profiloppsett",
 };

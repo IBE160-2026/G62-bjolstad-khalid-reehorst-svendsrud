@@ -1446,6 +1446,21 @@ Det viktigste funnet: Dekningsanalysen er regnet ut fra øvelseslista og viser a
 
 ### Status
 - [x] Ferdig, venter på review i PR.
+## 2026-11-23 – Story 1.7 (glemt passord)
+
+### Hva vi ba KI om
+- Bygge «Glemt passord?» med bmad-build: lenke på e-post, nytt passord, uten ekte e-posttjeneste.
+
+### Hva KI produserte
+- Spec, backend (e-postport, tabell `password_resets`, to offentlige endepunkter), to nye sider, Mailpit i Docker Compose, tester (backend, Vitest, Playwright som leser e-posten i Mailpit).
+
+### Hva vi selv vurderte og kontrollerte
+- Osman valgte Mailpit (alternativ A) framfor å skrive lenken i backend-loggen, slik planen sa.
+- Én reviewer (Edge Case Hunter) fant 10 punkter: 3 rettet (lenken forsvant for nettlesere med cookie, TLS uten sertifikatsjekk, uhåndterte feil ved sending), 1 utsatt, 6 avvist med begrunnelse.
+- Alle tester kjørt: 613 backend, 504 Vitest, lint, build og Playwright 11/11. To Playwright-kjøringer feilet på ulike tester mens Macen var overbelastet (load 10–18); hver test besto alene, og neste fulle kjøring besto.
+
+### Status
+- [x] Ferdig lokalt, venter på PR.
 
 ## Mal for nye oppføringer
 
