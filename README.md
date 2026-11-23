@@ -6,9 +6,7 @@ Repoet inneholder gruppens applikasjon og dokumentasjon av utvikling, testing og
 
 ## Applikasjon
 
-Appen publiseres på Vercel: [https://g62promptforce.vercel.app](https://g62promptforce.vercel.app)
-
-Siden viser 404 til den første versjonen av appen er pushet til `main`. Vercel-prosjektet ligger på kontoen til Muhammad O Khalid.
+Appen kjøres lokalt med Docker (se [Kom i gang](#kom-i-gang)). Den er ikke publisert på nett; det er ikke et krav i emnet.
 
 ## Medlemmer
 
@@ -19,18 +17,39 @@ Siden viser 404 til den første versjonen av appen er pushet til `main`. Vercel-
 
 ## Status
 
-Alle Must-krav er ferdige. Koden er bygget én story om gangen, med én branch og pull request per story. Se [sprint-status.yaml](.docs/implementation-artifacts/sprint-status.yaml) for status per story.
+Alle Must-krav er ferdige, i tillegg til fire Should-stories: ukestripe (6.3), filtre på muskelgruppe og nivå (4.5), deaktivere konto (1.8) og glemt passord (1.7). Koden er bygget én story om gangen, med én branch og pull request per story. Se [sprint-status.yaml](.docs/implementation-artifacts/sprint-status.yaml) for status per story.
 
 | Del | Status |
 |---|---|
 | Planlegging | Product brief, research, PRD, UX-design, arkitektur og 7 epics / 32 stories er ferdige |
-| Konto (epic 1) | Opprett konto, logg inn/ut, samtykke, glemt passord, slett konto |
+| Konto (epic 1) | Opprett konto, logg inn/ut, samtykke, glemt passord, slett og deaktivere konto |
 | Profil (epic 2) | Profiloppsett med daglig kaloribehov, endre profil |
 | Mat (epic 3) | Søk (Matvaretabellen + 941 norske merkevarer fra Open Food Facts), strekkode, egne matvarer, porsjoner, endre/slette med angre |
-| Trening (epic 4) | 34 øvelser med video, utstyrsprofiler, forslag som passer utstyret, søk på navn, filtre på muskelgruppe og nivå |
+| Trening (epic 4) | 34 øvelser med video (YouTube Shorts i stående spiller), utstyrsprofiler, forslag som passer utstyret, søk på navn, filtre på muskelgruppe og nivå |
 | Treningslogg (epic 5) | Starte økt, logge sett (repetisjoner/kg eller sekunder), «Sist» fra forrige gang, fullføre, endre og slette økter |
-| I dag (epic 6) | Kalorier igjen, dagens mat og trening, tomme tilstander, «?»-hjelp, demobrukere og Playwright-tester |
-| Gjenstår (Should) | Ukestripe for å bytte dag, deaktivere konto, kamera-skanning, muskelfigur; bildeestimat av kalorier (epic 7) er fase 2 |
+| I dag (epic 6) | Kalorier igjen, dagens mat og trening, ukestripe for å bytte dag, tomme tilstander, «?»-hjelp, demobrukere og Playwright-tester |
+| Ikke med | Se [Endret fra planen](#endret-fra-planen) |
+
+### Skjermbilder
+
+Demobrukeren Sara på mobilbredde (390 px). Bildene lages med `node frontend/scripts/screenshots.mjs` mens appen kjører.
+
+| I dag | Mat | Søk etter mat | Trening | Øvelse |
+|---|---|---|---|---|
+| <img src=".docs/skjermbilder/1-i-dag.png" width="160" alt="I dag: kalorier igjen og dagens måltider"> | <img src=".docs/skjermbilder/2-mat.png" width="160" alt="Mat: dagens måltider med kalorier"> | <img src=".docs/skjermbilder/3-sok-mat.png" width="160" alt="Søk etter havregryn i Legg til mat"> | <img src=".docs/skjermbilder/4-trening.png" width="160" alt="Trening: tidligere økter og utstyr"> | <img src=".docs/skjermbilder/5-ovelse.png" width="160" alt="Øvelsen Armhevinger med video og steg"> |
+| Story 6.1, 6.3 | Story 3.1, 3.6 | Story 3.1, 3.7 | Story 4.2, 4.3, 5.4 | Story 4.1 |
+
+### Endret fra planen
+
+Planen hadde 7 epics og 32 stories. Dette ble ikke med, og hvorfor:
+
+| Story | Hvorfor ikke med |
+|---|---|
+| 3.8 Skanne strekkode med kamera (Should) | Kamera i nettleseren krever HTTPS når appen åpnes fra en mobil på nettverket, og appen kjører bare lokalt. «Skriv strekkode» dekker behovet. |
+| 4.6 Muskelfigur (Should) | Trenger en tegnet kroppsfigur som ikke ble ferdig. Musklene vises som tekst på øvelsessiden. |
+| Epic 7 Kalorier fra bilde | Planlagt som fase 2, bare når kjerneflyten var stabil. Krever en betalt KI-tjeneste med API-nøkkel, og appen skal virke uten nøkler. |
+
+To ting kom i tillegg underveis: YouTube Shorts vises i en stående 9:16-spiller, og stories 6.1 og 6.2 ble slått sammen til én. Hver beslutning står i spec-filene i [`.docs/implementation-artifacts/`](.docs/implementation-artifacts/).
 
 Oppgaver og åpne spørsmål følges opp i [GitHub Issues](https://github.com/IBE160-2026/G62-bjolstad-khalid-reehorst-svendsrud/issues).
 
@@ -163,6 +182,8 @@ En database som allerede har varene, får ikke nye verdier for dem ved oppstart 
 **Prosess og KI-bruk**
 - [KI-logg](.docs/ki-logg.md): hva vi ba KI om, hva den laget, og hva vi selv kontrollerte og endret
 - [Sesjonslogger](.logs/): én mappe per gruppemedlem, med åpne punkter i `issues.md`
+- [Retro for hele prosjektet](.docs/implementation-artifacts/prosjekt-retro-2026-11-18.md) og [utsatt arbeid](.docs/implementation-artifacts/deferred-work.md)
+- [Utkast til metodevalg](.docs/rapport-metodevalg.md) for refleksjonsrapporten
 
 **Emnet**
 - [Sensorveiledning del 1 – applikasjon og prosess](.docs/course/sensorveiledning-del1-applikasjon-og-prosess.pdf): vurderingskriteriene repoet skal oppfylle
@@ -174,7 +195,14 @@ En database som allerede har varene, får ikke nye verdier for dem ved oppstart 
 | `backend/` | FastAPI-backend: `app/` (core, moduler, porter, seed), Alembic-migreringer og tester |
 | `frontend/` | Next.js-frontend: `src/app/`, `src/modules/`, generert API-klient i `src/lib/api/` og `e2e/` |
 | `db/init/` | Oppstartsskript for PostgreSQL (oppretter testdatabasen) |
+| `frontend/scripts/` | Skript som lager skjermbildene i README |
+| `.docs/implementation-artifacts/` | Sprint-status, én spec per story (med review-funn), retro og utsatt arbeid |
+| `.docs/skjermbilder/` | Skjermbildene i README |
 | `.docs/planning-artifacts/` | Brief, PRD, research, UX-design og øvelsesliste |
 | `.docs/course/` | Dokumenter fra emnet |
 | `.logs/` | Sesjonslogger per gruppemedlem |
 | `_bmad/`, `.claude/` | BMAD-rammeverket og KI-skills som brukes i prosjektet |
+| `CLAUDE.md` | Faste instruksjoner til KI-agenten (blant annet sesjonslogg) |
+| `PRODUCT.md` | Produktbeskrivelse som designskillen (`impeccable`) leser |
+| `.impeccable/` | Innstillinger og spørsmål for `impeccable`-skillen |
+| `docker-compose.yml`, `.env.example` | Oppstart av hele appen og trygge standardverdier |
