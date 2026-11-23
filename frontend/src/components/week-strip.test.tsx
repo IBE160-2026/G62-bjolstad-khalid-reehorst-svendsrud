@@ -116,6 +116,9 @@ describe("WeekStrip", () => {
     expect(today).toHaveAttribute("aria-pressed", "true");
     expect(today).toHaveAttribute("aria-current", "date");
     expect(today).toHaveTextContent("i dag");
+    // Phone width shows a dot instead of «i dag» (which would wrap); only today has it.
+    expect(within(toolbar()).getAllByTestId("today-dot")).toHaveLength(1);
+    expect(within(today).getByTestId("today-dot")).toBeInTheDocument();
     expect(today).toHaveAttribute("tabindex", "0");
     expect(day(/, fredag 20/)).toBeDisabled();
     expect(day(/, søndag 22/)).toBeDisabled();

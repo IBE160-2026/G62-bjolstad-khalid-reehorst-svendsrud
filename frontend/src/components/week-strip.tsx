@@ -178,9 +178,21 @@ export function WeekStrip({ date, today, futureRequested = false }: Props) {
                   {dayMarks?.has_workout && <Dumbbell className="size-3" />}
                 </span>
                 {isToday && (
-                  <span aria-hidden="true" className="text-label text-muted-foreground">
-                    i dag
-                  </span>
+                  <>
+                    {/* «i dag» needs about 28 px; a phone-width day is narrower, so it would
+                        wrap onto two lines. Phones get a dot; the aria-label says «i dag». */}
+                    <span
+                      aria-hidden="true"
+                      data-testid="today-dot"
+                      className="mt-1 size-1.5 rounded-full bg-foreground sm:hidden"
+                    />
+                    <span
+                      aria-hidden="true"
+                      className="hidden whitespace-nowrap text-label text-muted-foreground sm:inline"
+                    >
+                      i dag
+                    </span>
+                  </>
                 )}
               </button>
             );
